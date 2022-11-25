@@ -19010,7 +19010,7 @@ dissect_rrc_PLMN_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U
 
   /* Reset the digits string in the private data struct */
   /* Maximal length: 7 = 3 digits MCC + 3 digits MNC + trailing '\0' */
-  mcc_mnc_strbuf = wmem_strbuf_sized_new(actx->pinfo->pool,7,7);
+  mcc_mnc_strbuf = wmem_strbuf_new_sized(actx->pinfo->pool,7);
   private_data_set_digits_strbuf(actx, mcc_mnc_strbuf);
   /* Reset parsing failure flag*/
   private_data_set_digits_strbuf_parsing_failed_flag(actx, FALSE);
@@ -19030,7 +19030,7 @@ dissect_rrc_PLMN_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U
   if(string_len >= 3)
   {
     /* 3 MCC digits were found, keep for later in case MCC is missing in other PLMN ids*/
-    mcc_strbuf = wmem_strbuf_sized_new(actx->pinfo->pool,4,4);
+    mcc_strbuf = wmem_strbuf_new_sized(actx->pinfo->pool,4);
     wmem_strbuf_append_c(mcc_strbuf,mcc_mnc_string[0]);
     wmem_strbuf_append_c(mcc_strbuf,mcc_mnc_string[1]);
     wmem_strbuf_append_c(mcc_strbuf,mcc_mnc_string[2]);
@@ -116016,7 +116016,7 @@ dissect_rrc_IMSI_GSM_MAP(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_
   tvbuff_t* imsi_tvb;
 
   /* Reset the digits string in the private data struct */
-  imsi_strbuf = wmem_strbuf_sized_new(actx->pinfo->pool,16,16);
+  imsi_strbuf = wmem_strbuf_new_sized(actx->pinfo->pool,16);
   private_data_set_digits_strbuf(actx, imsi_strbuf);
   /* Reset parsing failure flag*/
   private_data_set_digits_strbuf_parsing_failed_flag(actx, FALSE);
@@ -135772,7 +135772,7 @@ dissect_rrc_PLMN_IdentityWithOptionalMCC_r6(tvbuff_t *tvb _U_, int offset _U_, a
 
   /* Reset the digits string in the private data struct */
   /* Maximal length: 7 = 3 digits MCC + 3 digits MNC + trailing '\0' */
-  mcc_mnc_strbuf = wmem_strbuf_sized_new(actx->pinfo->pool,7,7);
+  mcc_mnc_strbuf = wmem_strbuf_new_sized(actx->pinfo->pool,7);
   private_data_set_digits_strbuf(actx, mcc_mnc_strbuf);
   /* Reset parsing failure flag*/
   private_data_set_digits_strbuf_parsing_failed_flag(actx, FALSE);
@@ -135791,7 +135791,7 @@ dissect_rrc_PLMN_IdentityWithOptionalMCC_r6(tvbuff_t *tvb _U_, int offset _U_, a
   if (string_len > 3) {
       /* 3 MCC digits and at least 1 MNC digit were found, keep MCC for later
          in case it's missing in other PLMN ids*/
-    temp_strbuf = wmem_strbuf_sized_new(actx->pinfo->pool,4,4);
+    temp_strbuf = wmem_strbuf_new_sized(actx->pinfo->pool,4);
     wmem_strbuf_append_c(temp_strbuf,mcc_mnc_string[0]);
     wmem_strbuf_append_c(temp_strbuf,mcc_mnc_string[1]);
     wmem_strbuf_append_c(temp_strbuf,mcc_mnc_string[2]);
@@ -135805,7 +135805,7 @@ dissect_rrc_PLMN_IdentityWithOptionalMCC_r6(tvbuff_t *tvb _U_, int offset _U_, a
       if(last_mcc_strbuf)
       {
         /* Concat MCC and MNC in temp buffer */
-        temp_strbuf = wmem_strbuf_sized_new(actx->pinfo->pool,7,7);
+        temp_strbuf = wmem_strbuf_new_sized(actx->pinfo->pool,7);
         wmem_strbuf_append_printf(temp_strbuf,"%s",wmem_strbuf_get_str(last_mcc_strbuf));
         wmem_strbuf_append_printf(temp_strbuf,"%s",mcc_mnc_string);
         /* Update length of recovered MCC-MNC pair */
