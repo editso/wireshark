@@ -3,9 +3,6 @@
 /* packet-rrc.c                                                               */
 /* asn2wrs.py -L -p rrc -c ./rrc.cnf -s ./packet-rrc-template -D . -O ../.. Class-definitions.asn PDU-definitions.asn InformationElements.asn Constant-definitions.asn Internode-definitions.asn */
 
-/* Input file: packet-rrc-template.c */
-
-#line 1 "./asn1/rrc/packet-rrc-template.c"
 /* packet-rrc.c
  * Routines for Universal Mobile Telecommunications System (UMTS);
  * Radio Resource Control (RRC) protocol specification
@@ -317,9 +314,6 @@ static int dissect_SysInfoType11ter_PDU(tvbuff_t *tvb, packet_info *pinfo, proto
 static int dissect_SysInfoType22_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *);
 
 /* Include constants */
-
-/*--- Included file: packet-rrc-val.h ---*/
-#line 1 "./asn1/rrc/packet-rrc-val.h"
 #define hiPDSCHidentities              64
 #define hiPUSCHidentities              64
 #define hiRM                           256
@@ -515,18 +509,12 @@ static int dissect_SysInfoType22_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tr
 #define maxWLANID                      16
 #define maxWLANs                       64
 
-/*--- End of included file: packet-rrc-val.h ---*/
-#line 313 "./asn1/rrc/packet-rrc-template.c"
-
 /* Initialize the protocol and registered fields */
 int proto_rrc = -1;
 static int hf_test;
 static int hf_urnti;
 static int hf_urnti_new;
 static int hf_urnti_current;
-
-/*--- Included file: packet-rrc-hf.c ---*/
-#line 1 "./asn1/rrc/packet-rrc-hf.c"
 static int hf_rrc_DL_DCCH_Message_PDU = -1;       /* DL_DCCH_Message */
 static int hf_rrc_UL_DCCH_Message_PDU = -1;       /* UL_DCCH_Message */
 static int hf_rrc_DL_CCCH_Message_PDU = -1;       /* DL_CCCH_Message */
@@ -11421,15 +11409,9 @@ static int hf_rrc_GsmSecurityCapability_a5_3 = -1;
 static int hf_rrc_GsmSecurityCapability_a5_2 = -1;
 static int hf_rrc_GsmSecurityCapability_a5_1 = -1;
 
-/*--- End of included file: packet-rrc-hf.c ---*/
-#line 321 "./asn1/rrc/packet-rrc-template.c"
-
 /* Initialize the subtree pointers */
 static int ett_rrc = -1;
 
-
-/*--- Included file: packet-rrc-ett.c ---*/
-#line 1 "./asn1/rrc/packet-rrc-ett.c"
 static gint ett_rrc_DL_DCCH_Message = -1;
 static gint ett_rrc_DL_DCCH_MessageType = -1;
 static gint ett_rrc_UL_DCCH_Message = -1;
@@ -18368,9 +18350,6 @@ static gint ett_rrc_UE_RadioAccessCapability_r5 = -1;
 static gint ett_rrc_UE_RadioAccessCapability_r6 = -1;
 static gint ett_rrc_UL_RFC3095_Context = -1;
 
-/*--- End of included file: packet-rrc-ett.c ---*/
-#line 326 "./asn1/rrc/packet-rrc-template.c"
-
 static gint ett_rrc_eutraFeatureGroupIndicators = -1;
 static gint ett_rrc_cn_CommonGSM_MAP_NAS_SysInfo = -1;
 static gint ett_rrc_ims_info = -1;
@@ -18504,9 +18483,6 @@ rrc_try_map_urnti_to_crncc(guint32 u_rnti, asn1_ctx_t *actx)
   }
 }
 
-
-/*--- Included file: packet-rrc-fn.c ---*/
-#line 1 "./asn1/rrc/packet-rrc-fn.c"
 /*--- PDUs declarations ---*/
 static int dissect_CellUpdate_r3_add_ext_IEs_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_);
 static int dissect_CellUpdateConfirm_r7_add_ext_IEs_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_);
@@ -165178,9 +165154,6 @@ static int dissect_SRNC_RelocationInfo_r7_add_ext_IEs_PDU(tvbuff_t *tvb _U_, pac
 }
 
 
-/*--- End of included file: packet-rrc-fn.c ---*/
-#line 461 "./asn1/rrc/packet-rrc-template.c"
-
 
 static int
 dissect_rrc(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void* data _U_)
@@ -165262,9 +165235,6 @@ void proto_register_rrc(void) {
   /* List of fields */
   static hf_register_info hf[] = {
 
-
-/*--- Included file: packet-rrc-hfarr.c ---*/
-#line 1 "./asn1/rrc/packet-rrc-hfarr.c"
     { &hf_rrc_DL_DCCH_Message_PDU,
       { "DL-DCCH-Message", "rrc.DL_DCCH_Message_element",
         FT_NONE, BASE_NONE, NULL, 0,
@@ -208833,9 +208803,6 @@ void proto_register_rrc(void) {
       { "a5-1", "rrc.GsmSecurityCapability.a5.1",
         FT_BOOLEAN, 8, NULL, 0x02,
         NULL, HFILL }},
-
-/*--- End of included file: packet-rrc-hfarr.c ---*/
-#line 544 "./asn1/rrc/packet-rrc-template.c"
     { &hf_test,
       { "RAB Test", "rrc.RAB.test",
         FT_UINT8, BASE_DEC, NULL, 0,
@@ -208897,9 +208864,6 @@ void proto_register_rrc(void) {
   /* List of subtrees */
   static gint *ett[] = {
     &ett_rrc,
-
-/*--- Included file: packet-rrc-ettarr.c ---*/
-#line 1 "./asn1/rrc/packet-rrc-ettarr.c"
     &ett_rrc_DL_DCCH_Message,
     &ett_rrc_DL_DCCH_MessageType,
     &ett_rrc_UL_DCCH_Message,
@@ -215837,9 +215801,6 @@ void proto_register_rrc(void) {
     &ett_rrc_UE_RadioAccessCapability_r5,
     &ett_rrc_UE_RadioAccessCapability_r6,
     &ett_rrc_UL_RFC3095_Context,
-
-/*--- End of included file: packet-rrc-ettarr.c ---*/
-#line 606 "./asn1/rrc/packet-rrc-template.c"
     &ett_rrc_eutraFeatureGroupIndicators,
     &ett_rrc_cn_CommonGSM_MAP_NAS_SysInfo,
     &ett_rrc_ims_info,
@@ -215864,9 +215825,6 @@ void proto_register_rrc(void) {
 
   register_dissector("rrc", dissect_rrc, proto_rrc);
 
-
-/*--- Included file: packet-rrc-dis-reg.c ---*/
-#line 1 "./asn1/rrc/packet-rrc-dis-reg.c"
   register_dissector("rrc.dl.dcch", dissect_DL_DCCH_Message_PDU, proto_rrc);
   register_dissector("rrc.ul.dcch", dissect_UL_DCCH_Message_PDU, proto_rrc);
   register_dissector("rrc.dl.ccch", dissect_DL_CCCH_Message_PDU, proto_rrc);
@@ -215938,9 +215896,6 @@ void proto_register_rrc(void) {
   register_dissector("rrc.s_to_trnc_cont", dissect_rrc_ToTargetRNC_Container_PDU, proto_rrc);
   register_dissector("rrc.t_to_srnc_cont", dissect_rrc_TargetRNC_ToSourceRNC_Container_PDU, proto_rrc);
 
-
-/*--- End of included file: packet-rrc-dis-reg.c ---*/
-#line 631 "./asn1/rrc/packet-rrc-template.c"
 
   register_init_routine(rrc_init);
   register_cleanup_routine(rrc_cleanup);

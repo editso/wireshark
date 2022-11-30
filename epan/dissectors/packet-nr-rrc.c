@@ -3,9 +3,6 @@
 /* packet-nr-rrc.c                                                            */
 /* asn2wrs.py -L -L -p nr-rrc -c ./nr-rrc.cnf -s ./packet-nr-rrc-template -D . -O ../.. NR-InterNodeDefinitions.asn NR-RRC-Definitions.asn PC5-RRC-Definitions.asn */
 
-/* Input file: packet-nr-rrc-template.c */
-
-#line 1 "./asn1/nr-rrc/packet-nr-rrc-template.c"
 /* packet-nr-rrc-template.c
  * NR;
  * Radio Resource Control (RRC) protocol specification
@@ -71,9 +68,6 @@ extern int proto_mac_nr;
 extern int proto_pdcp_nr;
 
 /* Include constants */
-
-/*--- Included file: packet-nr-rrc-val.h ---*/
-#line 1 "./asn1/nr-rrc/packet-nr-rrc-val.h"
 #define maxMeasFreqsMN                 32
 #define maxMeasFreqsSN                 32
 #define maxMeasIdentitiesMN            62
@@ -450,14 +444,8 @@ typedef enum _T_targetRAT_Type_enum {
   T_targetRAT_Type_spare1 =   3
 } T_targetRAT_Type_enum;
 
-/*--- End of included file: packet-nr-rrc-val.h ---*/
-#line 67 "./asn1/nr-rrc/packet-nr-rrc-template.c"
-
 /* Initialize the protocol and registered fields */
 static int proto_nr_rrc = -1;
-
-/*--- Included file: packet-nr-rrc-hf.c ---*/
-#line 1 "./asn1/nr-rrc/packet-nr-rrc-hf.c"
 static int hf_nr_rrc_nr_rrc_HandoverCommand_PDU = -1;  /* HandoverCommand */
 static int hf_nr_rrc_nr_rrc_HandoverPreparationInformation_PDU = -1;  /* HandoverPreparationInformation */
 static int hf_nr_rrc_nr_rrc_CG_Config_PDU = -1;   /* CG_Config */
@@ -9416,9 +9404,6 @@ static int hf_nr_rrc_sl_SIB1_Delivery_r17 = -1;   /* T_sl_SIB1_Delivery_r17 */
 static int hf_nr_rrc_sl_SystemInformationDelivery_r17 = -1;  /* T_sl_SystemInformationDelivery_r17 */
 static int hf_nr_rrc_nonCriticalExtension_157 = -1;  /* T_nonCriticalExtension_67 */
 static int dummy_hf_nr_rrc_eag_field = -1; /* never registered */
-
-/*--- End of included file: packet-nr-rrc-hf.c ---*/
-#line 71 "./asn1/nr-rrc/packet-nr-rrc-template.c"
 static int hf_nr_rrc_serialNumber_gs = -1;
 static int hf_nr_rrc_serialNumber_msg_code = -1;
 static int hf_nr_rrc_serialNumber_upd_nb = -1;
@@ -9455,9 +9440,6 @@ static int hf_nr_rrc_absolute_time = -1;
 
 /* Initialize the subtree pointers */
 static gint ett_nr_rrc = -1;
-
-/*--- Included file: packet-nr-rrc-ett.c ---*/
-#line 1 "./asn1/nr-rrc/packet-nr-rrc-ett.c"
 static gint ett_nr_rrc_HandoverCommand = -1;
 static gint ett_nr_rrc_T_criticalExtensions = -1;
 static gint ett_nr_rrc_T_c1 = -1;
@@ -12921,9 +12903,6 @@ static gint ett_nr_rrc_T_criticalExtensions_60 = -1;
 static gint ett_nr_rrc_T_criticalExtensionsFuture_60 = -1;
 static gint ett_nr_rrc_UuMessageTransferSidelink_r17_IEs = -1;
 static gint ett_nr_rrc_T_nonCriticalExtension_67 = -1;
-
-/*--- End of included file: packet-nr-rrc-ett.c ---*/
-#line 108 "./asn1/nr-rrc/packet-nr-rrc-template.c"
 static gint ett_nr_rrc_DedicatedNAS_Message = -1;
 static gint ett_nr_rrc_targetRAT_MessageContainer = -1;
 static gint ett_nr_rrc_nas_Container = -1;
@@ -13607,9 +13586,6 @@ dissect_nr_rrc_handovercommand_msg(tvbuff_t* tvb _U_, packet_info* pinfo _U_, pr
 }
 
 
-
-/*--- Included file: packet-nr-rrc-fn.c ---*/
-#line 1 "./asn1/nr-rrc/packet-nr-rrc-fn.c"
 /*--- PDUs declarations ---*/
 static int dissect_MeasResultList2NR_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_);
 static int dissect_UE_RadioPagingInfo_r17_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_);
@@ -132400,9 +132376,6 @@ static int dissect_PagingRecord_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, p
 }
 
 
-/*--- End of included file: packet-nr-rrc-fn.c ---*/
-#line 792 "./asn1/nr-rrc/packet-nr-rrc-template.c"
-
 int
 dissect_nr_rrc_nr_RLF_Report_r16_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
@@ -132445,9 +132418,6 @@ proto_register_nr_rrc(void) {
   /* List of fields */
   static hf_register_info hf[] = {
 
-
-/*--- Included file: packet-nr-rrc-hfarr.c ---*/
-#line 1 "./asn1/nr-rrc/packet-nr-rrc-hfarr.c"
     { &hf_nr_rrc_nr_rrc_HandoverCommand_PDU,
       { "HandoverCommand", "nr-rrc.HandoverCommand_element",
         FT_NONE, BASE_NONE, NULL, 0,
@@ -168277,9 +168247,6 @@ proto_register_nr_rrc(void) {
         FT_NONE, BASE_NONE, NULL, 0,
         "T_nonCriticalExtension_67", HFILL }},
 
-/*--- End of included file: packet-nr-rrc-hfarr.c ---*/
-#line 836 "./asn1/nr-rrc/packet-nr-rrc-template.c"
-
     { &hf_nr_rrc_serialNumber_gs,
       { "Geographical Scope", "nr-rrc.serialNumber.gs",
         FT_UINT16, BASE_DEC, VALS(nr_rrc_serialNumber_gs_vals), 0xc000,
@@ -168416,9 +168383,6 @@ proto_register_nr_rrc(void) {
 
   static gint *ett[] = {
     &ett_nr_rrc,
-
-/*--- Included file: packet-nr-rrc-ettarr.c ---*/
-#line 1 "./asn1/nr-rrc/packet-nr-rrc-ettarr.c"
     &ett_nr_rrc_HandoverCommand,
     &ett_nr_rrc_T_criticalExtensions,
     &ett_nr_rrc_T_c1,
@@ -171882,9 +171846,6 @@ proto_register_nr_rrc(void) {
     &ett_nr_rrc_T_criticalExtensionsFuture_60,
     &ett_nr_rrc_UuMessageTransferSidelink_r17_IEs,
     &ett_nr_rrc_T_nonCriticalExtension_67,
-
-/*--- End of included file: packet-nr-rrc-ettarr.c ---*/
-#line 974 "./asn1/nr-rrc/packet-nr-rrc-template.c"
     &ett_nr_rrc_DedicatedNAS_Message,
     &ett_nr_rrc_targetRAT_MessageContainer,
     &ett_nr_rrc_nas_Container,
@@ -171976,9 +171937,6 @@ proto_register_nr_rrc(void) {
   register_dissector("nr-rrc.handoverpreparationinformation_msg", dissect_nr_rrc_handoverpreparationinformation_msg, proto_nr_rrc);
   register_dissector("nr-rrc.handovercommand_msg", dissect_nr_rrc_handovercommand_msg, proto_nr_rrc);
 
-
-/*--- Included file: packet-nr-rrc-dis-reg.c ---*/
-#line 1 "./asn1/nr-rrc/packet-nr-rrc-dis-reg.c"
   register_dissector("nr-rrc.ue_radio_paging_info", dissect_nr_rrc_UERadioPagingInformation_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.ue_radio_access_cap_info", dissect_UERadioAccessCapabilityInformation_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.bcch.bch", dissect_BCCH_BCH_Message_PDU, proto_nr_rrc);
@@ -171997,9 +171955,6 @@ proto_register_nr_rrc(void) {
   register_dissector("nr-rrc.sbcch.sl.bch", dissect_SBCCH_SL_BCH_Message_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.scch", dissect_SCCH_Message_PDU, proto_nr_rrc);
 
-
-/*--- End of included file: packet-nr-rrc-dis-reg.c ---*/
-#line 1066 "./asn1/nr-rrc/packet-nr-rrc-template.c"
 
   nr_rrc_etws_cmas_dcs_hash = wmem_map_new_autoreset(wmem_epan_scope(), wmem_file_scope(),
                                                      g_direct_hash, g_direct_equal);
