@@ -448,6 +448,7 @@ typedef enum _T_targetRAT_Type_enum {
 static int proto_nr_rrc = -1;
 static int hf_nr_rrc_nr_rrc_HandoverCommand_PDU = -1;  /* HandoverCommand */
 static int hf_nr_rrc_nr_rrc_HandoverPreparationInformation_PDU = -1;  /* HandoverPreparationInformation */
+static int hf_nr_rrc_nr_rrc_ConfigRestrictInfoDAPS_r16_PDU = -1;  /* ConfigRestrictInfoDAPS_r16 */
 static int hf_nr_rrc_nr_rrc_CG_Config_PDU = -1;   /* CG_Config */
 static int hf_nr_rrc_nr_rrc_PH_TypeListSCG_PDU = -1;  /* PH_TypeListSCG */
 static int hf_nr_rrc_nr_rrc_BandCombinationIndex_PDU = -1;  /* BandCombinationIndex */
@@ -529,6 +530,7 @@ static int hf_nr_rrc_nr_rrc_SchedulingRequestResourceConfig_PDU = -1;  /* Schedu
 static int hf_nr_rrc_nr_rrc_TDD_UL_DL_ConfigCommon_PDU = -1;  /* TDD_UL_DL_ConfigCommon */
 static int hf_nr_rrc_nr_rrc_UL_GapFR2_Config_r17_PDU = -1;  /* UL_GapFR2_Config_r17 */
 static int hf_nr_rrc_nr_rrc_UplinkTxDirectCurrentList_PDU = -1;  /* UplinkTxDirectCurrentList */
+static int hf_nr_rrc_nr_rrc_UplinkTxDirectCurrentTwoCarrierList_r16_PDU = -1;  /* UplinkTxDirectCurrentTwoCarrierList_r16 */
 static int hf_nr_rrc_nr_rrc_BandParametersSidelink_r16_PDU = -1;  /* BandParametersSidelink_r16 */
 static int hf_nr_rrc_nr_rrc_FreqBandList_PDU = -1;  /* FreqBandList */
 static int hf_nr_rrc_nr_rrc_SidelinkParametersNR_r16_PDU = -1;  /* SidelinkParametersNR_r16 */
@@ -131284,6 +131286,16 @@ int dissect_nr_rrc_HandoverPreparationInformation_PDU(tvbuff_t *tvb _U_, packet_
   offset += 7; offset >>= 3;
   return offset;
 }
+int dissect_nr_rrc_ConfigRestrictInfoDAPS_r16_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
+  proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
+  proto_item_set_hidden(prot_ti);
+  int offset = 0;
+  asn1_ctx_t asn1_ctx;
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, FALSE, pinfo);
+  offset = dissect_nr_rrc_ConfigRestrictInfoDAPS_r16(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_nr_rrc_ConfigRestrictInfoDAPS_r16_PDU);
+  offset += 7; offset >>= 3;
+  return offset;
+}
 int dissect_nr_rrc_CG_Config_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
@@ -132094,6 +132106,16 @@ int dissect_nr_rrc_UplinkTxDirectCurrentList_PDU(tvbuff_t *tvb _U_, packet_info 
   offset += 7; offset >>= 3;
   return offset;
 }
+int dissect_nr_rrc_UplinkTxDirectCurrentTwoCarrierList_r16_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
+  proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
+  proto_item_set_hidden(prot_ti);
+  int offset = 0;
+  asn1_ctx_t asn1_ctx;
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, FALSE, pinfo);
+  offset = dissect_nr_rrc_UplinkTxDirectCurrentTwoCarrierList_r16(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_nr_rrc_UplinkTxDirectCurrentTwoCarrierList_r16_PDU);
+  offset += 7; offset >>= 3;
+  return offset;
+}
 int dissect_nr_rrc_BandParametersSidelink_r16_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
@@ -132426,6 +132448,10 @@ proto_register_nr_rrc(void) {
       { "HandoverPreparationInformation", "nr-rrc.HandoverPreparationInformation_element",
         FT_NONE, BASE_NONE, NULL, 0,
         NULL, HFILL }},
+    { &hf_nr_rrc_nr_rrc_ConfigRestrictInfoDAPS_r16_PDU,
+      { "ConfigRestrictInfoDAPS-r16", "nr-rrc.ConfigRestrictInfoDAPS_r16_element",
+        FT_NONE, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
     { &hf_nr_rrc_nr_rrc_CG_Config_PDU,
       { "CG-Config", "nr-rrc.CG_Config_element",
         FT_NONE, BASE_NONE, NULL, 0,
@@ -132748,6 +132774,10 @@ proto_register_nr_rrc(void) {
         NULL, HFILL }},
     { &hf_nr_rrc_nr_rrc_UplinkTxDirectCurrentList_PDU,
       { "UplinkTxDirectCurrentList", "nr-rrc.UplinkTxDirectCurrentList",
+        FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_nr_rrc_UplinkTxDirectCurrentTwoCarrierList_r16_PDU,
+      { "UplinkTxDirectCurrentTwoCarrierList-r16", "nr-rrc.UplinkTxDirectCurrentTwoCarrierList_r16",
         FT_UINT32, BASE_DEC, NULL, 0,
         NULL, HFILL }},
     { &hf_nr_rrc_nr_rrc_BandParametersSidelink_r16_PDU,
