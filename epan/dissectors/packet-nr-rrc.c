@@ -40307,11 +40307,11 @@ dissect_nr_rrc_SN_FieldLengthAM(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *a
   nr_drb_mac_rlc_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_rlc_mapping;
   if (mapping->tempDirection == DIRECTION_UPLINK) {
     mapping->rlcUlSnLength_present = TRUE;
-    mapping->rlcUlSnLength = (value=0) ? 12 : 18;
+    mapping->rlcUlSnLength = (value==0) ? 12 : 18;
   }
   else {
     mapping->rlcDlSnLength_present = TRUE;
-    mapping->rlcDlSnLength = (value=0) ? 12 : 18;
+    mapping->rlcDlSnLength = (value==0) ? 12 : 18;
   }
 
 
@@ -40584,11 +40584,11 @@ dissect_nr_rrc_SN_FieldLengthUM(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *a
   nr_drb_mac_rlc_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_rlc_mapping;
   if (mapping->tempDirection == DIRECTION_UPLINK) {
     mapping->rlcUlSnLength_present = TRUE;
-    mapping->rlcUlSnLength = (value=0) ? 6 : 12;
+    mapping->rlcUlSnLength = (value==0) ? 6 : 12;
   }
   else {
     mapping->rlcDlSnLength_present = TRUE;
-    mapping->rlcDlSnLength = (value=0) ? 6 : 12;
+    mapping->rlcDlSnLength = (value==0) ? 6 : 12;
   }
 
 
