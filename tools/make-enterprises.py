@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# create the global_enterprise_entries.c file from
+# create the enterprises.c file from
 # https://www.iana.org/assignments/enterprise-numbers/enterprise-numbers
 # or an offline copy
 #
@@ -17,6 +17,8 @@ import argparse
 import re
 import urllib.request
 
+
+ENTERPRISES_CFILE = os.path.join('epan', 'enterprises.c')
 
 ENTERPRISE_NUMBERS_URL = "https://www.iana.org/assignments/enterprise-numbers/enterprise-numbers"
 
@@ -86,7 +88,7 @@ class CFile:
         self.f.write('#include "config.h"\n\n')
         self.f.write('#include <stddef.h>\n')
         self.f.write('#include <stdint.h>\n\n')
-        self.f.write('#include "global_enterprise_entries.h"\n')
+        self.f.write('#include "enterprises.h"\n')
         self.f.write('\n\n')
 
     def __del__(self):
@@ -145,9 +147,9 @@ class CFile:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Create the global_enterprise_entries.c file.")
+    parser = argparse.ArgumentParser(description="Create the {} file.".format(ENTERPRISES_CFILE))
     parser.add_argument('--infile')
-    parser.add_argument('outfile', nargs='?', default=os.path.join('epan', 'global_enterprise_entries.c'))
+    parser.add_argument('outfile', nargs='?', default=ENTERPRISES_CFILE)
     parsed_args = parser.parse_args()
 
     # Read data from file or webpage

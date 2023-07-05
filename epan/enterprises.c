@@ -1,4 +1,4 @@
-/* global_enterprise_entries.c
+/* enterprises.c
  *
  * Wireshark - Network traffic analyzer
  * By Gerald Combs <gerald@wireshark.org>
@@ -13,7 +13,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "global_enterprise_entries.h"
+#include "enterprises.h"
 
 
 typedef struct
