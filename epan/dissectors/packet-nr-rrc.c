@@ -520,6 +520,7 @@ static int hf_nr_rrc_nr_rrc_MUSIM_GapConfig_r17_PDU = -1;  /* MUSIM_GapConfig_r1
 static int hf_nr_rrc_nr_rrc_NeedForGapsInfoNR_r16_PDU = -1;  /* NeedForGapsInfoNR_r16 */
 static int hf_nr_rrc_nr_rrc_NeedForGapNCSG_InfoEUTRA_r17_PDU = -1;  /* NeedForGapNCSG_InfoEUTRA_r17 */
 static int hf_nr_rrc_nr_rrc_NeedForGapNCSG_InfoNR_r17_PDU = -1;  /* NeedForGapNCSG_InfoNR_r17 */
+static int hf_nr_rrc_nr_rrc_NonCellDefiningSSB_r17_PDU = -1;  /* NonCellDefiningSSB_r17 */
 static int hf_nr_rrc_nr_rrc_NZP_CSI_RS_Resource_PDU = -1;  /* NZP_CSI_RS_Resource */
 static int hf_nr_rrc_nr_rrc_P_Max_PDU = -1;       /* P_Max */
 static int hf_nr_rrc_nr_rrc_PDCCH_ConfigSIB1_PDU = -1;  /* PDCCH_ConfigSIB1 */
@@ -134790,6 +134791,16 @@ int dissect_nr_rrc_NeedForGapNCSG_InfoNR_r17_PDU(tvbuff_t *tvb _U_, packet_info 
   offset += 7; offset >>= 3;
   return offset;
 }
+int dissect_nr_rrc_NonCellDefiningSSB_r17_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
+  proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
+  proto_item_set_hidden(prot_ti);
+  int offset = 0;
+  asn1_ctx_t asn1_ctx;
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, FALSE, pinfo);
+  offset = dissect_nr_rrc_NonCellDefiningSSB_r17(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_nr_rrc_NonCellDefiningSSB_r17_PDU);
+  offset += 7; offset >>= 3;
+  return offset;
+}
 int dissect_nr_rrc_NZP_CSI_RS_Resource_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
@@ -135530,6 +135541,10 @@ proto_register_nr_rrc(void) {
         NULL, HFILL }},
     { &hf_nr_rrc_nr_rrc_NeedForGapNCSG_InfoNR_r17_PDU,
       { "NeedForGapNCSG-InfoNR-r17", "nr-rrc.NeedForGapNCSG_InfoNR_r17_element",
+        FT_NONE, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_nr_rrc_NonCellDefiningSSB_r17_PDU,
+      { "NonCellDefiningSSB-r17", "nr-rrc.NonCellDefiningSSB_r17_element",
         FT_NONE, BASE_NONE, NULL, 0,
         NULL, HFILL }},
     { &hf_nr_rrc_nr_rrc_NZP_CSI_RS_Resource_PDU,
