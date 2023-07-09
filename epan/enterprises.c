@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60697];
+    const char* values[60713];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60696,
+    60712,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -24088,7 +24088,7 @@ static global_enterprises_table_t table =
         "Zuzax LLC",                                                                      // 24059
         "icube",                                                                          // 24060
         "Amtium Computer Network Communiction  Tech. CO,LTD£»",                           // 24061
-        "Korenix Technology Co., Ltd.",                                                   // 24062
+        "Beijer Electronics Corp.",                                                       // 24062
         "NetComm Wireless Ltd",                                                           // 24063
         "Florian Hagedorn IT-Services",                                                   // 24064
         "TelcoSI",                                                                        // 24065
@@ -49799,7 +49799,7 @@ static global_enterprises_table_t table =
         "NAVIUS",                                                                         // 49770
         "Stiftung Krankenhaus Bethanien für die Grafschaft Moers",                        // 49771
         "Zolkover",                                                                       // 49772
-        "SCHOELLERSHAMMER GmbH & Co.KG",                                                  // 49773
+        "SCHOELLERSHAMMER GmbH",                                                          // 49773
         "XLIM",                                                                           // 49774
         NULL,                                                                             // 49775
         "INSTITUTO DEL CANCER Y ENFERMEDADES DE LA SANGRE, CSP",                          // 49776
@@ -60722,7 +60722,23 @@ static global_enterprises_table_t table =
         "Levi Keehn",                                                                     // 60693
         "MEBAY",                                                                          // 60694
         "iPresso S.A.",                                                                   // 60695
-        "SlashID"                                                                         // 60696
+        "SlashID",                                                                        // 60696
+        "Mike Chancey",                                                                   // 60697
+        "Verisure Sàrl",                                                                  // 60698
+        "Zhuzhou CRRC Times Electric Co., Ltd.",                                          // 60699
+        "Transport for Greater Manchester",                                               // 60700
+        "ED Elektronische Dienste GmbH",                                                  // 60701
+        "Chance Meador",                                                                  // 60702
+        "CTech Bilişim Teknolojileri San. ve Tic. AS",                                    // 60703
+        "FIRMATECH, INC",                                                                 // 60704
+        "Jessica Canas",                                                                  // 60705
+        "Keys Federal Credit Union",                                                      // 60706
+        "Granite School District",                                                        // 60707
+        "Ivan Stepanov",                                                                  // 60708
+        "Anhui Xike Electronic Technology Co., Ltd.",                                     // 60709
+        "StarCharge",                                                                     // 60710
+        "ZEKO.ME",                                                                        // 60711
+        "Highland Health Systems"                                                         // 60712
     }
 };
 const char* global_enterprises_lookup(uint32_t value)
