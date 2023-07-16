@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60713];
+    const char* values[60736];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60712,
+    60735,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -7493,7 +7493,7 @@ static global_enterprises_table_t table =
         "ECMWF (European Centre for Medium-Range Weather Forecast)",                      // 7464
         "WISI",                                                                           // 7465
         "CLI GmbH",                                                                       // 7466
-        "TTi Systems",                                                                    // 7467
+        "IVU Traffic Technologies AG",                                                    // 7467
         "Mixbaal",                                                                        // 7468
         "VoiceGenie Technologies",                                                        // 7469
         "Princeton Financial Systems",                                                    // 7470
@@ -55938,7 +55938,7 @@ static global_enterprises_table_t table =
         "Coolsure Limited",                                                               // 55909
         "Heka Werkzeuge GmbH",                                                            // 55910
         "Proper Code",                                                                    // 55911
-        "Associação Nacional dos Registradores de Pessoas Naturais",                      // 55912
+        "Operador Nacional do Registro Civil de Pessoas Naturais",                        // 55912
         "Pinnacle Oncology",                                                              // 55913
         "Tomasz Szkutkowski IT Consulting",                                               // 55914
         "NEMZETI MOBILFIZETESI ZRT.",                                                     // 55915
@@ -60738,7 +60738,30 @@ static global_enterprises_table_t table =
         "Anhui Xike Electronic Technology Co., Ltd.",                                     // 60709
         "StarCharge",                                                                     // 60710
         "ZEKO.ME",                                                                        // 60711
-        "Highland Health Systems"                                                         // 60712
+        "Highland Health Systems",                                                        // 60712
+        "Mestobo",                                                                        // 60713
+        "Panda Automatic",                                                                // 60714
+        "Cboe Global Markets",                                                            // 60715
+        "Christian Wurm",                                                                 // 60716
+        "Stadler Rail AG",                                                                // 60717
+        "Interfase S.A.",                                                                 // 60718
+        "Aapeli Vuorinen",                                                                // 60719
+        "Schule Moehlin",                                                                 // 60720
+        "Dohsnow Enterprises",                                                            // 60721
+        "Kantonsspital Baselland",                                                        // 60722
+        "Zuidberg B.V.",                                                                  // 60723
+        "Torus Inc",                                                                      // 60724
+        "VAD Industrial Communication Technology Co., Ltd",                               // 60725
+        "LeLu Berlin GmbH",                                                               // 60726
+        "Dipl.-Ing. Martin Danjes GmbH",                                                  // 60727
+        "Galldris",                                                                       // 60728
+        "Krei.se",                                                                        // 60729
+        "Georg Roth Stiftung & Co. Lebensmittelfilialbetrieb KG",                         // 60730
+        "RationalCore LLC",                                                               // 60731
+        "Sigenergy",                                                                      // 60732
+        "Hanwha solutions, SW development center",                                        // 60733
+        "Callisto Inc.",                                                                  // 60734
+        "Procono, S.A."                                                                   // 60735
     }
 };
 const char* global_enterprises_lookup(uint32_t value)
