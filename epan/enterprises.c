@@ -8,23 +8,23 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+/* (last updated 2023-07-21) */
+
 #include "config.h"
 
 #include <stddef.h>
-#include <stdint.h>
-
 #include "enterprises.h"
 
 
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60736];
+    const char* values[60761];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60735,
+    60760,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -42413,7 +42413,7 @@ static global_enterprises_table_t table =
         "Tecnologías Inteligentes y Modelación de Sistemas, S.A de C.V.",                 // 42384
         "AIC Inc.",                                                                       // 42385
         "dylanharris.org",                                                                // 42386
-        "CompuTEK Industries",                                                            // 42387
+        "Da Planet Security",                                                             // 42387
         "TEL-STER sp. z o.o.",                                                            // 42388
         "Ital-Mec s.r.l.",                                                                // 42389
         "Oslo KFUMs Sjøkorps",                                                            // 42390
@@ -60057,7 +60057,7 @@ static global_enterprises_table_t table =
         "Neil Farr",                                                                      // 60028
         "Digital Check Corp",                                                             // 60029
         "NonpareilTech",                                                                  // 60030
-        "Jeff Lunsford",                                                                  // 60031
+        "JEFFREY WILLIAM LUNSFORD",                                                       // 60031
         "Sikorsky Financial Credit Union",                                                // 60032
         "Whiterabbit AI Inc",                                                             // 60033
         "ZTD Training",                                                                   // 60034
@@ -60761,7 +60761,32 @@ static global_enterprises_table_t table =
         "Sigenergy",                                                                      // 60732
         "Hanwha solutions, SW development center",                                        // 60733
         "Callisto Inc.",                                                                  // 60734
-        "Procono, S.A."                                                                   // 60735
+        "Procono, S.A.",                                                                  // 60735
+        "Curtis Vaughn Thompson ©  The Edinburgh Originale -O.E. ™",                      // 60736
+        "Mennonite Benevolent Society",                                                   // 60737
+        "Meredith-Webb Printing Co",                                                      // 60738
+        "Smart Gauge",                                                                    // 60739
+        "Eugen Wintersberger",                                                            // 60740
+        "Optictimes",                                                                     // 60741
+        "Savino Digital Trust Sl",                                                        // 60742
+        "rcp",                                                                            // 60743
+        "Federale Overheidsdienst Beleid en Ondersteuning - Service Public Fédéral Stratégie et Appui",// 60744
+        "Kontron Europe",                                                                 // 60745
+        "ESY SUNHOME CO.,LTD",                                                            // 60746
+        "63 Network",                                                                     // 60747
+        "Senior:InnenEinrichtungen der Hansestadt Lübeck",                                // 60748
+        "Inverso GmbH",                                                                   // 60749
+        "HEMATOLOGY ONCOLOGY ASSOCIATES OF THE PALM BEACHES",                             // 60750
+        "3forge",                                                                         // 60751
+        "Michael Duggan",                                                                 // 60752
+        "Parliament of Western Australia",                                                // 60753
+        "Müller Frauenfeld AG",                                                           // 60754
+        "E&B Information communications. Co., Ltd.",                                      // 60755
+        "Hemag Nova AG",                                                                  // 60756
+        "Authentic Vision GmbH",                                                          // 60757
+        "Airborn, Inc",                                                                   // 60758
+        "Manuel Zelt",                                                                    // 60759
+        "Group Administrators, Ltd."                                                      // 60760
     }
 };
 const char* global_enterprises_lookup(uint32_t value)
