@@ -60789,10 +60789,20 @@ static global_enterprises_table_t table =
         "Group Administrators, Ltd."                                                      // 60760
     }
 };
+
 const char* global_enterprises_lookup(uint32_t value)
 {
     if (value > table.max_idx) {
         return NULL;
     }
     else return table.values[value];
+}
+
+void global_enterprises_dump(FILE *fp)
+{
+    for (size_t idx = 0; idx <= table.max_idx; idx++) {
+        if (table.values[idx] != NULL) {
+            fprintf(fp, "%zu\t%s\n", idx, table.values[idx]);
+        }
+    }
 }
