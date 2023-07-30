@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-07-21) */
+/* (last updated 2023-07-28) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60761];
+    const char* values[60778];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60760,
+    60777,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -191,7 +191,7 @@ static global_enterprises_table_t table =
         "European Space Agency (ESA)",                                                    // 162
         "Aethis sa/nv",                                                                   // 163
         "Rad Data Communications Ltd.",                                                   // 164
-        "OfficeNet, Inc.",                                                                // 165
+        "Tom",                                                                            // 165
         "Shiva Corporation",                                                              // 166
         "Fujikura America",                                                               // 167
         "Xlnt Designs INC (XDI)",                                                         // 168
@@ -15535,7 +15535,7 @@ static global_enterprises_table_t table =
         "Akiratech Limited",                                                              // 15506
         "TierOne OSS Technologies, Inc.",                                                 // 15507
         "PacketIQ Corp.",                                                                 // 15508
-        "direto.org.br",                                                                  // 15509
+        "Direto - Centro de Tecnologia da Informação e Comunicação do Estado do Rio Grande do Sul S.A.",// 15509
         "Rhetorical Systems, Ltd.",                                                       // 15510
         "Groupe ERMEWA S.A.",                                                             // 15511
         "COMAX INC.",                                                                     // 15512
@@ -54571,7 +54571,7 @@ static global_enterprises_table_t table =
         "Qoppao LLC",                                                                     // 54542
         "cumulusone LLC",                                                                 // 54543
         "Metrodata GmbH",                                                                 // 54544
-        "Companhia de processamento de dados do estado do Rio Grande do Sul",             // 54545
+        "PEN01 - Centro de Tecnologia da Informação e Comunicação do Estado do Rio Grande do Sul S.A.",// 54545
         "California Kidney Specialists",                                                  // 54546
         "L'Xtreme",                                                                       // 54547
         "Vereign AG",                                                                     // 54548
@@ -60786,7 +60786,24 @@ static global_enterprises_table_t table =
         "Authentic Vision GmbH",                                                          // 60757
         "Airborn, Inc",                                                                   // 60758
         "Manuel Zelt",                                                                    // 60759
-        "Group Administrators, Ltd."                                                      // 60760
+        "Group Administrators, Ltd.",                                                     // 60760
+        "TEMS GmbH",                                                                      // 60761
+        "780 Software, Inc.",                                                             // 60762
+        "SnapsInAZfs",                                                                    // 60763
+        "Alioth Systems Limited",                                                         // 60764
+        "Metropolitan Police",                                                            // 60765
+        "SICHUAN HUACUN ZHIGU TECHNOLOGY CO.,LTD",                                        // 60766
+        "PEN02 - Centro de Tecnologia da Informação e Comunicação do Estado do Rio Grande do Sul S.A.",// 60767
+        "P&G",                                                                            // 60768
+        "AASeq",                                                                          // 60769
+        "HANDL Technology LLC",                                                           // 60770
+        "Triorail Bahnfunk GmbH",                                                         // 60771
+        "School District of Milton",                                                      // 60772
+        "All4Conn Tecnologia",                                                            // 60773
+        "Woven by Toyota, Inc.",                                                          // 60774
+        "Inspur (Shandong) Computer Technology Co.,Ltd",                                  // 60775
+        "NEOROS LLC",                                                                     // 60776
+        "OneCloud"                                                                        // 60777
     }
 };
 
