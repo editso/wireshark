@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-07-28) */
+/* (last updated 2023-08-05) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60778];
+    const char* values[60799];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60777,
+    60798,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -38252,7 +38252,7 @@ static global_enterprises_table_t table =
         "definition six, inc.",                                                           // 38223
         "Caromont Health",                                                                // 38224
         "Encell Technology, Inc.",                                                        // 38225
-        "AriadNEXT",                                                                      // 38226
+        "IDnow SAS",                                                                      // 38226
         "Wellington and King, Inc.",                                                      // 38227
         "PICA GmbH",                                                                      // 38228
         "GIVC",                                                                           // 38229
@@ -57286,7 +57286,7 @@ static global_enterprises_table_t table =
         "Silicon Hills LLC",                                                              // 57257
         "LabTech",                                                                        // 57258
         "Japan Aviation Electronics Industry, Limited",                                   // 57259
-        "Sandvik Materials Technology",                                                   // 57260
+        "Alleima AB",                                                                     // 57260
         "ESPi",                                                                           // 57261
         "TechArgos",                                                                      // 57262
         "Attono Limited",                                                                 // 57263
@@ -60803,7 +60803,28 @@ static global_enterprises_table_t table =
         "Woven by Toyota, Inc.",                                                          // 60774
         "Inspur (Shandong) Computer Technology Co.,Ltd",                                  // 60775
         "NEOROS LLC",                                                                     // 60776
-        "OneCloud"                                                                        // 60777
+        "OneCloud",                                                                       // 60777
+        "XCoreSec",                                                                       // 60778
+        "FxPro",                                                                          // 60779
+        "Inditex",                                                                        // 60780
+        "Pilbara Minerals Ltd",                                                           // 60781
+        "LucciTech",                                                                      // 60782
+        "Sirius, Ltd",                                                                    // 60783
+        "Rakworx Inc.",                                                                   // 60784
+        "Marius Christ",                                                                  // 60785
+        "TrueNorth Medical Physics",                                                      // 60786
+        "Benny Zhou",                                                                     // 60787
+        "Palomar Health",                                                                 // 60788
+        "Ejtv",                                                                           // 60789
+        "VTI Corp.",                                                                      // 60790
+        "Istarska kreditna banka Umag d.d.",                                              // 60791
+        "Majava Consulting oy",                                                           // 60792
+        "Gummi-Welz GmbH & Co. KG",                                                       // 60793
+        "Panzer Security Consulting Inc",                                                 // 60794
+        "Sigdata",                                                                        // 60795
+        "LOTTO Hessen GmbH",                                                              // 60796
+        "Entrust Corporation",                                                            // 60797
+        "Matej Srebre (personal assignment)"                                              // 60798
     }
 };
 
