@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-08-05) */
+/* (last updated 2023-08-11) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60799];
+    const char* values[60826];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60798,
+    60825,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -4961,7 +4961,7 @@ static global_enterprises_table_t table =
         "Foglight Software",                                                              // 4932
         "Shunra Software Ltd.",                                                           // 4933
         "WebDialogs, Inc",                                                                // 4934
-        "Mediatrix Telecom Inc.",                                                         // 4935
+        "Media5 Corporation / M5 Technologies",                                           // 4935
         "First American Financial Corporation John",                                      // 4936
         "Stormbreaker Network Services",                                                  // 4937
         "Daeyoung Electronic Ind.CO., Ltd.",                                              // 4938
@@ -24919,7 +24919,7 @@ static global_enterprises_table_t table =
         "Extant Solutions",                                                               // 24890
         "Instituto Tecnológico y de Estudios Superiores de Occidente A.C.",               // 24891
         "Great Atlantic and Pacific Tea Company, Inc.",                                   // 24892
-        "GE Intelligent Platforms, Inc.",                                                 // 24893
+        "Intelligent Platforms, LLC",                                                     // 24893
         "PantheraNet",                                                                    // 24894
         "Medifacts International Inc.",                                                   // 24895
         "Microdental Laboratories",                                                       // 24896
@@ -34854,7 +34854,7 @@ static global_enterprises_table_t table =
         "Pareto Networks Inc.",                                                           // 34825
         "Tayana Software Solutions Pvt Ltd",                                              // 34826
         "RT-RK",                                                                          // 34827
-        "Telenor Magyarország Zrt.",                                                      // 34828
+        "Yettel Magyarország Zrt.",                                                       // 34828
         "GraphLogic Inc",                                                                 // 34829
         "Forers, s. r. o.",                                                               // 34830
         "The Freecycle Network",                                                          // 34831
@@ -60824,7 +60824,34 @@ static global_enterprises_table_t table =
         "Sigdata",                                                                        // 60795
         "LOTTO Hessen GmbH",                                                              // 60796
         "Entrust Corporation",                                                            // 60797
-        "Matej Srebre (personal assignment)"                                              // 60798
+        "Matej Srebre (personal assignment)",                                             // 60798
+        "VK Tech LLC",                                                                    // 60799
+        "Gemeinnützige und Hilfs-Gesellschaft der Stadt St.Gallen (GHG)",                 // 60800
+        "Exro Technologies Inc.",                                                         // 60801
+        "NebulaMatrix Technology Ltd. (Zhuhai)",                                          // 60802
+        "Exaion",                                                                         // 60803
+        "Kevin Thompson",                                                                 // 60804
+        "BSST G",                                                                         // 60805
+        "Arizona Regional Multiple Listing Services, Inc",                                // 60806
+        "PocketSign Inc.",                                                                // 60807
+        "Gabriele Giulimondi",                                                            // 60808
+        "ACE-MULTIPASS",                                                                  // 60809
+        "PT. Tata Sarana Mandiri",                                                        // 60810
+        "Kevin Ratliff",                                                                  // 60811
+        "PR CANCER SPECIALISTS",                                                          // 60812
+        "Shenzhen Kaifa Technology (Chengdu) Co., Ltd.",                                  // 60813
+        "G. Siempelkamp GmbH & Co. KG",                                                   // 60814
+        "JEDEC Solid State Technology Association",                                       // 60815
+        "Envent Engineering Ltd.",                                                        // 60816
+        "API-OI",                                                                         // 60817
+        "Riccardo Bella",                                                                 // 60818
+        "Shenzhen NebulaMatrix Technology Ltd.",                                          // 60819
+        "Rasmus Tunfalk",                                                                 // 60820
+        "Savant Technologies, Inc.",                                                      // 60821
+        "tnmember",                                                                       // 60822
+        "Greenland Television",                                                           // 60823
+        "APS Networks",                                                                   // 60824
+        "Eye Care of San Diego"                                                           // 60825
     }
 };
 
