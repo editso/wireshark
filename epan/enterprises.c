@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-08-11) */
+/* (last updated 2023-08-18) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60826];
+    const char* values[60855];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60825,
+    60854,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -52042,7 +52042,7 @@ static global_enterprises_table_t table =
         "Hanalytics Pte Ltd.",                                                            // 52013
         "Volkswagen Group Rus",                                                           // 52014
         "Sabinet Online",                                                                 // 52015
-        "Saab AB, Maritime Traffic Management",                                           // 52016
+        "Tidalis B.V.",                                                                   // 52016
         "OOO FPK ""Kosmos-Neft-Gaz""",                                                    // 52017
         "A.D.SION Info Santé",                                                            // 52018
         "littlemore.me.uk",                                                               // 52019
@@ -53969,7 +53969,7 @@ static global_enterprises_table_t table =
         "Planbox",                                                                        // 53940
         "PrivateDNS Pty Ltd",                                                             // 53941
         "GMVT GmbH",                                                                      // 53942
-        "ABL SURSUM Bayerische Elektrozubehör GmbH & Co. KG",                             // 53943
+        "ABL GmbH",                                                                       // 53943
         "Pharazon AB",                                                                    // 53944
         "TEK TRIBE",                                                                      // 53945
         "JACJ IT SOLUTIONS, LLC",                                                         // 53946
@@ -60851,7 +60851,36 @@ static global_enterprises_table_t table =
         "tnmember",                                                                       // 60822
         "Greenland Television",                                                           // 60823
         "APS Networks",                                                                   // 60824
-        "Eye Care of San Diego"                                                           // 60825
+        "Eye Care of San Diego",                                                          // 60825
+        "Handbuch Experten GmbH",                                                         // 60826
+        "AxiomDirekt",                                                                    // 60827
+        "FIZ Karlsruhe – Leibniz-Institut für Informationsinfrastruktur GmbH",            // 60828
+        "CARD CENTRIC LIMITED",                                                           // 60829
+        "NEOSCLOUD, LLC",                                                                 // 60830
+        "Hou Zhen Vision",                                                                // 60831
+        "GELSEN-NET Kommunikationsgesellschaft mbH",                                      // 60832
+        "Landesamt für Vermessung und Geobasisinformation",                               // 60833
+        "NetFoundry, Inc.",                                                               // 60834
+        "Vaticle Ltd",                                                                    // 60835
+        "OpenZiti.io",                                                                    // 60836
+        "A5G Networks, Inc.",                                                             // 60837
+        "DEERFIELD MANAGEMENT COMPANY, L.P.",                                             // 60838
+        "Tidalis (parked)",                                                               // 60839
+        "Leber",                                                                          // 60840
+        "Mosoblstroy",                                                                    // 60841
+        "Shenzhen WOOSH Innovations Co., Ltd.",                                           // 60842
+        "Aniekan  Ankoh",                                                                 // 60843
+        "Robin's Media Team",                                                             // 60844
+        "Stadtwerke Hildesheim AG",                                                       // 60845
+        "Grand Royal Chyld",                                                              // 60846
+        "RaptureWerks",                                                                   // 60847
+        "IDFACTORS, Inc.",                                                                // 60848
+        "TL Certification Centre Co., Ltd",                                               // 60849
+        "Midwest Regional Health Services",                                               // 60850
+        "Airone s.r.l.",                                                                  // 60851
+        "Ubitron Foundation",                                                             // 60852
+        "ISCL GmbH",                                                                      // 60853
+        "Steven Cutright"                                                                 // 60854
     }
 };
 
