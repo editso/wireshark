@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-08-18) */
+/* (last updated 2023-08-26) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60855];
+    const char* values[60887];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60854,
+    60886,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -6215,7 +6215,7 @@ static global_enterprises_table_t table =
         "Space CyberLink Inc.",                                                           // 6186
         "Dartmouth-Hitchcock Medical Center",                                             // 6187
         "University of Massachusetts Lowell",                                             // 6188
-        "Atos Information Technology GmbH - Trustcenter",                                 // 6189
+        "Eviden Germany GmbH - Trustcenter",                                              // 6189
         "Network365 Ltd",                                                                 // 6190
         "Plasmon, Inc.",                                                                  // 6191
         "Environmental Monitoring Solutions",                                             // 6192
@@ -60532,7 +60532,7 @@ static global_enterprises_table_t table =
         "Life Science Compute Cluster, University of Vienna",                             // 60503
         "TRIZ Networks corp.",                                                            // 60504
         "South East Coast Ambulance Service NHS Foundation Trust",                        // 60505
-        "Alexander Edward Blake",                                                         // 60506
+        "Blake.DK",                                                                       // 60506
         "TX Australia Pty Ltd",                                                           // 60507
         "Telenor Maritime AS",                                                            // 60508
         "brainelectronics",                                                               // 60509
@@ -60880,7 +60880,39 @@ static global_enterprises_table_t table =
         "Airone s.r.l.",                                                                  // 60851
         "Ubitron Foundation",                                                             // 60852
         "ISCL GmbH",                                                                      // 60853
-        "Steven Cutright"                                                                 // 60854
+        "Steven Cutright",                                                                // 60854
+        "pfish zone",                                                                     // 60855
+        "Show Config",                                                                    // 60856
+        "Crisham",                                                                        // 60857
+        "Ambit Sentry",                                                                   // 60858
+        "Octo Halsema",                                                                   // 60859
+        "GE Aerospace",                                                                   // 60860
+        "Petr Novák",                                                                     // 60861
+        "TiGHT AV",                                                                       // 60862
+        "Shenyang Zhitong Intelligent Device Technology LLC",                             // 60863
+        "TU Wien Informatics Infrastructure",                                             // 60864
+        "CryptCard",                                                                      // 60865
+        "Yunke China Information Technology Limited",                                     // 60866
+        "Cyshield",                                                                       // 60867
+        "Berufsgenossenschaft Holz und Metall (BGHM)",                                    // 60868
+        "UnityHPC",                                                                       // 60869
+        "PHMG Oncology Escondido",                                                        // 60870
+        "Baka Network",                                                                   // 60871
+        "Veterinærinstituttet",                                                           // 60872
+        "illumin Inc",                                                                    // 60873
+        "MI Technical Solutions",                                                         // 60874
+        "Larner College of Medicine at UVM",                                              // 60875
+        "Redgtech Automação",                                                             // 60876
+        "Ztamp Pte. Ltd.",                                                                // 60877
+        "Tmonet Corp",                                                                    // 60878
+        "UNICLOUD TECH CO., LTD.",                                                        // 60879
+        "LUGOS",                                                                          // 60880
+        "Sergey Dashanov",                                                                // 60881
+        "Emeres Inc.",                                                                    // 60882
+        "RiPSIM Technologies Inc",                                                        // 60883
+        "Sri Vedurumudi",                                                                 // 60884
+        "Impression Signatures",                                                          // 60885
+        "Frogi Secure"                                                                    // 60886
     }
 };
 
