@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-08-26) */
+/* (last updated 2023-09-01) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60887];
+    const char* values[60915];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60886,
+    60914,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -60910,9 +60910,37 @@ static global_enterprises_table_t table =
         "Sergey Dashanov",                                                                // 60881
         "Emeres Inc.",                                                                    // 60882
         "RiPSIM Technologies Inc",                                                        // 60883
-        "Sri Vedurumudi",                                                                 // 60884
+        "Mobile Frontiers LLC",                                                           // 60884
         "Impression Signatures",                                                          // 60885
-        "Frogi Secure"                                                                    // 60886
+        "Frogi Secure",                                                                   // 60886
+        "Galsie",                                                                         // 60887
+        "DIMITRIB NETWORKS",                                                              // 60888
+        "Zenithtel Technology",                                                           // 60889
+        "Ryll",                                                                           // 60890
+        "Frankyd's World",                                                                // 60891
+        "Glean Corporation",                                                              // 60892
+        "Nant Networks LTD",                                                              // 60893
+        "Integrated Foot & Ankle Specialists of NJ - Paul S. Demarco DPM",                // 60894
+        "四川虹信软件股份有限公司 (Sichuan Hongxin Software Co., Ltd.)",                              // 60895
+        "041专属 (041 Zhuanshu)",                                                           // 60896
+        "SCMS Manager",                                                                   // 60897
+        "John Malengrio",                                                                 // 60898
+        "Carl Zeiss AG",                                                                  // 60899
+        "Anchor Security, Inc.",                                                          // 60900
+        "MIND TECH INTERNATIONAL LIMITED",                                                // 60901
+        "Raum4 GmbH",                                                                     // 60902
+        "Rail Services International Austria GmbH",                                       // 60903
+        "G-Wave B.V.",                                                                    // 60904
+        "Kristian Covic",                                                                 // 60905
+        "中电云计算技术有限公司 (China Electronics Cloud Computing Technology Co., Ltd.)",           // 60906
+        "Kopparfors Skogar AB",                                                           // 60907
+        "Szpital Uniwersytecki w Krakowie",                                               // 60908
+        "Kaspars Rocans",                                                                 // 60909
+        "Jaycee James",                                                                   // 60910
+        "ESFA",                                                                           // 60911
+        "Tower Extrusions",                                                               // 60912
+        "Tiandy Technologies CO.,LTD",                                                    // 60913
+        "Sparky Wits"                                                                     // 60914
     }
 };
 
