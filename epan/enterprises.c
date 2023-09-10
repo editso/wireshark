@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-09-01) */
+/* (last updated 2023-09-09) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60915];
+    const char* values[60936];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60914,
+    60935,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -1255,7 +1255,7 @@ static global_enterprises_table_t table =
         "Forte Networks Inc.",                                                            // 1226
         "American Management Systems, Inc.",                                              // 1227
         "Choice Hotels Intl.",                                                            // 1228
-        "SEH Computertechnik Gm Rainer Ellerbrake",                                       // 1229
+        "SEH Computertechnik GmbH",                                                       // 1229
         "McAFee Associates Inc.",                                                         // 1230
         "Network Intelligent Inc.",                                                       // 1231
         "Luxcom Technologies, Inc.",                                                      // 1232
@@ -48373,7 +48373,7 @@ static global_enterprises_table_t table =
         "SHW Automotive GmbH",                                                            // 48344
         "IP-Lease BV",                                                                    // 48345
         "Elan Audio",                                                                     // 48346
-        "OHB System AG",                                                                  // 48347
+        "OHB SE",                                                                         // 48347
         "Medcomsoft Ltd.",                                                                // 48348
         "The Scale Factory Ltd",                                                          // 48349
         "Serco, Inc.",                                                                    // 48350
@@ -60824,7 +60824,7 @@ static global_enterprises_table_t table =
         "Sigdata",                                                                        // 60795
         "LOTTO Hessen GmbH",                                                              // 60796
         "Entrust Corporation",                                                            // 60797
-        "Matej Srebre (personal assignment)",                                             // 60798
+        "Matej Srebre",                                                                   // 60798
         "VK Tech LLC",                                                                    // 60799
         "Gemeinnützige und Hilfs-Gesellschaft der Stadt St.Gallen (GHG)",                 // 60800
         "Exro Technologies Inc.",                                                         // 60801
@@ -60940,7 +60940,28 @@ static global_enterprises_table_t table =
         "ESFA",                                                                           // 60911
         "Tower Extrusions",                                                               // 60912
         "Tiandy Technologies CO.,LTD",                                                    // 60913
-        "Sparky Wits"                                                                     // 60914
+        "Sparky Wits",                                                                    // 60914
+        "Innovate solutions",                                                             // 60915
+        "Universal Robots",                                                               // 60916
+        "Precision Optical Technologies",                                                 // 60917
+        "FineMEDIA",                                                                      // 60918
+        "Pathomation",                                                                    // 60919
+        "Symbiosis ICT Solutions",                                                        // 60920
+        "Shenzhen Cudy Technology Co., Ltd.",                                             // 60921
+        "Computer Telephone Integration Pty Ltd",                                         // 60922
+        "Yandlink Intelligent (Suzhou) Technology",                                       // 60923
+        "Gemeente Súdwest-Fryslân",                                                       // 60924
+        "Rafsanul Hasan",                                                                 // 60925
+        "Streams Tech Limited",                                                           // 60926
+        "IQVIA",                                                                          // 60927
+        "JDS Jerzy Drożdż",                                                               // 60928
+        "Geographic Data Dynamics LLC.",                                                  // 60929
+        "Hukseflux Thermal Sensors",                                                      // 60930
+        "Bialystok University of Technology",                                             // 60931
+        "Seamcom GmbH & Co. KG",                                                          // 60932
+        "Juehee Dawson",                                                                  // 60933
+        "OSS Health",                                                                     // 60934
+        "Utech"                                                                           // 60935
     }
 };
 
