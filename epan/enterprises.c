@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-09-09) */
+/* (last updated 2023-09-15) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60936];
+    const char* values[60967];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60935,
+    60966,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -10546,7 +10546,7 @@ static global_enterprises_table_t table =
         "Toronto POlice Service",                                                         // 10517
         "TrunkNet",                                                                       // 10518
         "Tsinghua Unisplendour Co., ltd",                                                 // 10519
-        "ABB Integrated DC Power",                                                        // 10520
+        "Marc Hirsch",                                                                    // 10520
         "VoicePlanet, Inc.",                                                              // 10521
         "Voigt & Haeffner GmbH",                                                          // 10522
         "Wanadoo Data",                                                                   // 10523
@@ -47154,7 +47154,7 @@ static global_enterprises_table_t table =
         "IDEAS S.R.L.",                                                                   // 47125
         "earthTV network GmbH",                                                           // 47126
         "Yoti Ltd",                                                                       // 47127
-        "Insobis GmbH",                                                                   // 47128
+        "SQTec GmbH",                                                                     // 47128
         "SECURA Insurance Companies",                                                     // 47129
         "Al Yah Satellite Communication Company PJSC (Yahsat)",                           // 47130
         "ViktorBalogh",                                                                   // 47131
@@ -52608,7 +52608,7 @@ static global_enterprises_table_t table =
         "ReLegoTec",                                                                      // 52579
         "DigiCert, Inc.",                                                                 // 52580
         "Kamran Khan SC",                                                                 // 52581
-        "TRUSTED ELECTRONIC SOLUTIONS S. L (BRANDDOCS)",                                  // 52582
+        "TRUSTCLOUD SOLUTIONS, S.L.",                                                     // 52582
         "Stöde Skog AB",                                                                  // 52583
         "Shakopee Public School District",                                                // 52584
         "Lanet Network Ltd",                                                              // 52585
@@ -53752,7 +53752,7 @@ static global_enterprises_table_t table =
         "Crooked",                                                                        // 53723
         "Council of Dubinia",                                                             // 53724
         "Montajes Y Proyectos Electrotécnicos, S.L.",                                     // 53725
-        "Cognicase Management Consulting S.L.",                                           // 53726
+        "CGI INFORMATION SYSTEMS AND MANAGEMENT CONSULTANTS ESPAÑA, S.A.",                // 53726
         "OXYLIOM",                                                                        // 53727
         "NPC, Inc.",                                                                      // 53728
         "celos Computer GmbH",                                                            // 53729
@@ -60961,7 +60961,38 @@ static global_enterprises_table_t table =
         "Seamcom GmbH & Co. KG",                                                          // 60932
         "Juehee Dawson",                                                                  // 60933
         "OSS Health",                                                                     // 60934
-        "Utech"                                                                           // 60935
+        "Utech",                                                                          // 60935
+        "Vipaks + Ltd",                                                                   // 60936
+        "SPINELCo.,Ltd",                                                                  // 60937
+        "Anker Innovations Technology Co., Ltd.",                                         // 60938
+        "Ceridwen Limited",                                                               // 60939
+        "Mr. Hamel",                                                                      // 60940
+        "Motorcomm Electronic Technology Co., Ltd.",                                      // 60941
+        "Fives Cinetic Corp.",                                                            // 60942
+        "GL Computing",                                                                   // 60943
+        "Ken Pollock Auto Group",                                                         // 60944
+        "gang sun",                                                                       // 60945
+        "KLG Smartec",                                                                    // 60946
+        "Conrad Kite",                                                                    // 60947
+        "Zarrin Mesbah Smart Technology",                                                 // 60948
+        "Xolile Mokoena",                                                                 // 60949
+        "Wagenborg Shipping BV",                                                          // 60950
+        "feltenpersonal GmbH",                                                            // 60951
+        "Versta",                                                                         // 60952
+        "XenServer, a Business Unit of the Cloud Software Group",                         // 60953
+        "SecuMailer",                                                                     // 60954
+        "What-IT",                                                                        // 60955
+        "colpari",                                                                        // 60956
+        "ITIC Paris",                                                                     // 60957
+        "Diputación Provincial de Cádiz",                                                 // 60958
+        "Horner Technology Ltd",                                                          // 60959
+        "NetCam Systems Corporation",                                                     // 60960
+        "SentryWire",                                                                     // 60961
+        "zshield",                                                                        // 60962
+        "Song GUO",                                                                       // 60963
+        "Birmingham Metropolitan College",                                                // 60964
+        "MHR Soluções",                                                                   // 60965
+        "Joseph Bunce"                                                                    // 60966
     }
 };
 
