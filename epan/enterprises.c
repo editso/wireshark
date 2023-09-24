@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-09-15) */
+/* (last updated 2023-09-22) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60967];
+    const char* values[60995];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60966,
+    60994,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -6848,7 +6848,7 @@ static global_enterprises_table_t table =
         "Musicfans, Inc.",                                                                // 6819
         "Menta Software",                                                                 // 6820
         "IMT Nord Europe",                                                                // 6821
-        "University of Cambridge, Card Office",                                           // 6822
+        "University Information Services, University of Cambridge",                       // 6822
         "Distributed Object Technologies, Inc.",                                          // 6823
         "List & Niemann",                                                                 // 6824
         "iCue Systems, Inc.",                                                             // 6825
@@ -16347,7 +16347,7 @@ static global_enterprises_table_t table =
         "empuron",                                                                        // 16318
         "ViaVis Mobile Solutions Inc.",                                                   // 16319
         "The Brain Room Ltd",                                                             // 16320
-        "ZOOM International a.s.",                                                        // 16321
+        "Eleveo a.s.",                                                                    // 16321
         "Leading Edge Telemetry, LLC",                                                    // 16322
         "Trax Holdings",                                                                  // 16323
         "Itelsys",                                                                        // 16324
@@ -32948,7 +32948,7 @@ static global_enterprises_table_t table =
         "Barking Iguana",                                                                 // 32919
         "ETSA",                                                                           // 32920
         "Orbis Technology Ltd",                                                           // 32921
-        "Verathon",                                                                       // 32922
+        "Verathon Inc",                                                                   // 32922
         "Alastair Carr",                                                                  // 32923
         "Menturagroup Ltd",                                                               // 32924
         "Treck Inc.",                                                                     // 32925
@@ -41546,7 +41546,7 @@ static global_enterprises_table_t table =
         "Eagle Electronics",                                                              // 41517
         "Ingram Content Group",                                                           // 41518
         "OpenADR Alliance",                                                               // 41519
-        "Jakub Juszczakiewicz",                                                           // 41520
+        "Krypto-IT",                                                                      // 41520
         "Zebsys Ltd",                                                                     // 41521
         "www.info-x.org",                                                                 // 41522
         "Cloudseed",                                                                      // 41523
@@ -44824,7 +44824,7 @@ static global_enterprises_table_t table =
         "Tridigy, LLC",                                                                   // 44795
         "SFO Technologies Pvt. Ltd.",                                                     // 44796
         "Stoat Works",                                                                    // 44797
-        "TechsMix Networks",                                                              // 44798
+        "TechsMix LLC",                                                                   // 44798
         "audioalgorithms",                                                                // 44799
         "it7 s.r.o.",                                                                     // 44800
         "Sole proprietorship Ilya Gruzinov",                                              // 44801
@@ -51213,7 +51213,7 @@ static global_enterprises_table_t table =
         "MacAulay-Brown, Inc.",                                                           // 51184
         "Oekumenisches Hainich Klinikum gGmbH",                                           // 51185
         "T-MOBILE POLSKA S.A.",                                                           // 51186
-        "Softiron Limited",                                                               // 51187
+        "SoftIron",                                                                       // 51187
         "Lanner Electronics Inc.",                                                        // 51188
         "JiangSu Future Networks Innovation Institute",                                   // 51189
         "Go-B Enterprise",                                                                // 51190
@@ -51464,7 +51464,7 @@ static global_enterprises_table_t table =
         "SCLE SFE",                                                                       // 51435
         "Opendigitalradio",                                                               // 51436
         "Razberi Technologies, Inc.",                                                     // 51437
-        "unshare",                                                                        // 51438
+        "Unshare",                                                                        // 51438
         "Videotec S.P.A.",                                                                // 51439
         "smart-edge.com",                                                                 // 51440
         "InfraNet AG",                                                                    // 51441
@@ -60992,7 +60992,35 @@ static global_enterprises_table_t table =
         "Song GUO",                                                                       // 60963
         "Birmingham Metropolitan College",                                                // 60964
         "MHR Soluções",                                                                   // 60965
-        "Joseph Bunce"                                                                    // 60966
+        "Joseph Bunce",                                                                   // 60966
+        "Shenzhen ACwatt Power Co., Ltd.",                                                // 60967
+        "JingTsing Technology Ltd",                                                       // 60968
+        "VestelKom A.S.",                                                                 // 60969
+        "Fondation Butini",                                                               // 60970
+        "Access Information Management",                                                  // 60971
+        "Powered By Citizen",                                                             // 60972
+        "Andreas Niedermair",                                                             // 60973
+        "FirstDMT",                                                                       // 60974
+        "Boyang Han",                                                                     // 60975
+        "MADEIT Inc",                                                                     // 60976
+        "Shalabh Soni",                                                                   // 60977
+        "LambdaSystems Inc.",                                                             // 60978
+        "SolarisBus&Coach Sp. z o.o.",                                                    // 60979
+        "C-Labs Srl",                                                                     // 60980
+        "Anker Innovations Limited",                                                      // 60981
+        "Icaza, Gonzalez-Ruiz & Aleman",                                                  // 60982
+        "Mike Bondzio",                                                                   // 60983
+        "Cedar County Memorial Hospital",                                                 // 60984
+        "Komcept Solutions",                                                              // 60985
+        "RadiTools",                                                                      // 60986
+        "TOWER BERSAMA INFRASTRUCTURE GROUP",                                             // 60987
+        "CDW Canada",                                                                     // 60988
+        "VanDeVosse.com ICT Services",                                                    // 60989
+        "Lebenshilfe Bonn e.V.",                                                          // 60990
+        "Stonewater",                                                                     // 60991
+        "Goldistile",                                                                     // 60992
+        "GSP Cloud Philippines",                                                          // 60993
+        "Lamprecht Transport AG"                                                          // 60994
     }
 };
 
