@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-09-22) */
+/* (last updated 2023-09-29) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[60995];
+    const char* values[61022];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    60994,
+    61021,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -53191,7 +53191,7 @@ static global_enterprises_table_t table =
         "Whoolud Networks",                                                               // 53162
         "SentinelOne",                                                                    // 53163
         "Unisys Österreich",                                                              // 53164
-        "Junek and Junek Pty Ltd",                                                        // 53165
+        "Morton Lights",                                                                  // 53165
         "COMaction",                                                                      // 53166
         "Keck - IT-Consulting",                                                           // 53167
         "Concordia Station in Antarctica",                                                // 53168
@@ -56727,7 +56727,7 @@ static global_enterprises_table_t table =
         "Intelfon SA de CV",                                                              // 56698
         "BNV e. V.",                                                                      // 56699
         NULL,                                                                             // 56700
-        "Openairinterface Software Alliance",                                             // 56701
+        "OpenAirInterface Software Alliance",                                             // 56701
         NULL,                                                                             // 56702
         NULL,                                                                             // 56703
         "AvalonBay Communities",                                                          // 56704
@@ -61020,7 +61020,34 @@ static global_enterprises_table_t table =
         "Stonewater",                                                                     // 60991
         "Goldistile",                                                                     // 60992
         "GSP Cloud Philippines",                                                          // 60993
-        "Lamprecht Transport AG"                                                          // 60994
+        "Lamprecht Transport AG",                                                         // 60994
+        "Pride Unbound Limited",                                                          // 60995
+        "NHS South West London ICB",                                                      // 60996
+        "IntelGenx Corp",                                                                 // 60997
+        "weird-web-workers.org",                                                          // 60998
+        "CosmoPolitical Cooperative SCE",                                                 // 60999
+        "Logikascium",                                                                    // 61000
+        "BigO",                                                                           // 61001
+        "ELGO Batscale AG",                                                               // 61002
+        "OpenThreat",                                                                     // 61003
+        "mCloud Networx, Inc.",                                                           // 61004
+        "Landratsamt Rosenheim",                                                          // 61005
+        "ŠKODA ELECTRIC a.s.",                                                            // 61006
+        "Apice Sistemas de Energia Ltda",                                                 // 61007
+        "Fplus",                                                                          // 61008
+        "Stadtwerke Schweinfurt GmbH",                                                    // 61009
+        "RuitingTech",                                                                    // 61010
+        "ITG System",                                                                     // 61011
+        "REIGN Technology Corporation",                                                   // 61012
+        "platynum",                                                                       // 61013
+        "Chippewa Valley Technical College",                                              // 61014
+        "InnoTrust Corporation",                                                          // 61015
+        "Fibergate Inc.",                                                                 // 61016
+        "FONDATION DES IMMEUBLES POUR LES ORGANISATIONS INTERNATIONALES",                 // 61017
+        "Open Administration UG (haftungsbeschränkt)",                                    // 61018
+        "LUXGEN Motor Co., Ltd.",                                                         // 61019
+        "Toronto East Health Network",                                                    // 61020
+        "P.B. Elettronica srl"                                                            // 61021
     }
 };
 
