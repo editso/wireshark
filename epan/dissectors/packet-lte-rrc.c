@@ -6,7 +6,7 @@
 /* packet-lte-rrc-template.c
  * Routines for Evolved Universal Terrestrial Radio Access (E-UTRA);
  * Radio Resource Control (RRC) protocol specification
- * (3GPP TS 36.331 V17.5.0 Release 17) packet dissection
+ * (3GPP TS 36.331 V17.6.0 Release 17) packet dissection
  * Copyright 2008, Vincent Helfre
  * Copyright 2009-2023, Pascal Quantin
  *
@@ -2917,6 +2917,9 @@ static int hf_lte_rrc_threshRS_Index_r15 = -1;    /* ThresholdListNR_r15 */
 static int hf_lte_rrc_multiBandNsPmaxListNR_v1550 = -1;  /* MultiBandNsPmaxListNR_1_v1550 */
 static int hf_lte_rrc_multiBandNsPmaxListNR_SUL_v1550 = -1;  /* MultiBandNsPmaxListNR_v1550 */
 static int hf_lte_rrc_ssb_ToMeasure_r15 = -1;     /* SSB_ToMeasure_r15 */
+static int hf_lte_rrc_ns_PmaxListNR_v1760 = -1;   /* NS_PmaxListNR_v1760 */
+static int hf_lte_rrc_multiBandNsPmaxListNR_v1760 = -1;  /* MultiBandNsPmaxListNR_1_v1760 */
+static int hf_lte_rrc_multiBandNsPmaxListNR_SUL_v1760 = -1;  /* MultiBandNsPmaxListNR_v1760 */
 static int hf_lte_rrc_smtc2_LP_r16 = -1;          /* MTC_SSB2_LP_NR_r16 */
 static int hf_lte_rrc_ssb_PositionQCL_CommonNR_r16 = -1;  /* SSB_PositionQCL_RelationNR_r16 */
 static int hf_lte_rrc_allowedCellListNR_r16 = -1;  /* AllowedCellListNR_r16 */
@@ -2926,6 +2929,8 @@ static int hf_lte_rrc_subcarrierSpacingSSB_r17_01 = -1;  /* T_subcarrierSpacingS
 static int hf_lte_rrc_ssb_PositionQCL_CommonNR_r17 = -1;  /* SSB_PositionQCL_RelationNR_r17 */
 static int hf_lte_rrc_MultiBandNsPmaxListNR_1_v1550_item = -1;  /* NS_PmaxListNR_r15 */
 static int hf_lte_rrc_MultiBandNsPmaxListNR_v1550_item = -1;  /* NS_PmaxListNR_r15 */
+static int hf_lte_rrc_MultiBandNsPmaxListNR_1_v1760_item = -1;  /* NS_PmaxListNR_v1760 */
+static int hf_lte_rrc_MultiBandNsPmaxListNR_v1760_item = -1;  /* NS_PmaxListNR_v1760 */
 static int hf_lte_rrc_AllowedCellListNR_r16_item = -1;  /* PhysCellIdNR_r15 */
 static int hf_lte_rrc_NR_FreqNeighHSDN_CellList_r17_item = -1;  /* PhysCellIdRangeNR_r16 */
 static int hf_lte_rrc_uac_BarringForCommon_r15 = -1;  /* UAC_BarringPerCatList_r15 */
@@ -5262,6 +5267,8 @@ static int hf_lte_rrc_additionalPmax_r10 = -1;    /* P_Max */
 static int hf_lte_rrc_NS_PmaxListNR_r15_item = -1;  /* NS_PmaxValueNR_r15 */
 static int hf_lte_rrc_additionalPmaxNR_r15 = -1;  /* P_MaxNR_r15 */
 static int hf_lte_rrc_additionalSpectrumEmissionNR_r15 = -1;  /* AdditionalSpectrumEmissionNR_r15 */
+static int hf_lte_rrc_NS_PmaxListNR_v1760_item = -1;  /* NS_PmaxValueNR_v1760 */
+static int hf_lte_rrc_additionalSpectrumEmissionNR_v1760 = -1;  /* AdditionalSpectrumEmissionNR_v1760 */
 static int hf_lte_rrc_networkColourCode = -1;     /* BIT_STRING_SIZE_3 */
 static int hf_lte_rrc_baseStationColourCode = -1;  /* BIT_STRING_SIZE_3 */
 static int hf_lte_rrc_start_01 = -1;              /* PhysCellId */
@@ -10571,6 +10578,8 @@ static gint ett_lte_rrc_CarrierFreqNR_v1700 = -1;
 static gint ett_lte_rrc_CarrierFreqNR_v1720 = -1;
 static gint ett_lte_rrc_MultiBandNsPmaxListNR_1_v1550 = -1;
 static gint ett_lte_rrc_MultiBandNsPmaxListNR_v1550 = -1;
+static gint ett_lte_rrc_MultiBandNsPmaxListNR_1_v1760 = -1;
+static gint ett_lte_rrc_MultiBandNsPmaxListNR_v1760 = -1;
 static gint ett_lte_rrc_AllowedCellListNR_r16 = -1;
 static gint ett_lte_rrc_NR_FreqNeighHSDN_CellList_r17 = -1;
 static gint ett_lte_rrc_SystemInformationBlockType25_r15 = -1;
@@ -11533,6 +11542,8 @@ static gint ett_lte_rrc_NS_PmaxValue_r10 = -1;
 static gint ett_lte_rrc_NS_PmaxValue_v10l0 = -1;
 static gint ett_lte_rrc_NS_PmaxListNR_r15 = -1;
 static gint ett_lte_rrc_NS_PmaxValueNR_r15 = -1;
+static gint ett_lte_rrc_NS_PmaxListNR_v1760 = -1;
+static gint ett_lte_rrc_NS_PmaxValueNR_v1760 = -1;
 static gint ett_lte_rrc_PhysCellIdGERAN = -1;
 static gint ett_lte_rrc_PhysCellIdRange = -1;
 static gint ett_lte_rrc_PhysCellIdRangeNR_r16 = -1;
@@ -68712,6 +68723,87 @@ dissect_lte_rrc_CarrierFreqNR_r15_eag_1(tvbuff_t *tvb _U_, int offset _U_, asn1_
 }
 
 
+
+static int
+dissect_lte_rrc_AdditionalSpectrumEmissionNR_v1760(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
+                                                            8U, 39U, NULL, FALSE);
+
+  return offset;
+}
+
+
+static const per_sequence_t NS_PmaxValueNR_v1760_sequence[] = {
+  { &hf_lte_rrc_additionalSpectrumEmissionNR_v1760, ASN1_NO_EXTENSIONS     , ASN1_OPTIONAL    , dissect_lte_rrc_AdditionalSpectrumEmissionNR_v1760 },
+  { NULL, 0, 0, NULL }
+};
+
+static int
+dissect_lte_rrc_NS_PmaxValueNR_v1760(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
+                                   ett_lte_rrc_NS_PmaxValueNR_v1760, NS_PmaxValueNR_v1760_sequence);
+
+  return offset;
+}
+
+
+static const per_sequence_t NS_PmaxListNR_v1760_sequence_of[1] = {
+  { &hf_lte_rrc_NS_PmaxListNR_v1760_item, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_lte_rrc_NS_PmaxValueNR_v1760 },
+};
+
+static int
+dissect_lte_rrc_NS_PmaxListNR_v1760(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  offset = dissect_per_constrained_sequence_of(tvb, offset, actx, tree, hf_index,
+                                                  ett_lte_rrc_NS_PmaxListNR_v1760, NS_PmaxListNR_v1760_sequence_of,
+                                                  1, 8, FALSE);
+
+  return offset;
+}
+
+
+static const per_sequence_t MultiBandNsPmaxListNR_1_v1760_sequence_of[1] = {
+  { &hf_lte_rrc_MultiBandNsPmaxListNR_1_v1760_item, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_lte_rrc_NS_PmaxListNR_v1760 },
+};
+
+static int
+dissect_lte_rrc_MultiBandNsPmaxListNR_1_v1760(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  offset = dissect_per_constrained_sequence_of(tvb, offset, actx, tree, hf_index,
+                                                  ett_lte_rrc_MultiBandNsPmaxListNR_1_v1760, MultiBandNsPmaxListNR_1_v1760_sequence_of,
+                                                  1, maxMultiBandsNR_1_r15, FALSE);
+
+  return offset;
+}
+
+
+static const per_sequence_t MultiBandNsPmaxListNR_v1760_sequence_of[1] = {
+  { &hf_lte_rrc_MultiBandNsPmaxListNR_v1760_item, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_lte_rrc_NS_PmaxListNR_v1760 },
+};
+
+static int
+dissect_lte_rrc_MultiBandNsPmaxListNR_v1760(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  offset = dissect_per_constrained_sequence_of(tvb, offset, actx, tree, hf_index,
+                                                  ett_lte_rrc_MultiBandNsPmaxListNR_v1760, MultiBandNsPmaxListNR_v1760_sequence_of,
+                                                  1, maxMultiBandsNR_r15, FALSE);
+
+  return offset;
+}
+
+
+static const per_sequence_t CarrierFreqNR_r15_eag_2_sequence[] = {
+  { &hf_lte_rrc_ns_PmaxListNR_v1760, ASN1_NO_EXTENSIONS     , ASN1_OPTIONAL    , dissect_lte_rrc_NS_PmaxListNR_v1760 },
+  { &hf_lte_rrc_multiBandNsPmaxListNR_v1760, ASN1_NO_EXTENSIONS     , ASN1_OPTIONAL    , dissect_lte_rrc_MultiBandNsPmaxListNR_1_v1760 },
+  { &hf_lte_rrc_multiBandNsPmaxListNR_SUL_v1760, ASN1_NO_EXTENSIONS     , ASN1_OPTIONAL    , dissect_lte_rrc_MultiBandNsPmaxListNR_v1760 },
+  { NULL, 0, 0, NULL }
+};
+
+static int
+dissect_lte_rrc_CarrierFreqNR_r15_eag_2(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  offset = dissect_per_sequence_eag(tvb, offset, actx, tree, CarrierFreqNR_r15_eag_2_sequence);
+
+  return offset;
+}
+
+
 static const per_sequence_t CarrierFreqNR_r15_sequence[] = {
   { &hf_lte_rrc_carrierFreq_r15, ASN1_EXTENSION_ROOT    , ASN1_NOT_OPTIONAL, dissect_lte_rrc_ARFCN_ValueNR_r15 },
   { &hf_lte_rrc_multiBandInfoList_r15, ASN1_EXTENSION_ROOT    , ASN1_OPTIONAL    , dissect_lte_rrc_MultiFrequencyBandListNR_r15 },
@@ -68733,6 +68825,7 @@ static const per_sequence_t CarrierFreqNR_r15_sequence[] = {
   { &hf_lte_rrc_maxRS_IndexCellQual_r15, ASN1_EXTENSION_ROOT    , ASN1_OPTIONAL    , dissect_lte_rrc_MaxRS_IndexCellQualNR_r15 },
   { &hf_lte_rrc_threshRS_Index_r15, ASN1_EXTENSION_ROOT    , ASN1_OPTIONAL    , dissect_lte_rrc_ThresholdListNR_r15 },
   { &dummy_hf_lte_rrc_eag_field, ASN1_NOT_EXTENSION_ROOT, ASN1_NOT_OPTIONAL, dissect_lte_rrc_CarrierFreqNR_r15_eag_1 },
+  { &dummy_hf_lte_rrc_eag_field, ASN1_NOT_EXTENSION_ROOT, ASN1_NOT_OPTIONAL, dissect_lte_rrc_CarrierFreqNR_r15_eag_2 },
   { NULL, 0, 0, NULL }
 };
 
@@ -144771,6 +144864,18 @@ void proto_register_lte_rrc(void) {
       { "ssb-ToMeasure-r15", "lte-rrc.ssb_ToMeasure_r15",
         FT_UINT32, BASE_DEC, VALS(lte_rrc_SSB_ToMeasure_r15_vals), 0,
         NULL, HFILL }},
+    { &hf_lte_rrc_ns_PmaxListNR_v1760,
+      { "ns-PmaxListNR-v1760", "lte-rrc.ns_PmaxListNR_v1760",
+        FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_lte_rrc_multiBandNsPmaxListNR_v1760,
+      { "multiBandNsPmaxListNR-v1760", "lte-rrc.multiBandNsPmaxListNR_v1760",
+        FT_UINT32, BASE_DEC, NULL, 0,
+        "MultiBandNsPmaxListNR_1_v1760", HFILL }},
+    { &hf_lte_rrc_multiBandNsPmaxListNR_SUL_v1760,
+      { "multiBandNsPmaxListNR-SUL-v1760", "lte-rrc.multiBandNsPmaxListNR_SUL_v1760",
+        FT_UINT32, BASE_DEC, NULL, 0,
+        "MultiBandNsPmaxListNR_v1760", HFILL }},
     { &hf_lte_rrc_smtc2_LP_r16,
       { "smtc2-LP-r16", "lte-rrc.smtc2_LP_r16_element",
         FT_NONE, BASE_NONE, NULL, 0,
@@ -144805,6 +144910,14 @@ void proto_register_lte_rrc(void) {
         NULL, HFILL }},
     { &hf_lte_rrc_MultiBandNsPmaxListNR_v1550_item,
       { "NS-PmaxListNR-r15", "lte-rrc.NS_PmaxListNR_r15",
+        FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_lte_rrc_MultiBandNsPmaxListNR_1_v1760_item,
+      { "NS-PmaxListNR-v1760", "lte-rrc.NS_PmaxListNR_v1760",
+        FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_lte_rrc_MultiBandNsPmaxListNR_v1760_item,
+      { "NS-PmaxListNR-v1760", "lte-rrc.NS_PmaxListNR_v1760",
         FT_UINT32, BASE_DEC, NULL, 0,
         NULL, HFILL }},
     { &hf_lte_rrc_AllowedCellListNR_r16_item,
@@ -154149,6 +154262,14 @@ void proto_register_lte_rrc(void) {
         "P_MaxNR_r15", HFILL }},
     { &hf_lte_rrc_additionalSpectrumEmissionNR_r15,
       { "additionalSpectrumEmissionNR-r15", "lte-rrc.additionalSpectrumEmissionNR_r15",
+        FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_lte_rrc_NS_PmaxListNR_v1760_item,
+      { "NS-PmaxValueNR-v1760", "lte-rrc.NS_PmaxValueNR_v1760_element",
+        FT_NONE, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_lte_rrc_additionalSpectrumEmissionNR_v1760,
+      { "additionalSpectrumEmissionNR-v1760", "lte-rrc.additionalSpectrumEmissionNR_v1760",
         FT_UINT32, BASE_DEC, NULL, 0,
         NULL, HFILL }},
     { &hf_lte_rrc_networkColourCode,
@@ -171613,6 +171734,8 @@ void proto_register_lte_rrc(void) {
     &ett_lte_rrc_CarrierFreqNR_v1720,
     &ett_lte_rrc_MultiBandNsPmaxListNR_1_v1550,
     &ett_lte_rrc_MultiBandNsPmaxListNR_v1550,
+    &ett_lte_rrc_MultiBandNsPmaxListNR_1_v1760,
+    &ett_lte_rrc_MultiBandNsPmaxListNR_v1760,
     &ett_lte_rrc_AllowedCellListNR_r16,
     &ett_lte_rrc_NR_FreqNeighHSDN_CellList_r17,
     &ett_lte_rrc_SystemInformationBlockType25_r15,
@@ -172575,6 +172698,8 @@ void proto_register_lte_rrc(void) {
     &ett_lte_rrc_NS_PmaxValue_v10l0,
     &ett_lte_rrc_NS_PmaxListNR_r15,
     &ett_lte_rrc_NS_PmaxValueNR_r15,
+    &ett_lte_rrc_NS_PmaxListNR_v1760,
+    &ett_lte_rrc_NS_PmaxValueNR_v1760,
     &ett_lte_rrc_PhysCellIdGERAN,
     &ett_lte_rrc_PhysCellIdRange,
     &ett_lte_rrc_PhysCellIdRangeNR_r16,
