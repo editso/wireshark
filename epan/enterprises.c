@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-09-29) */
+/* (last updated 2023-10-07) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61022];
+    const char* values[61044];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61021,
+    61043,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -60646,7 +60646,7 @@ static global_enterprises_table_t table =
         "Tina Bilisim Teknolojileri Yazilim Sanayi ve Ticaret Ltd. Sti.",                 // 60617
         "IPLAN",                                                                          // 60618
         "Callie Jones",                                                                   // 60619
-        "motech",                                                                         // 60620
+        "Motech",                                                                         // 60620
         "Queensland Department of Environment and Science",                               // 60621
         "CERN_COMK LD1",                                                                  // 60622
         "TekLnk",                                                                         // 60623
@@ -60964,7 +60964,7 @@ static global_enterprises_table_t table =
         "Utech",                                                                          // 60935
         "Vipaks + Ltd",                                                                   // 60936
         "SPINELCo.,Ltd",                                                                  // 60937
-        "Anker Innovations Technology Co., Ltd.",                                         // 60938
+        NULL,                                                                             // 60938
         "Ceridwen Limited",                                                               // 60939
         "Mr. Hamel",                                                                      // 60940
         "Motorcomm Electronic Technology Co., Ltd.",                                      // 60941
@@ -61047,7 +61047,29 @@ static global_enterprises_table_t table =
         "Open Administration UG (haftungsbeschränkt)",                                    // 61018
         "LUXGEN Motor Co., Ltd.",                                                         // 61019
         "Toronto East Health Network",                                                    // 61020
-        "P.B. Elettronica srl"                                                            // 61021
+        "P.B. Elettronica srl",                                                           // 61021
+        "Alf Ringkowski",                                                                 // 61022
+        "Fulton-Montgomery Community College",                                            // 61023
+        "GlobalBases.com GmbH",                                                           // 61024
+        "David Verba",                                                                    // 61025
+        "BRAINSAIT LTD",                                                                  // 61026
+        "Pannasastra University of Cambodia, Siem Reap Campus",                           // 61027
+        "Omega Power",                                                                    // 61028
+        "mySaveID GmbH",                                                                  // 61029
+        "Antik Technology",                                                               // 61030
+        "PyCERR Beta",                                                                    // 61031
+        "Oltiva Hong Kong Limited",                                                       // 61032
+        "Energie Service Biel/Bienne",                                                    // 61033
+        "EDEKA Südbayern Handels Stiftung & Co. KG",                                      // 61034
+        "Hotel President SA",                                                             // 61035
+        "SEE Critical Comms",                                                             // 61036
+        "Alzheimer's Research UK",                                                        // 61037
+        "Edgeway Vision B.V.",                                                            // 61038
+        "vlabs8.com",                                                                     // 61039
+        "Ocala Family Medical Center, Inc.",                                              // 61040
+        "Modular, Inc.",                                                                  // 61041
+        "Secure Bits",                                                                    // 61042
+        "Clinical Research Services Management GmbH CRS"                                  // 61043
     }
 };
 
