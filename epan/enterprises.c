@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-10-07) */
+/* (last updated 2023-10-13) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61044];
+    const char* values[61067];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61043,
+    61066,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -12313,7 +12313,7 @@ static global_enterprises_table_t table =
         "IMAX NETWORKS (SHENZHEN) Ltd.",                                                  // 12284
         "Acclamation Systems, Inc",                                                       // 12285
         "Issaqua",                                                                        // 12286
-        "Globecomm Systems, Inc.",                                                        // 12287
+        "UltiSat, Inc.",                                                                  // 12287
         "Andern Research Labs",                                                           // 12288
         "Beeweeb Srl",                                                                    // 12289
         "Celestica International Inc.",                                                   // 12290
@@ -41387,7 +41387,7 @@ static global_enterprises_table_t table =
         "JSC «AMB Bank»",                                                                 // 41358
         "Triax AS",                                                                       // 41359
         "Prodrive Technologies Group B.V.",                                               // 41360
-        "KYOS SARL",                                                                      // 41361
+        "KYOS SA",                                                                        // 41361
         "Transport Department, HKSARG",                                                   // 41362
         "Naunet Corporation",                                                             // 41363
         "MIRACLE Information Systems GmbH",                                               // 41364
@@ -60801,7 +60801,7 @@ static global_enterprises_table_t table =
         "School District of Milton",                                                      // 60772
         "All4Conn Tecnologia",                                                            // 60773
         "Woven by Toyota, Inc.",                                                          // 60774
-        "Inspur (Shandong) Computer Technology Co.,Ltd",                                  // 60775
+        "Inspur Computer Technology Co.,Ltd",                                             // 60775
         "NEOROS LLC",                                                                     // 60776
         "OneCloud",                                                                       // 60777
         "XCoreSec",                                                                       // 60778
@@ -61008,7 +61008,7 @@ static global_enterprises_table_t table =
         "SolarisBus&Coach Sp. z o.o.",                                                    // 60979
         "C-Labs Srl",                                                                     // 60980
         "Anker Innovations Limited",                                                      // 60981
-        "Icaza, Gonzalez-Ruiz & Aleman",                                                  // 60982
+        "IGRA, S.A.",                                                                     // 60982
         "Mike Bondzio",                                                                   // 60983
         "Cedar County Memorial Hospital",                                                 // 60984
         "Komcept Solutions",                                                              // 60985
@@ -61051,7 +61051,7 @@ static global_enterprises_table_t table =
         "Alf Ringkowski",                                                                 // 61022
         "Fulton-Montgomery Community College",                                            // 61023
         "GlobalBases.com GmbH",                                                           // 61024
-        "David Verba",                                                                    // 61025
+        "Avid Systems",                                                                   // 61025
         "BRAINSAIT LTD",                                                                  // 61026
         "Pannasastra University of Cambodia, Siem Reap Campus",                           // 61027
         "Omega Power",                                                                    // 61028
@@ -61069,7 +61069,30 @@ static global_enterprises_table_t table =
         "Ocala Family Medical Center, Inc.",                                              // 61040
         "Modular, Inc.",                                                                  // 61041
         "Secure Bits",                                                                    // 61042
-        "Clinical Research Services Management GmbH CRS"                                  // 61043
+        "Clinical Research Services Management GmbH CRS",                                 // 61043
+        "Persist Technologies",                                                           // 61044
+        "TdE-CTIC",                                                                       // 61045
+        "Kernelkit",                                                                      // 61046
+        "Zscaler Information Security",                                                   // 61047
+        "QFence IT security Zrt.",                                                        // 61048
+        "JOKER TELEVISION SL",                                                            // 61049
+        "Lindner IT",                                                                     // 61050
+        "Pierrot",                                                                        // 61051
+        "Maclinker Intelligence Information",                                             // 61052
+        "TePS'EG Inc.",                                                                   // 61053
+        "KREBS+KIEFER",                                                                   // 61054
+        "ATAYA",                                                                          // 61055
+        "Tianjin Optoelectronic Group Xin An Advanced Technology (Jiangsu) Co., LTD",     // 61056
+        "Infraknit Technologies Private Limited",                                         // 61057
+        "J. Wagner GmbH",                                                                 // 61058
+        "esko-systems GmbH & Co. KG",                                                     // 61059
+        "Bayvrio, Inc",                                                                   // 61060
+        "Echo Global Logistics",                                                          // 61061
+        "Object First",                                                                   // 61062
+        "Axalon GmbH",                                                                    // 61063
+        "Atielo Networks",                                                                // 61064
+        "Suzhou Bytewatt Technology Co., Ltd.",                                           // 61065
+        "DataRemote Inc."                                                                 // 61066
     }
 };
 
