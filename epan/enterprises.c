@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-10-13) */
+/* (last updated 2023-10-20) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61067];
+    const char* values[61078];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61066,
+    61077,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -29891,7 +29891,7 @@ static global_enterprises_table_t table =
         "NANCY s.r.o",                                                                    // 29862
         "Software Logic, Inc.",                                                           // 29863
         "Typeria",                                                                        // 29864
-        "Kjaerulff 1 A/S",                                                                // 29865
+        "Icotera A/S",                                                                    // 29865
         "Method Analysis Limited",                                                        // 29866
         "Skanska",                                                                        // 29867
         "Business Security",                                                              // 29868
@@ -34128,7 +34128,7 @@ static global_enterprises_table_t table =
         "Palestine Polytechnic University",                                               // 34099
         "Tompkins Cortland Community College",                                            // 34100
         "Aimetis Corp",                                                                   // 34101
-        "Perversia Networking",                                                           // 34102
+        "inMeta.Networks",                                                                // 34102
         "BV-Tech S.p.A.",                                                                 // 34103
         "Ceton Corp",                                                                     // 34104
         "Local Website Consulting",                                                       // 34105
@@ -61092,7 +61092,18 @@ static global_enterprises_table_t table =
         "Axalon GmbH",                                                                    // 61063
         "Atielo Networks",                                                                // 61064
         "Suzhou Bytewatt Technology Co., Ltd.",                                           // 61065
-        "DataRemote Inc."                                                                 // 61066
+        "DataRemote Inc.",                                                                // 61066
+        "Andreas Neuf",                                                                   // 61067
+        "Elektrokem Ltd.",                                                                // 61068
+        "ZENTRONICS SOLUTIONS PRIVATE LIMITED",                                           // 61069
+        "Netica Srl",                                                                     // 61070
+        "Kindred People AB",                                                              // 61071
+        "Systeme Electric",                                                               // 61072
+        "National Environmental Emergencies Centre",                                      // 61073
+        "Insight Media Internet Limited",                                                 // 61074
+        "Chandler Police Department",                                                     // 61075
+        "Zeroed.tech",                                                                    // 61076
+        "xswg"                                                                            // 61077
     }
 };
 
