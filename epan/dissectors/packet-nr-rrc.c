@@ -65,6 +65,7 @@ static reassembly_table nr_rrc_sib8_reassembly_table;
 static gboolean nr_rrc_nas_in_root_tree;
 
 extern int proto_mac_nr;
+extern int proto_rlc_nr;
 extern int proto_pdcp_nr;
 
 /* Include constants */
@@ -13307,6 +13308,29 @@ typedef struct {
   lpp_pos_sib_type_t pos_sib_type;
   pdcp_nr_security_info_t pdcp_security;
 } nr_rrc_private_data_t;
+
+/* Helper function to get UE identifier from lower layers (in order MAC, RLC, PDCP) */
+static guint16*
+nr_rrc_get_ueid_from_lower_layers(wmem_allocator_t *scope, struct _packet_info* pinfo)
+{
+  /* Try MAC first */
+  mac_nr_info *p_mac_nr_info = (mac_nr_info *)p_get_proto_data(scope, pinfo, proto_mac_nr, 0);
+  if (p_mac_nr_info != NULL) {
+    return &p_mac_nr_info->ueid;
+  }
+  /* Not found, try RLC */
+  rlc_nr_info *p_rlc_nr_info = (rlc_nr_info *)p_get_proto_data(scope, pinfo, proto_rlc_nr, 0);
+  if (p_rlc_nr_info != NULL) {
+    return &p_rlc_nr_info->ueid;
+  }
+  /* Not found, try PDCP */
+  pdcp_nr_info *p_pdcp_nr_info = (pdcp_nr_info *)p_get_proto_data(scope, pinfo, proto_pdcp_nr, 0);
+  if (p_pdcp_nr_info != NULL) {
+    return &p_pdcp_nr_info->ueid;
+  }
+  /* Nothing found, give up */
+  return NULL;
+}
 
 /* Helper function to get or create a struct that will be actx->private_data */
 static nr_rrc_private_data_t*
@@ -37124,12 +37148,12 @@ dissect_nr_rrc_DRB_ToAddMod(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_DRB_ToAddMod, DRB_ToAddMod_sequence);
 
-  /* Need UE identifier. Use mac-nr. */
-  mac_nr_info *p_mac_nr_info = (mac_nr_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_nr, 0);
-  if (p_mac_nr_info) {
+  /* Need UE identifier. */
+  guint16 *p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
+  if (p_ueid != NULL) {
     /* Configure PDCP SN length(s) for this DRB */
     if (mapping->pdcpUlSnLength_present || mapping->pdcpDlSnLength_present) {
-      mapping->ueid = p_mac_nr_info->ueid;
+      mapping->ueid = *p_ueid;
       set_rlc_nr_drb_pdcp_mapping(actx->pinfo, mapping);
     }
   }
@@ -37232,7 +37256,7 @@ static const per_sequence_t SecurityAlgorithmConfig_sequence[] = {
 
 static int
 dissect_nr_rrc_SecurityAlgorithmConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  mac_nr_info *p_mac_nr_info;
+  guint16 *p_ueid;
   pdcp_nr_security_info_t *p_security_algorithms;
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SecurityAlgorithmConfig, SecurityAlgorithmConfig_sequence);
@@ -37244,10 +37268,10 @@ dissect_nr_rrc_SecurityAlgorithmConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_c
   p_security_algorithms->previous_ciphering = nea0;
 
   /* Look for UE identifier */
-  p_mac_nr_info = (mac_nr_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_nr, 0);
-  if (p_mac_nr_info != NULL) {
+  p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
+  if (p_ueid != NULL) {
     /* Configure algorithms */
-    set_pdcp_nr_security_algorithms(p_mac_nr_info->ueid, p_security_algorithms);
+    set_pdcp_nr_security_algorithms(*p_ueid, p_security_algorithms);
   }
 
 
@@ -56722,11 +56746,11 @@ dissect_nr_rrc_RRCReestablishmentRequest(tvbuff_t *tvb _U_, int offset _U_, asn1
 
   if (!PINFO_FD_VISITED(actx->pinfo)) {
     /* Look for UE identifier */
-    mac_nr_info *p_mac_nr_info = (mac_nr_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_nr, 0);
+    guint16 *p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
 
-    if (p_mac_nr_info != NULL) {
+    if (p_ueid != NULL) {
       /* Inform PDCP about the RRCreestablishmentRequest */
-      set_pdcp_nr_rrc_reestablishment_request(p_mac_nr_info->ueid);
+      set_pdcp_nr_rrc_reestablishment_request(*p_ueid);
     }
   }
 
@@ -59740,18 +59764,18 @@ static const per_sequence_t SecurityModeFailure_sequence[] = {
 
 static int
 dissect_nr_rrc_SecurityModeFailure(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  mac_nr_info *p_mac_nr_info;
+  guint16 *p_ueid;
 
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "Security Mode Failure");
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SecurityModeFailure, SecurityModeFailure_sequence);
 
   /* Look for UE identifier */
-  p_mac_nr_info = (mac_nr_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_nr, 0);
+  p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
 
-  if (p_mac_nr_info != NULL) {
+  if (p_ueid != NULL) {
     /* Inform PDCP that the UE failed to execute the securityModeCommand */
-    set_pdcp_nr_security_algorithms_failed(p_mac_nr_info->ueid);
+    set_pdcp_nr_security_algorithms_failed(*p_ueid);
   }
 
 
@@ -81449,7 +81473,7 @@ static const per_sequence_t RLC_BearerConfig_sequence[] = {
 
 static int
 dissect_nr_rrc_RLC_BearerConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  struct mac_nr_info *p_mac_nr_info;
+  guint16 *p_ueid;
   /* Get the struct and clear it out */
   nr_drb_mac_rlc_mapping_t *drb_mapping = &nr_rrc_get_private_data(actx)->drb_rlc_mapping;
   memset(drb_mapping, 0, sizeof(nr_drb_mac_rlc_mapping_t));
@@ -81458,9 +81482,9 @@ dissect_nr_rrc_RLC_BearerConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *a
                                    ett_nr_rrc_RLC_BearerConfig, RLC_BearerConfig_sequence);
 
   /* Need UE identifier */
-  p_mac_nr_info = (mac_nr_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_nr, 0);
-  if (p_mac_nr_info && drb_mapping->drbid) {
-    drb_mapping->ueid = p_mac_nr_info->ueid;
+  p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
+  if (p_ueid != NULL && drb_mapping->drbid) {
+    drb_mapping->ueid = *p_ueid;
     /* Tell MAC about this mapping */
     set_mac_nr_bearer_mapping(drb_mapping);
   }
