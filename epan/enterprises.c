@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-10-20) */
+/* (last updated 2023-10-27) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61078];
+    const char* values[61096];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61077,
+    61095,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -13059,7 +13059,7 @@ static global_enterprises_table_t table =
         "Monitor724 Services Limited",                                                    // 13030
         "NextGen Business Solution, Inc.",                                                // 13031
         "Reach Technologies",                                                             // 13032
-        "shockunit productions",                                                          // 13033
+        "DragonBoxSolar",                                                                 // 13033
         "SoftNet Systems, Inc.",                                                          // 13034
         "Sonangol",                                                                       // 13035
         "Stradient, Inc.",                                                                // 13036
@@ -22449,7 +22449,7 @@ static global_enterprises_table_t table =
         "accedian, Inc.",                                                                 // 22420
         "TSYS Prepaid, Inc.",                                                             // 22421
         "Provideo Systems Pty Ltd",                                                       // 22422
-        "Telvent Netherlands B.V. (DTN)",                                                 // 22423
+        "DTN",                                                                            // 22423
         "INTELSOFT",                                                                      // 22424
         "Audio Processing Technology (APT)",                                              // 22425
         "Digital Data Communications Asia Co., Ltd.",                                     // 22426
@@ -28273,7 +28273,7 @@ static global_enterprises_table_t table =
         "Haus am Rügendamm",                                                              // 28244
         "agorum Software GmbH",                                                           // 28245
         "Trusted Peer Networks, Inc",                                                     // 28246
-        "Maxis Communications Berhad",                                                    // 28247
+        "Maxis Broadband Sdn Bhd",                                                        // 28247
         "Newport Development Group",                                                      // 28248
         "eonas IT-Beratung und -Entwicklung GmbH",                                        // 28249
         "Enerconv S.r.l.",                                                                // 28250
@@ -34350,7 +34350,7 @@ static global_enterprises_table_t table =
         "ICP DAS  Co., Ltd",                                                              // 34321
         "Hoojima Ltd",                                                                    // 34322
         "Zolfo Cooper",                                                                   // 34323
-        "Ministry for Information Society of Montenegro",                                 // 34324
+        "Ministry of Public Administration of Montenegro",                                // 34324
         "Investec",                                                                       // 34325
         "Nokia",                                                                          // 34326
         "Farmacia Valentini",                                                             // 34327
@@ -61103,7 +61103,25 @@ static global_enterprises_table_t table =
         "Insight Media Internet Limited",                                                 // 61074
         "Chandler Police Department",                                                     // 61075
         "Zeroed.tech",                                                                    // 61076
-        "xswg"                                                                            // 61077
+        "xswg",                                                                           // 61077
+        "Traceable AI",                                                                   // 61078
+        "RUAG AG",                                                                        // 61079
+        "Lemon Network Technology Co.,Ltd",                                               // 61080
+        "DsNetwork",                                                                      // 61081
+        "Klavis Kripta Inovasi",                                                          // 61082
+        "Marcel Metzen",                                                                  // 61083
+        "Cleverbase",                                                                     // 61084
+        "Terra Sound",                                                                    // 61085
+        "Chengdu BeiZhongWangXin Technology Co.Ltd",                                      // 61086
+        "shenzhen real linkShenzhen Real Link Technology Co.,Ltd",                        // 61087
+        "Anuvu",                                                                          // 61088
+        "Northeast Credit Union",                                                         // 61089
+        "PKITNEXT LABS",                                                                  // 61090
+        "DMIM",                                                                           // 61091
+        "Hochschule fuer Gesundheit",                                                     // 61092
+        "Airbus CyberSecurity SAS",                                                       // 61093
+        "Seuster KG",                                                                     // 61094
+        "MorningStar Senior Living"                                                       // 61095
     }
 };
 
