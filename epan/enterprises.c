@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-10-27) */
+/* (last updated 2023-11-03) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61096];
+    const char* values[61130];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61095,
+    61129,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -60374,7 +60374,7 @@ static global_enterprises_table_t table =
         "Open industrial PKI",                                                            // 60345
         "Voelkl Sports GmbH",                                                             // 60346
         "Lutech SpA",                                                                     // 60347
-        "Aretiico",                                                                       // 60348
+        "Aretiico PLC",                                                                   // 60348
         "Barbaros Catkan",                                                                // 60349
         "Settels Savenije Group of Companies",                                            // 60350
         "ITSEC RND MICHAŁ LESZCZYŃSKI",                                                   // 60351
@@ -61121,7 +61121,41 @@ static global_enterprises_table_t table =
         "Hochschule fuer Gesundheit",                                                     // 61092
         "Airbus CyberSecurity SAS",                                                       // 61093
         "Seuster KG",                                                                     // 61094
-        "MorningStar Senior Living"                                                       // 61095
+        "MorningStar Senior Living",                                                      // 61095
+        "Muhammad Amjad",                                                                 // 61096
+        "Fu Xiao",                                                                        // 61097
+        "Liljewall Architects",                                                           // 61098
+        "ENIT (ECOLE NATIONALE D'INGENIEURS DE TARBES)",                                  // 61099
+        "Softend",                                                                        // 61100
+        "TEC AND TEC LATAM AMERICA LTDA",                                                 // 61101
+        "MetriTrack, Inc.",                                                               // 61102
+        "DataKnights Ltd",                                                                // 61103
+        "Cosmian Tech SAS",                                                               // 61104
+        "GenCell Ltd",                                                                    // 61105
+        "Christian Hett",                                                                 // 61106
+        "International Vitamin Corporation, Inc.",                                        // 61107
+        "Telaversum Limited",                                                             // 61108
+        "Lance Hart",                                                                     // 61109
+        "Isojoen Saha Oy",                                                                // 61110
+        "BCNINNOVA",                                                                      // 61111
+        "ram electronic GmbH",                                                            // 61112
+        "Zertificon Solutions GmbH",                                                      // 61113
+        "Kevin Roberts NA7KR",                                                            // 61114
+        "Defel Technologies Private Limited",                                             // 61115
+        "Amanda's Collectables",                                                          // 61116
+        "R74n",                                                                           // 61117
+        "Simply NUC, Inc.",                                                               // 61118
+        "TapahTech",                                                                      // 61119
+        "Kempower",                                                                       // 61120
+        "ChargEye",                                                                       // 61121
+        "Sakarya University of Applied Sciences",                                         // 61122
+        "HEXIN Technologies Co., Ltd",                                                    // 61123
+        "Paperless doo Beograd",                                                          // 61124
+        """Group of Industrial Technologies"", Ltd",                                      // 61125
+        "Robert Gersbach",                                                                // 61126
+        "Scenic Rim Regional Council",                                                    // 61127
+        "AppViewX Inc",                                                                   // 61128
+        "MDCC Magdeburg-City-Com GmbH"                                                    // 61129
     }
 };
 
