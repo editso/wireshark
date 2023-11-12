@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-11-03) */
+/* (last updated 2023-11-09) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61130];
+    const char* values[61155];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61129,
+    61154,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -3083,7 +3083,7 @@ static global_enterprises_table_t table =
         "Ixia Communications",                                                            // 3054
         "Transmeta Corporation",                                                          // 3055
         "Systemsoft Corp.",                                                               // 3056
-        "Jaspal Miracles Ltd.",                                                           // 3057
+        "Compumatic",                                                                     // 3057
         "T-Systems",                                                                      // 3058
         "Sisler Promotions, Inc.",                                                        // 3059
         "ice-man refrigeration",                                                          // 3060
@@ -13156,7 +13156,7 @@ static global_enterprises_table_t table =
         "Thomas Jefferson University Hospital",                                           // 13127
         "Universe Software",                                                              // 13128
         "UPMC",                                                                           // 13129
-        "Video Products Group",                                                           // 13130
+        "Nevion AS",                                                                      // 13130
         "de Passievruchten",                                                              // 13131
         "Softing Europe S.A.",                                                            // 13132
         "Michelin",                                                                       // 13133
@@ -60057,7 +60057,7 @@ static global_enterprises_table_t table =
         "Neil Farr",                                                                      // 60028
         "Digital Check Corp",                                                             // 60029
         "NonpareilTech",                                                                  // 60030
-        "JEFFREY WILLIAM LUNSFORD",                                                       // 60031
+        "CLEARING HOUSE LIVE",                                                            // 60031
         "Sikorsky Financial Credit Union",                                                // 60032
         "Whiterabbit AI Inc",                                                             // 60033
         "ZTD Training",                                                                   // 60034
@@ -61152,10 +61152,35 @@ static global_enterprises_table_t table =
         "HEXIN Technologies Co., Ltd",                                                    // 61123
         "Paperless doo Beograd",                                                          // 61124
         """Group of Industrial Technologies"", Ltd",                                      // 61125
-        "Robert Gersbach",                                                                // 61126
+        "MRD Rail Technologies",                                                          // 61126
         "Scenic Rim Regional Council",                                                    // 61127
         "AppViewX Inc",                                                                   // 61128
-        "MDCC Magdeburg-City-Com GmbH"                                                    // 61129
+        "MDCC Magdeburg-City-Com GmbH",                                                   // 61129
+        "NNet",                                                                           // 61130
+        "Shenzhen Zhuoxun Optoelectronic Technology Co., LTD",                            // 61131
+        "MTN Group",                                                                      // 61132
+        "Reposit Power",                                                                  // 61133
+        "Wallbox N.V.",                                                                   // 61134
+        "GTD International",                                                              // 61135
+        "Sune Andersen",                                                                  // 61136
+        "Smart'r Solutions",                                                              // 61137
+        "Attochron, LLC",                                                                 // 61138
+        "F&F Filipowski",                                                                 // 61139
+        "RWE Renewables Europe & Australia GmbH",                                         // 61140
+        "Efros Defence Operations",                                                       // 61141
+        "Kosovo Specialist Chambers",                                                     // 61142
+        "STN BANK",                                                                       // 61143
+        "Shenzhen Xijia Medical Technology Co., Ltd.",                                    // 61144
+        "Steadfast Financial LP",                                                         // 61145
+        "Puzzle ITC GmbH",                                                                // 61146
+        "Telefónica IoT & Big Data Tech, S.A.U.",                                         // 61147
+        "Indorama Ventures Mobility Obernburg GmbH",                                      // 61148
+        "SevenTrust Zrt.",                                                                // 61149
+        "MSAmlin Corporate Services Limted",                                              // 61150
+        "Louisiana State Employees' Retirement System",                                   // 61151
+        "Lacus Inc.",                                                                     // 61152
+        "E-lige Informatica",                                                             // 61153
+        "Universitätsklinikum Carl Gustav Carus an der Technischen Universität Dresden"   // 61154
     }
 };
 
