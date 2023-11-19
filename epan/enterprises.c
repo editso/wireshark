@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-11-09) */
+/* (last updated 2023-11-18) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61155];
+    const char* values[61189];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61154,
+    61188,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -5401,7 +5401,7 @@ static global_enterprises_table_t table =
         "myCFO, Inc.",                                                                    // 5372
         "Open Telecommunications Limited",                                                // 5373
         "Dirigo Incorporated",                                                            // 5374
-        "BAE SYSTEMS, Tactical Comms (Filton)",                                           // 5375
+        "BAE SYSTEMS - Maritime Naval Ships",                                             // 5375
         "Oleane",                                                                         // 5376
         "TriNexus",                                                                       // 5377
         "PrairieFyre Software Inc.",                                                      // 5378
@@ -6176,7 +6176,7 @@ static global_enterprises_table_t table =
         "Alliegiance Telecom",                                                            // 6147
         "Cidera, Inc.",                                                                   // 6148
         "London School of Economics",                                                     // 6149
-        "Open Networks Engineering Ltd.",                                                 // 6150
+        "ONE Investment Group Limited",                                                   // 6150
         "Copyprint S.L.",                                                                 // 6151
         "Sendmail, Inc.",                                                                 // 6152
         "JOLT Ltd.",                                                                      // 6153
@@ -7185,7 +7185,7 @@ static global_enterprises_table_t table =
         "Princeton Networks",                                                             // 7156
         "SC Dart IMPEX SRL",                                                              // 7157
         "1 Global City.com, Inc.",                                                        // 7158
-        "Allianz AG",                                                                     // 7159
+        "Allianz Technology SE",                                                          // 7159
         "Granada Learning",                                                               // 7160
         "Network Solutions, Inc.",                                                        // 7161
         "Delancey Management and Consulting",                                             // 7162
@@ -20440,7 +20440,7 @@ static global_enterprises_table_t table =
         "lepo",                                                                           // 20411
         "OAO Link",                                                                       // 20412
         "University of Exeter",                                                           // 20413
-        "Fracarro Radioindustrie S.p.A.",                                                 // 20414
+        "Fracarro Radioindustrie S.r.l.",                                                 // 20414
         "Solid AB",                                                                       // 20415
         "Fifth Third Bank",                                                               // 20416
         "EUROTUNNEL",                                                                     // 20417
@@ -38308,7 +38308,7 @@ static global_enterprises_table_t table =
         "Pilot Corporation of America",                                                   // 38279
         "Millennium Information Technologies (Private) Limited",                          // 38280
         "1st Setup",                                                                      // 38281
-        "Italtelec S.p.A.",                                                               // 38282
+        "Italtelec International S.r.l.",                                                 // 38282
         "MobiWork LLC",                                                                   // 38283
         "PacketAccess",                                                                   // 38284
         "Live-PA Ltd",                                                                    // 38285
@@ -47553,7 +47553,7 @@ static global_enterprises_table_t table =
         "Rubicon Labs, Inc.",                                                             // 47524
         "Wuliang",                                                                        // 47525
         "A. Farber & Partners Inc.",                                                      // 47526
-        "Charbonnier",                                                                    // 47527
+        "Silent Waters IT Consulting S.L.",                                               // 47527
         "Softhum",                                                                        // 47528
         "NATIONAL BANK OF GREECE",                                                        // 47529
         "Softwaretechnik Ges.m.b.H.",                                                     // 47530
@@ -61180,7 +61180,41 @@ static global_enterprises_table_t table =
         "Louisiana State Employees' Retirement System",                                   // 61151
         "Lacus Inc.",                                                                     // 61152
         "E-lige Informatica",                                                             // 61153
-        "Universitätsklinikum Carl Gustav Carus an der Technischen Universität Dresden"   // 61154
+        "Universitätsklinikum Carl Gustav Carus an der Technischen Universität Dresden",  // 61154
+        "TPCWDRW Team",                                                                   // 61155
+        "vision-batt",                                                                    // 61156
+        "Wolfgang Friesenecker",                                                          // 61157
+        "Texas Native Health",                                                            // 61158
+        "OCHSNER Wärmepumpen GmbH",                                                       // 61159
+        "TUYA SMART",                                                                     // 61160
+        "Stadtentwaesserung Dresden",                                                     // 61161
+        "Verana Networks",                                                                // 61162
+        "heldtweit",                                                                      // 61163
+        "LuxQuanta Technologies S.L.",                                                    // 61164
+        "Platinum Equity Advisors, LLC",                                                  // 61165
+        "Tritium Ltd Pty",                                                                // 61166
+        "Wuhan Tengxin Communication Technology Co., Ltd",                                // 61167
+        "Beijing Broadwit Technology Co.,Ltd",                                            // 61168
+        "Infrawaves",                                                                     // 61169
+        "HAV Group ASA",                                                                  // 61170
+        "South Texas Oncology and Hematology PLLC",                                       // 61171
+        "上海恩阶电子科技有限公司 (Shanghai Enjie Electronic Technology Co., Ltd.)",                  // 61172
+        "UlMeCo AG",                                                                      // 61173
+        "FMH Generalsekretariat",                                                         // 61174
+        "Itti Digital",                                                                   // 61175
+        "Secure Identity",                                                                // 61176
+        "上海涛影医疗科技有限公司 (Shanghai Taoimage Medical Technology Co., Ltd.)",                  // 61177
+        "Promotech",                                                                      // 61178
+        "Solotech",                                                                       // 61179
+        "myDid",                                                                          // 61180
+        "Sibros Technologies Inc",                                                        // 61181
+        "Raditek",                                                                        // 61182
+        "Sean Sears",                                                                     // 61183
+        "Corky Reed Lucas",                                                               // 61184
+        "Qingdao Yuze Intelligent Technology Co., Ltd",                                   // 61185
+        "Mitchell Neal",                                                                  // 61186
+        "Integrated Concepts",                                                            // 61187
+        "FassaBortolo"                                                                    // 61188
     }
 };
 
