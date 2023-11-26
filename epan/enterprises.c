@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-11-18) */
+/* (last updated 2023-11-22) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61189];
+    const char* values[61206];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61188,
+    61205,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -42670,7 +42670,7 @@ static global_enterprises_table_t table =
         "Tri-State Generation and Transmission",                                          // 42641
         "Stage Entertainment",                                                            // 42642
         "NetSavia SA",                                                                    // 42643
-        "New Leaf Publishing Group, Inc.",                                                // 42644
+        "New Leaf Publishing Group, LLC",                                                 // 42644
         "Ros Vicente (ITComp)",                                                           // 42645
         "Etherlive Ltd",                                                                  // 42646
         "Alliance Spacesystems, LLC",                                                     // 42647
@@ -57156,7 +57156,7 @@ static global_enterprises_table_t table =
         "GABBE",                                                                          // 57127
         "Plow Technologies LLC",                                                          // 57128
         "Excel Technical Projects",                                                       // 57129
-        "EDEKA Rechenzentrum Süd GmbH",                                                   // 57130
+        "EDEKA Rechenzentrum Süd Betriebs GmbH",                                          // 57130
         "QEI, LLC",                                                                       // 57131
         "NEOX NETWORKS GmbH",                                                             // 57132
         "Tech Pad LLC",                                                                   // 57133
@@ -61214,7 +61214,24 @@ static global_enterprises_table_t table =
         "Qingdao Yuze Intelligent Technology Co., Ltd",                                   // 61185
         "Mitchell Neal",                                                                  // 61186
         "Integrated Concepts",                                                            // 61187
-        "FassaBortolo"                                                                    // 61188
+        "FassaBortolo",                                                                   // 61188
+        "Goldplate",                                                                      // 61189
+        "Theo Koulayan",                                                                  // 61190
+        "James Hackett",                                                                  // 61191
+        "ncubed B.V.",                                                                    // 61192
+        "Intrust JSC",                                                                    // 61193
+        "Forbes Computer Systems Ltd",                                                    // 61194
+        "Bluetti",                                                                        // 61195
+        "Genius Systems Pvt. Ltd.",                                                       // 61196
+        "Jiri Kroutil",                                                                   // 61197
+        "Sistemas Energéticos SA",                                                        // 61198
+        "Tribunal Regional Eleitoral do Pará",                                            // 61199
+        "Adashi Systems LLC",                                                             // 61200
+        "Comsign Europe",                                                                 // 61201
+        "Comsign Europe",                                                                 // 61202
+        "METRO Markets GmbH",                                                             // 61203
+        "ECCOS inzenjering d.o.o.",                                                       // 61204
+        "Nova Labs"                                                                       // 61205
     }
 };
 
