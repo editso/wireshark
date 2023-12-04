@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-11-22) */
+/* (last updated 2023-12-01) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61206];
+    const char* values[61240];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61205,
+    61239,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -12681,7 +12681,7 @@ static global_enterprises_table_t table =
         "Eivind Olsen Datakonsulent",                                                     // 12652
         "Armitel",                                                                        // 12653
         "ATH system",                                                                     // 12654
-        "exceet Secure Solutions GmbH",                                                   // 12655
+        "Utimaco IS GmbH",                                                                // 12655
         "Avest Plc.",                                                                     // 12656
         "Birmé Consulting",                                                               // 12657
         "Blue Star Sustainable Technologies Inc.",                                        // 12658
@@ -61231,7 +61231,41 @@ static global_enterprises_table_t table =
         "Comsign Europe",                                                                 // 61202
         "METRO Markets GmbH",                                                             // 61203
         "ECCOS inzenjering d.o.o.",                                                       // 61204
-        "Nova Labs"                                                                       // 61205
+        "Nova Labs",                                                                      // 61205
+        "MINISTRY OF FOREIGN AND EUROPEAN AFFAIRS",                                       // 61206
+        "A-ROSSO Sašo Cuder s.p.",                                                        // 61207
+        "FREEDOMPOP MEXICO, S.A. DE C.V.",                                                // 61208
+        "Canonical Identity",                                                             // 61209
+        "ZOWEE TECHNOLOGY(HEYUAN) CO., LTD.",                                             // 61210
+        "Erste Bank a.d. Novi Sad",                                                       // 61211
+        "SOS Tecnologia y Gestion de Informacion Ltda",                                   // 61212
+        "SiteB",                                                                          // 61213
+        "Our Host",                                                                       // 61214
+        "Heavy-Duty Computer Systems ELC",                                                // 61215
+        "ProData",                                                                        // 61216
+        "Atikur Rahman",                                                                  // 61217
+        "CICT Connected and Intelligent Technologies Co., Ltd",                           // 61218
+        "深圳市桑达无线通讯技术有限公司 (Shenzhen Sangda Wireless Communication Technology Co., Ltd.)",  // 61219
+        "HBBLAB",                                                                         // 61220
+        "EUKALIN Spezial-Klebstoff Fabrik GmbH",                                          // 61221
+        "Business Data Solutions GmbH",                                                   // 61222
+        "Consolis Oy",                                                                    // 61223
+        "Entcor-e LTD",                                                                   // 61224
+        "CGN SA",                                                                         // 61225
+        "Steve Houle",                                                                    // 61226
+        "eDocs Bulgaria Ltd",                                                             // 61227
+        "ByteMedia",                                                                      // 61228
+        "Step Forward Partners Limited",                                                  // 61229
+        "Никита (Nikita)",                                                                // 61230
+        "Cortus SAS",                                                                     // 61231
+        "liquidstack Limited",                                                            // 61232
+        "PESCOER L.L.C-FZ",                                                               // 61233
+        "Cisco Systems Inc",                                                              // 61234
+        "MATTIOLI MATTEO",                                                                // 61235
+        "Altimedia Corp.",                                                                // 61236
+        "Infracontrol AB",                                                                // 61237
+        "Waterstons Limited",                                                             // 61238
+        "Varex Imaging Corporation"                                                       // 61239
     }
 };
 
