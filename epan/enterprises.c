@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-12-01) */
+/* (last updated 2023-12-08) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61240];
+    const char* values[61267];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61239,
+    61266,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -5114,7 +5114,7 @@ static global_enterprises_table_t table =
         "SmartMove",                                                                      // 5085
         "ICS Advent",                                                                     // 5086
         "Great Dragon Telecom(Group)",                                                    // 5087
-        "Digital Burro, INC",                                                             // 5088
+        "Guy Cole",                                                                       // 5088
         "Clavister AB",                                                                   // 5089
         "Carumba",                                                                        // 5090
         "Norske Troll AS",                                                                // 5091
@@ -32860,7 +32860,7 @@ static global_enterprises_table_t table =
         "IDS",                                                                            // 32831
         "Optech Fibres Limited",                                                          // 32832
         "Université Lille 2 Droit et Santé",                                              // 32833
-        "ANTALIS SPAIN",                                                                  // 32834
+        "ANTALIS",                                                                        // 32834
         "Data Driven Logistics Limited",                                                  // 32835
         "C2SAT communications AB",                                                        // 32836
         "Lohmann GmbH&Co.KG",                                                             // 32837
@@ -46384,7 +46384,7 @@ static global_enterprises_table_t table =
         "Expert-Team Pte Ltd",                                                            // 46355
         "Grupo de Tecnologia Cibernetica, S.A. de C.V.",                                  // 46356
         "NBS System",                                                                     // 46357
-        "Zwick GmbH & Co KG",                                                             // 46358
+        "ZwickRoell GmbH & Co KG",                                                        // 46358
         "Robert P. Fein and David A. Richards",                                           // 46359
         "West and Central African Research and Education Network (WACREN)",               // 46360
         "Richard Scranton",                                                               // 46361
@@ -58252,7 +58252,7 @@ static global_enterprises_table_t table =
         "akYtec Gmbh",                                                                    // 58223
         "Telnyx",                                                                         // 58224
         "Miami County, KS",                                                               // 58225
-        "Cyber Sciences, Inc.",                                                           // 58226
+        "Trystar, LLC",                                                                   // 58226
         "Chongqing Lavid Industrial Co.,Ltd.",                                            // 58227
         "Nature Coast Psychiatry PLLC",                                                   // 58228
         "Terial Corp",                                                                    // 58229
@@ -61265,7 +61265,34 @@ static global_enterprises_table_t table =
         "Altimedia Corp.",                                                                // 61236
         "Infracontrol AB",                                                                // 61237
         "Waterstons Limited",                                                             // 61238
-        "Varex Imaging Corporation"                                                       // 61239
+        "Varex Imaging Corporation",                                                      // 61239
+        "AQA Education",                                                                  // 61240
+        "One9 Solutions",                                                                 // 61241
+        "RMA Network",                                                                    // 61242
+        "Audisi B.V.",                                                                    // 61243
+        "Duratech Industrial Components(Beijing)Co.,Ltd",                                 // 61244
+        "States of Jersey",                                                               // 61245
+        "ZERTIBAN S.L.U.",                                                                // 61246
+        "Medray Imaging Medical Corporation",                                             // 61247
+        "ESA Elektronische Steuerungs- und Automatisierungs Ges.m.b.H.",                  // 61248
+        "1E Limited",                                                                     // 61249
+        "E. Breuninger GmbH & Co.",                                                       // 61250
+        "Ian Spence",                                                                     // 61251
+        "Dubious, Inc.",                                                                  // 61252
+        "广州泓盈信息科技有限公司 (Guangzhou Hongying Information Technology Co., Ltd.)",             // 61253
+        "DCVC Management Co, LLC",                                                        // 61254
+        "Jonas Hofmann",                                                                  // 61255
+        "Carolyn Conroy, infiniteGratitude",                                              // 61256
+        "Gendarmerie nationale",                                                          // 61257
+        "NIWA ELECTRIC CO.,LTD.",                                                         // 61258
+        "浙江恒捷通信科技有限公司 (Zhejiang Hengjie Communication Technology Co., Ltd.)",             // 61259
+        "Mahindra & Mahindra Ltd.",                                                       // 61260
+        "Wuhan SmartWin Technology CO., Ltd.",                                            // 61261
+        "SHANGHAI HUIJUE NETWORK COMMUNICATION EQUIPMENT CO., LTD.",                      // 61262
+        "Stonefield Systems (Europe) Ltd",                                                // 61263
+        "Police nationale",                                                               // 61264
+        "Prime Alliance Aisbl",                                                           // 61265
+        "Byron Center Public Schools"                                                     // 61266
     }
 };
 
