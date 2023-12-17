@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-12-08) */
+/* (last updated 2023-12-16) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61267];
+    const char* values[61296];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61266,
+    61295,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -33728,7 +33728,7 @@ static global_enterprises_table_t table =
         "TAG Video Systems",                                                              // 33699
         "Saginaw Valley State University",                                                // 33700
         "Cathay Pacific Airways Ltd.",                                                    // 33701
-        "Technalogix Ltd.",                                                               // 33702
+        "Technalogix",                                                                    // 33702
         "ziggurat29",                                                                     // 33703
         "Middle Office Solutions, LLC",                                                   // 33704
         "Global 360 Inc",                                                                 // 33705
@@ -44029,7 +44029,7 @@ static global_enterprises_table_t table =
         "PointSecure Technologies Inc",                                                   // 44000
         "Shenzhen Envicool Technology Co., Ltd.",                                         // 44001
         "Gridwiz, Inc.",                                                                  // 44002
-        "AutoGrid Systems",                                                               // 44003
+        "AutoGrid Systems, Inc.",                                                         // 44003
         "BYKING INC.",                                                                    // 44004
         "Wadi Chadli",                                                                    // 44005
         "Xunlei Networking Technologies,Ltd.",                                            // 44006
@@ -53455,7 +53455,7 @@ static global_enterprises_table_t table =
         "Vacus Tech Pvt Ltd",                                                             // 53426
         "GB Logging AB",                                                                  // 53427
         "Invigo Offshore SAL",                                                            // 53428
-        "Digital 14 L.L.C",                                                               // 53429
+        "Digital 14 Oy",                                                                  // 53429
         "AUTAJON Group",                                                                  // 53430
         "Lookman Electroplast Industries Limited",                                        // 53431
         "Fondation des Apprentis d'Auteuil",                                              // 53432
@@ -61292,7 +61292,36 @@ static global_enterprises_table_t table =
         "Stonefield Systems (Europe) Ltd",                                                // 61263
         "Police nationale",                                                               // 61264
         "Prime Alliance Aisbl",                                                           // 61265
-        "Byron Center Public Schools"                                                     // 61266
+        "Byron Center Public Schools",                                                    // 61266
+        "Layer18.com, Inc",                                                               // 61267
+        "NajamTech",                                                                      // 61268
+        "RELIANOID",                                                                      // 61269
+        "Hoehn Motors",                                                                   // 61270
+        "Irdeto USA, Inc.",                                                               // 61271
+        "Ringer Mobile",                                                                  // 61272
+        "tablezip",                                                                       // 61273
+        "CominTech, LLC",                                                                 // 61274
+        "CoreTech",                                                                       // 61275
+        "Cordes & Graefe KG",                                                             // 61276
+        "RazorSecure",                                                                    // 61277
+        "Fresenius Medical Care AG",                                                      // 61278
+        "Cinring Networks",                                                               // 61279
+        "BEIJING SIFANG AUTOMATION CO.,LTD",                                              // 61280
+        "Shenzhen Cyclone Technology Co., Ltd.",                                          // 61281
+        "ILYA BELOSTOTSKIY",                                                              // 61282
+        "ZINWELL CORPORATION",                                                            // 61283
+        "Whitewater Express",                                                             // 61284
+        "ShenzhenTuSan technology Co., LTD",                                              // 61285
+        "New Look Retailers Ltd",                                                         // 61286
+        "Satya aditya Varma",                                                             // 61287
+        "Shuangyili (Ningbo) Battery Co., Ltd",                                           // 61288
+        "Beijing Cybercore Technology Co.,Ltd.",                                          // 61289
+        "DYNADVANCE S.R.L.",                                                              // 61290
+        "Ministery Of Defense Saudi Arabia",                                              // 61291
+        "CES Corporation",                                                                // 61292
+        "Mario Vernon",                                                                   // 61293
+        "Azbil Corporation",                                                              // 61294
+        "Submer Technologies SL."                                                         // 61295
     }
 };
 
