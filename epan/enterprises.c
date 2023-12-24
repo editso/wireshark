@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-12-16) */
+/* (last updated 2023-12-22) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61296];
+    const char* values[61321];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61295,
+    61320,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -49018,7 +49018,7 @@ static global_enterprises_table_t table =
         "Ture Johanssons Trävaru AB",                                                     // 48989
         "Intesi Group S.p.A.",                                                            // 48990
         "Aequitas Software GmbH & Co. KG",                                                // 48991
-        "AEF e.V.",                                                                       // 48992
+        "Agricultural Industry Electronics Foundation e.V.",                              // 48992
         "MKB Webhoster Limited",                                                          // 48993
         "AGELEC",                                                                         // 48994
         "Lumeta Corporation",                                                             // 48995
@@ -56773,7 +56773,7 @@ static global_enterprises_table_t table =
         "Satair A/S",                                                                     // 56744
         "Jiangsu RCT Power Energy Technology Co., Ltd",                                   // 56745
         "SPDT Solucoes em Energia",                                                       // 56746
-        "NKT Photonics GmbH",                                                             // 56747
+        "Luna Innovations Germany GmbH",                                                  // 56747
         "SETCCE d.o.o.",                                                                  // 56748
         "EJADA",                                                                          // 56749
         "AZIMUT",                                                                         // 56750
@@ -57763,7 +57763,7 @@ static global_enterprises_table_t table =
         "Trasna Solutions Telecom Limited",                                               // 57734
         "Computer Development Systems cc",                                                // 57735
         "AK Lab",                                                                         // 57736
-        "Informationstechnikzentrum Bund Nürnberg",                                       // 57737
+        "Informationstechnikzentrum Bund (ITZBund)",                                      // 57737
         "Inception doo Beograd",                                                          // 57738
         "Pedro J. Carvajal MDPA",                                                         // 57739
         "Flipkart Internet Pvt. Ltd.",                                                    // 57740
@@ -58749,7 +58749,7 @@ static global_enterprises_table_t table =
         "Orthopedic and Sports Medicine Specialist of Green Bay, SC",                     // 58720
         "it-economics GmbH",                                                              // 58721
         "Maximilian Kapra",                                                               // 58722
-        "TrusAuth Inc",                                                                   // 58723
+        "Shanghai AssembleAuth Coroutine Technology Co., Ltd",                            // 58723
         "Monban Project",                                                                 // 58724
         NULL,                                                                             // 58725
         "CIS",                                                                            // 58726
@@ -61321,7 +61321,32 @@ static global_enterprises_table_t table =
         "CES Corporation",                                                                // 61292
         "Mario Vernon",                                                                   // 61293
         "Azbil Corporation",                                                              // 61294
-        "Submer Technologies SL."                                                         // 61295
+        "Submer Technologies SL.",                                                        // 61295
+        "厦门星创易联科技有限公司 (Xiamen Xingchuang Yilian Technology Co., Ltd.)",                   // 61296
+        "DIGILEO",                                                                        // 61297
+        "Uwe Schneider",                                                                  // 61298
+        "LimePoint Pty Ltd",                                                              // 61299
+        "Beijinig Shannoncyber Technology Co., Ltd.",                                     // 61300
+        "Landkreis Vorpommern-Rügen",                                                     // 61301
+        "Damon Nicholas Chong",                                                           // 61302
+        "Decatur Utilities",                                                              // 61303
+        "Oros Ltd",                                                                       // 61304
+        "FIRMASEGURA S.A.S.",                                                             // 61305
+        "ELA BATHROOM SUPPLY LTD",                                                        // 61306
+        "Deutsches Rotes Kreuz Landesverband Rheinland-Pfalz e.V.",                       // 61307
+        "BugProve, Inc.",                                                                 // 61308
+        "M Travis Schnell",                                                               // 61309
+        "Clive, Inc.",                                                                    // 61310
+        "DigiBird",                                                                       // 61311
+        "Ingrain SA Pty. Ltd.",                                                           // 61312
+        "Native Wind Pediatric  & Family Care",                                           // 61313
+        "Colorlight Cloud Tech Ltd",                                                      // 61314
+        "VNO Roaming and Carrier Operations",                                             // 61315
+        "Abwasserbetrieb TEO AoeR",                                                       // 61316
+        "BST POWER (Shenzhen) limited",                                                   // 61317
+        "Jupiter Networks LLC",                                                           // 61318
+        "ZeroSubnet",                                                                     // 61319
+        "Maxauer Papierfabrik GmbH"                                                       // 61320
     }
 };
 
