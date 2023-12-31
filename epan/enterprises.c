@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-12-22) */
+/* (last updated 2023-12-26) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61321];
+    const char* values[61328];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61320,
+    61327,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -61346,7 +61346,14 @@ static global_enterprises_table_t table =
         "BST POWER (Shenzhen) limited",                                                   // 61317
         "Jupiter Networks LLC",                                                           // 61318
         "ZeroSubnet",                                                                     // 61319
-        "Maxauer Papierfabrik GmbH"                                                       // 61320
+        "Maxauer Papierfabrik GmbH",                                                      // 61320
+        "Mukogawa US Campus",                                                             // 61321
+        "ARIX NETWORK",                                                                   // 61322
+        "Matthias Nagel",                                                                 // 61323
+        "feibra GmbH",                                                                    // 61324
+        "Vid vitenskapelige høgskole",                                                    // 61325
+        "Mikroszerviz SP Ltd",                                                            // 61326
+        "CSConsult"                                                                       // 61327
     }
 };
 
