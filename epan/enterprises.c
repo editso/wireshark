@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2023-12-26) */
+/* (last updated 2024-01-06) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61328];
+    const char* values[61360];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61327,
+    61359,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -59202,7 +59202,7 @@ static global_enterprises_table_t table =
         "CSL Dualcom Ltd",                                                                // 59173
         "Primoris Services Corporation",                                                  // 59174
         "Azdio",                                                                          // 59175
-        "PowerLerder Computer Systems Co., LTD",                                          // 59176
+        "PowerLeader Computer Systems Co., LTD",                                          // 59176
         "Asio",                                                                           // 59177
         "Indiana Foot & Ankle Specialists LLC",                                           // 59178
         "USSOCOM",                                                                        // 59179
@@ -61108,7 +61108,7 @@ static global_enterprises_table_t table =
         "RUAG AG",                                                                        // 61079
         "Lemon Network Technology Co.,Ltd",                                               // 61080
         "DsNetwork",                                                                      // 61081
-        "Klavis Kripta Inovasi",                                                          // 61082
+        "Klavis Kripta",                                                                  // 61082
         "Marcel Metzen",                                                                  // 61083
         "Cleverbase",                                                                     // 61084
         "Terra Sound",                                                                    // 61085
@@ -61353,7 +61353,39 @@ static global_enterprises_table_t table =
         "feibra GmbH",                                                                    // 61324
         "Vid vitenskapelige høgskole",                                                    // 61325
         "Mikroszerviz SP Ltd",                                                            // 61326
-        "CSConsult"                                                                       // 61327
+        "CSConsult",                                                                      // 61327
+        "Robinson Lighting Ltd",                                                          // 61328
+        "People's Technology Co., Ltd.",                                                  // 61329
+        "Janelle Lynette Guidry",                                                         // 61330
+        "Forgital Italy S.p.A.",                                                          // 61331
+        "Research Institute for Road Safety of MPS",                                      // 61332
+        "Shenzhen Goodtime Technology Co. ,Ltd",                                          // 61333
+        "Cryptob3auty",                                                                   // 61334
+        "Michael C Pergolese",                                                            // 61335
+        "RASEKO",                                                                         // 61336
+        "BrainGu",                                                                        // 61337
+        "EFit partners",                                                                  // 61338
+        "VTech Telecommunications Limited",                                               // 61339
+        "VB-Tech",                                                                        // 61340
+        "Ideal Credit Union",                                                             // 61341
+        "Mote Enterprises Inc.",                                                          // 61342
+        "iTran",                                                                          // 61343
+        "Juel Group",                                                                     // 61344
+        "Marshall Health Network",                                                        // 61345
+        "LLC «P C Most»",                                                                 // 61346
+        "Kirill Sluzhaev",                                                                // 61347
+        "Limited Liability Company ""Thunder Soft""",                                     // 61348
+        "北京中科恒伦科技有限公司 (Beijing Zhongke Henglun Technology Co., Ltd.)",                    // 61349
+        "SMARTGEN(ZHENGZHOU) TECHNOLOGY CO.,LTD",                                         // 61350
+        "Telekomi Kosoves",                                                               // 61351
+        "Parta Networks",                                                                 // 61352
+        "Polar Wind Medical Center, Inc.",                                                // 61353
+        "Blackbaud Global",                                                               // 61354
+        "SHANDONG LURUAN DIGITAL TECHNOLOGY CO., LTD. SMART ENERGY BRANCH",               // 61355
+        "NOSSAMAN LLP",                                                                   // 61356
+        "Cobram Anglican Grammar School",                                                 // 61357
+        "Hochschule für Grafik und Buchkunst Leipzig",                                    // 61358
+        "Private Tech, Inc"                                                               // 61359
     }
 };
 
