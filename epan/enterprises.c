@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-01-06) */
+/* (last updated 2024-01-12) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61360];
+    const char* values[61392];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61359,
+    61391,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -33158,7 +33158,7 @@ static global_enterprises_table_t table =
         "ENTEREST GmbH",                                                                  // 33129
         "Virtual Instruments Corporation",                                                // 33130
         "Drexel University",                                                              // 33131
-        "Lichti² GbR",                                                                    // 33132
+        "Kaiserpfalz EDV-Service",                                                        // 33132
         "Daedalus Software, Inc.",                                                        // 33133
         "LS ELECTRIC Co.,Ltd.",                                                           // 33134
         "PeakSystems",                                                                    // 33135
@@ -44072,7 +44072,7 @@ static global_enterprises_table_t table =
         "BSG-IT Kft.",                                                                    // 44043
         "SETCCE",                                                                         // 44044
         "Dos al Cubo",                                                                    // 44045
-        "POK Power of Knowledge",                                                         // 44046
+        "POK AG Schweiz",                                                                 // 44046
         "Schreiber Foods Inc",                                                            // 44047
         "Instytut Hodowli i Aklimatyzacji Roslin - Panstwowy Instytut Badawczy",          // 44048
         "Cloud2Ground Technologies Div. Digital Multimedia, LLC",                         // 44049
@@ -61385,7 +61385,39 @@ static global_enterprises_table_t table =
         "NOSSAMAN LLP",                                                                   // 61356
         "Cobram Anglican Grammar School",                                                 // 61357
         "Hochschule für Grafik und Buchkunst Leipzig",                                    // 61358
-        "Private Tech, Inc"                                                               // 61359
+        "Private Tech, Inc",                                                              // 61359
+        "Ediciones Kimün SpA",                                                            // 61360
+        "Mental Health Innovation SpA",                                                   // 61361
+        "Partner-ed Colaborativa SpA",                                                    // 61362
+        "Health-ed SpA",                                                                  // 61363
+        "Corporación de Derecho Privado I`+DEA",                                          // 61364
+        "HONGTAO",                                                                        // 61365
+        "Tung You Yu",                                                                    // 61366
+        "Big Ticket Solutions LLC",                                                       // 61367
+        "Subledger",                                                                      // 61368
+        "CV Bilişim Teknoloji Ticaret Ltd.",                                              // 61369
+        "Big Geek Computer Sales and Service",                                            // 61370
+        "BAW SAS",                                                                        // 61371
+        "Fritz Kübler GmbH",                                                              // 61372
+        "JetStream Software Inc.",                                                        // 61373
+        "spaixx AG",                                                                      // 61374
+        "learnitlessons.com",                                                             // 61375
+        "IT-Consulting Kinner",                                                           // 61376
+        "Ningbo Deye Inverter Technology Co., Ltd.",                                      // 61377
+        "Chinese Army Factory No. 6909",                                                  // 61378
+        "Appleby Westward Group Limited",                                                 // 61379
+        "Vitamin IT Limited",                                                             // 61380
+        "Clipsal Cortex",                                                                 // 61381
+        "Squirrel Energy Pty Ltd",                                                        // 61382
+        "Jeremy D. Pavleck",                                                              // 61383
+        "SWARCO FUTURIT Verkehrssignalsysteme Ges.m.b.H",                                 // 61384
+        "Dongdong Wen",                                                                   // 61385
+        "ELIM Co., Ltd",                                                                  // 61386
+        "Verbandsgemeindeverwaltung Vallendar",                                           // 61387
+        "Sinai Health System",                                                            // 61388
+        "Wesley College",                                                                 // 61389
+        "ANSART B.V.",                                                                    // 61390
+        "NEXT TELEKOM"                                                                    // 61391
     }
 };
 
