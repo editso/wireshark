@@ -77380,7 +77380,7 @@ dissect_lte_rrc_ReleaseCause(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx
                                      4, &value, FALSE, 0, NULL);
 
   col_append_fstr(actx->pinfo->cinfo, COL_INFO, " [cause=%s]",
-                  val_to_str(value, lte_rrc_ReleaseCause_vals, "Unknown"));
+                  val_to_str_const(value, lte_rrc_ReleaseCause_vals, "Unknown"));
 
 
   return offset;

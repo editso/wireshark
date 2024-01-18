@@ -19116,7 +19116,8 @@ dissect_rrc_CN_DomainIdentity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *act
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &nas_sys_info, FALSE, 0, NULL);
 
-  col_append_fstr(actx->pinfo->cinfo, COL_INFO, "(%s)", val_to_str_const(nas_sys_info,rrc_CN_DomainIdentity_vals,"Unknown"));
+  col_append_fstr(actx->pinfo->cinfo, COL_INFO, "(%s)",
+                  val_to_str_const(nas_sys_info,rrc_CN_DomainIdentity_vals, "Unknown"));
   nas_sys_info++; /* CS = 0, PS = 1 but the enum defines 0 as Unknown and CS = 1, PS = 2 */
   private_data_set_cn_domain(actx, (enum nas_sys_info_gsm_map) nas_sys_info);
 
@@ -91334,7 +91335,7 @@ dissect_rrc_ReleaseCause(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_
                                      8, &value, FALSE, 0, NULL);
 
   col_append_fstr(actx->pinfo->cinfo, COL_INFO, " [cause=%s]",
-                  val_to_str(value, rrc_ReleaseCause_vals, "Unknown"));
+                  val_to_str_const(value, rrc_ReleaseCause_vals, "Unknown"));
 
 
   return offset;
