@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-01-12) */
+/* (last updated 2024-01-19) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61392];
+    const char* values[61412];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61391,
+    61411,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -22248,7 +22248,7 @@ static global_enterprises_table_t table =
         "BoreNet AB",                                                                     // 22219
         "LACNIC",                                                                         // 22220
         "Wescom GmbH",                                                                    // 22221
-        "ProaXial",                                                                       // 22222
+        "Gericos",                                                                        // 22222
         "IntelliCal LLC",                                                                 // 22223
         "Queensland Treasury",                                                            // 22224
         "Huazhong University of Science and Technology",                                  // 22225
@@ -22413,7 +22413,7 @@ static global_enterprises_table_t table =
         "Benedikt Heinen",                                                                // 22384
         "Houston Academy of Medicine-Texas Medical Center Library",                       // 22385
         "ionflux.org",                                                                    // 22386
-        "InSync Technology Ltd",                                                          // 22387
+        "InSync Technology Limited",                                                      // 22387
         "SENTELCO",                                                                       // 22388
         "IRIS Corporation Berhad",                                                        // 22389
         "Parsek Corporation Ltd.",                                                        // 22390
@@ -43776,7 +43776,7 @@ static global_enterprises_table_t table =
         "MaterialApps",                                                                   // 43747
         "ARES Conocimiento de Negocio, SL",                                               // 43748
         "Country Bright Company Ltd.",                                                    // 43749
-        "Jabil Circuit, Inc",                                                             // 43750
+        "Jabil Inc",                                                                      // 43750
         "Shenzhen TG-NET Botone Technology CO. Ltd.",                                     // 43751
         "China Film Equipment Co. Ltd.",                                                  // 43752
         "Kyriasis",                                                                       // 43753
@@ -58360,7 +58360,7 @@ static global_enterprises_table_t table =
         "Three Z Printing",                                                               // 58331
         "Eagle's Flight",                                                                 // 58332
         "T Pieters",                                                                      // 58333
-        "GEWIS",                                                                          // 58334
+        "Gemeenschap van Wiskunde en Informatica Studenten (GEWIS)",                      // 58334
         "Capitol Broadcasting Company",                                                   // 58335
         "Tekkgear",                                                                       // 58336
         "runZero, Inc",                                                                   // 58337
@@ -61417,7 +61417,27 @@ static global_enterprises_table_t table =
         "Sinai Health System",                                                            // 61388
         "Wesley College",                                                                 // 61389
         "ANSART B.V.",                                                                    // 61390
-        "NEXT TELEKOM"                                                                    // 61391
+        "NEXT TELEKOM",                                                                   // 61391
+        "Estado Maior das Forças Armadas",                                                // 61392
+        "Goosnet",                                                                        // 61393
+        "iDCmini",                                                                        // 61394
+        "UNIVERSAL INFORMATION SYSTEM TECHNOLOGIES LAB",                                  // 61395
+        "Avernis Communications GmbH",                                                    // 61396
+        "Brett Eisenberg",                                                                // 61397
+        "Wohler Technologies Inc.",                                                       // 61398
+        "SIGENERGY AUSTRALIA PTY LTD",                                                    // 61399
+        "CPI International, Inc.",                                                        // 61400
+        "Family Walk In Clinic of Mountain Grove Inc",                                    // 61401
+        "Raw TV Ltd",                                                                     // 61402
+        "Nursyafiqah Mohdfaudzi",                                                         // 61403
+        "ABB Robotics",                                                                   // 61404
+        "Universitätsklinikum Erlangen Gebäudeleittechnik",                               // 61405
+        "TOOSIGN",                                                                        // 61406
+        "MULTITECH ENGINEERING LLC",                                                      // 61407
+        "Kompas",                                                                         // 61408
+        "Bavarian Centre for Families and Social Affairs (ZBFS)",                         // 61409
+        "Name Start",                                                                     // 61410
+        "GVTel Co. Ltd."                                                                  // 61411
     }
 };
 
