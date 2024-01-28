@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-01-19) */
+/* (last updated 2024-01-26) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61412];
+    const char* values[61447];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61411,
+    61446,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -3024,7 +3024,7 @@ static global_enterprises_table_t table =
         "AcuComm, Inc.",                                                                  // 2995
         "SpectraWorks Inc.",                                                              // 2996
         "RedTitan",                                                                       // 2997
-        "Anderson Consulting",                                                            // 2998
+        "Wire-Tap, Inc.",                                                                 // 2998
         "American Family Insurance",                                                      // 2999
         "IDB Systems, a Division of WorldCom Inc.",                                       // 3000
         "BAILO",                                                                          // 3001
@@ -3371,7 +3371,7 @@ static global_enterprises_table_t table =
         "MachOne Communications Inc.",                                                    // 3342
         "Philips Digital Video Systems Harry",                                            // 3343
         "Helsinki Televisio Oy",                                                          // 3344
-        "Nemetschek AG",                                                                  // 3345
+        "Nemetschek SE",                                                                  // 3345
         "Vocom",                                                                          // 3346
         "Hitachi Kokusai Electric Inc.",                                                  // 3347
         "Reliable Network Solutions",                                                     // 3348
@@ -48528,7 +48528,7 @@ static global_enterprises_table_t table =
         "inovex GmbH",                                                                    // 48499
         "Ventilatorenfabrik Oelde GmbH",                                                  // 48500
         "Wilmers Messtechnik GmbH",                                                       // 48501
-        "Startups, Inc.",                                                                 // 48502
+        "Startups Venture",                                                               // 48502
         "Magrathea Laboratories e.V.",                                                    // 48503
         "Pulselight Inc",                                                                 // 48504
         "AI2Co",                                                                          // 48505
@@ -50650,7 +50650,7 @@ static global_enterprises_table_t table =
         "Golage Inc",                                                                     // 50621
         "EQS Group AG",                                                                   // 50622
         "South Jersey Industries",                                                        // 50623
-        "Hill-Rom, Inc.",                                                                 // 50624
+        "Baxter Healthcare Products",                                                     // 50624
         "Agari Data, Inc.",                                                               // 50625
         "Concentric Media Sdn Bhd",                                                       // 50626
         "Rosenberger Hochfrequenztechnik GmbH & Co KG",                                   // 50627
@@ -61437,7 +61437,42 @@ static global_enterprises_table_t table =
         "Kompas",                                                                         // 61408
         "Bavarian Centre for Families and Social Affairs (ZBFS)",                         // 61409
         "Name Start",                                                                     // 61410
-        "GVTel Co. Ltd."                                                                  // 61411
+        "GVTel Co. Ltd.",                                                                 // 61411
+        "John Dowling",                                                                   // 61412
+        "EPRI",                                                                           // 61413
+        "Innspark Solutions Private Limited",                                             // 61414
+        "ZASP",                                                                           // 61415
+        "SINET",                                                                          // 61416
+        "Emerald",                                                                        // 61417
+        "Emerald.local",                                                                  // 61418
+        "The Based Department",                                                           // 61419
+        "Capricorn Identity Services Private Limited.",                                   // 61420
+        "Plantynet",                                                                      // 61421
+        "OPSWAT INC.",                                                                    // 61422
+        "BioComputing UP",                                                                // 61423
+        "D&D Nilsson AB",                                                                 // 61424
+        "Xtend Technologies Pvt. Ltd.",                                                   // 61425
+        "Salzburger Sand- und Kieswerk GmbH",                                             // 61426
+        "Synthesis Health Intelligence Inc.",                                             // 61427
+        "AGILTECH",                                                                       // 61428
+        "Xi'an THRN Technology Co., Ltd",                                                 // 61429
+        "Powerex Corp.",                                                                  // 61430
+        "Woolworths Group",                                                               // 61431
+        "Selectronic Australia Pty Ltd",                                                  // 61432
+        "HydroExceed GmbH",                                                               // 61433
+        "Product Marketing Service LLC",                                                  // 61434
+        "BY Kalim",                                                                       // 61435
+        "Tessenderlo Kerley Inc.",                                                        // 61436
+        "State of Nevada",                                                                // 61437
+        "Sierra Vista Hospital",                                                          // 61438
+        "Meade's PC Repair Shop, Inc.",                                                   // 61439
+        "Basalt AB",                                                                      // 61440
+        "TELETECNICA s.r.l.",                                                             // 61441
+        "Netgroot Infotech Private Limited",                                              // 61442
+        "CommuniGate Software Development & Licensing SA",                                // 61443
+        "IMESO-IT GmbH",                                                                  // 61444
+        "Siemens SI GSW IT GC RAIL",                                                      // 61445
+        "PT Bank Jago Tbk"                                                                // 61446
     }
 };
 
