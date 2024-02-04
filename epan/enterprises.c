@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-01-26) */
+/* (last updated 2024-02-02) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61447];
+    const char* values[61474];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61446,
+    61473,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -3422,7 +3422,7 @@ static global_enterprises_table_t table =
         "SandS International",                                                            // 3393
         "NeTrue Communications",                                                          // 3394
         "Certicom Corp.",                                                                 // 3395
-        "DICOS GmbH Kommunikationssysteme Stephan",                                       // 3396
+        "DICOS GmbH Kommunikationssysteme",                                               // 3396
         "Border Blues Productions",                                                       // 3397
         "Fieldbus Foundation",                                                            // 3398
         "Olencom Electronics Ltd.",                                                       // 3399
@@ -23809,7 +23809,7 @@ static global_enterprises_table_t table =
         "Prose Consulting Ltd.",                                                          // 23780
         "Albertslund Ungdomsboliger",                                                     // 23781
         "ASN",                                                                            // 23782
-        "iTellus Holdings, Inc.",                                                         // 23783
+        "Planet Networks, Inc.",                                                          // 23783
         "StrataLight Communications",                                                     // 23784
         "CIC/CAFMICRO",                                                                   // 23785
         "DS DATA SYSTEMS GmbH",                                                           // 23786
@@ -48587,7 +48587,7 @@ static global_enterprises_table_t table =
         "Trinity Grammar School",                                                         // 48558
         "Rosenberger Technologies Co., Ltd.",                                             // 48559
         "Almnäs Bruk AB",                                                                 // 48560
-        "Ahlstrom-Munksjö AB",                                                            // 48561
+        "Ahlstrom Group",                                                                 // 48561
         "KENDRIS AG",                                                                     // 48562
         "ANEXIA Internetdienstleistungs GmbH",                                            // 48563
         "Autoland Deutschland Inh. Wilfried Wilhelm Anclam, e. K.",                       // 48564
@@ -54533,7 +54533,7 @@ static global_enterprises_table_t table =
         "Warsaw University of Technology",                                                // 54504
         "Transcelestial Technologies PTE LTD",                                            // 54505
         "Intereuropa d.d.",                                                               // 54506
-        "IdeaData",                                                                       // 54507
+        "CySight",                                                                        // 54507
         "Deutsche Telekom - Access 4.0",                                                  // 54508
         "iCE - Intelligent Controlled Environments",                                      // 54509
         "Noscendo GmbH",                                                                  // 54510
@@ -61472,7 +61472,34 @@ static global_enterprises_table_t table =
         "CommuniGate Software Development & Licensing SA",                                // 61443
         "IMESO-IT GmbH",                                                                  // 61444
         "Siemens SI GSW IT GC RAIL",                                                      // 61445
-        "PT Bank Jago Tbk"                                                                // 61446
+        "PT Bank Jago Tbk",                                                               // 61446
+        "Shenzhen Beilai Technology Co.,Ltd.",                                            // 61447
+        "Ooredoo Oman",                                                                   // 61448
+        "Zesp",                                                                           // 61449
+        "AGENCE FRANCAISE DE DEVELOPPEMENT (AFD)",                                        // 61450
+        "Schloss Tempelhof eG",                                                           // 61451
+        "Paul Hagedorn",                                                                  // 61452
+        "Cybernop, LLC",                                                                  // 61453
+        "Shawna Odom-Burgower",                                                           // 61454
+        "Leonardo (Digital Platform)",                                                    // 61455
+        "Inferno Communications",                                                         // 61456
+        "Marcelo Augusto Garbuli",                                                        // 61457
+        "Northern Schools Trust",                                                         // 61458
+        "天磊卫士（深圳）科技有限公司 (Tianlei Guardian (Shenzhen) Technology Co., Ltd.)",              // 61459
+        "PT Sentra Vidya Utama",                                                          // 61460
+        "Excellent Entertainment AG",                                                     // 61461
+        "4Links",                                                                         // 61462
+        "Zühlke Engineering AG",                                                          // 61463
+        "De Vaere Solutions",                                                             // 61464
+        "Armstrong Equipment, Inc",                                                       // 61465
+        "Connecticut Criminal Justice Information System Governing Board",                // 61466
+        "Roland Rechtsschutz Versicherungs AG",                                           // 61467
+        "Mobius Networks Limited",                                                        // 61468
+        "Lagardere Travel Retail sp. z o.o.",                                             // 61469
+        "LXDEV Technologies",                                                             // 61470
+        "Conexys S.R.L.",                                                                 // 61471
+        "Swistec GmbH",                                                                   // 61472
+        "Alliance Transport Bois"                                                         // 61473
     }
 };
 
