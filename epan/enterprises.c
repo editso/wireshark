@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-02-02) */
+/* (last updated 2024-02-09) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61474];
+    const char* values[61499];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61473,
+    61498,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -13747,7 +13747,7 @@ static global_enterprises_table_t table =
         "CCITRIAD",                                                                       // 13718
         "CEGETEL SI",                                                                     // 13719
         "CoreMedia AG",                                                                   // 13720
-        "Corning Cable Systems",                                                          // 13721
+        "Corning  Optical Communications",                                                // 13721
         "deot.net",                                                                       // 13722
         "Division of BITL",                                                               // 13723
         "Erasmus University Rotterdam",                                                   // 13724
@@ -49040,7 +49040,7 @@ static global_enterprises_table_t table =
         "Tanium Inc.",                                                                    // 49011
         "Indasys",                                                                        // 49012
         "Choice Cancer Care",                                                             // 49013
-        "Sörmlands Printing Solutions AB",                                                // 49014
+        "Stibo Complete AB",                                                              // 49014
         "HEXBITS TECNOLOGIA LTDA",                                                        // 49015
         "Build Informed GmbH",                                                            // 49016
         "Yukoo Limited",                                                                  // 49017
@@ -61499,7 +61499,32 @@ static global_enterprises_table_t table =
         "LXDEV Technologies",                                                             // 61470
         "Conexys S.R.L.",                                                                 // 61471
         "Swistec GmbH",                                                                   // 61472
-        "Alliance Transport Bois"                                                         // 61473
+        "Alliance Transport Bois",                                                        // 61473
+        "Mthokozisi",                                                                     // 61474
+        "Shenzhen Eybond Co., Ltd",                                                       // 61475
+        "Götalands Logistik & Transport AB",                                              // 61476
+        "Marcelo Estriga",                                                                // 61477
+        "Blep.cz, z. s.",                                                                 // 61478
+        "Euro-Alkohol GmbH",                                                              // 61479
+        "BRUNATA Wärmemesser Hagen GmbH & Co. KG",                                        // 61480
+        "idesis GmbH",                                                                    // 61481
+        "Amica Senior Lifestyles",                                                        // 61482
+        "Pirelli Tyre Russia",                                                            // 61483
+        "Daniel Fisher",                                                                  // 61484
+        "Enet Dev",                                                                       // 61485
+        "Evgeny Leontyev",                                                                // 61486
+        "宁波市商沃通信科技有限公司 (Ningbo Shangwo Communication Technology Co., Ltd.)",              // 61487
+        "NotalVision, Inc.",                                                              // 61488
+        "SGNT - Sibneftetransproekt",                                                     // 61489
+        "Integrated Technical Vision Ltd.",                                               // 61490
+        "Akleza",                                                                         // 61491
+        "Energy Development Corporation Limited",                                         // 61492
+        "Aviler SARL",                                                                    // 61493
+        "MWZCONNECT LLC",                                                                 // 61494
+        "Festival de Cannes",                                                             // 61495
+        "Aleksandr Loktev",                                                               // 61496
+        "Conor DeCamp",                                                                   // 61497
+        "RWB PrivateCapital Emissionshaus AG"                                             // 61498
     }
 };
 
