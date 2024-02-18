@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-02-09) */
+/* (last updated 2024-02-17) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61499];
+    const char* values[61527];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61498,
+    61526,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -11176,7 +11176,7 @@ static global_enterprises_table_t table =
         "SVTO Hewlett-Packard",                                                           // 11147
         "Swan Systems",                                                                   // 11148
         "TI, d.o.o.",                                                                     // 11149
-        "Roamware Inc.",                                                                  // 11150
+        "Mobileum Inc.",                                                                  // 11150
         "Urschel Laboratories Incorporated",                                              // 11151
         "Vocalcom",                                                                       // 11152
         "WebWear",                                                                        // 11153
@@ -14158,7 +14158,7 @@ static global_enterprises_table_t table =
         "Sevan Networks, Inc.",                                                           // 14129
         "Bifco",                                                                          // 14130
         "Ifoundry Systems",                                                               // 14131
-        "CS Systemes d'Information",                                                      // 14132
+        "CS GROUP",                                                                       // 14132
         "Buergernetz Weihenstephan e.V.",                                                 // 14133
         "University of Szeged",                                                           // 14134
         "SysDM",                                                                          // 14135
@@ -61524,7 +61524,35 @@ static global_enterprises_table_t table =
         "Festival de Cannes",                                                             // 61495
         "Aleksandr Loktev",                                                               // 61496
         "Conor DeCamp",                                                                   // 61497
-        "RWB PrivateCapital Emissionshaus AG"                                             // 61498
+        "RWB PrivateCapital Emissionshaus AG",                                            // 61498
+        "steute Technologies GmbH & Co. KG",                                              // 61499
+        "APL Red Team",                                                                   // 61500
+        "Malayan Banking Berhad",                                                         // 61501
+        "Stadt Nuernberg",                                                                // 61502
+        "Delta, LLC",                                                                     // 61503
+        "PT. Satata Neka Tama",                                                           // 61504
+        "Glier's Meats, Inc.",                                                            // 61505
+        "Popli Design Group",                                                             // 61506
+        "Armstrong Group International, Inc",                                             // 61507
+        "IdentiTek sh.a",                                                                 // 61508
+        "no42.org",                                                                       // 61509
+        "Oficiul National al Registrului Comertului",                                     // 61510
+        "J.H. Bennett & Company, Inc.",                                                   // 61511
+        "Crump Homelab",                                                                  // 61512
+        "SondeHub",                                                                       // 61513
+        "Valley Metro",                                                                   // 61514
+        "Xian Stannard",                                                                  // 61515
+        "CooperVision Specialty Eyecare",                                                 // 61516
+        "Digit'Eaux",                                                                     // 61517
+        "Tout Pareil Corp.",                                                              // 61518
+        "TDK Sensors AG & Co. KG",                                                        // 61519
+        "Abbott LLC",                                                                     // 61520
+        "llang.at - IT-Dienstleistungen",                                                 // 61521
+        "Perryton Equity Exchange",                                                       // 61522
+        "EQUIRON",                                                                        // 61523
+        "Research and Production Association named after A.S. Popov",                     // 61524
+        "Darletto",                                                                       // 61525
+        "Dmitry Vorobiev"                                                                 // 61526
     }
 };
 
