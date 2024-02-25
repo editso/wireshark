@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-02-17) */
+/* (last updated 2024-02-23) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61527];
+    const char* values[61552];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61526,
+    61551,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -28000,7 +28000,7 @@ static global_enterprises_table_t table =
         "China Infosec Technologies Co.,Ltd.",                                            // 27971
         "Mac Papers, Inc.",                                                               // 27972
         "Open Finance, LLC",                                                              // 27973
-        "MCS GROUPE",                                                                     // 27974
+        "BRUNO PONTILLO",                                                                 // 27974
         "Centec Networks Inc.",                                                           // 27975
         "GEO CONCEPT SA",                                                                 // 27976
         "Genex",                                                                          // 27977
@@ -30522,7 +30522,7 @@ static global_enterprises_table_t table =
         "Digitek spa",                                                                    // 30493
         "Microlink Telecom",                                                              // 30494
         "RoundTrip Systems",                                                              // 30495
-        "E-Smart Systems d.o.o.",                                                         // 30496
+        "E-Smart Systems d.o.o. Beograd",                                                 // 30496
         "Beijing EaseSea Interman Technology Co.,",                                       // 30497
         "AeroScout",                                                                      // 30498
         "Design 2000 Pvt Ltd",                                                            // 30499
@@ -61552,7 +61552,32 @@ static global_enterprises_table_t table =
         "EQUIRON",                                                                        // 61523
         "Research and Production Association named after A.S. Popov",                     // 61524
         "Darletto",                                                                       // 61525
-        "Dmitry Vorobiev"                                                                 // 61526
+        "Dmitry Vorobiev",                                                                // 61526
+        "Alexander R Craven",                                                             // 61527
+        "MOORNET SOLUTIONS LLC",                                                          // 61528
+        "REC SYSTEM co.,ltd",                                                             // 61529
+        "G & X Services",                                                                 // 61530
+        "Layer9.space",                                                                   // 61531
+        "ServerStep Technology",                                                          // 61532
+        "ComroeStudios LLC",                                                              // 61533
+        "Envirovision Solutions Systems",                                                 // 61534
+        "Groupe Hospitalier Nord-Essonne",                                                // 61535
+        "Polyphony",                                                                      // 61536
+        "BAE Systems",                                                                    // 61537
+        "Brookhaven Surgical Services, PC D/B/A MY Health Long Island Frank Sconzo MD",   // 61538
+        "Bidwells LLP",                                                                   // 61539
+        "Flowbix",                                                                        // 61540
+        "Anton Luka Šijanec",                                                             // 61541
+        "Danilo Klug",                                                                    // 61542
+        "Isfahan University",                                                             // 61543
+        "Flick Gocke Schaumburg Partnerschaft mbB",                                       // 61544
+        "Shanghai Yunsilicon Technology Co.,Ltd.",                                        // 61545
+        "MATTR LIMITED",                                                                  // 61546
+        "INNIO Jenbacher GmbH & Co OG",                                                   // 61547
+        "Schwarz Produktion Stiftung & Co. KG - SPW Papier",                              // 61548
+        "Sierra Management Services",                                                     // 61549
+        "Kyle Ellis",                                                                     // 61550
+        "Equinox Power Innovations Inc"                                                   // 61551
     }
 };
 
