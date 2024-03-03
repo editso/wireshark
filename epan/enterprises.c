@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-02-23) */
+/* (last updated 2024-03-01) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61552];
+    const char* values[61578];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61551,
+    61577,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -61563,7 +61563,7 @@ static global_enterprises_table_t table =
         "Envirovision Solutions Systems",                                                 // 61534
         "Groupe Hospitalier Nord-Essonne",                                                // 61535
         "Polyphony",                                                                      // 61536
-        "BAE Systems",                                                                    // 61537
+        "BAE Systems Air Sector (TEST)",                                                  // 61537
         "Brookhaven Surgical Services, PC D/B/A MY Health Long Island Frank Sconzo MD",   // 61538
         "Bidwells LLP",                                                                   // 61539
         "Flowbix",                                                                        // 61540
@@ -61577,7 +61577,33 @@ static global_enterprises_table_t table =
         "Schwarz Produktion Stiftung & Co. KG - SPW Papier",                              // 61548
         "Sierra Management Services",                                                     // 61549
         "Kyle Ellis",                                                                     // 61550
-        "Equinox Power Innovations Inc"                                                   // 61551
+        "Equinox Power Innovations Inc",                                                  // 61551
+        "ABSULT-Group",                                                                   // 61552
+        "Lindinger IT-Services KG",                                                       // 61553
+        "Kosmos Infrastructure Foundation",                                               // 61554
+        "HYCU Support Lab (support.hycu.work)",                                           // 61555
+        "Rail Safety Systems Pty Ltd",                                                    // 61556
+        "Futurex Inc.",                                                                   // 61557
+        "Viana & Dias",                                                                   // 61558
+        "Sweetondale LLC",                                                                // 61559
+        "Muon Space, Inc.",                                                               // 61560
+        "Thomas Ford Roofing Inc",                                                        // 61561
+        "Cisco Flex Platform",                                                            // 61562
+        "EnerSys Sp. z o.o.",                                                             // 61563
+        "nexo-standards",                                                                 // 61564
+        "flucon fluid control GmbH",                                                      // 61565
+        "VAV Versicherungs AG",                                                           // 61566
+        "Sydostskog AB",                                                                  // 61567
+        "Shanghai Pingbo Info & Tech Ltd.",                                               // 61568
+        "Matthew Gardner",                                                                // 61569
+        "Bence Skorka",                                                                   // 61570
+        "Asseco SEE d.o.o Beograd",                                                       // 61571
+        "BNGSOFT ltd.",                                                                   // 61572
+        "Code Fox",                                                                       // 61573
+        "Stadt Troisdorf",                                                                // 61574
+        "Hylte Paper AB",                                                                 // 61575
+        "Exportkreditnämnden",                                                            // 61576
+        "Coastal Enterprises, Inc."                                                       // 61577
     }
 };
 
