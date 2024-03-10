@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-03-01) */
+/* (last updated 2024-03-08) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61578];
+    const char* values[61612];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61577,
+    61611,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -57786,7 +57786,7 @@ static global_enterprises_table_t table =
         "MOST",                                                                           // 57757
         "Stadtverwaltung Burgdorf",                                                       // 57758
         "Sam Brittingham",                                                                // 57759
-        "Big Boy Entertainment",                                                          // 57760
+        "Awesomentertainment",                                                            // 57760
         "VSENS",                                                                          // 57761
         "Kowloonbia International Limited",                                               // 57762
         "Vollmergruppe",                                                                  // 57763
@@ -58749,7 +58749,7 @@ static global_enterprises_table_t table =
         "Orthopedic and Sports Medicine Specialist of Green Bay, SC",                     // 58720
         "it-economics GmbH",                                                              // 58721
         "Maximilian Kapra",                                                               // 58722
-        "Shanghai AssembleAuth Coroutine Technology Co., Ltd",                            // 58723
+        "TrusAuth Inc",                                                                   // 58723
         "Monban Project",                                                                 // 58724
         NULL,                                                                             // 58725
         "CIS",                                                                            // 58726
@@ -60759,7 +60759,7 @@ static global_enterprises_table_t table =
         "Georg Roth Stiftung & Co. Lebensmittelfilialbetrieb KG",                         // 60730
         "RationalCore LLC",                                                               // 60731
         "Sigenergy",                                                                      // 60732
-        "Hanwha solutions, SW development center",                                        // 60733
+        "Hanwha Solutions Corporation, SW development center",                            // 60733
         "Callisto Inc.",                                                                  // 60734
         "Procono, S.A.",                                                                  // 60735
         "Curtis Vaughn Thompson ©  The Edinburgh Originale -O.E. ™",                      // 60736
@@ -61603,7 +61603,41 @@ static global_enterprises_table_t table =
         "Stadt Troisdorf",                                                                // 61574
         "Hylte Paper AB",                                                                 // 61575
         "Exportkreditnämnden",                                                            // 61576
-        "Coastal Enterprises, Inc."                                                       // 61577
+        "Coastal Enterprises, Inc.",                                                      // 61577
+        "Linknat.com",                                                                    // 61578
+        "TBC Kredit",                                                                     // 61579
+        "GIRASOL PE S.R.L",                                                               // 61580
+        "Hangzhou Huite Technology CO.,Ltd",                                              // 61581
+        "RedEarth Energy Storage Pty Ltd",                                                // 61582
+        "Telenor Pakistan",                                                               // 61583
+        "MAPAL Dr. Kress KG",                                                             // 61584
+        "Apollo Infoways PVT LTD",                                                        // 61585
+        "Kumi Systems e.U.",                                                              // 61586
+        "David Emett",                                                                    // 61587
+        "EKSELANS by ITS · ITS PARTNER O.B.S. S.L.",                                      // 61588
+        "Tii Technologies Inc.",                                                          // 61589
+        "TrusAuth Inc",                                                                   // 61590
+        "JKiene",                                                                         // 61591
+        "GSW Frankfurt GmbH",                                                             // 61592
+        "Apollo Care",                                                                    // 61593
+        "Hartono Consulting",                                                             // 61594
+        "AISWEI PTY LTD",                                                                 // 61595
+        "Exail Aerospace",                                                                // 61596
+        "Overseas Family School",                                                         // 61597
+        "Wavetel Technology Limited",                                                     // 61598
+        "Benjamin Parzella",                                                              // 61599
+        "Lion Energy",                                                                    // 61600
+        "Aurora Innovation, Inc.",                                                        // 61601
+        "EHOOME IOT PRIVATE LIMITED",                                                     // 61602
+        "Bundesanzeiger Verlag GmbH",                                                     // 61603
+        "Raytheon UK",                                                                    // 61604
+        "Amdocs IOT",                                                                     // 61605
+        "Tosee Enteghal Dade Aryan (EASYGIGs)",                                           // 61606
+        "Rolls-Royce Solutions GmbH",                                                     // 61607
+        "Stichting Esdégé-Reigersdaal",                                                   // 61608
+        "System Admins ApS",                                                              // 61609
+        "Firda",                                                                          // 61610
+        "KYLink"                                                                          // 61611
     }
 };
 
