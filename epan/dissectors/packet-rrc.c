@@ -1,7 +1,7 @@
 /* Do not modify this file. Changes will be overwritten.                      */
 /* Generated automatically by the ASN.1 to Wireshark dissector compiler       */
 /* packet-rrc.c                                                               */
-/* asn2wrs.py -L -p rrc -c ./rrc.cnf -s ./packet-rrc-template -D . -O ../.. Class-definitions.asn PDU-definitions.asn InformationElements.asn Constant-definitions.asn Internode-definitions.asn */
+/* asn2wrs.py -q -L -p rrc -c ./rrc.cnf -s ./packet-rrc-template -D . -O ../.. Class-definitions.asn PDU-definitions.asn InformationElements.asn Constant-definitions.asn Internode-definitions.asn */
 
 /* packet-rrc.c
  * Routines for Universal Mobile Telecommunications System (UMTS);
