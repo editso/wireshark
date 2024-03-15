@@ -23014,17 +23014,21 @@ static int
 dissect_rrc_H_RNTI(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   tvbuff_t *hrnti_tvb;
   struct rrc_info *rrcinf;
+  fp_info *fpinf;
   offset = dissect_per_bit_string(tvb, offset, actx, tree, hf_index,
                                      16, 16, FALSE, NULL, 0, &hrnti_tvb, NULL);
 
 
 
   rrcinf = (struct rrc_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_rrc, 0);
-  if (!rrcinf) {
-    rrcinf = wmem_new0(wmem_file_scope(), struct rrc_info);
-    p_add_proto_data(wmem_file_scope(), actx->pinfo, proto_rrc, 0, rrcinf);
+  fpinf = (fp_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_fp, 0);
+  if (fpinf) {
+    if (!rrcinf) {
+      rrcinf = wmem_new0(wmem_file_scope(), struct rrc_info);
+      p_add_proto_data(wmem_file_scope(), actx->pinfo, proto_rrc, 0, rrcinf);
+    }
+    rrcinf->hrnti[fpinf->cur_tb] = tvb_get_ntohs(hrnti_tvb, 0);
   }
-  rrcinf->hrnti[actx->pinfo->fd->subnum] = tvb_get_ntohs(hrnti_tvb, 0);
 
   return offset;
 }
@@ -46425,6 +46429,7 @@ dissect_rrc_DL_TransportChannelType_r5(tvbuff_t *tvb _U_, int offset _U_, asn1_c
     guint *flowd_p;
     guint *cur_val=NULL;
     struct rrc_info *rrcinf;
+    fp_info *fpinf;
 
       offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_rrc_DL_TransportChannelType_r5, DL_TransportChannelType_r5_choice,
@@ -46437,16 +46442,17 @@ dissect_rrc_DL_TransportChannelType_r5(tvbuff_t *tvb _U_, int offset _U_, asn1_c
 
         if(num_chans_per_flow[flowd] > 1 ){
             rrcinf = (rrc_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_rrc, 0);
-            if((rrcinf == NULL) || (rrcinf->hrnti[actx->pinfo->fd->subnum] == 0)){
+            fpinf = (fp_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_fp, 0);
+            if((rrcinf == NULL) || (fpinf == NULL) || (rrcinf->hrnti[fpinf->cur_tb] == 0)){
                 expert_add_info(actx->pinfo, actx->created_item, &ei_rrc_no_hrnti);
             }
             else{
                 /*If it doesn't exists, insert it*/
-                if( (cur_val=(gint *)g_tree_lookup(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[actx->pinfo->fd->subnum]))) == NULL ){
+                if( (cur_val=(gint *)g_tree_lookup(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[fpinf->cur_tb]))) == NULL ){
 
                     flowd_p = g_new0(guint, 1);
                     *flowd_p = (1U<<flowd);    /*Set the bit to mark it as true*/
-                    g_tree_insert(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[actx->pinfo->fd->subnum]), flowd_p);
+                    g_tree_insert(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[fpinf->cur_tb]), flowd_p);
 
                 }else{
                     *cur_val = (1U<<flowd) | *cur_val;
@@ -49919,6 +49925,7 @@ dissect_rrc_DL_TransportChannelType_r7(tvbuff_t *tvb _U_, int offset _U_, asn1_c
     guint *flowd_p;
     guint *cur_val=NULL;
     struct rrc_info *rrcinf;
+    fp_info *fpinf;
 
       offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_rrc_DL_TransportChannelType_r7, DL_TransportChannelType_r7_choice,
@@ -49932,16 +49939,17 @@ dissect_rrc_DL_TransportChannelType_r7(tvbuff_t *tvb _U_, int offset _U_, asn1_c
 
         if(num_chans_per_flow[flowd] > 1 ){
             rrcinf = (rrc_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_rrc, 0);
-            if((rrcinf == NULL) || (rrcinf->hrnti[actx->pinfo->fd->subnum] == 0)){
+            fpinf = (fp_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_fp, 0);
+            if((rrcinf == NULL) || (fpinf == NULL) || (rrcinf->hrnti[fpinf->cur_tb] == 0)){
                 expert_add_info(actx->pinfo, actx->created_item, &ei_rrc_no_hrnti);
             }
             else{
                 /*If it doesn't exists, insert it*/
-                if( (cur_val=(gint *)g_tree_lookup(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[actx->pinfo->fd->subnum]))) == NULL ){
+                if( (cur_val=(gint *)g_tree_lookup(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[fpinf->cur_tb]))) == NULL ){
 
                     flowd_p = g_new0(guint, 1);
                     *flowd_p = (1U<<flowd);    /* Set the bit to mark it as true*/
-                    g_tree_insert(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[actx->pinfo->fd->subnum]), flowd_p);
+                    g_tree_insert(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[fpinf->cur_tb]), flowd_p);
 
                 }else{
                     *cur_val = (1U<<flowd) | *cur_val;
@@ -165166,9 +165174,11 @@ dissect_rrc(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void* data _U_)
     proto_item    *rrc_item = NULL;
     proto_tree    *rrc_tree = NULL;
     struct rrc_info *rrcinf;
+    fp_info *fpinf;
 
     top_tree = tree;
     rrcinf = (struct rrc_info *)p_get_proto_data(wmem_file_scope(), pinfo, proto_rrc, 0);
+    fpinf = (fp_info *)p_get_proto_data(wmem_file_scope(), pinfo, proto_fp, 0);
 
     /* make entry in the Protocol column on summary display */
     col_set_str(pinfo->cinfo, COL_PROTOCOL, "RRC");
@@ -165180,8 +165190,8 @@ dissect_rrc(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void* data _U_)
     rrc_item = proto_tree_add_item(tree, proto_rrc, tvb, 0, -1, ENC_NA);
     rrc_tree = proto_item_add_subtree(rrc_item, ett_rrc);
 
-    if (rrcinf) {
-        switch (rrcinf->msgtype[pinfo->fd->subnum]) {
+    if (rrcinf && fpinf) {
+        switch (rrcinf->msgtype[fpinf->cur_tb]) {
             case RRC_MESSAGE_TYPE_PCCH:
                 call_dissector(rrc_pcch_handle, tvb, pinfo, rrc_tree);
                 break;
