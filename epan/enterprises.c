@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-03-08) */
+/* (last updated 2024-03-15) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61612];
+    const char* values[61653];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61611,
+    61652,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -25149,7 +25149,7 @@ static global_enterprises_table_t table =
         "SAGUAPAC",                                                                       // 25120
         "Temex Sync",                                                                     // 25121
         "Hauk & Sasko GmbH",                                                              // 25122
-        "Barco Orthogon GmbH",                                                            // 25123
+        "Frequentis Orthogon GmbH",                                                       // 25123
         "Trade-On-Technology Holdings",                                                   // 25124
         "ALWIL Software",                                                                 // 25125
         "Jackson State University",                                                       // 25126
@@ -28000,7 +28000,7 @@ static global_enterprises_table_t table =
         "China Infosec Technologies Co.,Ltd.",                                            // 27971
         "Mac Papers, Inc.",                                                               // 27972
         "Open Finance, LLC",                                                              // 27973
-        "BRUNO PONTILLO",                                                                 // 27974
+        "PONTILLO.EU",                                                                    // 27974
         "Centec Networks Inc.",                                                           // 27975
         "GEO CONCEPT SA",                                                                 // 27976
         "Genex",                                                                          // 27977
@@ -49821,7 +49821,7 @@ static global_enterprises_table_t table =
         "HDS a.s.",                                                                       // 49792
         "Persson Invest skog AB",                                                         // 49793
         "M2MSOFT",                                                                        // 49794
-        "Navitel",                                                                        // 49795
+        "Navitel sp. z o.o.",                                                             // 49795
         "ARH Inc.",                                                                       // 49796
         "RideOnTrack",                                                                    // 49797
         "BVZ Holding AG",                                                                 // 49798
@@ -56062,7 +56062,7 @@ static global_enterprises_table_t table =
         "Die Autobahn GmbH des Bundes",                                                   // 56033
         "ALS Laboratory Group",                                                           // 56034
         "GALDERMA S.A.",                                                                  // 56035
-        "Gentlent, Inc.",                                                                 // 56036
+        "Gentlent UG (haftungsbeschränkt)",                                               // 56036
         "Argo AI",                                                                        // 56037
         "Nroad",                                                                          // 56038
         "Bold City Tech",                                                                 // 56039
@@ -56329,7 +56329,7 @@ static global_enterprises_table_t table =
         "STAUFEN.AG",                                                                     // 56300
         "IOIT",                                                                           // 56301
         "Narodni agentura pro komunikacni a informacni technologie, s. p.",               // 56302
-        "marcusfolkesson",                                                                // 56303
+        "MFOConsulting AB",                                                               // 56303
         "Infrastructures Technologiques Quebec",                                          // 56304
         "ParaFlare Pty Ltd",                                                              // 56305
         "Centro Oncológico Figueroa-Cabrera",                                             // 56306
@@ -61632,12 +61632,53 @@ static global_enterprises_table_t table =
         "Bundesanzeiger Verlag GmbH",                                                     // 61603
         "Raytheon UK",                                                                    // 61604
         "Amdocs IOT",                                                                     // 61605
-        "Tosee Enteghal Dade Aryan (EASYGIGs)",                                           // 61606
+        "Tosee Enteghal Dade Aryan (TED Aryan)",                                          // 61606
         "Rolls-Royce Solutions GmbH",                                                     // 61607
         "Stichting Esdégé-Reigersdaal",                                                   // 61608
         "System Admins ApS",                                                              // 61609
         "Firda",                                                                          // 61610
-        "KYLink"                                                                          // 61611
+        "KYLink",                                                                         // 61611
+        "Beijing 3CAVI Tech Co.,Ltd",                                                     // 61612
+        "Trophy Fish Outdoors",                                                           // 61613
+        "La MicroMega Srl",                                                               // 61614
+        "Thomas Blome",                                                                   // 61615
+        "EUROCOLOR Sp. z o.o.",                                                           // 61616
+        "Zipit Wireless, Inc.",                                                           // 61617
+        "PPDAC LTD",                                                                      // 61618
+        "AGGRECOST OF NORTH AMERICA BENEFIT CORP",                                        // 61619
+        "BYLT OF NORTH AMERICA BENEFIT CORP",                                             // 61620
+        "xD OF NORTH AMERICA BENEFIT CORP",                                               // 61621
+        "Beep Telecommunications & Computing Ltd.",                                       // 61622
+        "Grundio cPlc.",                                                                  // 61623
+        "Two Degrees Mobile",                                                             // 61624
+        "Phrygian Solutions",                                                             // 61625
+        "Asmo Advanced Logistics Services Co.",                                           // 61626
+        "Studierendenwerk Bremen AöR",                                                    // 61627
+        "Staatliche Hochschule für Musik und Darstellende Kunst Mannheim",                // 61628
+        "上海鑫融网络科技股份有限公司 (Shanghai Xinrong Network Technology Co., Ltd.)",                 // 61629
+        "Everfox Holdings LLC",                                                           // 61630
+        "Ibermutua, Mutua Colaboradora con la Seguridad Social nº 274",                   // 61631
+        "Westnetz GmbH",                                                                  // 61632
+        "Alysse Gapsis",                                                                  // 61633
+        "Cooley LLP",                                                                     // 61634
+        "Tårnby Kommune",                                                                 // 61635
+        "U.T.E. Electronic GmbH & Co. KG",                                                // 61636
+        "eSystems MTG GmbH",                                                              // 61637
+        "Mecc Alte SPA",                                                                  // 61638
+        "Metal Service Center Sp. z o. o.",                                               // 61639
+        "SIPEARL SAS",                                                                    // 61640
+        "Resource Management Associates, Inc.",                                           // 61641
+        "Honeybadger Industries",                                                         // 61642
+        "Provide Datenverarbeitung GmbH",                                                 // 61643
+        "Lunner.Kommune.no",                                                              // 61644
+        "Dyagsys Karya Informatika",                                                      // 61645
+        "Région Réunion",                                                                 // 61646
+        "Fractal Energy Pty Ltd",                                                         // 61647
+        "Norcal Ambulance",                                                               // 61648
+        "Citykinect Inc",                                                                 // 61649
+        "Semco Maritime A/S",                                                             // 61650
+        "PA Technology Solutions Limited",                                                // 61651
+        "America's First Responders Network"                                              // 61652
     }
 };
 
