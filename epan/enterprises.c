@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-03-15) */
+/* (last updated 2024-03-22) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61653];
+    const char* values[61692];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61652,
+    61691,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -45763,7 +45763,7 @@ static global_enterprises_table_t table =
         "STARNET s.r.o.",                                                                 // 45734
         "easyset",                                                                        // 45735
         "Utilisoft Ltd",                                                                  // 45736
-        "shah-network.com",                                                               // 45737
+        "brokentech.ca",                                                                  // 45737
         "Aspirational Cognition LLC",                                                     // 45738
         "winfonet.eu",                                                                    // 45739
         "Cirrus Identity, Inc",                                                           // 45740
@@ -50756,7 +50756,7 @@ static global_enterprises_table_t table =
         "Civil Aviation University of China",                                             // 50727
         "Nemon",                                                                          // 50728
         "Stichting Groningen Groningen Declaration Network",                              // 50729
-        "TELCAT MULTICOM GmbH",                                                           // 50730
+        "Salzgitter Digital Solutions GmbH",                                              // 50730
         "NAES Corporation",                                                               // 50731
         "HIAG Data",                                                                      // 50732
         "bluebyteIT Sven Treiber",                                                        // 50733
@@ -53619,7 +53619,7 @@ static global_enterprises_table_t table =
         "Eastone Century Technology Co，.Ltd.",                                            // 53590
         "TERAPRO",                                                                        // 53591
         "K M B systems, s.r.o.",                                                          // 53592
-        "Highways England",                                                               // 53593
+        "National Highways",                                                              // 53593
         "Protocol Labs",                                                                  // 53594
         "Lookback Inc",                                                                   // 53595
         "Cumulus Cloud Software and Consulting",                                          // 53596
@@ -60374,7 +60374,7 @@ static global_enterprises_table_t table =
         "Open industrial PKI",                                                            // 60345
         "Voelkl Sports GmbH",                                                             // 60346
         "Lutech SpA",                                                                     // 60347
-        "Aretiico PLC",                                                                   // 60348
+        "Aretiico Group PLC",                                                             // 60348
         "Barbaros Catkan",                                                                // 60349
         "Settels Savenije Group of Companies",                                            // 60350
         "ITSEC RND MICHAŁ LESZCZYŃSKI",                                                   // 60351
@@ -61678,7 +61678,46 @@ static global_enterprises_table_t table =
         "Citykinect Inc",                                                                 // 61649
         "Semco Maritime A/S",                                                             // 61650
         "PA Technology Solutions Limited",                                                // 61651
-        "America's First Responders Network"                                              // 61652
+        "America's First Responders Network",                                             // 61652
+        "DDL-Engineering",                                                                // 61653
+        "Digitaltomass",                                                                  // 61654
+        "CV TRENINDO CIPTA MANDIRI",                                                      // 61655
+        "Information Softworks., Inc",                                                    // 61656
+        "ArtiVisi Intermedia",                                                            // 61657
+        "Equalx Technologies Private Limited",                                            // 61658
+        "xk-image",                                                                       // 61659
+        "PrecisionX Technology LLC",                                                      // 61660
+        "AISWEI Technology Co., Ltd.",                                                    // 61661
+        "Community Health & Emergency Services Inc.",                                     // 61662
+        "Monolit IT Sp. z o.o.",                                                          // 61663
+        "Etihad Etisalat Company (Mobily)",                                               // 61664
+        "Aleko Embedded",                                                                 // 61665
+        "Tunstall Systems",                                                               // 61666
+        "Anastasios Mavrommatis - IT Lösungen",                                           // 61667
+        "PT Sinar Baru Rajawali",                                                         // 61668
+        "Noark Australia Pty Ltd",                                                        // 61669
+        "OneTv S.r.l.",                                                                   // 61670
+        "Gemeinnützige Industrie- Wohnungsaktiengesellschaft",                            // 61671
+        "Creative Liquid Coatings",                                                       // 61672
+        "Concrete Genius Manufacturing Inc.",                                             // 61673
+        "Coridyan",                                                                       // 61674
+        "Hangzhou Bingte Technology Co., Ltd",                                            // 61675
+        "Wha Yu Industrial Co., Ltd.",                                                    // 61676
+        "BxC GmbH & Co. KG",                                                              // 61677
+        "FIMER S.p.A",                                                                    // 61678
+        "Hellenic National Defense General Staff (HNDGS)",                                // 61679
+        "Troglodyte.io",                                                                  // 61680
+        "Joe Sniderman & Associates, LLC",                                                // 61681
+        "Kontrolnext Technology",                                                         // 61682
+        "Hoffmann Group Engineering GmbH",                                                // 61683
+        "Beutlhauser Holding GmbH",                                                       // 61684
+        "Orxcel Co.,Limited",                                                             // 61685
+        "Athens-Limestone Hospital",                                                      // 61686
+        "Mani Raju (LcDigital)",                                                          // 61687
+        "oruga.de",                                                                       // 61688
+        "Ricon İletişim AŞ",                                                              // 61689
+        "ThinkCloud",                                                                     // 61690
+        "Public Joint Stock Company Mobile TeleSystems (PJSC MTS)"                        // 61691
     }
 };
 
