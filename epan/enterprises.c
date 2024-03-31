@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-03-22) */
+/* (last updated 2024-03-28) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61692];
+    const char* values[61705];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61691,
+    61704,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -40480,7 +40480,7 @@ static global_enterprises_table_t table =
         "Allens, Inc.",                                                                   // 40451
         "Care Team Connect Inc.",                                                         // 40452
         "School District",                                                                // 40453
-        "Jaguar Network",                                                                 // 40454
+        "Free Pro",                                                                       // 40454
         "TMM.CX",                                                                         // 40455
         "Radio Systems Ltd",                                                              // 40456
         "Zen Entertainment, Inc.",                                                        // 40457
@@ -49330,7 +49330,7 @@ static global_enterprises_table_t table =
         "BCS Information Systems Pte Ltd",                                                // 49301
         "Dart Container",                                                                 // 49302
         "Flexmedia Ind. e Com. de Tecnologia Ltda.",                                      // 49303
-        "Tapoustry",                                                                      // 49304
+        NULL,                                                                             // 49304
         "Neural Technologies",                                                            // 49305
         "AUM Cardiovascular Inc",                                                         // 49306
         "Secturion Systems Inc.",                                                         // 49307
@@ -61717,7 +61717,20 @@ static global_enterprises_table_t table =
         "oruga.de",                                                                       // 61688
         "Ricon İletişim AŞ",                                                              // 61689
         "ThinkCloud",                                                                     // 61690
-        "Public Joint Stock Company Mobile TeleSystems (PJSC MTS)"                        // 61691
+        "Public Joint Stock Company Mobile TeleSystems (PJSC MTS)",                       // 61691
+        "MA Labs",                                                                        // 61692
+        "Karam Jameel Moore",                                                             // 61693
+        "Local Connectivity Lab",                                                         // 61694
+        "Eltron s.r.o.",                                                                  // 61695
+        "MEMMERT GMBH + CO. KG",                                                          // 61696
+        "Bolle",                                                                          // 61697
+        "r01.li hébergement communautaire",                                               // 61698
+        "Esc Muhendislik A.S.",                                                           // 61699
+        "Southgate Community Schools",                                                    // 61700
+        "Piing.ai",                                                                       // 61701
+        "Kuhmo Oy",                                                                       // 61702
+        "Thomasville City Schools",                                                       // 61703
+        "Luminex Software Inc."                                                           // 61704
     }
 };
 
