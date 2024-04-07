@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-03-28) */
+/* (last updated 2024-04-05) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61705];
+    const char* values[61737];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61704,
+    61736,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -10411,7 +10411,7 @@ static global_enterprises_table_t table =
         "UCNET",                                                                          // 10382
         "Universite de Liege",                                                            // 10383
         "Virginia Commonwealth University",                                               // 10384
-        "Westronic Systems, Inc.",                                                        // 10385
+        "Guardian Telecom Ltd.",                                                          // 10385
         "YoungWoo Telecom Co., LTD",                                                      // 10386
         "Dongah Elecomm",                                                                 // 10387
         "Supportcomm Teleinformatica SA",                                                 // 10388
@@ -61730,7 +61730,39 @@ static global_enterprises_table_t table =
         "Piing.ai",                                                                       // 61701
         "Kuhmo Oy",                                                                       // 61702
         "Thomasville City Schools",                                                       // 61703
-        "Luminex Software Inc."                                                           // 61704
+        "Luminex Software Inc.",                                                          // 61704
+        "Ravit Technologies Pvt. Ltd.",                                                   // 61705
+        "NTT DATA, Inc - Netherlands",                                                    // 61706
+        "Shanghai Fanzhen Information Technology Co., Ltd.",                              // 61707
+        "hotwirestudios",                                                                 // 61708
+        "PatchAmp",                                                                       // 61709
+        "BJS Family",                                                                     // 61710
+        "Jess Schallenberg",                                                              // 61711
+        "Masoud Shokohi",                                                                 // 61712
+        "NetworkECO",                                                                     // 61713
+        "The Principia Corporation",                                                      // 61714
+        "Omnissa",                                                                        // 61715
+        "A.E. Perkins",                                                                   // 61716
+        "iStore (QLD) Pty Ltd",                                                           // 61717
+        "C&D Technologies, Inc",                                                          // 61718
+        "THINGS HORIZON PVT LTD",                                                         // 61719
+        "Petroleum Development Oman",                                                     // 61720
+        "Decatur Morgan Hospital",                                                        // 61721
+        "Jennifer Ai",                                                                    // 61722
+        "Hitachi Vantara Ltd.",                                                           // 61723
+        "LEMA",                                                                           // 61724
+        "Carleton Place & District Memorial Hospital",                                    // 61725
+        "Technical Momentum",                                                             // 61726
+        "Torrion River",                                                                  // 61727
+        "杭州众兴慧智能科技有限公司 (Hangzhou Zhongxinghui Intelligent Technology Co., Ltd.)",         // 61728
+        "Stadtverwaltung Schleswig",                                                      // 61729
+        "Franco Brothers Enterprises llc.",                                               // 61730
+        "Grupo Armas Trasmediterranea",                                                   // 61731
+        "TM Technology Services Sdn Bhd",                                                 // 61732
+        "Defigo Ltd.",                                                                    // 61733
+        "Syntony GNSS",                                                                   // 61734
+        "IT-Schmid GmbH & Co.KG",                                                         // 61735
+        "AssetBook IoT"                                                                   // 61736
     }
 };
 
