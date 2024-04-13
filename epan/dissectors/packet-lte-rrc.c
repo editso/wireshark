@@ -25439,7 +25439,7 @@ dissect_lte_rrc_T_drb_TypeChange_r12(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx
 
 static int
 dissect_lte_rrc_T_ul_extended_RLC_LI_Field_r12(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  gboolean ext_li_field;
+  bool ext_li_field;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_boolean(tvb, offset, actx, tree, hf_index, &ext_li_field);
 
@@ -25455,7 +25455,7 @@ dissect_lte_rrc_T_ul_extended_RLC_LI_Field_r12(tvbuff_t *tvb _U_, int offset _U_
 
 static int
 dissect_lte_rrc_T_dl_extended_RLC_LI_Field_r12(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  gboolean ext_li_field;
+  bool ext_li_field;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_boolean(tvb, offset, actx, tree, hf_index, &ext_li_field);
 
@@ -25500,7 +25500,7 @@ dissect_lte_rrc_DRB_ToAddMod_eag_1(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t
 
 static int
 dissect_lte_rrc_T_ul_extended_RLC_AM_SN_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  gboolean ext_am_sn;
+  bool ext_am_sn;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_boolean(tvb, offset, actx, tree, hf_index, &ext_am_sn);
 
@@ -25516,7 +25516,7 @@ dissect_lte_rrc_T_ul_extended_RLC_AM_SN_r13(tvbuff_t *tvb _U_, int offset _U_, a
 
 static int
 dissect_lte_rrc_T_dl_extended_RLC_AM_SN_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  gboolean ext_am_sn;
+  bool ext_am_sn;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_boolean(tvb, offset, actx, tree, hf_index, &ext_am_sn);
 
