@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-04-05) */
+/* (last updated 2024-04-12) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61737];
+    const char* values[61779];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61736,
+    61778,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -55203,7 +55203,7 @@ static global_enterprises_table_t table =
         "LPS France",                                                                     // 55174
         "Hans Sasserath GmbH & Co. KG",                                                   // 55175
         "Hitachi Industrial Equipment Systems Co.,Ltd.",                                  // 55176
-        "MOS Corporate Service GmbH",                                                     // 55177
+        "MOS Corporate Services GmbH",                                                    // 55177
         "OECHSLER AG",                                                                    // 55178
         "OECHSLER Motion GmbH",                                                           // 55179
         "Säters Kommun",                                                                  // 55180
@@ -61762,7 +61762,49 @@ static global_enterprises_table_t table =
         "Defigo Ltd.",                                                                    // 61733
         "Syntony GNSS",                                                                   // 61734
         "IT-Schmid GmbH & Co.KG",                                                         // 61735
-        "AssetBook IoT"                                                                   // 61736
+        "AssetBook IoT",                                                                  // 61736
+        "Global Message Services AG",                                                     // 61737
+        "DWDM.RU LLC",                                                                    // 61738
+        "Mentech Power",                                                                  // 61739
+        "Karol Szczepanowski",                                                            // 61740
+        "Ortocomputer",                                                                   // 61741
+        "Cv Ridho",                                                                       // 61742
+        "WorldwideOSC",                                                                   // 61743
+        "Chewing Project",                                                                // 61744
+        "KanruInfo",                                                                      // 61745
+        "Bostocks.Club",                                                                  // 61746
+        "Hanplast Sp. z o.o.",                                                            // 61747
+        "Rikom Technologies SDH. BHD",                                                    // 61748
+        "Technické sitě Brno, akciová společnost",                                        // 61749
+        "XDTRUST 02-28-2024 CHARLEY MINNGEAO",                                            // 61750
+        "Enfall",                                                                         // 61751
+        "Shahed, Inc.",                                                                   // 61752
+        "Lexi Winter",                                                                    // 61753
+        "FADU",                                                                           // 61754
+        "Kraftringen Energi AB",                                                          // 61755
+        "ANDA TELECOM PVT. LTD",                                                          // 61756
+        "Vierkant Software GmbH",                                                         // 61757
+        "Wartsila SAM Electronics GmbH",                                                  // 61758
+        "Lehigh University",                                                              // 61759
+        "Crist Engineers",                                                                // 61760
+        "Simau srl",                                                                      // 61761
+        "RAPIN",                                                                          // 61762
+        "Växjö Energi AB",                                                                // 61763
+        "ISG Nordic AB",                                                                  // 61764
+        "DLR e.V. RB",                                                                    // 61765
+        "SigmaTron International, Inc.",                                                  // 61766
+        "HTT",                                                                            // 61767
+        "CommScope Technologies LLC",                                                     // 61768
+        "Jeff Allen",                                                                     // 61769
+        "hacKRNspace",                                                                    // 61770
+        "Shenzhen Vahours New Energy Corporation",                                        // 61771
+        "Shenzhen Number Energy Saving Corporation",                                      // 61772
+        "SUMMIT IT CONSULT GmbH",                                                         // 61773
+        "Gröner Group AG",                                                                // 61774
+        "CG Elementum AG",                                                                // 61775
+        "ecobuilding AG",                                                                 // 61776
+        "Metaminds",                                                                      // 61777
+        "GLN Schakt & Transport"                                                          // 61778
     }
 };
 
