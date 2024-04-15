@@ -14337,7 +14337,8 @@ dissect_nr_rrc_DRB_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx 
                                                             1U, 32U, &value, FALSE);
 
   if (nr_rrc_get_private_data(actx)->drb_rlc_mapping.active) {
-    nr_rrc_get_private_data(actx)->drb_rlc_mapping.drbid = (guint8)value;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.rbid = (guint8)value;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.is_drb = TRUE;
   }
   else if (nr_rrc_get_private_data(actx)->drb_pdcp_mapping.active) {
     nr_rrc_get_private_data(actx)->drb_pdcp_mapping.drbid = (guint8)value;
@@ -36063,8 +36064,18 @@ dissect_nr_rrc_RRC_TransactionIdentifier(tvbuff_t *tvb _U_, int offset _U_, asn1
 
 static int
 dissect_nr_rrc_SRB_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  guint32 value;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
-                                                            1U, 3U, NULL, FALSE);
+                                                            1U, 3U, &value, FALSE);
+
+  if (nr_rrc_get_private_data(actx)->drb_rlc_mapping.active) {
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.rbid = (guint8)value;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.is_drb = FALSE;
+  }
+  else if (nr_rrc_get_private_data(actx)->drb_pdcp_mapping.active) {
+    nr_rrc_get_private_data(actx)->drb_pdcp_mapping.drbid = (guint8)value;
+  }
+
 
   return offset;
 }
@@ -81601,10 +81612,20 @@ dissect_nr_rrc_RLC_BearerConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *a
 
   /* Need UE identifier */
   p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
-  if (p_ueid != NULL && drb_mapping->drbid) {
+  if (p_ueid != NULL && drb_mapping->rbid) {
     drb_mapping->ueid = *p_ueid;
-    /* Tell MAC about this mapping */
-    set_mac_nr_bearer_mapping(drb_mapping);
+    if (drb_mapping->is_drb) {
+      /* Tell MAC about this mapping */
+      set_mac_nr_bearer_mapping(drb_mapping);
+    }
+    else if (drb_mapping->lcid_present && drb_mapping->lcid==3) {
+      /* Tell MAC that LCID 3 is for SRB-3 */
+      set_mac_nr_srb3_in_use(drb_mapping->ueid);
+    }
+    else if (drb_mapping->lcid_present && drb_mapping->lcid==4) {
+      /* Tell MAC that LCID 4 is for SRB-4 */
+      set_mac_nr_srb4_in_use(drb_mapping->ueid);
+    }
   }
   drb_mapping->active = FALSE;
 
