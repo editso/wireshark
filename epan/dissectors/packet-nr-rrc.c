@@ -37014,8 +37014,18 @@ dissect_nr_rrc_PDCP_Config(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _
 
 static int
 dissect_nr_rrc_SRB_Identity_v1700(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  guint32 value;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
-                                                            4U, 4U, NULL, FALSE);
+                                                            4U, 4U, &value, FALSE);
+
+  if (nr_rrc_get_private_data(actx)->drb_rlc_mapping.active) {
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.rbid = (guint8)value;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.is_drb = FALSE;
+  }
+  else if (nr_rrc_get_private_data(actx)->drb_pdcp_mapping.active) {
+    nr_rrc_get_private_data(actx)->drb_pdcp_mapping.drbid = (guint8)value;
+  }
+
 
   return offset;
 }
