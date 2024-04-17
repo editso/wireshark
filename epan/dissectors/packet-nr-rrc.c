@@ -1582,7 +1582,7 @@ static int hf_nr_rrc_securityModeCommand_01;      /* SecurityModeCommand_IEs */
 static int hf_nr_rrc_criticalExtensionsFuture_36;  /* T_criticalExtensionsFuture_36 */
 static int hf_nr_rrc_securityConfigSMC;           /* SecurityConfigSMC */
 static int hf_nr_rrc_nonCriticalExtension_94;     /* T_nonCriticalExtension_36 */
-static int hf_nr_rrc_securityAlgorithmConfig;     /* SecurityAlgorithmConfig */
+static int hf_nr_rrc_securityAlgorithmConfig;     /* T_securityAlgorithmConfig */
 static int hf_nr_rrc_criticalExtensions_37;       /* T_criticalExtensions_37 */
 static int hf_nr_rrc_securityModeComplete_01;     /* SecurityModeComplete_IEs */
 static int hf_nr_rrc_criticalExtensionsFuture_37;  /* T_criticalExtensionsFuture_37 */
@@ -5087,6 +5087,7 @@ static int hf_nr_rrc_reestablishPDCP_01;          /* T_reestablishPDCP_01 */
 static int hf_nr_rrc_recoverPDCP;                 /* T_recoverPDCP */
 static int hf_nr_rrc_daps_Config_r16;             /* T_daps_Config_r16 */
 static int hf_nr_rrc_DRB_ToReleaseList_item;      /* DRB_Identity */
+static int hf_nr_rrc_securityAlgorithmConfig_01;  /* SecurityAlgorithmConfig */
 static int hf_nr_rrc_keyToUse;                    /* T_keyToUse */
 static int hf_nr_rrc_MRB_ToAddModList_r17_item;   /* MRB_ToAddMod_r17 */
 static int hf_nr_rrc_mbs_SessionId_r17;           /* TMGI_r17 */
@@ -37392,24 +37393,8 @@ static const per_sequence_t SecurityAlgorithmConfig_sequence[] = {
 
 static int
 dissect_nr_rrc_SecurityAlgorithmConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint16 *p_ueid;
-  pdcp_nr_security_info_t *p_security_algorithms;
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SecurityAlgorithmConfig, SecurityAlgorithmConfig_sequence);
-
-  p_security_algorithms = &(nr_rrc_get_private_data(actx)->pdcp_security);
-  p_security_algorithms->algorithm_configuration_frame = actx->pinfo->num;
-  p_security_algorithms->previous_algorithm_configuration_frame = 0;
-  p_security_algorithms->previous_integrity = nia0;
-  p_security_algorithms->previous_ciphering = nea0;
-
-  /* Look for UE identifier */
-  p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
-  if (p_ueid != NULL) {
-    /* Configure algorithms */
-    set_pdcp_nr_security_algorithms(*p_ueid, p_security_algorithms);
-  }
-
 
   return offset;
 }
@@ -37432,7 +37417,7 @@ dissect_nr_rrc_T_keyToUse(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U
 
 
 static const per_sequence_t SecurityConfig_sequence[] = {
-  { &hf_nr_rrc_securityAlgorithmConfig, ASN1_EXTENSION_ROOT    , ASN1_OPTIONAL    , dissect_nr_rrc_SecurityAlgorithmConfig },
+  { &hf_nr_rrc_securityAlgorithmConfig_01, ASN1_EXTENSION_ROOT    , ASN1_OPTIONAL    , dissect_nr_rrc_SecurityAlgorithmConfig },
   { &hf_nr_rrc_keyToUse     , ASN1_EXTENSION_ROOT    , ASN1_OPTIONAL    , dissect_nr_rrc_T_keyToUse },
   { NULL, 0, 0, NULL }
 };
@@ -53748,8 +53733,33 @@ dissect_nr_rrc_RRCReestablishment(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
 }
 
 
+
+static int
+dissect_nr_rrc_T_securityAlgorithmConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  guint16 *p_ueid;
+  pdcp_nr_security_info_t *p_security_algorithms;
+  offset = dissect_nr_rrc_SecurityAlgorithmConfig(tvb, offset, actx, tree, hf_index);
+
+  p_security_algorithms = &(nr_rrc_get_private_data(actx)->pdcp_security);
+  p_security_algorithms->algorithm_configuration_frame = actx->pinfo->num;
+  p_security_algorithms->previous_algorithm_configuration_frame = 0;
+  p_security_algorithms->previous_integrity = nia0;
+  p_security_algorithms->previous_ciphering = nea0;
+
+  /* Look for UE identifier */
+  p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
+  if (p_ueid != NULL) {
+    /* Configure algorithms */
+    set_pdcp_nr_security_algorithms(*p_ueid, p_security_algorithms);
+  }
+
+
+  return offset;
+}
+
+
 static const per_sequence_t SecurityConfigSMC_sequence[] = {
-  { &hf_nr_rrc_securityAlgorithmConfig, ASN1_EXTENSION_ROOT    , ASN1_NOT_OPTIONAL, dissect_nr_rrc_SecurityAlgorithmConfig },
+  { &hf_nr_rrc_securityAlgorithmConfig, ASN1_EXTENSION_ROOT    , ASN1_NOT_OPTIONAL, dissect_nr_rrc_T_securityAlgorithmConfig },
   { NULL, 0, 0, NULL }
 };
 
@@ -155363,6 +155373,10 @@ proto_register_nr_rrc(void) {
     { &hf_nr_rrc_DRB_ToReleaseList_item,
       { "DRB-Identity", "nr-rrc.DRB_Identity",
         FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_securityAlgorithmConfig_01,
+      { "securityAlgorithmConfig", "nr-rrc.securityAlgorithmConfig_element",
+        FT_NONE, BASE_NONE, NULL, 0,
         NULL, HFILL }},
     { &hf_nr_rrc_keyToUse,
       { "keyToUse", "nr-rrc.keyToUse",
