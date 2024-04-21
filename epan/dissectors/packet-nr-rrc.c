@@ -23154,7 +23154,7 @@ static int
 dissect_nr_rrc_SIB2(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB2");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB2 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB2, SIB2_sequence);
@@ -23462,7 +23462,7 @@ static int
 dissect_nr_rrc_SIB3(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB3");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB3 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB3, SIB3_sequence);
@@ -23970,7 +23970,7 @@ static int
 dissect_nr_rrc_SIB4(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB4");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB4 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB4, SIB4_sequence);
@@ -24440,7 +24440,7 @@ static int
 dissect_nr_rrc_SIB5(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB5");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB5 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB5, SIB5_sequence);
@@ -24520,7 +24520,7 @@ static int
 dissect_nr_rrc_SIB6(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB6");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB6 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB6, SIB6_sequence);
@@ -24677,7 +24677,7 @@ static int
 dissect_nr_rrc_SIB7(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB7");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB7 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB7, SIB7_sequence);
@@ -24835,7 +24835,7 @@ static int
 dissect_nr_rrc_SIB8(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB8");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB8 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB8, SIB8_sequence);
@@ -25044,7 +25044,7 @@ static int
 dissect_nr_rrc_SIB9(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB9");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB9 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB9, SIB9_sequence);
@@ -25099,7 +25099,7 @@ static const per_sequence_t SIB10_r16_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB10_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB10");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB10 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB10_r16, SIB10_r16_sequence);
@@ -25362,7 +25362,7 @@ static const per_sequence_t SIB11_r16_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB11_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB11");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB11");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB11_r16, SIB11_r16_sequence);
@@ -25396,7 +25396,7 @@ static const per_sequence_t SIB12_r16_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB12_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB12");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB12 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB12_r16, SIB12_r16_sequence);
@@ -25451,7 +25451,7 @@ static const per_sequence_t SIB13_r16_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB13_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB13");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB13 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB13_r16, SIB13_r16_sequence);
@@ -25468,7 +25468,7 @@ static const per_sequence_t SIB14_r16_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB14_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB14");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB14 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB14_r16, SIB14_r16_sequence);
@@ -25526,7 +25526,7 @@ static const per_sequence_t SIB15_r17_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB15_r17(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB15");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB15 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB15_r17, SIB15_r17_sequence);
@@ -25674,7 +25674,7 @@ static const per_sequence_t SIB16_r17_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB16_r17(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB16");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB16 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB16_r17, SIB16_r17_sequence);
@@ -25708,7 +25708,7 @@ static const per_sequence_t SIB17_r17_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB17_r17(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB17");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB17 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB17_r17, SIB17_r17_sequence);
@@ -25807,7 +25807,7 @@ static const per_sequence_t SIB18_r17_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB18_r17(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB18");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB18 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB18_r17, SIB18_r17_sequence);
@@ -26174,7 +26174,7 @@ static const per_sequence_t SIB19_r17_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB19_r17(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB19");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB19 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB19_r17, SIB19_r17_sequence);
@@ -27313,7 +27313,7 @@ static const per_sequence_t SIB20_r17_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB20_r17(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB20");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB20 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB20_r17, SIB20_r17_sequence);
@@ -27384,7 +27384,7 @@ static const per_sequence_t SIB21_r17_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB21_r17(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " SIB21");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB21 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB21_r17, SIB21_r17_sequence);
@@ -28266,12 +28266,12 @@ static const per_sequence_t SystemInformation_sequence[] = {
 
 static int
 dissect_nr_rrc_SystemInformation(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "System Information [");
+  col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "System Information [ ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SystemInformation, SystemInformation_sequence);
 
-  col_append_str(actx->pinfo->cinfo, COL_INFO, " ]");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "]");
 
   return offset;
 }
@@ -35874,7 +35874,7 @@ static int
 dissect_nr_rrc_SIB1(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
-  col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "SIB1");
+  col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "SIB1 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB1, SIB1_sequence);
@@ -177596,7 +177596,7 @@ proto_register_nr_rrc(void) {
   register_dissector("nr-rrc.measgapconfig_msg", dissect_nr_rrc_measgapconfig_msg, proto_nr_rrc);
   register_dissector("nr-rrc.handoverpreparationinformation_msg", dissect_nr_rrc_handoverpreparationinformation_msg, proto_nr_rrc);
   register_dissector("nr-rrc.handovercommand_msg", dissect_nr_rrc_handovercommand_msg, proto_nr_rrc);
-
+ /*#include "packet-nr-rrc-dis-reg.c" */
   register_dissector("nr-rrc.ue_radio_paging_info", dissect_nr_rrc_UERadioPagingInformation_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.ue_radio_access_cap_info", dissect_UERadioAccessCapabilityInformation_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.bcch.bch", dissect_BCCH_BCH_Message_PDU, proto_nr_rrc);
@@ -177610,6 +177610,27 @@ proto_register_nr_rrc(void) {
   register_dissector("nr-rrc.ul.dcch", dissect_nr_rrc_UL_DCCH_Message_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.rrc_reconf", dissect_nr_rrc_RRCReconfiguration_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.rrc_reconf_compl", dissect_nr_rrc_RRCReconfigurationComplete_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib1", dissect_nr_rrc_SIB1_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib2", dissect_nr_rrc_SIB2_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib3", dissect_nr_rrc_SIB3_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib4", dissect_nr_rrc_SIB4_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib5", dissect_nr_rrc_SIB5_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib6", dissect_nr_rrc_SIB6_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib7", dissect_nr_rrc_SIB7_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib8", dissect_nr_rrc_SIB8_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib9", dissect_nr_rrc_SIB9_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib10-r16", dissect_nr_rrc_SIB10_r16_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib11-r16", dissect_nr_rrc_SIB11_r16_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib12-r16", dissect_nr_rrc_SIB12_r16_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib13-r16", dissect_nr_rrc_SIB13_r16_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib14-r16", dissect_nr_rrc_SIB14_r16_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib15-r17", dissect_nr_rrc_SIB15_r17_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib16-r17", dissect_nr_rrc_SIB16_r17_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib17-r17", dissect_nr_rrc_SIB17_r17_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib18-r17", dissect_nr_rrc_SIB18_r17_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib21-r17", dissect_nr_rrc_SIB19_r17_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib22-r17", dissect_nr_rrc_SIB20_r17_PDU, proto_nr_rrc);
+  register_dissector("nr-rrc.sib23-r17", dissect_nr_rrc_SIB21_r17_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.ue_mrdc_cap", dissect_nr_rrc_UE_MRDC_Capability_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.ue_nr_cap", dissect_nr_rrc_UE_NR_Capability_PDU, proto_nr_rrc);
   register_dissector("nr-rrc.sbcch.sl.bch", dissect_SBCCH_SL_BCH_Message_PDU, proto_nr_rrc);
