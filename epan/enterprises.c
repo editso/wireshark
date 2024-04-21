@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-04-12) */
+/* (last updated 2024-04-19) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61779];
+    const char* values[61811];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61778,
+    61810,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -316,7 +316,7 @@ static global_enterprises_table_t table =
         "CSELT(Centro Studi E Laboratori Telecomunicazioni)",                             // 287
         "Electronic Data Systems",                                                        // 288
         "Brocade Communications Systems, Inc.",                                           // 289
-        "Harris Corporation",                                                             // 290
+        "L3Harris Corporation",                                                           // 290
         "Technology Dynamics, Inc.",                                                      // 291
         "DATAHOUSE Information Systems Ltd.",                                             // 292
         "Teltrend (NZ) Limited",                                                          // 293
@@ -9862,7 +9862,7 @@ static global_enterprises_table_t table =
         "Legend Holdings Ltd.",                                                           // 9833
         "Agencja Uslug InformatycznychARTCOMP",                                           // 9834
         "Alien Network",                                                                  // 9835
-        "AOK Bayern",                                                                     // 9836
+        "AOK Bayern – Die Gesundheitskasse",                                              // 9836
         "Ball State University",                                                          // 9837
         "Broadview Networks, Inc.",                                                       // 9838
         "CAREL",                                                                          // 9839
@@ -26722,7 +26722,7 @@ static global_enterprises_table_t table =
         "AirPoint Co., Ltd.",                                                             // 26693
         "Digitals India",                                                                 // 26694
         "Openlink Financial, Inc.",                                                       // 26695
-        "Marvell Semiconductor Inc.",                                                     // 26696
+        "Marvell Technology Inc",                                                         // 26696
         "Arces Network, LLC",                                                             // 26697
         "Net Project SRL",                                                                // 26698
         "Open Switch Software e Consultoria Ltda",                                        // 26699
@@ -40598,7 +40598,7 @@ static global_enterprises_table_t table =
         "HERNIS Scan Systems AS",                                                         // 40569
         "RFOptic",                                                                        // 40570
         "SRT Communications, Inc.",                                                       // 40571
-        "Carlos Domingues",                                                               // 40572
+        "CapTemp, Lda",                                                                   // 40572
         "vklop.com",                                                                      // 40573
         "Ukrainian Computer Laboratory ltd.",                                             // 40574
         "Touro Infirmary",                                                                // 40575
@@ -61777,7 +61777,7 @@ static global_enterprises_table_t table =
         "Rikom Technologies SDH. BHD",                                                    // 61748
         "Technické sitě Brno, akciová společnost",                                        // 61749
         "XDTRUST 02-28-2024 CHARLEY MINNGEAO",                                            // 61750
-        "Enfall",                                                                         // 61751
+        "Enhub",                                                                          // 61751
         "Shahed, Inc.",                                                                   // 61752
         "Lexi Winter",                                                                    // 61753
         "FADU",                                                                           // 61754
@@ -61804,7 +61804,39 @@ static global_enterprises_table_t table =
         "CG Elementum AG",                                                                // 61775
         "ecobuilding AG",                                                                 // 61776
         "Metaminds",                                                                      // 61777
-        "GLN Schakt & Transport"                                                          // 61778
+        "GLN Schakt & Transport",                                                         // 61778
+        "Adrian Gonzaga-Ge Aguilar",                                                      // 61779
+        "Beijing Maker 6 Technology Co. Ltd.",                                            // 61780
+        "Noosphere Technologies, Inc.",                                                   // 61781
+        "Century Autogroep BV",                                                           // 61782
+        "RLKM UG",                                                                        // 61783
+        "CIUSSS du Centre-Sud-de-l'Île-de-Montréal",                                      // 61784
+        "上海源中信息科技有限公司 (Shanghai Yuanzhong Information Technology Co., Ltd.)",             // 61785
+        "Medicalholodeck",                                                                // 61786
+        "Kostur IT SERVICES",                                                             // 61787
+        "IGOSEC.PL",                                                                      // 61788
+        "Woningstichting Heteren",                                                        // 61789
+        "Omnibit",                                                                        // 61790
+        "New Hope Information systems",                                                   // 61791
+        "Call Box",                                                                       // 61792
+        "Tradewinds Networks Incorporated",                                               // 61793
+        "Masoud",                                                                         // 61794
+        "Moreforlesstech",                                                                // 61795
+        "Ob/Gyn Professionals of East Tennessee",                                         // 61796
+        "Sobel Tech",                                                                     // 61797
+        "Beijing Urban Construction Intelligent Control Co.,Ltd",                         // 61798
+        "Optima SC Inc.",                                                                 // 61799
+        "Vikor Scientific",                                                               // 61800
+        "Naum Ravinovich",                                                                // 61801
+        "Alta Labs",                                                                      // 61802
+        "Fox Crypto B.V.",                                                                // 61803
+        "XobeBook",                                                                       // 61804
+        "NEXION Corporation",                                                             // 61805
+        "VOLARIS Marcin Ziemiański",                                                      // 61806
+        "Marcin Ziemiański",                                                              // 61807
+        "kISA@kubus IT GbR",                                                              // 61808
+        "The Perfume Shop",                                                               // 61809
+        "Bitzer Compressores Ltda."                                                       // 61810
     }
 };
 
