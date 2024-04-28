@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-04-19) */
+/* (last updated 2024-04-26) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61811];
+    const char* values[61838];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61810,
+    61837,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -19009,7 +19009,7 @@ static global_enterprises_table_t table =
         "Cypak AB",                                                                       // 18980
         "Reserved",                                                                       // 18981
         "Link-Yug Ltd.",                                                                  // 18982
-        "AOK Sachsen",                                                                    // 18983
+        "AOK PLUS – Die Gesundheitskasse für Sachsen und Thüringen",                      // 18983
         "Magos Consulting, Ltd.",                                                         // 18984
         "Insinova AG",                                                                    // 18985
         "FleetBoston Financial Corporation",                                              // 18986
@@ -51734,7 +51734,7 @@ static global_enterprises_table_t table =
         "Ionx Solutions",                                                                 // 51705
         "Anditi",                                                                         // 51706
         "South Sound Oncology Services, PC",                                              // 51707
-        "Gatema a.s.",                                                                    // 51708
+        "Medutech s.r.o.",                                                                // 51708
         "K-CIX",                                                                          // 51709
         "Electronic Monitoring Solutionz Ltd",                                            // 51710
         "Apis Networks",                                                                  // 51711
@@ -54624,7 +54624,7 @@ static global_enterprises_table_t table =
         "Phinergy",                                                                       // 54595
         "Duracomm Corporation",                                                           // 54596
         "L&T Technology Services",                                                        // 54597
-        "Daimler AG",                                                                     // 54598
+        "Mercedes-Benz Group AG",                                                         // 54598
         "DPD Direct Parcel Distribution Austria GmbH",                                    // 54599
         "PGE Systemy S.A.",                                                               // 54600
         "LLC «FOTEL»",                                                                    // 54601
@@ -57990,7 +57990,7 @@ static global_enterprises_table_t table =
         "Telycan S.L.",                                                                   // 57961
         "Sedam IT d.o.o.",                                                                // 57962
         "Afzar Pardaz Tose'eh",                                                           // 57963
-        "ZAP Surgical Systems, Inc.",                                                     // 57964
+        "ZAP Surgical Systems, Inc",                                                      // 57964
         "LLC ""Company DVK-electro""",                                                    // 57965
         "Aethera Technologies Limited",                                                   // 57966
         "INSTITUTO PARA LA DINAMIZACIÓN ECONÓMICA S.A.",                                  // 57967
@@ -61597,7 +61597,7 @@ static global_enterprises_table_t table =
         "Shanghai Pingbo Info & Tech Ltd.",                                               // 61568
         "Matthew Gardner",                                                                // 61569
         "Bence Skorka",                                                                   // 61570
-        "Asseco SEE d.o.o Beograd",                                                       // 61571
+        "ASEE Solutions d.o.o Beograd",                                                   // 61571
         "BNGSOFT ltd.",                                                                   // 61572
         "Code Fox",                                                                       // 61573
         "Stadt Troisdorf",                                                                // 61574
@@ -61827,7 +61827,7 @@ static global_enterprises_table_t table =
         "Beijing Urban Construction Intelligent Control Co.,Ltd",                         // 61798
         "Optima SC Inc.",                                                                 // 61799
         "Vikor Scientific",                                                               // 61800
-        "Naum Ravinovich",                                                                // 61801
+        "Nova Software SRL",                                                              // 61801
         "Alta Labs",                                                                      // 61802
         "Fox Crypto B.V.",                                                                // 61803
         "XobeBook",                                                                       // 61804
@@ -61836,7 +61836,34 @@ static global_enterprises_table_t table =
         "Marcin Ziemiański",                                                              // 61807
         "kISA@kubus IT GbR",                                                              // 61808
         "The Perfume Shop",                                                               // 61809
-        "Bitzer Compressores Ltda."                                                       // 61810
+        "Bitzer Compressores Ltda.",                                                      // 61810
+        "Noah Mesel",                                                                     // 61811
+        "Tutoringbytiff",                                                                 // 61812
+        "Irista Technologies, Inc",                                                       // 61813
+        "Gitservice.dk",                                                                  // 61814
+        "Blair A Piper",                                                                  // 61815
+        "Jungheinrich AG",                                                                // 61816
+        "New Yard B.V.",                                                                  // 61817
+        "Surry County Schools",                                                           // 61818
+        "Information Security Services S.A.",                                             // 61819
+        "Chorke, Inc.",                                                                   // 61820
+        "Dynamo Software",                                                                // 61821
+        "Per ALBIN HANSSON",                                                              // 61822
+        "Middlesurf Inc.",                                                                // 61823
+        "Canadian Centre for Cyber Security",                                             // 61824
+        "H ENERGY LTD",                                                                   // 61825
+        "Cloud Solutions LLC",                                                            // 61826
+        "MC Burny",                                                                       // 61827
+        "MTN Converged Solutions",                                                        // 61828
+        "SAJ DIGITAL ENERGY AUSTRALIA PTY LTD",                                           // 61829
+        "Tinh Van Technologies JSC.",                                                     // 61830
+        "MFK Burny",                                                                      // 61831
+        "Alfavit",                                                                        // 61832
+        "Xiaojun Ben",                                                                    // 61833
+        "Venturus Centro de Inovacao Tecnologica",                                        // 61834
+        "Otheda Limited",                                                                 // 61835
+        "AtFocus",                                                                        // 61836
+        "Associated Medical Specialists, d/b/a Coastal Cancer Center"                     // 61837
     }
 };
 
