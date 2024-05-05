@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-04-26) */
+/* (last updated 2024-05-03) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61838];
+    const char* values[61864];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61837,
+    61863,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -5014,7 +5014,7 @@ static global_enterprises_table_t table =
         "Vigilant Networks",                                                              // 4985
         "KB/Tel",                                                                         // 4986
         "Simpler Networks Inc.",                                                          // 4987
-        "Ronningen Consulting",                                                           // 4988
+        "Synkro AS",                                                                      // 4988
         "Connect Austria GmbH",                                                           // 4989
         "TTI Telecom",                                                                    // 4990
         "Stonebridge Technologies, Inc.S.E.",                                             // 4991
@@ -59920,7 +59920,7 @@ static global_enterprises_table_t table =
         "Baltic Institute of Advanced Technology",                                        // 59891
         "Denomas Denetim Otomasyon",                                                      // 59892
         "ZhangZexin",                                                                     // 59893
-        "LBS Westdeutsche Landesbausparkasse",                                            // 59894
+        "LBS Landesbausparkasse NordWest",                                                // 59894
         "DOXIO",                                                                          // 59895
         "NTS LLC",                                                                        // 59896
         "Anothermouse",                                                                   // 59897
@@ -61376,7 +61376,7 @@ static global_enterprises_table_t table =
         "Kirill Sluzhaev",                                                                // 61347
         "Limited Liability Company ""Thunder Soft""",                                     // 61348
         "北京中科恒伦科技有限公司 (Beijing Zhongke Henglun Technology Co., Ltd.)",                    // 61349
-        "SMARTGEN(ZHENGZHOU) TECHNOLOGY CO.,LTD",                                         // 61350
+        "smartgen",                                                                       // 61350
         "Telekomi Kosoves",                                                               // 61351
         "Parta Networks",                                                                 // 61352
         "Polar Wind Medical Center, Inc.",                                                // 61353
@@ -61863,7 +61863,33 @@ static global_enterprises_table_t table =
         "Venturus Centro de Inovacao Tecnologica",                                        // 61834
         "Otheda Limited",                                                                 // 61835
         "AtFocus",                                                                        // 61836
-        "Associated Medical Specialists, d/b/a Coastal Cancer Center"                     // 61837
+        "Associated Medical Specialists, d/b/a Coastal Cancer Center",                    // 61837
+        "iatele",                                                                         // 61838
+        "Secretarium",                                                                    // 61839
+        "Pohjois-Suomen Metsämarkkinat Oy",                                               // 61840
+        "M+C Schiffer GmbH",                                                              // 61841
+        "TRANS ELECTRIC CO.,LTD.",                                                        // 61842
+        "Impala Terminals",                                                               // 61843
+        "meet patel",                                                                     // 61844
+        "Paul Rodriguez",                                                                 // 61845
+        "North Platte Public Schools",                                                    // 61846
+        "IEIT SYSTEMS Co.，Ltd.",                                                          // 61847
+        "Nexfi",                                                                          // 61848
+        "ZJUSCT",                                                                         // 61849
+        "mrhaoxx",                                                                        // 61850
+        "Cummins, Inc.",                                                                  // 61851
+        "Northside Hospital, Inc. for the benefit of Atlanta Cancer Care",                // 61852
+        "nexgentec AG",                                                                   // 61853
+        "COFACE",                                                                         // 61854
+        "Nationwide Telephone Assistance Ltd",                                            // 61855
+        "NextGenGames",                                                                   // 61856
+        "Converge Enterprise Cloud",                                                      // 61857
+        "Silines",                                                                        // 61858
+        "Miami-Dade Police Department, Fl.",                                              // 61859
+        "SipaZon AB",                                                                     // 61860
+        "Home Lab LLC",                                                                   // 61861
+        "NAMIRIAL LIMITED",                                                               // 61862
+        "The Danish Society of Engineers, IDA"                                            // 61863
     }
 };
 
