@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-05-03) */
+/* (last updated 2024-05-10) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61864];
+    const char* values[61884];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61863,
+    61883,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -47482,7 +47482,7 @@ static global_enterprises_table_t table =
         "Gobierno de Santa Fe",                                                           // 47453
         "Area d'Inxenieria Telematica - University of Oviedo",                            // 47454
         "Sydved AB",                                                                      // 47455
-        "Vodafone NZ Limited",                                                            // 47456
+        "One New Zealand Group Limited",                                                  // 47456
         "SAS Orbitracs",                                                                  // 47457
         "GIGANET NETWORKING SOLUTIONS LTD",                                               // 47458
         "BKM-Micronic Richtfunkanlagen GmbH",                                             // 47459
@@ -61889,7 +61889,27 @@ static global_enterprises_table_t table =
         "SipaZon AB",                                                                     // 61860
         "Home Lab LLC",                                                                   // 61861
         "NAMIRIAL LIMITED",                                                               // 61862
-        "The Danish Society of Engineers, IDA"                                            // 61863
+        "The Danish Society of Engineers, IDA",                                           // 61863
+        "GIGALIGHT",                                                                      // 61864
+        "SKS Welding Systems GmbH",                                                       // 61865
+        "IronWiFi, LLC",                                                                  // 61866
+        "IDnow Trust Services AB",                                                        // 61867
+        "西安恒多智能科技有限公司 (Xi'an Hengduo Intelligent Technology Co., Ltd.)",                  // 61868
+        "Visional Labs",                                                                  // 61869
+        "Marieborgs Lantbruk AB",                                                         // 61870
+        "Davide Crivelli",                                                                // 61871
+        "KAYTUS SYSTEMS PTE. LTD.",                                                       // 61872
+        "Landratsamt Tübingen",                                                           // 61873
+        "WFF IT-Service GmbH",                                                            // 61874
+        "Beijing Jinqun Technology Co., Ltd",                                             // 61875
+        "Shanghai ReeLink Global Communication Company LTD",                              // 61876
+        "htp GmbH",                                                                       // 61877
+        "New H3C Technologies Co., Ltd",                                                  // 61878
+        "Villageofdali",                                                                  // 61879
+        "Xsight Labs",                                                                    // 61880
+        "New Zealand Institute for Plant and Food Research",                              // 61881
+        "Esri Chile",                                                                     // 61882
+        "BEQ Technology"                                                                  // 61883
     }
 };
 
