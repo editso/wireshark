@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-05-10) */
+/* (last updated 2024-05-17) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61884];
+    const char* values[61919];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61883,
+    61918,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -22157,7 +22157,7 @@ static global_enterprises_table_t table =
         "RBC Capital Markets, Sydney",                                                    // 22128
         "AfterHours Upgrades",                                                            // 22129
         "Vivatas, Inc",                                                                   // 22130
-        "ÖWD time access GmbH",                                                           // 22131
+        "ÖWD security systems GmbH & Co KG",                                              // 22131
         "Mediasyscom SAS",                                                                // 22132
         "UWIC",                                                                           // 22133
         "Eminds AB",                                                                      // 22134
@@ -61162,7 +61162,7 @@ static global_enterprises_table_t table =
         "Reposit Power",                                                                  // 61133
         "Wallbox N.V.",                                                                   // 61134
         "GTD International",                                                              // 61135
-        "Sune Andersen",                                                                  // 61136
+        "Aeven A/S",                                                                      // 61136
         "Smart'r Solutions",                                                              // 61137
         "Attochron, LLC",                                                                 // 61138
         "F&F Filipowski",                                                                 // 61139
@@ -61909,7 +61909,42 @@ static global_enterprises_table_t table =
         "Xsight Labs",                                                                    // 61880
         "New Zealand Institute for Plant and Food Research",                              // 61881
         "Esri Chile",                                                                     // 61882
-        "BEQ Technology"                                                                  // 61883
+        "BEQ Technology",                                                                 // 61883
+        "百信信息技术有限公司 (Baixin Information Technology Co., Ltd.)",                           // 61884
+        "Bright Star Pty Ltd",                                                            // 61885
+        "Paweł Worwąg",                                                                   // 61886
+        "EcoFlow",                                                                        // 61887
+        "Ballpoint",                                                                      // 61888
+        "Hazel",                                                                          // 61889
+        "The Funkin' Crew Inc.",                                                          // 61890
+        "MELCOMP S.A.",                                                                   // 61891
+        "WATSONGALAXY.COM",                                                               // 61892
+        "Tom Schollmeyer",                                                                // 61893
+        "TERRAWARP CORPORATION",                                                          // 61894
+        "Fabian Riechsteiner",                                                            // 61895
+        "IOFE SAC",                                                                       // 61896
+        "VNETS INFORMATION TECHNOLOGY LTD.",                                              // 61897
+        "Spruce Systems Inc",                                                             // 61898
+        "Grant Lewis",                                                                    // 61899
+        "eSIM Go Limited",                                                                // 61900
+        "Magnus Wissler",                                                                 // 61901
+        "cyt.s365.us",                                                                    // 61902
+        "LLC Accent Capital",                                                             // 61903
+        "Switchfly",                                                                      // 61904
+        "Stichting WoonFriesland",                                                        // 61905
+        "DUG Technology Pty Ltd",                                                         // 61906
+        "Kliskatek SL",                                                                   // 61907
+        "KOSTAL Solar Electric GmbH",                                                     // 61908
+        "IT Security Services SA de CV",                                                  // 61909
+        "Essence quantum technology",                                                     // 61910
+        "Inseego Wireless",                                                               // 61911
+        "GoCert.Ca",                                                                      // 61912
+        "AUSNET PTY LTD",                                                                 // 61913
+        "C-COR Broadband Australia Pty. Ltd.",                                            // 61914
+        "Beeline Telecom",                                                                // 61915
+        "Huettenes GmbH Architekten",                                                     // 61916
+        "Thomas Jones",                                                                   // 61917
+        "IT LAB SG"                                                                       // 61918
     }
 };
 
