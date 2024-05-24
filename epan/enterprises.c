@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-05-17) */
+/* (last updated 2024-05-23) */
 
 #include "config.h"
 
@@ -19,12 +19,12 @@
 typedef struct
 {
     uint32_t max_idx;
-    const char* values[61919];
+    const char* values[61941];
 } global_enterprises_table_t;
 
 static global_enterprises_table_t table =
 {
-    61918,
+    61940,
     {
         "Reserved",                                                                       // 0
         "NxNetworks",                                                                     // 1
@@ -61115,7 +61115,7 @@ static global_enterprises_table_t table =
         "Chengdu BeiZhongWangXin Technology Co.Ltd",                                      // 61086
         "shenzhen real linkShenzhen Real Link Technology Co.,Ltd",                        // 61087
         "Anuvu",                                                                          // 61088
-        "Northeast Credit Union",                                                         // 61089
+        "Lighthouse Credit Union",                                                        // 61089
         "PKITNEXT LABS",                                                                  // 61090
         "DMIM",                                                                           // 61091
         "Hochschule fuer Gesundheit",                                                     // 61092
@@ -61944,7 +61944,29 @@ static global_enterprises_table_t table =
         "Beeline Telecom",                                                                // 61915
         "Huettenes GmbH Architekten",                                                     // 61916
         "Thomas Jones",                                                                   // 61917
-        "IT LAB SG"                                                                       // 61918
+        "IT LAB SG",                                                                      // 61918
+        "Groupe La Québécoise",                                                           // 61919
+        "Linxpeed Limited",                                                               // 61920
+        "GavinMP",                                                                        // 61921
+        "Black Country Healthcare NHS Foundation Trust",                                  // 61922
+        "ENELT GROUP Co.Ltd.",                                                            // 61923
+        "recretix systems AG",                                                            // 61924
+        "10T Tech Sdn Bhd",                                                               // 61925
+        "Grant Taylor",                                                                   // 61926
+        "Retailsystem.com",                                                               // 61927
+        "NetDevOp",                                                                       // 61928
+        "Schaffhauser Kantonalbank",                                                      // 61929
+        "PEBKAC.CA Technology Solutions",                                                 // 61930
+        "Kindred Tech",                                                                   // 61931
+        "OtoTrak d.o.o.",                                                                 // 61932
+        "IASO GmbH",                                                                      // 61933
+        "QMW Technologies Inc.",                                                          // 61934
+        "Swerve Limited",                                                                 // 61935
+        "Prolan Power Co., Ltd.",                                                         // 61936
+        "Acertia",                                                                        // 61937
+        "Kurt Lagergrens Trävaru AB",                                                     // 61938
+        "Genew Technologies Co., Ltd.",                                                   // 61939
+        "Excard Research GmbH"                                                            // 61940
     }
 };
 
