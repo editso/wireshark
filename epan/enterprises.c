@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-05-23) */
+/* (last updated 2024-05-25) */
 
 #include "config.h"
 
@@ -61959,7 +61959,11 @@ static const char * const table[] =
     "Acertia",                                                                            // 61937
     "Kurt Lagergrens Trävaru AB",                                                         // 61938
     "Genew Technologies Co., Ltd.",                                                       // 61939
-    "Excard Research GmbH"                                                                // 61940
+    "Excard Research GmbH",                                                               // 61940
+    "Notre Dame Academy",                                                                 // 61941
+    "Thüringer Staatslotterie AöR",                                                       // 61942
+    "Beijing LXTV Technology Co., Ltd",                                                   // 61943
+    "PM Factory BV"                                                                       // 61944
 };
 
 const char* global_enterprises_lookup(uint32_t value)
