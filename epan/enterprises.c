@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-05-25) */
+/* (last updated 2024-06-01) */
 
 #include "config.h"
 
@@ -2377,7 +2377,7 @@ static const char * const table[] =
     "ITIS",                                                                               // 2355
     "LANCOM Systems",                                                                     // 2356
     "PSIMED Corporation",                                                                 // 2357
-    "Transfer Data Test GmbH",                                                            // 2358
+    "TDT AG",                                                                             // 2358
     "T.I.P. Group S.A.",                                                                  // 2359
     "Redlink",                                                                            // 2360
     "Japan Information Engineering Co, Ltd.",                                             // 2361
@@ -5625,7 +5625,7 @@ static const char * const table[] =
     "Capital One Financial Services",                                                     // 5603
     "digit-safe",                                                                         // 5604
     "William Data Systems Ltd.",                                                          // 5605
-    "Cerplus SAPierre",                                                                   // 5606
+    "DocuSign France",                                                                    // 5606
     "Erwann ABALEA",                                                                      // 5607
     "Red Planet Technologies",                                                            // 5608
     "Smartleaf, Inc.",                                                                    // 5609
@@ -48965,7 +48965,7 @@ static const char * const table[] =
     "Ampetronic Ltd",                                                                     // 48943
     "Lietuvos vyriausiojo archyvaro tarnyba",                                             // 48944
     "Rundvirke Skog AB",                                                                  // 48945
-    "556081-8782",                                                                        // 48946
+    "Aktiebolaget Karlaträ",                                                              // 48946
     "ATMC Automação e Comunicação Ltda",                                                  // 48947
     "TCPixel, LLC",                                                                       // 48948
     "At4wireless",                                                                        // 48949
@@ -56978,7 +56978,7 @@ static const char * const table[] =
     "Groupe Canam",                                                                       // 56956
     "LLC BigDataRu",                                                                      // 56957
     "CORE|Vision BV",                                                                     // 56958
-    "Cpac Systems AB",                                                                    // 56959
+    "CPAC Systems AB",                                                                    // 56959
     "Oberstufen-Kolleg",                                                                  // 56960
     "VMnic",                                                                              // 56961
     "Digital Gaming Corporation USA",                                                     // 56962
@@ -59518,7 +59518,7 @@ static const char * const table[] =
     "Shenzhen Phoenix Telecom Technology Co.,Ltd",                                        // 59496
     "MPEON Co, Ltd.",                                                                     // 59497
     "PT Juke Solusi Teknologi",                                                           // 59498
-    "Juke Solutions Labs",                                                                // 59499
+    "PT Punggawa Siber Solusi",                                                           // 59499
     "Innofriends GmbH",                                                                   // 59500
     "Billund Aquaculture",                                                                // 59501
     "Get-Random",                                                                         // 59502
@@ -60494,7 +60494,7 @@ static const char * const table[] =
     "Fengrunda Technology Co.,Ltd.",                                                      // 60472
     "Zhengdao Quantum",                                                                   // 60473
     "EXO",                                                                                // 60474
-    "State Service of Special Communication and Information Security",                    // 60475
+    "Special Communication and Information Security State Service of the Republic of Azerbaijan",// 60475
     "Antara Teknik LLC",                                                                  // 60476
     "PicnicHealth",                                                                       // 60477
     "Airtime Network, Inc.",                                                              // 60478
@@ -61963,7 +61963,35 @@ static const char * const table[] =
     "Notre Dame Academy",                                                                 // 61941
     "Thüringer Staatslotterie AöR",                                                       // 61942
     "Beijing LXTV Technology Co., Ltd",                                                   // 61943
-    "PM Factory BV"                                                                       // 61944
+    "PM Factory BV",                                                                      // 61944
+    "Bliss.AI Pty Ltd",                                                                   // 61945
+    "PT Integra Teknologi Solusi",                                                        // 61946
+    "Lohith BK",                                                                          // 61947
+    "Erik Jan Uitenbroek",                                                                // 61948
+    "SANRO HEALTH PTY LTD",                                                               // 61949
+    "neu-itec GmbH",                                                                      // 61950
+    "Beijing Yingfei Networks Technology Co.Ltd.",                                        // 61951
+    "Luis Grünke",                                                                        // 61952
+    "Andreas Mueller",                                                                    // 61953
+    "Hochschule Karlsruhe",                                                               // 61954
+    "Praxis Asmus-Timm",                                                                  // 61955
+    "SaiFlow",                                                                            // 61956
+    "RCE Systems s.r.o. / DataFromSky",                                                   // 61957
+    "BerryByte Limited",                                                                  // 61958
+    "Lusory Limited",                                                                     // 61959
+    "Miralium Research",                                                                  // 61960
+    "Kodsport Sverige",                                                                   // 61961
+    "Chengdu Rongshitong Technology Co., Ltd",                                            // 61962
+    "SCA Obbola AB",                                                                      // 61963
+    "Craft Digital Inc.",                                                                 // 61964
+    "Knoxville Utilities Board",                                                          // 61965
+    "MythicalKitten",                                                                     // 61966
+    "SCM Insurance Services",                                                             // 61967
+    "Wojciech Teichert (6961405014)",                                                     // 61968
+    "TCIIT",                                                                              // 61969
+    "Kinder.Bildung.Zukunft e.V.",                                                        // 61970
+    "Teleradiologia Avanzada SL",                                                         // 61971
+    "IPTAM GmbH"                                                                          // 61972
 };
 
 const char* global_enterprises_lookup(uint32_t value)
