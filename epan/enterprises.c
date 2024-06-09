@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-06-01) */
+/* (last updated 2024-06-07) */
 
 #include "config.h"
 
@@ -23593,7 +23593,7 @@ static const char * const table[] =
     "IPBS-CNRS",                                                                          // 23571
     "WebMagician Global",                                                                 // 23572
     "Kids & Co g.e.V.",                                                                   // 23573
-    "TU Hamburg-Harburg",                                                                 // 23574
+    "TU Hamburg",                                                                         // 23574
     "Wayfinder Systems AB",                                                               // 23575
     "ADVIS Maciej Matysiak",                                                              // 23576
     "Enfo Partner Oy",                                                                    // 23577
@@ -46105,7 +46105,7 @@ static const char * const table[] =
     "F&F Computer Anwendungen und Unternehmensberatung GmbH",                             // 46083
     "FACTORYNET AUGUSTA, S.L.",                                                           // 46084
     "INFORMATICA Y PROCESOS DE GESTION, S.L.",                                            // 46085
-    "Elvexys SA",                                                                         // 46086
+    "CONDIS SA",                                                                          // 46086
     "IT Scharschinger",                                                                   // 46087
     "Sylvain Girod",                                                                      // 46088
     "edisonlee55",                                                                        // 46089
@@ -61947,7 +61947,7 @@ static const char * const table[] =
     "10T Tech Sdn Bhd",                                                                   // 61925
     "Grant Taylor",                                                                       // 61926
     "Retailsystem.com",                                                                   // 61927
-    "NetDevOp",                                                                           // 61928
+    "NetDevWare",                                                                         // 61928
     "Schaffhauser Kantonalbank",                                                          // 61929
     "PEBKAC.CA Technology Solutions",                                                     // 61930
     "Kindred Tech",                                                                       // 61931
@@ -61991,7 +61991,31 @@ static const char * const table[] =
     "TCIIT",                                                                              // 61969
     "Kinder.Bildung.Zukunft e.V.",                                                        // 61970
     "Teleradiologia Avanzada SL",                                                         // 61971
-    "IPTAM GmbH"                                                                          // 61972
+    "IPTAM GmbH",                                                                         // 61972
+    "Beijing Puruixin Technology Co., Ltd.",                                              // 61973
+    "Teske Virtual System",                                                               // 61974
+    "Comprehensive Hematology Oncology",                                                  // 61975
+    "NeuReality",                                                                         // 61976
+    "7Generation",                                                                        // 61977
+    "Bindworks",                                                                          // 61978
+    "Redstor Limited",                                                                    // 61979
+    "Madison Women's Clinic",                                                             // 61980
+    "Volvo Autonomous Solutions",                                                         // 61981
+    "ITS Consulting s.r.o.",                                                              // 61982
+    "Tianjin Optical Electrical Juneng Communication Co. , Ltd.",                         // 61983
+    "Zhengdao Quantum",                                                                   // 61984
+    "MapleCloud Technologies",                                                            // 61985
+    "TEAC Corporation",                                                                   // 61986
+    "E+H Rechtsanwälte GmbH",                                                             // 61987
+    "FTP Today, Inc.",                                                                    // 61988
+    "Rudolf Presl GmbH & Co. Klinik Bavaria Rehabilitations KG",                          // 61989
+    "Institut d'études politiques de Lyon",                                               // 61990
+    "Kian Alraqmiah",                                                                     // 61991
+    "ACSoftware",                                                                         // 61992
+    "CelSian Glass & Solar B.V.",                                                         // 61993
+    "Guangzhou Huisheng Electronic Technology Co., Ltd",                                  // 61994
+    "Rogers Behavioral Health",                                                           // 61995
+    "Raymond Sin"                                                                         // 61996
 };
 
 const char* global_enterprises_lookup(uint32_t value)
