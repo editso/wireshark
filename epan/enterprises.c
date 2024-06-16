@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-06-07) */
+/* (last updated 2024-06-14) */
 
 #include "config.h"
 
@@ -28490,7 +28490,7 @@ static const char * const table[] =
     "Fabio Prina",                                                                        // 28468
     "Cyber Media (India) Ltd",                                                            // 28469
     "St. Lawrence University",                                                            // 28470
-    "Bremer AG",                                                                          // 28471
+    "Bremer SE",                                                                          // 28471
     "tapirdata.com",                                                                      // 28472
     "DAVOnet GmbH",                                                                       // 28473
     "periscoptic perceptions",                                                            // 28474
@@ -42077,7 +42077,7 @@ static const char * const table[] =
     "West Lothian Council",                                                               // 42055
     "MultiToll Solutions SAS",                                                            // 42056
     "Cegedim",                                                                            // 42057
-    "Lomnido, s.r.o.",                                                                    // 42058
+    "DONAU INFORMATIK",                                                                   // 42058
     "MED2020 Health Care Software Inc.",                                                  // 42059
     "Egon Braun",                                                                         // 42060
     "SquareTwo Financial",                                                                // 42061
@@ -62015,7 +62015,28 @@ static const char * const table[] =
     "CelSian Glass & Solar B.V.",                                                         // 61993
     "Guangzhou Huisheng Electronic Technology Co., Ltd",                                  // 61994
     "Rogers Behavioral Health",                                                           // 61995
-    "Raymond Sin"                                                                         // 61996
+    "Raymond Sin",                                                                        // 61996
+    "Technologies Ssmidge",                                                               // 61997
+    "Umeå Energi AB",                                                                     // 61998
+    "de.borderline",                                                                      // 61999
+    "GVS Ko",                                                                             // 62000
+    "Sun Valley Holdings",                                                                // 62001
+    "ONAIR.VISION",                                                                       // 62002
+    "YATELECOM.RU",                                                                       // 62003
+    "R-Group International",                                                              // 62004
+    "Erabyte Inc",                                                                        // 62005
+    "Simetel S.p.A.",                                                                     // 62006
+    "Say Webhost Inc",                                                                    // 62007
+    "CyberSico",                                                                          // 62008
+    "MARISSA ANN OBRYAN",                                                                 // 62009
+    "Hoffmann Automobile AG",                                                             // 62010
+    "ECACTUS PTY LTD",                                                                    // 62011
+    "OneLayer Network",                                                                   // 62012
+    "Dielectric, LLC",                                                                    // 62013
+    "Richard Tetlow",                                                                     // 62014
+    "Shenzhen SH-fiber Technology Co., Ltd.",                                             // 62015
+    "J. Schmalz GmbH",                                                                    // 62016
+    "Genus Innovation"                                                                    // 62017
 };
 
 const char* global_enterprises_lookup(uint32_t value)
