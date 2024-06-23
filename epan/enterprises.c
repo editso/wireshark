@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-06-14) */
+/* (last updated 2024-06-21) */
 
 #include "config.h"
 
@@ -12496,7 +12496,7 @@ static const char * const table[] =
     "WAC",                                                                                // 12474
     "Webmotion Inc.",                                                                     // 12475
     "Carmody Consulting, Inc.",                                                           // 12476
-    "Christian Michelsen Research AS",                                                    // 12477
+    "NORCE Norwegian Research Centre AS",                                                 // 12477
     "Maryland Department of Transportation",                                              // 12478
     "OpenDNS Corp",                                                                       // 12479
     "Allied Worldwide",                                                                   // 12480
@@ -47877,7 +47877,7 @@ static const char * const table[] =
     "Rumo Logística",                                                                     // 47855
     "Geo++ GmbH",                                                                         // 47856
     "Juice Goose",                                                                        // 47857
-    "ENDICOTT PRECISION",                                                                 // 47858
+    "ENDICOTT PRECISION, INC.",                                                           // 47858
     "KEO GmbH",                                                                           // 47859
     "Thalia Bücher GmbH",                                                                 // 47860
     "The Berkeley Carroll School",                                                        // 47861
@@ -53163,7 +53163,7 @@ static const char * const table[] =
     "EKA Skog AB",                                                                        // 53141
     "Pima Omran Niroo",                                                                   // 53142
     "Travelopia Holdings Ltd.",                                                           // 53143
-    "Thales Deutschland GmbH",                                                            // 53144
+    "GTS Deutschland GmbH",                                                               // 53144
     "Ethos Infotech",                                                                     // 53145
     "Frachtwerk GmbH",                                                                    // 53146
     "fortop projects BV",                                                                 // 53147
@@ -61048,7 +61048,7 @@ static const char * const table[] =
     "BRAINSAIT LTD",                                                                      // 61026
     "Pannasastra University of Cambodia, Siem Reap Campus",                               // 61027
     "Omega Power",                                                                        // 61028
-    "mySaveID GmbH",                                                                      // 61029
+    "msg mySaveID GmbH",                                                                  // 61029
     "Antik Technology",                                                                   // 61030
     "PyCERR Beta",                                                                        // 61031
     "Oltiva Hong Kong Limited",                                                           // 61032
@@ -62036,7 +62036,38 @@ static const char * const table[] =
     "Richard Tetlow",                                                                     // 62014
     "Shenzhen SH-fiber Technology Co., Ltd.",                                             // 62015
     "J. Schmalz GmbH",                                                                    // 62016
-    "Genus Innovation"                                                                    // 62017
+    "Genus Innovation",                                                                   // 62017
+    "Northbrook School District 27",                                                      // 62018
+    "Wanhua Chemical Group Co.,Ltd.",                                                     // 62019
+    "Shaun Courtney",                                                                     // 62020
+    "Decent Lab",                                                                         // 62021
+    "Brotel s.r.o.",                                                                      // 62022
+    "Not Not Consulting AB",                                                              // 62023
+    "PIXA",                                                                               // 62024
+    "Tenex Software Solutions, Inc.",                                                     // 62025
+    "While 1 SRL",                                                                        // 62026
+    "Trenton Public Schools",                                                             // 62027
+    "Ring2U",                                                                             // 62028
+    "ThysTips",                                                                           // 62029
+    "CyberPKI",                                                                           // 62030
+    "Tekmo Co., Ltd.",                                                                    // 62031
+    "ORLEN S.A.",                                                                         // 62032
+    "Synerion Systems Lts",                                                               // 62033
+    "Vivek Chandran",                                                                     // 62034
+    "Donni Maulana Sipa",                                                                 // 62035
+    "Init7",                                                                              // 62036
+    "Forcap AB",                                                                          // 62037
+    "NexoPrima Sdn Bhd",                                                                  // 62038
+    "snafu Gesellschaft für interaktive Netzwerke mbH (Society for interactive networks mbH)",// 62039
+    "Blaguss",                                                                            // 62040
+    "Eguana Technologies Inc",                                                            // 62041
+    "Al Hami Information Technology",                                                     // 62042
+    "Sidarion AG",                                                                        // 62043
+    "DEYE NEW ENERGY AUSTRALIA PTY LTD",                                                  // 62044
+    "Landesamt für Sicherheit in der Informationstechnik (LSI)",                          // 62045
+    "MED-EL Medical Electronics",                                                         // 62046
+    "DESK SOFT COMERCIO E SERVICOS LTDA",                                                 // 62047
+    "MODENA TERMINAL SRL"                                                                 // 62048
 };
 
 const char* global_enterprises_lookup(uint32_t value)
