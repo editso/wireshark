@@ -81731,7 +81731,14 @@ static const per_sequence_t RRCConnectionReestablishmentRequest_sequence[] = {
 
 static int
 dissect_lte_rrc_RRCConnectionReestablishmentRequest(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-
+  /* Inform RLC & PDCP - need UE identifier */
+  mac_lte_info *p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
+  if (p_mac_lte_info) {
+    /* Tell RLC this UE is trying to (re)connect */
+    rlc_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid);
+    /* And PDCP. Only SRBs and UM (not AM) DRBs */
+    pdcp_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid, true);
+  }
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "RRCConnectionReestablishmentRequest");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -81890,7 +81897,14 @@ static const per_sequence_t RRCConnectionRequest_sequence[] = {
 
 static int
 dissect_lte_rrc_RRCConnectionRequest(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-
+  /* Inform RLC & PDCP - need UE identifier */
+  mac_lte_info *p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
+  if (p_mac_lte_info) {
+    /* Tell RLC this UE is trying to (re)connect */
+    rlc_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid);
+    /* And PDCP */
+    pdcp_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid, true);
+  }
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "RRCConnectionRequest");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -82073,7 +82087,15 @@ static const per_sequence_t RRCConnectionResumeRequest_r13_sequence[] = {
 
 static int
 dissect_lte_rrc_RRCConnectionResumeRequest_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-
+  /* Inform RLC & PDCP - need UE identifier */
+  mac_lte_info *p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
+  if (p_mac_lte_info) {
+    /* Tell RLC this UE is trying to (re)connect */
+    rlc_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid);
+    /* And PDCP */
+    /* TODO: more complicated, skip PDCP reset for now */
+    // pdcp_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid, true);
+  }
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "RRCConnectionResumeRequest-r13");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -82310,7 +82332,14 @@ static const per_sequence_t RRCEarlyDataRequest_r15_sequence[] = {
 
 static int
 dissect_lte_rrc_RRCEarlyDataRequest_r15(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-
+  /* Inform RLC & PDCP - need UE identifier */
+  mac_lte_info *p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
+  if (p_mac_lte_info) {
+    /* Tell RLC this UE is trying to (re)connect */
+    rlc_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid);
+    /* And PDCP */
+    pdcp_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid, false);
+  }
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "RRCEarlyDataRequest-r15");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -129238,6 +129267,14 @@ static const per_sequence_t RRCConnectionReestablishmentRequest_NB_sequence[] = 
 
 static int
 dissect_lte_rrc_RRCConnectionReestablishmentRequest_NB(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  /* Inform RLC & PDCP - need UE identifier */
+  mac_lte_info *p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
+  if (p_mac_lte_info) {
+    /* Tell RLC this UE is trying to (re)connect */
+    rlc_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid);
+    /* And PDCP. Only SRBs and UM (not AM) DRBs */
+    pdcp_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid, true);
+  }
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "RRCConnectionReestablishmentRequest-NB");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -129454,6 +129491,14 @@ static const per_sequence_t RRCConnectionRequest_NB_sequence[] = {
 
 static int
 dissect_lte_rrc_RRCConnectionRequest_NB(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  /* Inform RLC & PDCP - need UE identifier */
+  mac_lte_info *p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
+  if (p_mac_lte_info) {
+    /* Tell RLC this UE is trying to (re)connect */
+    rlc_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid);
+    /* And PDCP */
+    pdcp_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid, true);
+  }
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "RRCConnectionRequest-NB");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -129565,6 +129610,15 @@ static const per_sequence_t RRCConnectionResumeRequest_NB_sequence[] = {
 
 static int
 dissect_lte_rrc_RRCConnectionResumeRequest_NB(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  /* Inform RLC & PDCP - need UE identifier */
+  mac_lte_info *p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
+  if (p_mac_lte_info) {
+    /* Tell RLC this UE is trying to (re)connect */
+    rlc_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid);
+    /* And PDCP */
+    /* TODO: more complicated, skip PDCP reset for now */
+    // pdcp_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid, true);
+  }
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "RRCConnectionResumeRequest-NB");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -129752,6 +129806,14 @@ static const per_sequence_t RRCEarlyDataRequest_NB_r15_sequence[] = {
 
 static int
 dissect_lte_rrc_RRCEarlyDataRequest_NB_r15(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  /* Inform RLC & PDCP - need UE identifier */
+  mac_lte_info *p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
+  if (p_mac_lte_info) {
+    /* Tell RLC this UE is trying to (re)connect */
+    rlc_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid);
+    /* And PDCP */
+    pdcp_lte_reset_ue_bearers(actx->pinfo, p_mac_lte_info->ueid, false);
+  }
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "RRCEarlyDataRequest-NB-r15");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
