@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-06-21) */
+/* (last updated 2024-06-28) */
 
 #include "config.h"
 
@@ -54817,7 +54817,7 @@ static const char * const table[] =
     "HiveMQ / dc-square GmbH",                                                            // 54795
     "Department of Public Instruction - State of Wisconsin",                              // 54796
     "New England Hernia Center LLC",                                                      // 54797
-    "Dalian Neusoft Education Technology Group Co. Limited",                              // 54798
+    "Dalian Neusoft Education Technology Group Co., Ltd.",                                // 54798
     "SVD Gmbh",                                                                           // 54799
     "Apparent Inc.",                                                                      // 54800
     "County of Kern",                                                                     // 54801
@@ -55816,7 +55816,7 @@ static const char * const table[] =
     "NINGBO DEYE INVERTER TECHNOLOGY Co., LTD",                                           // 55794
     "BIZ-CHO",                                                                            // 55795
     "ORANO SA",                                                                           // 55796
-    "Some Idiots Are Savants",                                                            // 55797
+    "Stephen Douglas Scotti",                                                             // 55797
     "OCN",                                                                                // 55798
     "E Squared",                                                                          // 55799
     "smartics",                                                                           // 55800
@@ -58384,7 +58384,7 @@ static const char * const table[] =
     "NetLAB GmbH",                                                                        // 58362
     "RTO GmbH",                                                                           // 58363
     "Northern Arizona University",                                                        // 58364
-    "Rowanteck",                                                                          // 58365
+    "Rowantek",                                                                           // 58365
     "NEPBROADCASTING.COM",                                                                // 58366
     "Five Mountains Hawaii dba Kipuka O Ke Ola",                                          // 58367
     "Hangzhou Clounix Technology Limited",                                                // 58368
@@ -62067,7 +62067,41 @@ static const char * const table[] =
     "Landesamt für Sicherheit in der Informationstechnik (LSI)",                          // 62045
     "MED-EL Medical Electronics",                                                         // 62046
     "DESK SOFT COMERCIO E SERVICOS LTDA",                                                 // 62047
-    "MODENA TERMINAL SRL"                                                                 // 62048
+    "MODENA TERMINAL SRL",                                                                // 62048
+    "Eleasar Blum",                                                                       // 62049
+    "H1 Radio Co.,Ltd.",                                                                  // 62050
+    "SAC/TC82（Techinical Committee 82 of Standardization Adiminstration of China ）",      // 62051
+    "Iredell Memorial Hosptial",                                                          // 62052
+    "Mobile Communications Company of Iran (MCI)",                                        // 62053
+    "INFRAHEX",                                                                           // 62054
+    "ActivCloud",                                                                         // 62055
+    "Nigul.coop",                                                                         // 62056
+    "Entarian Limited",                                                                   // 62057
+    "Flabrice",                                                                           // 62058
+    "b-inside",                                                                           // 62059
+    "Tucson Embedded Systems",                                                            // 62060
+    "WalkHorizon",                                                                        // 62061
+    "4MITECH",                                                                            // 62062
+    "EasyNet Industry (Shenzhen) Co., Ltd",                                               // 62063
+    "ООО ""Новые облачные технологии"" (LLC ""New cloud technologies"")",                 // 62064
+    "CommScope Italy SRL",                                                                // 62065
+    "CloudXP Ltd",                                                                        // 62066
+    "ORLEN Oddział Centralny PGNiG w Warszawie",                                          // 62067
+    "Qasky",                                                                              // 62068
+    "Triangle",                                                                           // 62069
+    "Hobart Corporation",                                                                 // 62070
+    "E.T.I. Srl",                                                                         // 62071
+    "UBIQCOM INDIA PVT LTD",                                                              // 62072
+    "DCM Services, LLC",                                                                  // 62073
+    "MDOC S.R.L.",                                                                        // 62074
+    "Axonics, Inc",                                                                       // 62075
+    "Fort Peck Assiniboine & Sioux Tribes",                                               // 62076
+    "Ares Green Technology Corporation",                                                  // 62077
+    "Technology Innovation Lab, LLC.",                                                    // 62078
+    "ESERA GmbH",                                                                         // 62079
+    "Netflash Internet Solutions",                                                        // 62080
+    "City and Borough of Juneau",                                                         // 62081
+    "Rosatom Automated Control Systems JSC"                                               // 62082
 };
 
 const char* global_enterprises_lookup(uint32_t value)
