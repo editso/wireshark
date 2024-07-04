@@ -9728,7 +9728,7 @@ static int hf_nr_rrc_local_time;
 static int hf_nr_rrc_absolute_time;
 
 /* Initialize the subtree pointers */
-static gint ett_nr_rrc;
+static int ett_nr_rrc;
 static int ett_nr_rrc_HandoverCommand;
 static int ett_nr_rrc_T_criticalExtensions;
 static int ett_nr_rrc_T_c1;
@@ -13304,60 +13304,60 @@ static int ett_nr_rrc_T_criticalExtensions_60;
 static int ett_nr_rrc_T_criticalExtensionsFuture_60;
 static int ett_nr_rrc_UuMessageTransferSidelink_r17_IEs;
 static int ett_nr_rrc_T_nonCriticalExtension_67;
-static gint ett_nr_rrc_DedicatedNAS_Message;
-static gint ett_nr_rrc_targetRAT_MessageContainer;
-static gint ett_nr_rrc_nas_Container;
-static gint ett_nr_rrc_serialNumber;
-static gint ett_nr_rrc_warningType;
-static gint ett_nr_rrc_dataCodingScheme;
-static gint ett_nr_rrc_sib7_fragment;
-static gint ett_nr_rrc_sib7_fragments;
-static gint ett_nr_rrc_sib8_fragment;
-static gint ett_nr_rrc_sib8_fragments;
-static gint ett_nr_rrc_warningMessageSegment;
-static gint ett_nr_rrc_timeInfo;
-static gint ett_nr_rrc_capabilityRequestFilter;
-static gint ett_nr_rrc_sourceSCG_EUTRA_Config;
-static gint ett_nr_rrc_scg_CellGroupConfigEUTRA;
-static gint ett_nr_rrc_candidateCellInfoListSN_EUTRA;
-static gint ett_nr_rrc_candidateCellInfoListMN_EUTRA;
-static gint ett_nr_rrc_sourceConfigSCG_EUTRA;
-static gint ett_nr_rrc_eutra_SCG;
-static gint ett_nr_rrc_nr_SCG_Response;
-static gint ett_nr_rrc_eutra_SCG_Response;
-static gint ett_nr_rrc_measResultSCG_FailureMRDC;
-static gint ett_nr_rrc_ul_DCCH_MessageNR;
-static gint ett_nr_rrc_ul_DCCH_MessageEUTRA;
-static gint ett_rr_rrc_nas_SecurityParamFromNR;
-static gint ett_nr_rrc_sidelinkUEInformationNR;
-static gint ett_nr_rrc_sidelinkUEInformationEUTRA;
-static gint ett_nr_rrc_ueAssistanceInformationEUTRA;
-static gint ett_nr_rrc_dl_DCCH_MessageNR;
-static gint ett_nr_rrc_dl_DCCH_MessageEUTRA;
-static gint ett_nr_rrc_sl_ConfigDedicatedEUTRA;
-static gint ett_nr_rrc_sl_CapabilityInformationSidelink;
-static gint ett_nr_rrc_measResult_RLF_Report_EUTRA;
-static gint ett_nr_rrc_measResult_RLF_Report_EUTRA_v1690;
-static gint ett_nr_rrc_locationTimestamp_r16;
-static gint ett_nr_rrc_locationCoordinate_r16;
-static gint ett_nr_rrc_locationError_r16;
-static gint ett_nr_rrc_locationSource_r16;
-static gint ett_nr_rrc_velocityEstimate_r16;
-static gint ett_nr_rrc_sensor_MeasurementInformation_r16;
-static gint ett_nr_rrc_sensor_MotionInformation_r16;
-static gint ett_nr_rrc_bandParametersSidelinkEUTRA1_r16;
-static gint ett_nr_rrc_bandParametersSidelinkEUTRA2_r16;
-static gint ett_nr_rrc_sl_ParametersEUTRA1_r16;
-static gint ett_nr_rrc_sl_ParametersEUTRA2_r16;
-static gint ett_nr_rrc_sl_ParametersEUTRA3_r16;
-static gint ett_nr_rrc_absTimeInfo;
-static gint ett_nr_rrc_assistanceDataSIB_Element_r16;
-static gint ett_nr_sl_V2X_ConfigCommon_r16;
-static gint ett_nr_tdd_Config_r16;
-static gint ett_nr_coarseLocationInfo_r17;
-static gint ett_nr_sl_MeasResultsCandRelay_r17;
-static gint ett_nr_sl_MeasResultServingRelay_r17;
-static gint ett_nr_ReferenceLocation_r17;
+static int ett_nr_rrc_DedicatedNAS_Message;
+static int ett_nr_rrc_targetRAT_MessageContainer;
+static int ett_nr_rrc_nas_Container;
+static int ett_nr_rrc_serialNumber;
+static int ett_nr_rrc_warningType;
+static int ett_nr_rrc_dataCodingScheme;
+static int ett_nr_rrc_sib7_fragment;
+static int ett_nr_rrc_sib7_fragments;
+static int ett_nr_rrc_sib8_fragment;
+static int ett_nr_rrc_sib8_fragments;
+static int ett_nr_rrc_warningMessageSegment;
+static int ett_nr_rrc_timeInfo;
+static int ett_nr_rrc_capabilityRequestFilter;
+static int ett_nr_rrc_sourceSCG_EUTRA_Config;
+static int ett_nr_rrc_scg_CellGroupConfigEUTRA;
+static int ett_nr_rrc_candidateCellInfoListSN_EUTRA;
+static int ett_nr_rrc_candidateCellInfoListMN_EUTRA;
+static int ett_nr_rrc_sourceConfigSCG_EUTRA;
+static int ett_nr_rrc_eutra_SCG;
+static int ett_nr_rrc_nr_SCG_Response;
+static int ett_nr_rrc_eutra_SCG_Response;
+static int ett_nr_rrc_measResultSCG_FailureMRDC;
+static int ett_nr_rrc_ul_DCCH_MessageNR;
+static int ett_nr_rrc_ul_DCCH_MessageEUTRA;
+static int ett_rr_rrc_nas_SecurityParamFromNR;
+static int ett_nr_rrc_sidelinkUEInformationNR;
+static int ett_nr_rrc_sidelinkUEInformationEUTRA;
+static int ett_nr_rrc_ueAssistanceInformationEUTRA;
+static int ett_nr_rrc_dl_DCCH_MessageNR;
+static int ett_nr_rrc_dl_DCCH_MessageEUTRA;
+static int ett_nr_rrc_sl_ConfigDedicatedEUTRA;
+static int ett_nr_rrc_sl_CapabilityInformationSidelink;
+static int ett_nr_rrc_measResult_RLF_Report_EUTRA;
+static int ett_nr_rrc_measResult_RLF_Report_EUTRA_v1690;
+static int ett_nr_rrc_locationTimestamp_r16;
+static int ett_nr_rrc_locationCoordinate_r16;
+static int ett_nr_rrc_locationError_r16;
+static int ett_nr_rrc_locationSource_r16;
+static int ett_nr_rrc_velocityEstimate_r16;
+static int ett_nr_rrc_sensor_MeasurementInformation_r16;
+static int ett_nr_rrc_sensor_MotionInformation_r16;
+static int ett_nr_rrc_bandParametersSidelinkEUTRA1_r16;
+static int ett_nr_rrc_bandParametersSidelinkEUTRA2_r16;
+static int ett_nr_rrc_sl_ParametersEUTRA1_r16;
+static int ett_nr_rrc_sl_ParametersEUTRA2_r16;
+static int ett_nr_rrc_sl_ParametersEUTRA3_r16;
+static int ett_nr_rrc_absTimeInfo;
+static int ett_nr_rrc_assistanceDataSIB_Element_r16;
+static int ett_nr_sl_V2X_ConfigCommon_r16;
+static int ett_nr_tdd_Config_r16;
+static int ett_nr_coarseLocationInfo_r17;
+static int ett_nr_sl_MeasResultsCandRelay_r17;
+static int ett_nr_sl_MeasResultServingRelay_r17;
+static int ett_nr_ReferenceLocation_r17;
 
 static expert_field ei_nr_rrc_number_pages_le15;
 
@@ -13375,11 +13375,11 @@ static const unit_name_string units_prbs = { " PRB", " PRBs" };
 static const unit_name_string units_slots = { " slot", " slots" };
 
 typedef struct {
-  guint8 rat_type;
-  guint8 target_rat_type;
-  guint16 message_identifier;
-  guint8 warning_message_segment_type;
-  guint8 warning_message_segment_number;
+  uint8_t rat_type;
+  uint8_t target_rat_type;
+  uint16_t message_identifier;
+  uint8_t warning_message_segment_type;
+  uint8_t warning_message_segment_number;
   nr_drb_mac_rlc_mapping_t drb_rlc_mapping;
   nr_drb_rlc_pdcp_mapping_t drb_pdcp_mapping;
   lpp_pos_sib_type_t pos_sib_type;
@@ -13387,7 +13387,7 @@ typedef struct {
 } nr_rrc_private_data_t;
 
 /* Helper function to get UE identifier from lower layers (in order MAC, RLC, PDCP) */
-static guint16*
+static uint16_t*
 nr_rrc_get_ueid_from_lower_layers(wmem_allocator_t *scope, struct _packet_info* pinfo)
 {
   /* Try MAC first */
@@ -13433,9 +13433,9 @@ nr_rrc_call_dissector(dissector_handle_t handle, tvbuff_t *tvb, packet_info *pin
 }
 
 static void
-nr_rrc_q_RxLevMin_fmt(gchar *s, guint32 v)
+nr_rrc_q_RxLevMin_fmt(char *s, uint32_t v)
 {
-  gint32 d = (gint32)v;
+  int32_t d = (int32_t)v;
 
   snprintf(s, ITEM_LABEL_LENGTH, "%d dB (%d)", 2*d, d);
 }
@@ -13492,10 +13492,10 @@ static const fragment_items nr_rrc_sib8_frag_items = {
 };
 
 static void
-dissect_nr_rrc_warningMessageSegment(tvbuff_t *warning_msg_seg_tvb, proto_tree *tree, packet_info *pinfo, guint8 dataCodingScheme)
+dissect_nr_rrc_warningMessageSegment(tvbuff_t *warning_msg_seg_tvb, proto_tree *tree, packet_info *pinfo, uint8_t dataCodingScheme)
 {
-  guint32 offset;
-  guint8 nb_of_pages, length, *str;
+  uint32_t offset;
+  uint8_t nb_of_pages, length, *str;
   proto_item *ti;
   tvbuff_t *cb_data_page_tvb, *cb_data_tvb;
   int i;
@@ -13529,9 +13529,9 @@ static const value_string nr_rrc_daylightSavingTime_vals[] = {
 };
 
 static void
-nr_rrc_localTimeOffset_fmt(gchar *s, guint32 v)
+nr_rrc_localTimeOffset_fmt(char *s, uint32_t v)
 {
-  gint32 time_offset = (gint32) v;
+  int32_t time_offset = (int32_t) v;
 
   snprintf(s, ITEM_LABEL_LENGTH, "UTC time %c %dhr %dmin (%d)",
              (time_offset < 0) ? '-':'+', abs(time_offset) >> 2,
@@ -13539,35 +13539,35 @@ nr_rrc_localTimeOffset_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_drx_SlotOffset_fmt(gchar *s, guint32 v)
+nr_rrc_drx_SlotOffset_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%g ms (%u)", 1./32 * v, v);
 }
 
 static void
-nr_rrc_Hysteresis_fmt(gchar *s, guint32 v)
+nr_rrc_Hysteresis_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%gdB (%u)", 0.5 * v, v);
 }
 
 static void
-nr_rrc_msg3_DeltaPreamble_fmt(gchar *s, guint32 v)
+nr_rrc_msg3_DeltaPreamble_fmt(char *s, uint32_t v)
 {
-  gint32 d = (gint32)v;
+  int32_t d = (int32_t)v;
 
   snprintf(s, ITEM_LABEL_LENGTH, "%ddB (%d)", 2 * d, d);
 }
 
 static void
-nr_rrc_Q_RxLevMin_fmt(gchar *s, guint32 v)
+nr_rrc_Q_RxLevMin_fmt(char *s, uint32_t v)
 {
-  gint32 d = (gint32)v;
+  int32_t d = (int32_t)v;
 
   snprintf(s, ITEM_LABEL_LENGTH, "%ddBm (%d)", 2 * d, d);
 }
 
 static void
-nr_rrc_RSRP_RangeEUTRA_fmt(gchar *s, guint32 v)
+nr_rrc_RSRP_RangeEUTRA_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "RSRP < -140dBm (0)");
@@ -13579,7 +13579,7 @@ nr_rrc_RSRP_RangeEUTRA_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_RSRQ_RangeEUTRA_fmt(gchar *s, guint32 v)
+nr_rrc_RSRQ_RangeEUTRA_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "RSRQ < -19.5dB (0)");
@@ -13591,7 +13591,7 @@ nr_rrc_RSRQ_RangeEUTRA_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_SINR_RangeEUTRA_fmt(gchar *s, guint32 v)
+nr_rrc_SINR_RangeEUTRA_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "SINR < -23dB (0)");
@@ -13603,13 +13603,13 @@ nr_rrc_SINR_RangeEUTRA_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_ReselectionThreshold_fmt(gchar *s, guint32 v)
+nr_rrc_ReselectionThreshold_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%udB (%u)", 2 * v, v);
 }
 
 static void
-nr_rrc_RSRP_Range_fmt(gchar *s, guint32 v)
+nr_rrc_RSRP_Range_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "SS-RSRP < -156dBm (0)");
@@ -13623,7 +13623,7 @@ nr_rrc_RSRP_Range_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_RSRQ_Range_fmt(gchar *s, guint32 v)
+nr_rrc_RSRQ_Range_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "SS-RSRQ < -43dB (0)");
@@ -13635,7 +13635,7 @@ nr_rrc_RSRQ_Range_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_SINR_Range_fmt(gchar *s, guint32 v)
+nr_rrc_SINR_Range_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "SS-SINR < -23dB (0)");
@@ -13647,19 +13647,19 @@ nr_rrc_SINR_Range_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_dl_1024QAM_TotalWeightedLayers_fmt(gchar *s, guint32 v)
+nr_rrc_dl_1024QAM_TotalWeightedLayers_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%u (%u)", 10+(2*v), v);
 }
 
 static void
-nr_rrc_timeConnFailure_r16_fmt(gchar *s, guint32 v)
+nr_rrc_timeConnFailure_r16_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%ums (%u)", 100*v, v);
 }
 
 static void
-nr_rrc_RSSI_Range_r16_fmt(gchar *s, guint32 v)
+nr_rrc_RSSI_Range_r16_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "RSSI < -100dBm (0)");
@@ -13671,9 +13671,9 @@ nr_rrc_RSSI_Range_r16_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_RSRQ_RangeEUTRA_r16_fmt(gchar *s, guint32 v)
+nr_rrc_RSRQ_RangeEUTRA_r16_fmt(char *s, uint32_t v)
 {
-  gint32 d = (gint32)v;
+  int32_t d = (int32_t)v;
 
   if (d == -34) {
     snprintf(s, ITEM_LABEL_LENGTH, "RSRQ < -36dB (-34)");
@@ -13693,9 +13693,9 @@ nr_rrc_RSRQ_RangeEUTRA_r16_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_utra_FDD_RSCP_r16_fmt(gchar *s, guint32 v)
+nr_rrc_utra_FDD_RSCP_r16_fmt(char *s, uint32_t v)
 {
-  gint32 d = (gint32)v;
+  int32_t d = (int32_t)v;
 
   if (d == -5) {
     snprintf(s, ITEM_LABEL_LENGTH, "RSCP < -120dBm (-5)");
@@ -13707,7 +13707,7 @@ nr_rrc_utra_FDD_RSCP_r16_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_utra_FDD_EcN0_r16_fmt(gchar *s, guint32 v)
+nr_rrc_utra_FDD_EcN0_r16_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "Ec/No < -24dB (0)");
@@ -13719,27 +13719,27 @@ nr_rrc_utra_FDD_EcN0_r16_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_averageDelay_r16_fmt(gchar *s, guint32 v)
+nr_rrc_averageDelay_r16_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%.1fms (%u)", (float)v/10, v);
 }
 
 static void
-nr_rrc_measTriggerQuantity_utra_FDD_RSCP_r16_fmt(gchar *s, guint32 v)
+nr_rrc_measTriggerQuantity_utra_FDD_RSCP_r16_fmt(char *s, uint32_t v)
 {
-  gint32 d = (gint32)v;
+  int32_t d = (int32_t)v;
 
   snprintf(s, ITEM_LABEL_LENGTH, "%ddBm (%d)", d-115, d);
 }
 
 static void
-nr_rrc_measTriggerQuantity_utra_FDD_EcN0_r16_fmt(gchar *s, guint32 v)
+nr_rrc_measTriggerQuantity_utra_FDD_EcN0_r16_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%.1fdB (%u)", (float)v/2-24.5, v);
 }
 
 static void
-nr_rrc_SRS_RSRP_r16_fmt(gchar *s, guint32 v)
+nr_rrc_SRS_RSRP_r16_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "SRS-RSRP < -140dBm (0)");
@@ -13753,15 +13753,15 @@ nr_rrc_SRS_RSRP_r16_fmt(gchar *s, guint32 v)
 }
 
 static void
-nr_rrc_MeasTriggerQuantityOffset_fmt(gchar *s, guint32 v)
+nr_rrc_MeasTriggerQuantityOffset_fmt(char *s, uint32_t v)
 {
-  gint32 d = (gint32)v;
+  int32_t d = (int32_t)v;
 
   snprintf(s, ITEM_LABEL_LENGTH, "%.1fdB (%d)", (float)d/2, d);
 }
 
 static void
-nr_rrc_TimeSinceCHO_Reconfig_r17_fmt(gchar *s, guint32 v)
+nr_rrc_TimeSinceCHO_Reconfig_r17_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%.1fs (%u)", (float)v/10, v);
 }
@@ -14157,12 +14157,12 @@ static const value_string nr_rrc_RAT_Type_vals[] = {
 
 static int
 dissect_nr_rrc_RAT_Type(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 rat_type;
+  uint32_t rat_type;
   nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      4, &rat_type, true, 0, NULL);
 
-  nr_priv->rat_type = (guint8)rat_type;
+  nr_priv->rat_type = (uint8_t)rat_type;
 
 
   return offset;
@@ -14333,16 +14333,16 @@ dissect_nr_rrc_AS_Config_eag_2(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *ac
 
 static int
 dissect_nr_rrc_DRB_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             1U, 32U, &value, false);
 
   if (nr_rrc_get_private_data(actx)->drb_rlc_mapping.active) {
-    nr_rrc_get_private_data(actx)->drb_rlc_mapping.rbid = (guint8)value;
-    nr_rrc_get_private_data(actx)->drb_rlc_mapping.is_drb = TRUE;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.rbid = (uint8_t)value;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.is_drb = true;
   }
   else if (nr_rrc_get_private_data(actx)->drb_pdcp_mapping.active) {
-    nr_rrc_get_private_data(actx)->drb_pdcp_mapping.drbid = (guint8)value;
+    nr_rrc_get_private_data(actx)->drb_pdcp_mapping.drbid = (uint8_t)value;
   }
 
 
@@ -24581,11 +24581,11 @@ static const value_string nr_rrc_T_warningMessageSegmentType_vals[] = {
 static int
 dissect_nr_rrc_T_warningMessageSegmentType(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
-  guint32 segment_type;
+  uint32_t segment_type;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &segment_type, false, 0, NULL);
 
-  nr_priv->warning_message_segment_type = (guint8)segment_type;
+  nr_priv->warning_message_segment_type = (uint8_t)segment_type;
 
 
   return offset;
@@ -24596,11 +24596,11 @@ dissect_nr_rrc_T_warningMessageSegmentType(tvbuff_t *tvb _U_, int offset _U_, as
 static int
 dissect_nr_rrc_T_warningMessageSegmentNumber(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
-  guint32 segment_number;
+  uint32_t segment_number;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 63U, &segment_number, false);
 
-  nr_priv->warning_message_segment_number = (guint8)segment_number;
+  nr_priv->warning_message_segment_number = (uint8_t)segment_number;
 
 
   return offset;
@@ -24620,16 +24620,16 @@ dissect_nr_rrc_T_warningMessageSegment(tvbuff_t *tvb _U_, int offset _U_, asn1_c
     nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
     proto_tree *subtree;
     tvbuff_t *frag_tvb;
-    gpointer p_dcs;
+    void *p_dcs;
     fragment_head *frag_data = fragment_add_seq_check(&nr_rrc_sib7_reassembly_table, warning_msg_seg_tvb, 0, actx->pinfo,
                                                       nr_priv->message_identifier, NULL,
                                                       nr_priv->warning_message_segment_number,
                                                       tvb_reported_length(warning_msg_seg_tvb),
-                                                      nr_priv->warning_message_segment_type ? FALSE : TRUE);
+                                                      nr_priv->warning_message_segment_type ? false : true);
     subtree = proto_item_add_subtree(actx->created_item, ett_nr_rrc_warningMessageSegment);
     frag_tvb = process_reassembled_data(warning_msg_seg_tvb, 0, actx->pinfo, "Reassembled SIB7 warning message",
                                         frag_data, &nr_rrc_sib7_frag_items, NULL, subtree);
-    p_dcs = wmem_map_lookup(nr_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((guint)nr_priv->message_identifier));
+    p_dcs = wmem_map_lookup(nr_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((unsigned)nr_priv->message_identifier));
     if (frag_tvb && p_dcs) {
       dissect_nr_rrc_warningMessageSegment(frag_tvb, subtree, actx->pinfo, GPOINTER_TO_UINT(p_dcs));
     }
@@ -24651,10 +24651,10 @@ dissect_nr_rrc_T_dataCodingScheme(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
   if (data_coding_scheme_tvb) {
     nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
     proto_tree *subtree;
-    guint32 dataCodingScheme;
+    uint32_t dataCodingScheme;
     subtree = proto_item_add_subtree(actx->created_item, ett_nr_rrc_dataCodingScheme);
     dataCodingScheme = dissect_cbs_data_coding_scheme(data_coding_scheme_tvb, actx->pinfo, subtree, 0);
-    wmem_map_insert(nr_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((guint)nr_priv->message_identifier),
+    wmem_map_insert(nr_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((unsigned)nr_priv->message_identifier),
                     GUINT_TO_POINTER(dataCodingScheme));
   }
 
@@ -24738,11 +24738,11 @@ static const value_string nr_rrc_T_warningMessageSegmentType_01_vals[] = {
 static int
 dissect_nr_rrc_T_warningMessageSegmentType_01(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
-  guint32 segment_type;
+  uint32_t segment_type;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &segment_type, false, 0, NULL);
 
-  nr_priv->warning_message_segment_type = (guint8)segment_type;
+  nr_priv->warning_message_segment_type = (uint8_t)segment_type;
 
 
   return offset;
@@ -24753,11 +24753,11 @@ dissect_nr_rrc_T_warningMessageSegmentType_01(tvbuff_t *tvb _U_, int offset _U_,
 static int
 dissect_nr_rrc_T_warningMessageSegmentNumber_01(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
-  guint32 segment_number;
+  uint32_t segment_number;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 63U, &segment_number, false);
 
-  nr_priv->warning_message_segment_number = (guint8)segment_number;
+  nr_priv->warning_message_segment_number = (uint8_t)segment_number;
 
 
   return offset;
@@ -24777,16 +24777,16 @@ dissect_nr_rrc_T_warningMessageSegment_01(tvbuff_t *tvb _U_, int offset _U_, asn
     nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
     proto_tree *subtree;
     tvbuff_t *frag_tvb;
-    gpointer p_dcs;
+    void *p_dcs;
     fragment_head *frag_data = fragment_add_seq_check(&nr_rrc_sib8_reassembly_table, warning_msg_seg_tvb, 0, actx->pinfo,
                                                       nr_priv->message_identifier, NULL,
                                                       nr_priv->warning_message_segment_number,
                                                       tvb_reported_length(warning_msg_seg_tvb),
-                                                      nr_priv->warning_message_segment_type ? FALSE : TRUE);
+                                                      nr_priv->warning_message_segment_type ? false : true);
     subtree = proto_item_add_subtree(actx->created_item, ett_nr_rrc_warningMessageSegment);
     frag_tvb = process_reassembled_data(warning_msg_seg_tvb, 0, actx->pinfo, "Reassembled SIB8 warning message",
                                         frag_data, &nr_rrc_sib8_frag_items, NULL, subtree);
-    p_dcs = wmem_map_lookup(nr_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((guint)nr_priv->message_identifier));
+    p_dcs = wmem_map_lookup(nr_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((unsigned)nr_priv->message_identifier));
     if (frag_tvb && p_dcs) {
       dissect_nr_rrc_warningMessageSegment(frag_tvb, subtree, actx->pinfo, GPOINTER_TO_UINT(p_dcs));
     }
@@ -24808,10 +24808,10 @@ dissect_nr_rrc_T_dataCodingScheme_01(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx
   if (data_coding_scheme_tvb) {
     nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
     proto_tree *subtree;
-    guint32 dataCodingScheme;
+    uint32_t dataCodingScheme;
     subtree = proto_item_add_subtree(actx->created_item, ett_nr_rrc_dataCodingScheme);
     dataCodingScheme = dissect_cbs_data_coding_scheme(data_coding_scheme_tvb, actx->pinfo, subtree, 0);
-    wmem_map_insert(nr_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((guint)nr_priv->message_identifier),
+    wmem_map_insert(nr_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((unsigned)nr_priv->message_identifier),
                     GUINT_TO_POINTER(dataCodingScheme));
   }
 
@@ -24847,10 +24847,10 @@ dissect_nr_rrc_SIB8(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, pro
 
 static int
 dissect_nr_rrc_T_timeInfoUTC(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint64 timeInfo;
+  uint64_t timeInfo;
   proto_tree *subtree;
   nstime_t ts;
-  guint32 old_offset = offset;
+  uint32_t old_offset = offset;
   offset = dissect_per_constrained_integer_64b(tvb, offset, actx, tree, hf_index,
                                                             0U, UINT64_C(549755813887), &timeInfo, false);
 
@@ -24876,7 +24876,7 @@ dissect_nr_rrc_T_dayLightSavingTime(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_
 
 
   if (daylight_saving_time_tvb) {
-    guint bitvalue = tvb_get_bits8(daylight_saving_time_tvb, 0, 2);
+    unsigned bitvalue = tvb_get_bits8(daylight_saving_time_tvb, 0, 2);
     actx->created_item = proto_tree_add_uint(tree, hf_index, daylight_saving_time_tvb, 0, 1, bitvalue);
   }
 
@@ -36065,16 +36065,16 @@ dissect_nr_rrc_RRC_TransactionIdentifier(tvbuff_t *tvb _U_, int offset _U_, asn1
 
 static int
 dissect_nr_rrc_SRB_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             1U, 3U, &value, false);
 
   if (nr_rrc_get_private_data(actx)->drb_rlc_mapping.active) {
-    nr_rrc_get_private_data(actx)->drb_rlc_mapping.rbid = (guint8)value;
-    nr_rrc_get_private_data(actx)->drb_rlc_mapping.is_drb = FALSE;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.rbid = (uint8_t)value;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.is_drb = false;
   }
   else if (nr_rrc_get_private_data(actx)->drb_pdcp_mapping.active) {
-    nr_rrc_get_private_data(actx)->drb_pdcp_mapping.drbid = (guint8)value;
+    nr_rrc_get_private_data(actx)->drb_pdcp_mapping.drbid = (uint8_t)value;
   }
 
 
@@ -36151,12 +36151,12 @@ static const value_string nr_rrc_T_pdcp_SN_SizeUL_vals[] = {
 
 static int
 dissect_nr_rrc_T_pdcp_SN_SizeUL(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   nr_drb_rlc_pdcp_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_pdcp_mapping;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &value, false, 0, NULL);
 
-  mapping->pdcpUlSnLength_present = TRUE;
+  mapping->pdcpUlSnLength_present = true;
   mapping->pdcpUlSnLength = (value) ? 18 : 12;
 
 
@@ -36173,12 +36173,12 @@ static const value_string nr_rrc_T_pdcp_SN_SizeDL_vals[] = {
 
 static int
 dissect_nr_rrc_T_pdcp_SN_SizeDL(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   nr_drb_rlc_pdcp_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_pdcp_mapping;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &value, false, 0, NULL);
 
-  mapping->pdcpDlSnLength_present = TRUE;
+  mapping->pdcpDlSnLength_present = true;
   mapping->pdcpDlSnLength = (value) ? 18 : 12;
 
 
@@ -36331,7 +36331,7 @@ dissect_nr_rrc_T_integrityProtection(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx
                                      1, NULL, false, 0, NULL);
 
   nr_drb_rlc_pdcp_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_pdcp_mapping;
-  mapping->pdcpIntegrityProtection = TRUE;
+  mapping->pdcpIntegrityProtection = true;
 
 
   return offset;
@@ -36401,13 +36401,13 @@ dissect_nr_rrc_CellGroupId(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _
 
 static int
 dissect_nr_rrc_LogicalChannelIdentity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   nr_drb_mac_rlc_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_rlc_mapping;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             1U, maxLC_ID, &value, false);
 
-  mapping->lcid = (guint8)value;
-  mapping->lcid_present = TRUE;
+  mapping->lcid = (uint8_t)value;
+  mapping->lcid_present = true;
 
 
   return offset;
@@ -36582,7 +36582,7 @@ static const value_string nr_rrc_T_cipheringDisabled_vals[] = {
 static int
 dissect_nr_rrc_T_cipheringDisabled(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   nr_drb_rlc_pdcp_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_pdcp_mapping;
-  mapping->pdcpCipheringDisabled = TRUE;
+  mapping->pdcpCipheringDisabled = true;
 
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      1, NULL, false, 0, NULL);
@@ -37015,16 +37015,16 @@ dissect_nr_rrc_PDCP_Config(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _
 
 static int
 dissect_nr_rrc_SRB_Identity_v1700(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             4U, 4U, &value, false);
 
   if (nr_rrc_get_private_data(actx)->drb_rlc_mapping.active) {
-    nr_rrc_get_private_data(actx)->drb_rlc_mapping.rbid = (guint8)value;
-    nr_rrc_get_private_data(actx)->drb_rlc_mapping.is_drb = FALSE;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.rbid = (uint8_t)value;
+    nr_rrc_get_private_data(actx)->drb_rlc_mapping.is_drb = false;
   }
   else if (nr_rrc_get_private_data(actx)->drb_pdcp_mapping.active) {
-    nr_rrc_get_private_data(actx)->drb_pdcp_mapping.drbid = (guint8)value;
+    nr_rrc_get_private_data(actx)->drb_pdcp_mapping.drbid = (uint8_t)value;
   }
 
 
@@ -37111,7 +37111,7 @@ static const value_string nr_rrc_T_sdap_HeaderDL_vals[] = {
 
 static int
 dissect_nr_rrc_T_sdap_HeaderDL(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &value, false, 0, NULL);
 
@@ -37132,7 +37132,7 @@ static const value_string nr_rrc_T_sdap_HeaderUL_vals[] = {
 
 static int
 dissect_nr_rrc_T_sdap_HeaderUL(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &value, false, 0, NULL);
 
@@ -37281,12 +37281,12 @@ static int
 dissect_nr_rrc_DRB_ToAddMod(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   nr_drb_rlc_pdcp_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_pdcp_mapping;
   memset(mapping, 0, sizeof(*mapping));
-  mapping->active = TRUE;
+  mapping->active = true;
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_DRB_ToAddMod, DRB_ToAddMod_sequence);
 
   /* Need UE identifier. */
-  guint16 *p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
+  uint16_t *p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
   if (p_ueid != NULL) {
     /* Configure PDCP SN length(s) for this DRB */
     if (mapping->pdcpUlSnLength_present || mapping->pdcpDlSnLength_present) {
@@ -37294,7 +37294,7 @@ dissect_nr_rrc_DRB_ToAddMod(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx 
       set_rlc_nr_drb_pdcp_mapping(actx->pinfo, mapping);
     }
   }
-  mapping->active = FALSE;
+  mapping->active = false;
 
 
   return offset;
@@ -37344,7 +37344,7 @@ static const value_string nr_rrc_CipheringAlgorithm_vals[] = {
 
 static int
 dissect_nr_rrc_CipheringAlgorithm(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   pdcp_nr_security_info_t *p_security_algorithms;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      8, &value, true, 0, NULL);
@@ -37372,7 +37372,7 @@ static const value_string nr_rrc_IntegrityProtAlgorithm_vals[] = {
 
 static int
 dissect_nr_rrc_IntegrityProtAlgorithm(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   pdcp_nr_security_info_t *p_security_algorithms;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      8, &value, true, 0, NULL);
@@ -40935,17 +40935,17 @@ static const value_string nr_rrc_SN_FieldLengthAM_vals[] = {
 
 static int
 dissect_nr_rrc_SN_FieldLengthAM(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &value, false, 0, NULL);
 
   nr_drb_mac_rlc_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_rlc_mapping;
   if (mapping->tempDirection == DIRECTION_UPLINK) {
-    mapping->rlcUlSnLength_present = TRUE;
+    mapping->rlcUlSnLength_present = true;
     mapping->rlcUlSnLength = (value==0) ? 12 : 18;
   }
   else {
-    mapping->rlcDlSnLength_present = TRUE;
+    mapping->rlcDlSnLength_present = true;
     mapping->rlcDlSnLength = (value==0) ? 12 : 18;
   }
 
@@ -41212,17 +41212,17 @@ static const value_string nr_rrc_SN_FieldLengthUM_vals[] = {
 
 static int
 dissect_nr_rrc_SN_FieldLengthUM(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &value, false, 0, NULL);
 
   nr_drb_mac_rlc_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_rlc_mapping;
   if (mapping->tempDirection == DIRECTION_UPLINK) {
-    mapping->rlcUlSnLength_present = TRUE;
+    mapping->rlcUlSnLength_present = true;
     mapping->rlcUlSnLength = (value==0) ? 6 : 12;
   }
   else {
-    mapping->rlcDlSnLength_present = TRUE;
+    mapping->rlcDlSnLength_present = true;
     mapping->rlcDlSnLength = (value==0) ? 6 : 12;
   }
 
@@ -53736,7 +53736,7 @@ dissect_nr_rrc_RRCReestablishment(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
 
 static int
 dissect_nr_rrc_T_securityAlgorithmConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint16 *p_ueid;
+  uint16_t *p_ueid;
   pdcp_nr_security_info_t *p_security_algorithms;
   offset = dissect_nr_rrc_SecurityAlgorithmConfig(tvb, offset, actx, tree, hf_index);
 
@@ -54307,12 +54307,12 @@ static const value_string nr_rrc_T_targetRAT_Type_vals[] = {
 
 static int
 dissect_nr_rrc_T_targetRAT_Type(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 target_rat_type;
+  uint32_t target_rat_type;
   nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      4, &target_rat_type, true, 0, NULL);
 
-  nr_priv->target_rat_type = (guint8)target_rat_type;
+  nr_priv->target_rat_type = (uint8_t)target_rat_type;
 
 
   return offset;
@@ -54996,10 +54996,10 @@ dissect_nr_rrc_AbsoluteTimeInfo_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_
 
 
   if (abs_time_info_tvb) {
-    const gchar *str, *hf_str;
+    const char *str, *hf_str;
     proto_tree *subtree;
     subtree = proto_item_add_subtree(actx->created_item, ett_nr_rrc_absTimeInfo);
-    str = tvb_bcd_dig_to_str(actx->pinfo->pool, abs_time_info_tvb, 0, 6, NULL, FALSE);
+    str = tvb_bcd_dig_to_str(actx->pinfo->pool, abs_time_info_tvb, 0, 6, NULL, false);
     hf_str = wmem_strdup_printf(actx->pinfo->pool, "%c%c-%c%c-%c%c %c%c:%c%c:%c%c", str[0], str[1],
                         str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11]);
     proto_tree_add_string(subtree, hf_nr_rrc_absolute_time, abs_time_info_tvb, 0, 6, hf_str);
@@ -56892,7 +56892,7 @@ dissect_nr_rrc_RRCReestablishmentRequest(tvbuff_t *tvb _U_, int offset _U_, asn1
 
   if (!PINFO_FD_VISITED(actx->pinfo)) {
     /* Look for UE identifier */
-    guint16 *p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
+    uint16_t *p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
 
     if (p_ueid != NULL) {
       /* Inform PDCP about the RRCreestablishmentRequest */
@@ -59910,7 +59910,7 @@ static const per_sequence_t SecurityModeFailure_sequence[] = {
 
 static int
 dissect_nr_rrc_SecurityModeFailure(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint16 *p_ueid;
+  uint16_t *p_ueid;
 
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "Security Mode Failure");
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -76455,14 +76455,14 @@ static const per_choice_t RLC_Config_choice[] = {
 
 static int
 dissect_nr_rrc_RLC_Config(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   nr_drb_mac_rlc_mapping_t *mapping = &nr_rrc_get_private_data(actx)->drb_rlc_mapping;
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_nr_rrc_RLC_Config, RLC_Config_choice,
                                  &value);
 
   mapping->rlcMode = (value==0) ? RLC_AM_MODE : RLC_UM_MODE;
-  mapping->rlcMode_present = TRUE;
+  mapping->rlcMode_present = true;
 
 
   return offset;
@@ -81622,11 +81622,11 @@ static const per_sequence_t RLC_BearerConfig_sequence[] = {
 
 static int
 dissect_nr_rrc_RLC_BearerConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint16 *p_ueid;
+  uint16_t *p_ueid;
   /* Get the struct and clear it out */
   nr_drb_mac_rlc_mapping_t *drb_mapping = &nr_rrc_get_private_data(actx)->drb_rlc_mapping;
   memset(drb_mapping, 0, sizeof(nr_drb_mac_rlc_mapping_t));
-  drb_mapping->active = TRUE;
+  drb_mapping->active = true;
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_RLC_BearerConfig, RLC_BearerConfig_sequence);
 
@@ -81647,7 +81647,7 @@ dissect_nr_rrc_RLC_BearerConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *a
       set_mac_nr_srb4_in_use(drb_mapping->ueid);
     }
   }
-  drb_mapping->active = FALSE;
+  drb_mapping->active = false;
 
 
   return offset;
@@ -136786,7 +136786,7 @@ dissect_nr_rrc_nr_RLF_Report_r16_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, 
   proto_item_set_hidden(prot_ti);
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, FALSE, pinfo);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, pinfo);
   offset = dissect_nr_rrc_T_nr_RLF_Report_r16(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_BCCH_DL_SCH_Message_PDU);
   offset += 7; offset >>= 3;
   return offset;
@@ -136798,7 +136798,7 @@ dissect_nr_rrc_subCarrierSpacingCommon_PDU(tvbuff_t *tvb _U_, packet_info *pinfo
   proto_item_set_hidden(prot_ti);
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, FALSE, pinfo);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, pinfo);
   offset = dissect_nr_rrc_T_subCarrierSpacingCommon(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_BCCH_DL_SCH_Message_PDU);
   offset += 7; offset >>= 3;
   return offset;
@@ -136810,7 +136810,7 @@ dissect_nr_rrc_rach_ConfigCommonIAB_r16_PDU(tvbuff_t *tvb _U_, packet_info *pinf
   proto_item_set_hidden(prot_ti);
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, FALSE, pinfo);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, pinfo);
   offset = dissect_nr_rrc_T_rach_ConfigCommonIAB_r16(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_BCCH_DL_SCH_Message_PDU);
   offset += 7; offset >>= 3;
   return offset;
@@ -173929,7 +173929,7 @@ proto_register_nr_rrc(void) {
         NULL, HFILL }},
   };
 
-  static gint *ett[] = {
+  static int *ett[] = {
     &ett_nr_rrc,
     &ett_nr_rrc_HandoverCommand,
     &ett_nr_rrc_T_criticalExtensions,

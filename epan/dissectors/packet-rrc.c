@@ -84,21 +84,21 @@ enum rrc_sib_segment_type {
 
 typedef struct umts_rrc_private_data_t
 {
-  guint32 s_rnc_id; /* The S-RNC ID part of a U-RNTI */
-  guint32 s_rnti; /* The S-RNTI part of a U-RNTI */
-  guint32 new_u_rnti;
-  guint32 current_u_rnti;
-  guint32 scrambling_code;
+  uint32_t s_rnc_id; /* The S-RNC ID part of a U-RNTI */
+  uint32_t s_rnti; /* The S-RNTI part of a U-RNTI */
+  uint32_t new_u_rnti;
+  uint32_t current_u_rnti;
+  uint32_t scrambling_code;
   enum nas_sys_info_gsm_map cn_domain;
   wmem_strbuf_t* digits_strbuf; /* A collection of digits in a string. Used for reconstructing IMSIs or MCC-MNC pairs */
   wmem_strbuf_t* last_mcc_strbuf; /* Last seen MCC digits string */
-  gboolean digits_strbuf_parsing_failed_flag; /* Whether an error occurred when creating the IMSI/MCC-MNC pair string */
-  guint32 rbid;
-  guint32 rlc_ciphering_sqn; /* Sequence number where ciphering starts in a given bearer */
+  bool digits_strbuf_parsing_failed_flag; /* Whether an error occurred when creating the IMSI/MCC-MNC pair string */
+  uint32_t rbid;
+  uint32_t rlc_ciphering_sqn; /* Sequence number where ciphering starts in a given bearer */
   rrc_ciphering_info* ciphering_info;
   enum rrc_ue_state rrc_state_indicator;
   enum rrc_sib_segment_type curr_sib_segment_type;
-  guint32 curr_sib_type;
+  uint32_t curr_sib_type;
 } umts_rrc_private_data_t;
 
 
@@ -111,61 +111,61 @@ static umts_rrc_private_data_t* umts_rrc_get_private_data(asn1_ctx_t *actx)
   return (umts_rrc_private_data_t*)actx->private_data;
 }
 
-static guint32 private_data_get_s_rnc_id(asn1_ctx_t *actx)
+static uint32_t private_data_get_s_rnc_id(asn1_ctx_t *actx)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   return private_data->s_rnc_id;
 }
 
-static void private_data_set_s_rnc_id(asn1_ctx_t *actx, guint32 s_rnc_id)
+static void private_data_set_s_rnc_id(asn1_ctx_t *actx, uint32_t s_rnc_id)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   private_data->s_rnc_id = s_rnc_id;
 }
 
-static guint32 private_data_get_s_rnti(asn1_ctx_t *actx)
+static uint32_t private_data_get_s_rnti(asn1_ctx_t *actx)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   return private_data->s_rnti;
 }
 
-static void private_data_set_s_rnti(asn1_ctx_t *actx, guint32 s_rnti)
+static void private_data_set_s_rnti(asn1_ctx_t *actx, uint32_t s_rnti)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   private_data->s_rnti = s_rnti;
 }
 
-static guint32 private_data_get_new_u_rnti(asn1_ctx_t *actx)
+static uint32_t private_data_get_new_u_rnti(asn1_ctx_t *actx)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   return private_data->new_u_rnti;
 }
 
-static void private_data_set_new_u_rnti(asn1_ctx_t *actx, guint32 new_u_rnti)
+static void private_data_set_new_u_rnti(asn1_ctx_t *actx, uint32_t new_u_rnti)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   private_data->new_u_rnti = new_u_rnti;
 }
 
-static guint32 private_data_get_current_u_rnti(asn1_ctx_t *actx)
+static uint32_t private_data_get_current_u_rnti(asn1_ctx_t *actx)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   return private_data->current_u_rnti;
 }
 
-static void private_data_set_current_u_rnti(asn1_ctx_t *actx, guint32 current_u_rnti)
+static void private_data_set_current_u_rnti(asn1_ctx_t *actx, uint32_t current_u_rnti)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   private_data->current_u_rnti = current_u_rnti;
 }
 
-static guint32 private_data_get_scrambling_code(asn1_ctx_t *actx)
+static uint32_t private_data_get_scrambling_code(asn1_ctx_t *actx)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   return private_data->scrambling_code;
 }
 
-static void private_data_set_scrambling_code(asn1_ctx_t *actx, guint32 scrambling_code)
+static void private_data_set_scrambling_code(asn1_ctx_t *actx, uint32_t scrambling_code)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   private_data->scrambling_code = scrambling_code;
@@ -195,13 +195,13 @@ static void private_data_set_digits_strbuf(asn1_ctx_t *actx, wmem_strbuf_t* digi
   private_data->digits_strbuf = digits_strbuf;
 }
 
-static gboolean private_data_get_digits_strbuf_parsing_failed_flag(asn1_ctx_t *actx)
+static bool private_data_get_digits_strbuf_parsing_failed_flag(asn1_ctx_t *actx)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   return private_data->digits_strbuf_parsing_failed_flag;
 }
 
-static void private_data_set_digits_strbuf_parsing_failed_flag(asn1_ctx_t *actx, gboolean digits_strbuf_parsing_failed_flag)
+static void private_data_set_digits_strbuf_parsing_failed_flag(asn1_ctx_t *actx, bool digits_strbuf_parsing_failed_flag)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   private_data->digits_strbuf_parsing_failed_flag = digits_strbuf_parsing_failed_flag;
@@ -219,25 +219,25 @@ static void private_data_set_last_mcc_strbuf(asn1_ctx_t *actx, wmem_strbuf_t* la
   private_data->last_mcc_strbuf = last_mcc_strbuf;
 }
 
-static guint32 private_data_get_rbid(asn1_ctx_t *actx)
+static uint32_t private_data_get_rbid(asn1_ctx_t *actx)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   return private_data->rbid;
 }
 
-static void private_data_set_rbid(asn1_ctx_t *actx, guint32 rbid)
+static void private_data_set_rbid(asn1_ctx_t *actx, uint32_t rbid)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   private_data->rbid = rbid;
 }
 
-static guint32 private_data_get_rlc_ciphering_sqn(asn1_ctx_t *actx)
+static uint32_t private_data_get_rlc_ciphering_sqn(asn1_ctx_t *actx)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   return private_data->rlc_ciphering_sqn;
 }
 
-static void private_data_set_rlc_ciphering_sqn(asn1_ctx_t *actx, guint32 rlc_ciphering_sqn)
+static void private_data_set_rlc_ciphering_sqn(asn1_ctx_t *actx, uint32_t rlc_ciphering_sqn)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   private_data->rlc_ciphering_sqn = rlc_ciphering_sqn;
@@ -279,13 +279,13 @@ static void private_data_set_curr_sib_segment_type(asn1_ctx_t *actx, enum rrc_si
   private_data->curr_sib_segment_type = curr_sib_segment_type;
 }
 
-static guint32 private_data_get_curr_sib_type(asn1_ctx_t *actx)
+static uint32_t private_data_get_curr_sib_type(asn1_ctx_t *actx)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   return private_data->curr_sib_type;
 }
 
-static void private_data_set_curr_sib_type(asn1_ctx_t *actx, guint32 curr_sib_type)
+static void private_data_set_curr_sib_type(asn1_ctx_t *actx, uint32_t curr_sib_type)
 {
   umts_rrc_private_data_t *private_data = (umts_rrc_private_data_t*)umts_rrc_get_private_data(actx);
   private_data->curr_sib_type = curr_sib_type;
@@ -18350,11 +18350,11 @@ static int ett_rrc_UE_RadioAccessCapability_r5;
 static int ett_rrc_UE_RadioAccessCapability_r6;
 static int ett_rrc_UL_RFC3095_Context;
 
-static gint ett_rrc_eutraFeatureGroupIndicators;
-static gint ett_rrc_cn_CommonGSM_MAP_NAS_SysInfo;
-static gint ett_rrc_ims_info;
-static gint ett_rrc_cellIdentity;
-static gint ett_rrc_sib_data_var;
+static int ett_rrc_eutraFeatureGroupIndicators;
+static int ett_rrc_cn_CommonGSM_MAP_NAS_SysInfo;
+static int ett_rrc_ims_info;
+static int ett_rrc_cellIdentity;
+static int ett_rrc_sib_data_var;
 
 static expert_field ei_rrc_no_hrnti;
 
@@ -18398,7 +18398,7 @@ static int flowd,type;
 
 /*Stores how many channels we have detected for a HS-DSCH MAC-flow*/
 #define    RRC_MAX_NUM_HSDHSCH_MACDFLOW 8
-static guint8 num_chans_per_flow[RRC_MAX_NUM_HSDHSCH_MACDFLOW];
+static uint8_t num_chans_per_flow[RRC_MAX_NUM_HSDHSCH_MACDFLOW];
 
 /**
  * Return the maximum counter, useful for initiating counters
@@ -18406,10 +18406,10 @@ static guint8 num_chans_per_flow[RRC_MAX_NUM_HSDHSCH_MACDFLOW];
 #if 0
 static int get_max_counter(int com_context){
     int i;
-    guint32 max = 0;
+    uint32_t max = 0;
     rrc_ciphering_info * ciphering_info;
 
-    if( (ciphering_info = g_tree_lookup(rrc_ciph_info_tree, GINT_TO_POINTER((gint)com_context))) == NULL ){
+    if( (ciphering_info = g_tree_lookup(rrc_ciph_info_tree, GINT_TO_POINTER((int)com_context))) == NULL ){
         return 0;
     }
     for(i = 0; i<31; i++){
@@ -18420,28 +18420,28 @@ static int get_max_counter(int com_context){
 }
 #endif
 /** Utility functions used for various comparisons/cleanups in tree **/
-static gint rrc_key_cmp(gconstpointer b_ptr, gconstpointer a_ptr, gpointer ignore _U_){
+static int rrc_key_cmp(const void *b_ptr, const void *a_ptr, void *ignore _U_){
     if( GPOINTER_TO_INT(a_ptr) > GPOINTER_TO_INT(b_ptr) ){
         return  -1;
     }
     return GPOINTER_TO_INT(a_ptr) < GPOINTER_TO_INT(b_ptr);
 }
 
-static void rrc_free_value(gpointer value ){
+static void rrc_free_value(void *value ){
             g_free(value);
 }
 
 static rrc_ciphering_info*
 get_or_create_cipher_info(fp_info *fpinf, rlc_info *rlcinf) {
   rrc_ciphering_info *cipher_info = NULL;
-  guint32 ueid;
+  uint32_t ueid;
   int i;
 
   if (!fpinf || !rlcinf)
     return NULL;
 
   ueid = rlcinf->ueid[fpinf->cur_tb];
-  cipher_info = (rrc_ciphering_info *)g_tree_lookup(rrc_ciph_info_tree, GINT_TO_POINTER((gint)ueid));
+  cipher_info = (rrc_ciphering_info *)g_tree_lookup(rrc_ciph_info_tree, GINT_TO_POINTER((int)ueid));
 
   if( cipher_info == NULL ){
     cipher_info = g_new0(rrc_ciphering_info,1);
@@ -18461,16 +18461,16 @@ get_or_create_cipher_info(fp_info *fpinf, rlc_info *rlcinf) {
     cipher_info->ciphering_algorithm = -1;
     cipher_info->integrity_algorithm = -1;
 
-    g_tree_insert(rrc_ciph_info_tree, GINT_TO_POINTER((gint)rlcinf->ueid[fpinf->cur_tb]), cipher_info);
+    g_tree_insert(rrc_ciph_info_tree, GINT_TO_POINTER((int)rlcinf->ueid[fpinf->cur_tb]), cipher_info);
   }
   return cipher_info;
 }
 
 /* Try to find the NBAP C-RNC Context and, if found, pair it with a given U-RNTI */
 static void
-rrc_try_map_urnti_to_crncc(guint32 u_rnti, asn1_ctx_t *actx)
+rrc_try_map_urnti_to_crncc(uint32_t u_rnti, asn1_ctx_t *actx)
 {
-  guint32 scrambling_code, crnc_context;
+  uint32_t scrambling_code, crnc_context;
   /* Getting the user's Uplink Scrambling Code*/
   scrambling_code = private_data_get_scrambling_code(actx);
   if (u_rnti != 0 && scrambling_code != 0) {
@@ -18640,7 +18640,7 @@ static const value_string rrc_IntegrityProtectionAlgorithm_vals[] = {
 static int
 dissect_rrc_IntegrityProtectionAlgorithm(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   rrc_ciphering_info *ciphering_info;
-  gint32 integrity_algo;
+  int32_t integrity_algo;
 
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      1, &integrity_algo, false, 0, NULL);
@@ -18682,7 +18682,7 @@ static const value_string rrc_CipheringAlgorithm_vals[] = {
 static int
 dissect_rrc_CipheringAlgorithm(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   rrc_ciphering_info *ciphering_info;
-  gint32 ciphering_algo;
+  int32_t ciphering_algo;
 
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &ciphering_algo, false, 0, NULL);
@@ -18743,7 +18743,7 @@ dissect_rrc_ActivationTime(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _
 
 static int
 dissect_rrc_RB_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-guint32 rbid;
+uint32_t rbid;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             1U, 32U, &rbid, false);
 
@@ -18758,7 +18758,7 @@ private_data_set_rbid(actx, rbid);
 
 static int
 dissect_rrc_RLC_SequenceNumber(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-guint32 rlc_ciphering_sqn;
+uint32_t rlc_ciphering_sqn;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 4095U, &rlc_ciphering_sqn, false);
 
@@ -18780,9 +18780,9 @@ dissect_rrc_RB_ActivationTimeInfo(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
   fp_info            *fpinf;
   rlc_info           *rlcinf;
   rrc_ciphering_info *ciphering_info;
-  guint32 rbid;
-  guint32 rlc_ciphering_sqn;
-  guint32 direction;
+  uint32_t rbid;
+  uint32_t rlc_ciphering_sqn;
+  uint32_t direction;
 
   fpinf = (fp_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_fp, 0);
   rlcinf = (rlc_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_umts_rlc, 0);
@@ -18885,14 +18885,14 @@ static int
 dissect_rrc_U_RNTI(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   private_data_set_s_rnc_id(actx, 0);
   private_data_set_s_rnti(actx, 0);
-  guint32 s_rnc_id;
-  guint32 s_rnti;
-  guint32 u_rnti_value;
-  guint32 original_offset;
+  uint32_t s_rnc_id;
+  uint32_t s_rnti;
+  uint32_t u_rnti_value;
+  uint32_t original_offset;
   proto_item *ti;
-  guint32 item_len;
+  uint32_t item_len;
   proto_tree *sub_tree;
-  gboolean is_new_urnti;
+  bool is_new_urnti;
   int generated_field_hf;
   original_offset = offset;
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -18935,7 +18935,7 @@ dissect_rrc_U_RNTI(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, prot
 
 static int
 dissect_rrc_Digit(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 digit;
+  uint32_t digit;
   wmem_strbuf_t* digits_strbuf; /* The string of either an IMSI or a MCC-MNC pair */
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 9U, &digit, false);
@@ -18947,15 +18947,15 @@ dissect_rrc_Digit(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto
 
   digits_strbuf = private_data_get_digits_strbuf(actx);
   if (digits_strbuf) {
-    gchar digit_char;
+    char digit_char;
 
     if(digit > 9) {
-      private_data_set_digits_strbuf_parsing_failed_flag(actx, TRUE);
+      private_data_set_digits_strbuf_parsing_failed_flag(actx, true);
       return offset;
     }
 
-    /* Converting to the matching gchar */
-    digit_char = (gchar)(digit + '0');
+    /* Converting to the matching char */
+    digit_char = (char)(digit + '0');
 
     /* Appending to the digits string */
     wmem_strbuf_append_c(digits_strbuf, digit_char);
@@ -19004,8 +19004,8 @@ static int
 dissect_rrc_PLMN_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   wmem_strbuf_t* mcc_mnc_strbuf;
   wmem_strbuf_t* mcc_strbuf;
-  guint32 string_len;
-  gchar* mcc_mnc_string;
+  uint32_t string_len;
+  char* mcc_mnc_string;
   tvbuff_t* mcc_mnc_tvb;
 
   /* Reset the digits string in the private data struct */
@@ -19013,7 +19013,7 @@ dissect_rrc_PLMN_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U
   mcc_mnc_strbuf = wmem_strbuf_new_sized(actx->pinfo->pool,7);
   private_data_set_digits_strbuf(actx, mcc_mnc_strbuf);
   /* Reset parsing failure flag*/
-  private_data_set_digits_strbuf_parsing_failed_flag(actx, FALSE);
+  private_data_set_digits_strbuf_parsing_failed_flag(actx, false);
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_rrc_PLMN_Identity, PLMN_Identity_sequence);
 
@@ -19024,7 +19024,7 @@ dissect_rrc_PLMN_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U
   }
 
   /* Extracting the string collected in the strbuf */
-  string_len = (guint32)wmem_strbuf_get_len(mcc_mnc_strbuf);
+  string_len = (uint32_t)wmem_strbuf_get_len(mcc_mnc_strbuf);
   mcc_mnc_string = wmem_strbuf_finalize(mcc_mnc_strbuf);
 
   if(string_len >= 3)
@@ -19039,7 +19039,7 @@ dissect_rrc_PLMN_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U
   }
 
   /* Creating TVB from extracted string*/
-  mcc_mnc_tvb = tvb_new_child_real_data(tvb, (guint8*)mcc_mnc_string, string_len, string_len);
+  mcc_mnc_tvb = tvb_new_child_real_data(tvb, (uint8_t*)mcc_mnc_string, string_len, string_len);
   add_new_data_source(actx->pinfo, mcc_mnc_tvb, "MCC-MNC");
 
   /* Calling E.212 */
@@ -19054,7 +19054,7 @@ dissect_rrc_PLMN_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U
 static int
 dissect_rrc_NAS_SystemInformationGSM_MAP(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   tvbuff_t *nas_sys_info_gsm_map_tvb = NULL;
-  guint32 length;
+  uint32_t length;
   enum nas_sys_info_gsm_map cn_domain;
   proto_tree *subtree;
 
@@ -19112,7 +19112,7 @@ static const value_string rrc_CN_DomainIdentity_vals[] = {
 
 static int
 dissect_rrc_CN_DomainIdentity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 nas_sys_info;
+  uint32_t nas_sys_info;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &nas_sys_info, false, 0, NULL);
 
@@ -28519,7 +28519,7 @@ dissect_rrc_ScramblingCodeType(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *ac
 
 static int
 dissect_rrc_UL_ScramblingCode(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-guint32 scrambling_code;
+uint32_t scrambling_code;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 16777215U, &scrambling_code, false);
 
@@ -39073,7 +39073,7 @@ dissect_rrc_GERAN_SystemInfoBlock(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
                                        1, 23, false, &parameter_tvb);
 
   if (parameter_tvb){
-    guint8 byte = tvb_get_guint8(parameter_tvb, 0);
+    uint8_t byte = tvb_get_guint8(parameter_tvb, 0);
     if (byte == 0x06) {
       if (gsm_a_dtap_handle) {
         call_dissector(gsm_a_dtap_handle, parameter_tvb, actx->pinfo, tree);
@@ -39261,8 +39261,8 @@ dissect_rrc_C_RNTI(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, prot
   umts_fp_conversation_info_t *umts_fp_conversation_info = NULL;
   fp_fach_channel_info_t *fp_fach_channel_info = NULL;
   tvbuff_t * c_rnti_tvb = NULL;
-  guint16 c_rnti = 0;
-  guint32 u_rnti = 0;
+  uint16_t c_rnti = 0;
+  uint32_t u_rnti = 0;
   fp_crnti_allocation_info_t *fp_crnti_allocation_info = NULL;
   offset = dissect_per_bit_string(tvb, offset, actx, tree, hf_index,
                                      16, 16, false, NULL, 0, &c_rnti_tvb, NULL);
@@ -39341,7 +39341,7 @@ static const value_string rrc_RRC_StateIndicator_vals[] = {
 
 static int
 dissect_rrc_RRC_StateIndicator(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-gint32 state_dec = -1;
+int32_t state_dec = -1;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      4, &state_dec, false, 0, NULL);
 
@@ -46426,8 +46426,8 @@ static const per_choice_t DL_TransportChannelType_r5_choice[] = {
 static int
 dissect_rrc_DL_TransportChannelType_r5(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 /*Here we try to figure out which HS-DSCH channels are multiplexed*/
-    guint *flowd_p;
-    guint *cur_val=NULL;
+    unsigned *flowd_p;
+    unsigned *cur_val=NULL;
     struct rrc_info *rrcinf;
     fp_info *fpinf;
 
@@ -46448,11 +46448,11 @@ dissect_rrc_DL_TransportChannelType_r5(tvbuff_t *tvb _U_, int offset _U_, asn1_c
             }
             else{
                 /*If it doesn't exists, insert it*/
-                if( (cur_val=(gint *)g_tree_lookup(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[fpinf->cur_tb]))) == NULL ){
+                if( (cur_val=(int *)g_tree_lookup(hsdsch_muxed_flows, GUINT_TO_POINTER((unsigned)rrcinf->hrnti[fpinf->cur_tb]))) == NULL ){
 
-                    flowd_p = g_new0(guint, 1);
+                    flowd_p = g_new0(unsigned, 1);
                     *flowd_p = (1U<<flowd);    /*Set the bit to mark it as true*/
-                    g_tree_insert(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[fpinf->cur_tb]), flowd_p);
+                    g_tree_insert(hsdsch_muxed_flows, GUINT_TO_POINTER((unsigned)rrcinf->hrnti[fpinf->cur_tb]), flowd_p);
 
                 }else{
                     *cur_val = (1U<<flowd) | *cur_val;
@@ -49556,7 +49556,7 @@ static const value_string rrc_IntegrityProtectionAlgorithm_r7_vals[] = {
 static int
 dissect_rrc_IntegrityProtectionAlgorithm_r7(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   rrc_ciphering_info *ciphering_info;
-  gint32 integrity_algo;
+  int32_t integrity_algo;
 
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &integrity_algo, false, 0, NULL);
@@ -49599,7 +49599,7 @@ static const value_string rrc_CipheringAlgorithm_r7_vals[] = {
 static int
 dissect_rrc_CipheringAlgorithm_r7(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   rrc_ciphering_info *ciphering_info;
-  gint32 ciphering_algo;
+  int32_t ciphering_algo;
 
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      3, &ciphering_algo, false, 0, NULL);
@@ -49922,8 +49922,8 @@ static const per_choice_t DL_TransportChannelType_r7_choice[] = {
 static int
 dissect_rrc_DL_TransportChannelType_r7(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 /*Here we try to figure out which HS-DSCH channels are multiplexed*/
-    guint *flowd_p;
-    guint *cur_val=NULL;
+    unsigned *flowd_p;
+    unsigned *cur_val=NULL;
     struct rrc_info *rrcinf;
     fp_info *fpinf;
 
@@ -49945,11 +49945,11 @@ dissect_rrc_DL_TransportChannelType_r7(tvbuff_t *tvb _U_, int offset _U_, asn1_c
             }
             else{
                 /*If it doesn't exists, insert it*/
-                if( (cur_val=(gint *)g_tree_lookup(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[fpinf->cur_tb]))) == NULL ){
+                if( (cur_val=(int *)g_tree_lookup(hsdsch_muxed_flows, GUINT_TO_POINTER((unsigned)rrcinf->hrnti[fpinf->cur_tb]))) == NULL ){
 
-                    flowd_p = g_new0(guint, 1);
+                    flowd_p = g_new0(unsigned, 1);
                     *flowd_p = (1U<<flowd);    /* Set the bit to mark it as true*/
-                    g_tree_insert(hsdsch_muxed_flows, GUINT_TO_POINTER((guint)rrcinf->hrnti[fpinf->cur_tb]), flowd_p);
+                    g_tree_insert(hsdsch_muxed_flows, GUINT_TO_POINTER((unsigned)rrcinf->hrnti[fpinf->cur_tb]), flowd_p);
 
                 }else{
                     *cur_val = (1U<<flowd) | *cur_val;
@@ -63842,7 +63842,7 @@ static int
 dissect_rrc_CellUpdateConfirm(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   fp_info  *fpinf = NULL;
   rlc_info *rlcinf = NULL;
-  guint32 u_rnti;
+  uint32_t u_rnti;
   col_append_str(actx->pinfo->cinfo, COL_INFO, "CellUpdateConfirm");
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_rrc_CellUpdateConfirm, CellUpdateConfirm_choice,
@@ -64160,7 +64160,7 @@ static const per_sequence_t T_single_GSM_Message_r3_sequence[] = {
 static int
 dissect_rrc_T_single_GSM_Message_r3(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   tvbuff_t *gsm_message_tvb=NULL;
-  guint bits_remaining, whole_octets_remaining;
+  unsigned bits_remaining, whole_octets_remaining;
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_rrc_T_single_GSM_Message_r3, T_single_GSM_Message_r3_sequence);
@@ -64442,7 +64442,7 @@ static const per_sequence_t T_single_GSM_Message_r6_sequence[] = {
 static int
 dissect_rrc_T_single_GSM_Message_r6(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   tvbuff_t *gsm_message_tvb=NULL;
-  guint bits_remaining, whole_octets_remaining;
+  unsigned bits_remaining, whole_octets_remaining;
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_rrc_T_single_GSM_Message_r6, T_single_GSM_Message_r6_sequence);
@@ -80589,7 +80589,7 @@ static int
 dissect_rrc_PhysicalChannelReconfiguration(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   fp_info  *fpinf = NULL;
   rlc_info *rlcinf = NULL;
-  guint32 u_rnti;
+  uint32_t u_rnti;
   col_append_str(actx->pinfo->cinfo, COL_INFO, "PhysicalChannelReconfiguration");
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_rrc_PhysicalChannelReconfiguration, PhysicalChannelReconfiguration_choice,
@@ -86100,7 +86100,7 @@ static int
 dissect_rrc_RadioBearerReconfiguration(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   fp_info  *fpinf = NULL;
   rlc_info *rlcinf = NULL;
-  guint32 u_rnti;
+  uint32_t u_rnti;
   col_append_str(actx->pinfo->cinfo, COL_INFO, "RadioBearerReconfiguration");
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_rrc_RadioBearerReconfiguration, RadioBearerReconfiguration_choice,
@@ -91338,7 +91338,7 @@ static const value_string rrc_ReleaseCause_vals[] = {
 
 static int
 dissect_rrc_ReleaseCause(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      8, &value, false, 0, NULL);
 
@@ -92394,7 +92394,7 @@ dissect_rrc_SecurityModeCommand(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *a
   fp_info            *fpinf;
   rlc_info           *rlcinf;
   rrc_ciphering_info *ciphering_info = NULL;
-  guint8              direction;
+  uint8_t             direction;
   col_append_str(actx->pinfo->cinfo, COL_INFO, "SecurityModeCommand");
 
   fpinf = (fp_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_fp, 0);
@@ -94655,7 +94655,7 @@ static int
 dissect_rrc_TransportChannelReconfiguration(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   fp_info  *fpinf = NULL;
   rlc_info *rlcinf = NULL;
-  guint32 u_rnti;
+  uint32_t u_rnti;
   col_append_str(actx->pinfo->cinfo, COL_INFO, "TransportChannelReconfiguration");
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_rrc_TransportChannelReconfiguration, TransportChannelReconfiguration_choice,
@@ -99632,8 +99632,8 @@ dissect_rrc_T_ims_Information(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *act
        Decoding specified in TS 124 237 V11.4.0 Annex D.5.3.3 ATGW transfer details
      */
     proto_tree *subtree;
-    gint curr_offset = 0;
-    guint32 atgw_trans_det_cont;
+    int curr_offset = 0;
+    uint32_t atgw_trans_det_cont;
     subtree = proto_item_add_subtree(actx->created_item, ett_rrc_ims_info);
     proto_tree_add_item_ret_uint(subtree, hf_rrc_ims_info_atgw_trans_det_cont_type, imsInformation_tvb, curr_offset, 1, ENC_BIG_ENDIAN, &atgw_trans_det_cont);
     curr_offset++;
@@ -100837,7 +100837,7 @@ dissect_rrc_START_Value(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
   fp_info       *fpinf;
   rlc_info      *rlcinf;
   rrc_ciphering_info * ciphering_info;
-  guint32 * start;
+  uint32_t * start;
   enum nas_sys_info_gsm_map cn_domain;
 
   offset = dissect_per_bit_string(tvb, offset, actx, tree, hf_index,
@@ -100868,7 +100868,7 @@ dissect_rrc_START_Value(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
 
       /*Retrieve and store the value*/
       if(ciphering_info && ciphering_info->start_ps) {
-        start = g_new(guint32,1);
+        start = g_new(uint32_t,1);
         *start = tvb_get_bits32(start_val,0,20,ENC_BIG_ENDIAN);
         /*Insert the value based on current frame num since this might vary over time*/
         g_tree_insert(ciphering_info->start_ps, GUINT_TO_POINTER(actx->pinfo->num), start);
@@ -112124,7 +112124,7 @@ dissect_rrc_SecurityModeComplete(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *
   fp_info            *fpinf;
   rlc_info           *rlcinf;
   rrc_ciphering_info *ciphering_info = NULL;
-  guint8              direction;
+  uint8_t             direction;
   col_append_str(actx->pinfo->cinfo, COL_INFO, "SecurityModeComplete");
 
   fpinf = (fp_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_fp, 0);
@@ -115985,7 +115985,7 @@ static int
 dissect_rrc_CellUpdateConfirm_CCCH(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   fp_info  *fpinf = NULL;
   rlc_info *rlcinf = NULL;
-  guint32 u_rnti;
+  uint32_t u_rnti;
   col_append_str(actx->pinfo->cinfo, COL_INFO, "CellUpdateConfirm-CCCH");
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_rrc_CellUpdateConfirm_CCCH, CellUpdateConfirm_CCCH_choice,
@@ -116021,15 +116021,15 @@ static const per_sequence_t IMSI_GSM_MAP_sequence_of[1] = {
 static int
 dissect_rrc_IMSI_GSM_MAP(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   wmem_strbuf_t* imsi_strbuf;
-  guint32 string_len;
-  gchar* imsi_string;
+  uint32_t string_len;
+  char* imsi_string;
   tvbuff_t* imsi_tvb;
 
   /* Reset the digits string in the private data struct */
   imsi_strbuf = wmem_strbuf_new_sized(actx->pinfo->pool,16);
   private_data_set_digits_strbuf(actx, imsi_strbuf);
   /* Reset parsing failure flag*/
-  private_data_set_digits_strbuf_parsing_failed_flag(actx, FALSE);
+  private_data_set_digits_strbuf_parsing_failed_flag(actx, false);
   offset = dissect_per_constrained_sequence_of(tvb, offset, actx, tree, hf_index,
                                                   ett_rrc_IMSI_GSM_MAP, IMSI_GSM_MAP_sequence_of,
                                                   6, 21, false);
@@ -116041,11 +116041,11 @@ dissect_rrc_IMSI_GSM_MAP(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_
   }
 
   /* Extracting the string collected in the strbuf */
-  string_len = (guint32)wmem_strbuf_get_len(imsi_strbuf);
+  string_len = (uint32_t)wmem_strbuf_get_len(imsi_strbuf);
   imsi_string = wmem_strbuf_finalize(imsi_strbuf);
 
   /* Creating TVB from extracted string*/
-  imsi_tvb = tvb_new_child_real_data(tvb, (guint8*)imsi_string, string_len, string_len);
+  imsi_tvb = tvb_new_child_real_data(tvb, (uint8_t*)imsi_string, string_len, string_len);
   add_new_data_source(actx->pinfo, imsi_tvb, "IMSI");
 
   /* Calling E.212 */
@@ -119343,7 +119343,7 @@ static const per_choice_t RRCConnectionSetup_choice[] = {
 
 static int
 dissect_rrc_RRCConnectionSetup(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 new_u_rnti;
+  uint32_t new_u_rnti;
   col_append_str(actx->pinfo->cinfo, COL_INFO, "RRCConnectionSetup");
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_rrc_RRCConnectionSetup, RRCConnectionSetup_choice,
@@ -122574,7 +122574,7 @@ static value_string_ext rrc_SIB_Type_vals_ext = VALUE_STRING_EXT_INIT(rrc_SIB_Ty
 
 static int
 dissect_rrc_SIB_Type(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 sib_type;
+  uint32_t sib_type;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      32, &sib_type, false, 0, NULL);
 
@@ -122641,15 +122641,15 @@ dissect_rrc_SubsequentSegment(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *act
 static int
 dissect_rrc_SIB_Data_variable(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   tvbuff_t *sib_data_tvb;
-  guint32 sib_type;
+  uint32_t sib_type;
   proto_tree *subtree;
-  guint32 seg_type;
+  uint32_t seg_type;
 
   offset = dissect_per_bit_string(tvb, offset, actx, tree, hf_index,
                                      1, 214, false, NULL, 0, &sib_data_tvb, NULL);
 
 
-  seg_type = (guint32)private_data_get_curr_sib_segment_type(actx);
+  seg_type = (uint32_t)private_data_get_curr_sib_segment_type(actx);
   if(seg_type != RRC_SIB_SEG_COMP) {
       /* TODO: The Dissector only handles 'complete SIBs' right now.
        * Reassembly logic should be implemented, taking into acocunt that
@@ -135776,8 +135776,8 @@ dissect_rrc_PLMN_IdentityWithOptionalMCC_r6(tvbuff_t *tvb _U_, int offset _U_, a
   wmem_strbuf_t* mcc_mnc_strbuf;
   wmem_strbuf_t* temp_strbuf;
   wmem_strbuf_t* last_mcc_strbuf;
-  guint32 string_len;
-  gchar* mcc_mnc_string;
+  uint32_t string_len;
+  char* mcc_mnc_string;
   tvbuff_t* mcc_mnc_tvb;
 
   /* Reset the digits string in the private data struct */
@@ -135785,7 +135785,7 @@ dissect_rrc_PLMN_IdentityWithOptionalMCC_r6(tvbuff_t *tvb _U_, int offset _U_, a
   mcc_mnc_strbuf = wmem_strbuf_new_sized(actx->pinfo->pool,7);
   private_data_set_digits_strbuf(actx, mcc_mnc_strbuf);
   /* Reset parsing failure flag*/
-  private_data_set_digits_strbuf_parsing_failed_flag(actx, FALSE);
+  private_data_set_digits_strbuf_parsing_failed_flag(actx, false);
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_rrc_PLMN_IdentityWithOptionalMCC_r6, PLMN_IdentityWithOptionalMCC_r6_sequence);
 
@@ -135796,7 +135796,7 @@ dissect_rrc_PLMN_IdentityWithOptionalMCC_r6(tvbuff_t *tvb _U_, int offset _U_, a
   }
 
   /* Extracting the string collected in the strbuf */
-  string_len = (guint32)wmem_strbuf_get_len(mcc_mnc_strbuf);
+  string_len = (uint32_t)wmem_strbuf_get_len(mcc_mnc_strbuf);
   mcc_mnc_string = wmem_strbuf_finalize(mcc_mnc_strbuf);
   if (string_len > 3) {
       /* 3 MCC digits and at least 1 MNC digit were found, keep MCC for later
@@ -135819,7 +135819,7 @@ dissect_rrc_PLMN_IdentityWithOptionalMCC_r6(tvbuff_t *tvb _U_, int offset _U_, a
         wmem_strbuf_append_printf(temp_strbuf,"%s",wmem_strbuf_get_str(last_mcc_strbuf));
         wmem_strbuf_append_printf(temp_strbuf,"%s",mcc_mnc_string);
         /* Update length of recovered MCC-MNC pair */
-        string_len = (guint32)wmem_strbuf_get_len(temp_strbuf);
+        string_len = (uint32_t)wmem_strbuf_get_len(temp_strbuf);
         mcc_mnc_string = wmem_strbuf_finalize(temp_strbuf);
       }
   }
@@ -135828,7 +135828,7 @@ dissect_rrc_PLMN_IdentityWithOptionalMCC_r6(tvbuff_t *tvb _U_, int offset _U_, a
     /* optional MCC was present (or restored above), we can call E.212 dissector */
 
     /* Creating TVB from extracted string*/
-    mcc_mnc_tvb = tvb_new_child_real_data(tvb, (guint8*)mcc_mnc_string, string_len, string_len);
+    mcc_mnc_tvb = tvb_new_child_real_data(tvb, (uint8_t*)mcc_mnc_string, string_len, string_len);
     add_new_data_source(actx->pinfo, mcc_mnc_tvb, "MCC-MNC");
 
     /* Calling E.212 */
@@ -138433,7 +138433,7 @@ dissect_rrc_T_eutraFeatureGroupIndicators(tvbuff_t *tvb _U_, int offset _U_, asn
   if(eutraFeatureGroupIndicators_tvb){
     /* Dissect eutraFeatureGroupIndicators */
     proto_tree *subtree;
-    gint curr_bit_offset = 0;
+    int curr_bit_offset = 0;
     subtree = proto_item_add_subtree(actx->created_item, ett_rrc_eutraFeatureGroupIndicators);
     proto_tree_add_bits_item(subtree, hf_rrc_eutra_feat_group_ind_1, eutraFeatureGroupIndicators_tvb, curr_bit_offset, 1, ENC_BIG_ENDIAN);
     curr_bit_offset++;
@@ -165184,7 +165184,7 @@ dissect_rrc(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void* data _U_)
     col_set_str(pinfo->cinfo, COL_PROTOCOL, "RRC");
 
     /*Clear memory*/
-    memset(num_chans_per_flow,0,sizeof(guint8)*RRC_MAX_NUM_HSDHSCH_MACDFLOW);
+    memset(num_chans_per_flow,0,sizeof(uint8_t)*RRC_MAX_NUM_HSDHSCH_MACDFLOW);
 
     /* create the rrc protocol tree */
     rrc_item = proto_tree_add_item(tree, proto_rrc, tvb, 0, -1, ENC_NA);
@@ -208871,7 +208871,7 @@ void proto_register_rrc(void) {
   };
 
   /* List of subtrees */
-  static gint *ett[] = {
+  static int *ett[] = {
     &ett_rrc,
     &ett_rrc_DL_DCCH_Message,
     &ett_rrc_DL_DCCH_MessageType,

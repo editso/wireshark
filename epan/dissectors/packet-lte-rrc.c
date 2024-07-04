@@ -67,8 +67,8 @@ static wmem_map_t *lte_rrc_etws_cmas_dcs_hash;
 
 /* Keep track of where/how the System Info value has changed */
 static wmem_map_t *lte_rrc_system_info_value_changed_hash;
-static guint8     system_info_value_current;
-static gboolean   system_info_value_current_set;
+static uint8_t    system_info_value_current;
+static bool       system_info_value_current_set;
 
 static bool lte_rrc_nas_in_root_tree;
 
@@ -13236,60 +13236,60 @@ static int ett_lte_rrc_T_schedulingPeriodStartOffsetSCPTM_r14_03;
 static int ett_lte_rrc_SCPTM_NeighbourCellList_NB_r14;
 static int ett_lte_rrc_PCI_ARFCN_NB_r14;
 
-static gint ett_lte_rrc_featureGroupIndicators;
-static gint ett_lte_rrc_featureGroupIndRel9Add;
-static gint ett_lte_rrc_featureGroupIndRel10;
-static gint ett_lte_rrc_absTimeInfo;
-static gint ett_lte_rrc_nas_SecurityParam;
-static gint ett_lte_rrc_targetRAT_MessageContainer;
-static gint ett_lte_rrc_siPsiSibContainer;
-static gint ett_lte_rrc_dedicatedInfoNAS;
-static gint ett_lte_rrc_timeInfo;
-static gint ett_lte_rrc_serialNumber;
-static gint ett_lte_rrc_warningType;
-static gint ett_lte_rrc_dataCodingScheme;
-static gint ett_lte_rrc_warningMessageSegment;
-static gint ett_lte_rrc_interBandTDD_CA_WithDifferentConfig;
-static gint ett_lte_rrc_tdd_FDD_CA_PCellDuplex_r12;
-static gint ett_lte_rrc_aperiodicCSI_Reporting_r13;
-static gint ett_lte_rrc_codebook_HARQ_ACK_r13;
-static gint ett_lte_rrc_sr_ConfigIndex;
-static gint ett_lte_rrc_transmissionModeList_r12;
-static gint ett_lte_rrc_modifiedMPR_Behavior_r10;
-static gint ett_lte_rrc_sib11_fragment;
-static gint ett_lte_rrc_sib11_fragments;
-static gint ett_lte_rrc_sib12_fragment;
-static gint ett_lte_rrc_sib12_fragments;
-static gint ett_lte_rrc_nr_SecondaryCellGroupConfig_r15;
-static gint ett_lte_rrc_nr_RadioBearerConfig_r15;
-static gint ett_lte_rrc_nr_RadioBearerConfigS_r15;
-static gint ett_lte_rrc_sl_ConfigDedicatedForNR_r16;
-static gint ett_lte_rrc_nr_SecondaryCellGroupConfig;
-static gint ett_lte_rrc_scg_ConfigResponseNR_r15;
-static gint ett_lte_rrc_scg_ConfigResponseNR_r16;
-static gint ett_lte_rrc_measResultSCG_r15;
-static gint ett_lte_rrc_measResultSCG_r16;
-static gint ett_lte_rrc_ul_DCCH_MessageNR_r15;
-static gint ett_lte_rrc_ul_DCCH_MessageNR_r16;
-static gint ett_lte_rrc_sourceRB_ConfigNR_r15;
-static gint ett_lte_rrc_sourceRB_ConfigSN_NR_r15;
-static gint ett_lte_rrc_sourceOtherConfigSN_NR_r15;
-static gint ett_lte_rrc_sourceContextEN_DC_r15;
-static gint ett_lte_rrc_requestedFreqBandsNR_MRDC_r15;
-static gint ett_lte_rrc_measGapPatterns_r15;
-static gint ett_lte_rrc_nas_Container_r15;
-static gint ett_lte_rrc_sourceRB_ConfigIntra5GC_r15;
-static gint ett_lte_rrc_selectedbandCombinationInfoEN_DC_v1540;
-static gint ett_lte_rrc_requestedCapabilityCommon_r15;
-static gint ett_lte_rrc_sidelinkUEInformationNR_r16;
-static gint ett_lte_rrc_ueAssistanceInformationNR_r16;
-static gint ett_lte_rrc_sl_ParameterNR_r16;
-static gint ett_lte_rrc_v2x_BandParametersNR_r16;
-static gint ett_lte_rrc_ueAssistanceInformationNR_SCG_r16;
-static gint ett_lte_rrc_assistanceDataSIB_Element_r15;
-static gint ett_lte_rrc_overheatingAssistanceForSCG_r16;
-static gint ett_lte_rrc_overheatingAssistanceForSCG_FR2_2_r17;
-static gint ett_lte_rrc_triggerConditionSN_r17;
+static int ett_lte_rrc_featureGroupIndicators;
+static int ett_lte_rrc_featureGroupIndRel9Add;
+static int ett_lte_rrc_featureGroupIndRel10;
+static int ett_lte_rrc_absTimeInfo;
+static int ett_lte_rrc_nas_SecurityParam;
+static int ett_lte_rrc_targetRAT_MessageContainer;
+static int ett_lte_rrc_siPsiSibContainer;
+static int ett_lte_rrc_dedicatedInfoNAS;
+static int ett_lte_rrc_timeInfo;
+static int ett_lte_rrc_serialNumber;
+static int ett_lte_rrc_warningType;
+static int ett_lte_rrc_dataCodingScheme;
+static int ett_lte_rrc_warningMessageSegment;
+static int ett_lte_rrc_interBandTDD_CA_WithDifferentConfig;
+static int ett_lte_rrc_tdd_FDD_CA_PCellDuplex_r12;
+static int ett_lte_rrc_aperiodicCSI_Reporting_r13;
+static int ett_lte_rrc_codebook_HARQ_ACK_r13;
+static int ett_lte_rrc_sr_ConfigIndex;
+static int ett_lte_rrc_transmissionModeList_r12;
+static int ett_lte_rrc_modifiedMPR_Behavior_r10;
+static int ett_lte_rrc_sib11_fragment;
+static int ett_lte_rrc_sib11_fragments;
+static int ett_lte_rrc_sib12_fragment;
+static int ett_lte_rrc_sib12_fragments;
+static int ett_lte_rrc_nr_SecondaryCellGroupConfig_r15;
+static int ett_lte_rrc_nr_RadioBearerConfig_r15;
+static int ett_lte_rrc_nr_RadioBearerConfigS_r15;
+static int ett_lte_rrc_sl_ConfigDedicatedForNR_r16;
+static int ett_lte_rrc_nr_SecondaryCellGroupConfig;
+static int ett_lte_rrc_scg_ConfigResponseNR_r15;
+static int ett_lte_rrc_scg_ConfigResponseNR_r16;
+static int ett_lte_rrc_measResultSCG_r15;
+static int ett_lte_rrc_measResultSCG_r16;
+static int ett_lte_rrc_ul_DCCH_MessageNR_r15;
+static int ett_lte_rrc_ul_DCCH_MessageNR_r16;
+static int ett_lte_rrc_sourceRB_ConfigNR_r15;
+static int ett_lte_rrc_sourceRB_ConfigSN_NR_r15;
+static int ett_lte_rrc_sourceOtherConfigSN_NR_r15;
+static int ett_lte_rrc_sourceContextEN_DC_r15;
+static int ett_lte_rrc_requestedFreqBandsNR_MRDC_r15;
+static int ett_lte_rrc_measGapPatterns_r15;
+static int ett_lte_rrc_nas_Container_r15;
+static int ett_lte_rrc_sourceRB_ConfigIntra5GC_r15;
+static int ett_lte_rrc_selectedbandCombinationInfoEN_DC_v1540;
+static int ett_lte_rrc_requestedCapabilityCommon_r15;
+static int ett_lte_rrc_sidelinkUEInformationNR_r16;
+static int ett_lte_rrc_ueAssistanceInformationNR_r16;
+static int ett_lte_rrc_sl_ParameterNR_r16;
+static int ett_lte_rrc_v2x_BandParametersNR_r16;
+static int ett_lte_rrc_ueAssistanceInformationNR_SCG_r16;
+static int ett_lte_rrc_assistanceDataSIB_Element_r15;
+static int ett_lte_rrc_overheatingAssistanceForSCG_r16;
+static int ett_lte_rrc_overheatingAssistanceForSCG_FR2_2_r17;
+static int ett_lte_rrc_triggerConditionSN_r17;
 
 static expert_field ei_lte_rrc_number_pages_le15;
 static expert_field ei_lte_rrc_si_info_value_changed;
@@ -13904,7 +13904,7 @@ static const value_string lte_rrc_messageSize_r14_vals[] =
 static value_string_ext lte_rrc_messageSize_r14_vals_ext = VALUE_STRING_EXT_INIT(lte_rrc_messageSize_r14_vals);
 
 static void
-lte_rrc_timeConnFailure_r10_fmt(gchar *s, guint32 v)
+lte_rrc_timeConnFailure_r10_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%ums (%u)", 100*v, v);
 }
@@ -13922,7 +13922,7 @@ static const value_string lte_rrc_n_r12_vals[] = {
 };
 
 static void
-lte_rrc_m_r12_fmt(gchar *s, guint32 v)
+lte_rrc_m_r12_fmt(char *s, uint32_t v)
 {
   if (v == 255) {
     snprintf(s, ITEM_LABEL_LENGTH, "255 <= f(Nr) (255)");
@@ -15130,7 +15130,7 @@ static const value_string lte_rrc_RSRP_RangeSL4_vals[] = {
 static value_string_ext lte_rrc_RSRP_RangeSL4_vals_ext = VALUE_STRING_EXT_INIT(lte_rrc_RSRP_RangeSL4_vals);
 
 static void
-lte_rrc_RSRP_RangeNR_r15_fmt(gchar *s, guint32 v)
+lte_rrc_RSRP_RangeNR_r15_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "SS-RSRP < -156dBm (0)");
@@ -15230,7 +15230,7 @@ static const value_string lte_rrc_RSRQ_Range_vals[] = {
 static value_string_ext lte_rrc_RSRQ_Range_vals_ext = VALUE_STRING_EXT_INIT(lte_rrc_RSRQ_Range_vals);
 
 static void
-lte_rrc_RSRQ_RangeNR_r15_fmt(gchar *s, guint32 v)
+lte_rrc_RSRQ_RangeNR_r15_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "SS-RSRQ < -43dB (0)");
@@ -15279,13 +15279,13 @@ static const value_string lte_rrc_MBSFN_RSRQ_Range_vals[] = {
 static value_string_ext lte_rrc_MBSFN_RSRQ_Range_vals_ext = VALUE_STRING_EXT_INIT(lte_rrc_MBSFN_RSRQ_Range_vals);
 
 static void
-lte_rrc_availableAdmissionCapacityWLAN_fmt(gchar *s, guint32 v)
+lte_rrc_availableAdmissionCapacityWLAN_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%uus/s (%u)", 32*v, v);
 }
 
 static void
-lte_rrc_ue_RxTxTimeDiffResult_fmt(gchar *s, guint32 v)
+lte_rrc_ue_RxTxTimeDiffResult_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "T < 2Ts (0)");
@@ -15497,13 +15497,13 @@ static const value_string lte_rrc_excessDelay_r13_vals[] = {
 static value_string_ext lte_rrc_excessDelay_r13_vals_ext = VALUE_STRING_EXT_INIT(lte_rrc_excessDelay_r13_vals);
 
 static void
-lte_rrc_averageDelay_r16_fmt(gchar *s, guint32 v)
+lte_rrc_averageDelay_r16_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%.1fms (%u)", (float)v/10, v);
 }
 
 static void
-lte_rrc_subframeBoundaryOffsetResult_r13_fmt(gchar *s, guint32 v)
+lte_rrc_subframeBoundaryOffsetResult_r13_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "abs(deltaZ) < 700Ts (0)");
@@ -15515,7 +15515,7 @@ lte_rrc_subframeBoundaryOffsetResult_r13_fmt(gchar *s, guint32 v)
 }
 
 static void
-lte_rrc_RS_SINR_Range_r13_fmt(gchar *s, guint32 v)
+lte_rrc_RS_SINR_Range_r13_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "RS-SINR < -23dB (0)");
@@ -15527,7 +15527,7 @@ lte_rrc_RS_SINR_Range_r13_fmt(gchar *s, guint32 v)
 }
 
 static void
-lte_rrc_RS_SINR_RangeNR_r15_fmt(gchar *s, guint32 v)
+lte_rrc_RS_SINR_RangeNR_r15_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "SS-SINR < -23dB (0)");
@@ -15539,7 +15539,7 @@ lte_rrc_RS_SINR_RangeNR_r15_fmt(gchar *s, guint32 v)
 }
 
 static void
-lte_rrc_RSSI_Range_r13_fmt(gchar *s, guint32 v)
+lte_rrc_RSSI_Range_r13_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "RSSI < -100dBm (0)");
@@ -15551,13 +15551,13 @@ lte_rrc_RSSI_Range_r13_fmt(gchar *s, guint32 v)
 }
 
 static void
-lte_rrc_scptm_FreqOffset_r14_fmt(gchar *s, guint32 v)
+lte_rrc_scptm_FreqOffset_r14_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%udB (%u)", 2*v, v);
 }
 
 static void
-lte_rrc_offsetDFN_r14_fmt(gchar *s, guint32 v)
+lte_rrc_offsetDFN_r14_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "0ms (0)");
@@ -15569,13 +15569,13 @@ lte_rrc_offsetDFN_r14_fmt(gchar *s, guint32 v)
 }
 
 static void
-lte_rrc_thresholdWLAN_RSSI_fmt(gchar *s, guint32 v)
+lte_rrc_thresholdWLAN_RSSI_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%ddBm (%u)", -128+v, v);
 }
 
 static void
-lte_rrc_cr_Limit_r14_fmt(gchar *s, guint32 v)
+lte_rrc_cr_Limit_r14_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "0 (0)");
@@ -15587,7 +15587,7 @@ lte_rrc_cr_Limit_r14_fmt(gchar *s, guint32 v)
 }
 
 static void
-lte_rrc_SL_CBR_r14_fmt(gchar *s, guint32 v)
+lte_rrc_SL_CBR_r14_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "0 (0)");
@@ -15599,7 +15599,7 @@ lte_rrc_SL_CBR_r14_fmt(gchar *s, guint32 v)
 }
 
 static void
-lte_rrc_threshS_RSSI_CBR_r14_fmt(gchar *s, guint32 v)
+lte_rrc_threshS_RSSI_CBR_r14_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%ddBm (%u)", -112+(2*v), v);
 }
@@ -15622,7 +15622,7 @@ static const value_string lte_rrc_schedulingInfoSIB1_NB_r13_vals[] = {
 static value_string_ext lte_rrc_schedulingInfoSIB1_NB_r13_vals_ext = VALUE_STRING_EXT_INIT(lte_rrc_schedulingInfoSIB1_NB_r13_vals);
 
 static void
-lte_rrc_NRSRP_Range_NB_r14_fmt(gchar *s, guint32 v)
+lte_rrc_NRSRP_Range_NB_r14_fmt(char *s, uint32_t v)
 {
   if (v == 0) {
     snprintf(s, ITEM_LABEL_LENGTH, "NRSRP < -156dBm (0)");
@@ -15634,9 +15634,9 @@ lte_rrc_NRSRP_Range_NB_r14_fmt(gchar *s, guint32 v)
 }
 
 static void
-lte_rrc_NRSRQ_Range_NB_r14_fmt(gchar *s, guint32 v)
+lte_rrc_NRSRQ_Range_NB_r14_fmt(char *s, uint32_t v)
 {
-  gint32 rsrq = (guint32)v;
+  int32_t rsrq = (uint32_t)v;
   if (rsrq == -30) {
     snprintf(s, ITEM_LABEL_LENGTH, "NRSRQ < -34dB (-30)");
   } else if (rsrq < 0) {
@@ -15655,13 +15655,13 @@ lte_rrc_NRSRQ_Range_NB_r14_fmt(gchar *s, guint32 v)
 }
 
 static void
-lte_rrc_mbms_MaxBW_r14_fmt(gchar *s, guint32 v)
+lte_rrc_mbms_MaxBW_r14_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%u MHz (%u)", 40*v, v);
 }
 
 static void
-lte_rrc_dl_1024QAM_TotalWeightedLayers_r15_fmt(gchar *s, guint32 v)
+lte_rrc_dl_1024QAM_TotalWeightedLayers_r15_fmt(char *s, uint32_t v)
 {
   snprintf(s, ITEM_LABEL_LENGTH, "%u (%u)", 10+(2*v), v);
 }
@@ -15685,10 +15685,10 @@ lte_rrc_call_dissector(dissector_handle_t handle, tvbuff_t *tvb, packet_info *pi
 /*****************************************************************************/
 
 typedef struct meas_capabilities_item_band_mappings_t {
-  guint16 number_of_bands_set;
-  guint16 number_of_interfreq_serving_read;
-  guint16 number_of_interfreq_target_read;
-  guint16 band_by_item[256];
+  uint16_t number_of_bands_set;
+  uint16_t number_of_interfreq_serving_read;
+  uint16_t number_of_interfreq_target_read;
+  uint16_t band_by_item[256];
 } meas_capabilities_item_band_mappings_t;
 
 
@@ -15696,19 +15696,19 @@ typedef struct meas_capabilities_item_band_mappings_t {
 /* Struct to store all current uses of packet private data */
 typedef struct lte_rrc_private_data_t
 {
-  guint8  rat_type;
-  guint8  target_rat_type;
-  guint8  si_or_psi_geran;
-  guint8  ra_preambles;
-  guint16 message_identifier;
-  guint8 warning_message_segment_type;
-  guint8 warning_message_segment_number;
+  uint8_t rat_type;
+  uint8_t target_rat_type;
+  uint8_t si_or_psi_geran;
+  uint8_t ra_preambles;
+  uint16_t message_identifier;
+  uint8_t warning_message_segment_type;
+  uint8_t warning_message_segment_number;
   drb_mapping_t drb_mapping;
   drx_config_t  drx_config;
   pdcp_lte_security_info_t pdcp_security;
   meas_capabilities_item_band_mappings_t meas_capabilities_item_band_mappings;
   simult_pucch_pusch_cell_type cell_type;
-  gboolean bcch_dl_sch_msg;
+  bool bcch_dl_sch_msg;
   lpp_pos_sib_type_t pos_sib_type;
 } lte_rrc_private_data_t;
 
@@ -15743,13 +15743,13 @@ static drb_mapping_t* private_data_get_drb_mapping(asn1_ctx_t *actx)
 
 
 /* RAT type */
-static guint8 private_data_get_rat_type(asn1_ctx_t *actx)
+static uint8_t private_data_get_rat_type(asn1_ctx_t *actx)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   return private_data->rat_type;
 }
 
-static void private_data_set_rat_type(asn1_ctx_t *actx, guint8 rat_type)
+static void private_data_set_rat_type(asn1_ctx_t *actx, uint8_t rat_type)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   private_data->rat_type = rat_type;
@@ -15757,13 +15757,13 @@ static void private_data_set_rat_type(asn1_ctx_t *actx, guint8 rat_type)
 
 
 /* Target RAT type */
-static guint8 private_data_get_rat_target_type(asn1_ctx_t *actx)
+static uint8_t private_data_get_rat_target_type(asn1_ctx_t *actx)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   return private_data->target_rat_type;
 }
 
-static void private_data_set_rat_target_type(asn1_ctx_t *actx, guint8 target_rat_type)
+static void private_data_set_rat_target_type(asn1_ctx_t *actx, uint8_t target_rat_type)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   private_data->target_rat_type = target_rat_type;
@@ -15771,13 +15771,13 @@ static void private_data_set_rat_target_type(asn1_ctx_t *actx, guint8 target_rat
 
 
 /* si_or_psi_geran */
-static guint8 private_data_get_si_or_psi_geran(asn1_ctx_t *actx)
+static uint8_t private_data_get_si_or_psi_geran(asn1_ctx_t *actx)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   return private_data->si_or_psi_geran;
 }
 
-static void private_data_set_si_or_psi_geran(asn1_ctx_t *actx, guint8 si_or_psi_geran)
+static void private_data_set_si_or_psi_geran(asn1_ctx_t *actx, uint8_t si_or_psi_geran)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   private_data->si_or_psi_geran = si_or_psi_geran;
@@ -15785,13 +15785,13 @@ static void private_data_set_si_or_psi_geran(asn1_ctx_t *actx, guint8 si_or_psi_
 
 
 /* Message identifier */
-static guint16 private_data_get_message_identifier(asn1_ctx_t *actx)
+static uint16_t private_data_get_message_identifier(asn1_ctx_t *actx)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   return private_data->message_identifier;
 }
 
-static void private_data_set_message_identifier(asn1_ctx_t *actx, guint16 message_identifier)
+static void private_data_set_message_identifier(asn1_ctx_t *actx, uint16_t message_identifier)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   private_data->message_identifier = message_identifier;
@@ -15799,13 +15799,13 @@ static void private_data_set_message_identifier(asn1_ctx_t *actx, guint16 messag
 
 
 /* Warning message segment type */
-static guint16 private_data_get_warning_message_segment_type(asn1_ctx_t *actx)
+static uint16_t private_data_get_warning_message_segment_type(asn1_ctx_t *actx)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   return private_data->warning_message_segment_type;
 }
 
-static void private_data_set_warning_message_segment_type(asn1_ctx_t *actx, guint8 segment_type)
+static void private_data_set_warning_message_segment_type(asn1_ctx_t *actx, uint8_t segment_type)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   private_data->warning_message_segment_type = segment_type;
@@ -15813,13 +15813,13 @@ static void private_data_set_warning_message_segment_type(asn1_ctx_t *actx, guin
 
 
 /* Warning message segment number */
-static guint16 private_data_get_warning_message_segment_number(asn1_ctx_t *actx)
+static uint16_t private_data_get_warning_message_segment_number(asn1_ctx_t *actx)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   return private_data->warning_message_segment_number;
 }
 
-static void private_data_set_warning_message_segment_number(asn1_ctx_t *actx, guint8 segment_number)
+static void private_data_set_warning_message_segment_number(asn1_ctx_t *actx, uint8_t segment_number)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   private_data->warning_message_segment_number = segment_number;
@@ -15827,13 +15827,13 @@ static void private_data_set_warning_message_segment_number(asn1_ctx_t *actx, gu
 
 
 /* Number of RA-preambles */
-static guint8 private_data_get_ra_preambles(asn1_ctx_t *actx)
+static uint8_t private_data_get_ra_preambles(asn1_ctx_t *actx)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   return private_data->ra_preambles;
 }
 
-static void private_data_set_ra_preambles(asn1_ctx_t *actx, guint8 ra_preambles)
+static void private_data_set_ra_preambles(asn1_ctx_t *actx, uint8_t ra_preambles)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   private_data->ra_preambles = ra_preambles;
@@ -15855,12 +15855,12 @@ static meas_capabilities_item_band_mappings_t* private_data_meas_capabilities_it
   return &private_data->meas_capabilities_item_band_mappings;
 }
 
-static void set_freq_band_indicator(guint32 value, asn1_ctx_t *actx)
+static void set_freq_band_indicator(uint32_t value, asn1_ctx_t *actx)
 {
   /* Store band mapping for this item in the next position */
   meas_capabilities_item_band_mappings_t *mappings = private_data_meas_capabilities_item_band_mappings(actx);
   if (mappings->number_of_bands_set < 256) {
-    mappings->band_by_item[mappings->number_of_bands_set++] = (guint16)value;
+    mappings->band_by_item[mappings->number_of_bands_set++] = (uint16_t)value;
   }
 }
 
@@ -15886,13 +15886,13 @@ static void private_data_set_simult_pucch_pusch_cell_type(asn1_ctx_t *actx, simu
 }
 
 /* Is top message a BCCH DL-SCH BR/MBMS */
-static gboolean private_data_get_bcch_dl_sch_msg(asn1_ctx_t *actx)
+static bool private_data_get_bcch_dl_sch_msg(asn1_ctx_t *actx)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   return private_data->bcch_dl_sch_msg;
 }
 
-static void private_data_set_bcch_dl_sch_msg(asn1_ctx_t *actx, gboolean is_bcch_dl_sch)
+static void private_data_set_bcch_dl_sch_msg(asn1_ctx_t *actx, bool is_bcch_dl_sch)
 {
   lte_rrc_private_data_t *private_data = (lte_rrc_private_data_t*)lte_rrc_get_private_data(actx);
   private_data->bcch_dl_sch_msg = is_bcch_dl_sch;
@@ -15914,9 +15914,9 @@ static void private_data_set_pos_sib_type(asn1_ctx_t *actx, lpp_pos_sib_type_t p
 
 
 static void
-lte_rrc_localTimeOffset_fmt(gchar *s, guint32 v)
+lte_rrc_localTimeOffset_fmt(char *s, uint32_t v)
 {
-  gint32 time_offset = (gint32) v;
+  int32_t time_offset = (int32_t) v;
 
   snprintf(s, ITEM_LABEL_LENGTH, "UTC time %c %dhr %dmin (%d)",
              (time_offset < 0) ? '-':'+', abs(time_offset) >> 2,
@@ -15924,10 +15924,10 @@ lte_rrc_localTimeOffset_fmt(gchar *s, guint32 v)
 }
 
 static void
-dissect_lte_rrc_warningMessageSegment(tvbuff_t *warning_msg_seg_tvb, proto_tree *tree, packet_info *pinfo, guint8 dataCodingScheme)
+dissect_lte_rrc_warningMessageSegment(tvbuff_t *warning_msg_seg_tvb, proto_tree *tree, packet_info *pinfo, uint8_t dataCodingScheme)
 {
-  guint32 offset;
-  guint8 nb_of_pages, length, *str;
+  uint32_t offset;
+  uint8_t nb_of_pages, length, *str;
   proto_item *ti;
   tvbuff_t *cb_data_page_tvb, *cb_data_tvb;
   int i;
@@ -16074,41 +16074,41 @@ dissect_lte_rrc_featureGroupIndRel9Add(tvbuff_t *featureGroupIndRel9Add_tvb, asn
 
 /* Functions to get enum values out of indices parsed */
 /* If entry not found, return last element of array */
-static guint32 drx_lookup_onDurationTimer(guint32 idx)
+static uint32_t drx_lookup_onDurationTimer(uint32_t idx)
 {
-  static const guint32 vals[] = {1,2,3,4,5,6,8,10,20,30,40,50,60,80,100,200};
+  static const uint32_t vals[] = {1,2,3,4,5,6,8,10,20,30,40,50,60,80,100,200};
 
   return vals[MIN(idx, array_length(vals) - 1)];
 }
 
-static guint32 drx_lookup_inactivityTimer(guint32 idx)
+static uint32_t drx_lookup_inactivityTimer(uint32_t idx)
 {
-  static const guint32 vals[] = {
+  static const uint32_t vals[] = {
     1,2,3,4,5,6,8,10,20,30,40,50,60,80,100,200,300,500,750,1280,1920,2560,0
   };
 
   return vals[MIN(idx, array_length(vals) - 1)];
 }
 
-static guint32 drx_lookup_retransmissionTimer(guint32 idx)
+static uint32_t drx_lookup_retransmissionTimer(uint32_t idx)
 {
-  static const guint32 vals[] = {1,2,4,6,8,16,24,33};
+  static const uint32_t vals[] = {1,2,4,6,8,16,24,33};
 
   return vals[MIN(idx, array_length(vals) - 1)];
 }
 
-static guint32 drx_lookup_longCycle(guint32 idx)
+static uint32_t drx_lookup_longCycle(uint32_t idx)
 {
-  static const guint32 vals[] = {
+  static const uint32_t vals[] = {
     10,20,32,40,64,80,128,160,256,320,512,640,1024,1280,2048,2560
   };
 
   return vals[MIN(idx, array_length(vals) - 1)];
 }
 
-static guint32 drx_lookup_longCycle_v1130(guint32 idx)
+static uint32_t drx_lookup_longCycle_v1130(uint32_t idx)
 {
-  static const guint32 vals[] = {
+  static const uint32_t vals[] = {
     60,70
   };
 
@@ -16116,9 +16116,9 @@ static guint32 drx_lookup_longCycle_v1130(guint32 idx)
 }
 
 
-static guint32 drx_lookup_shortCycle(guint32 idx)
+static uint32_t drx_lookup_shortCycle(uint32_t idx)
 {
-  static const guint32 vals[] = {
+  static const uint32_t vals[] = {
     2,5,8,10,16,20,32,40,64,80,128,160,256,320,512,640
   };
 
@@ -16160,7 +16160,7 @@ static void drx_check_config_sane(drx_config_t *config, asn1_ctx_t *actx)
 }
 
 /* Break sr-configIndex down into periodicity and offset.  From 36.231, 10.1 */
-static void sr_lookup_configindex(guint32 config_index, guint16 *periodicity, guint16 *offset)
+static void sr_lookup_configindex(uint32_t config_index, uint16_t *periodicity, uint16_t *offset)
 {
   if (config_index < 5) {
     *periodicity = 5;
@@ -16369,11 +16369,11 @@ static const value_string lte_rrc_RAT_Type_vals[] = {
 
 static int
 dissect_lte_rrc_RAT_Type(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 rat_type;
+  uint32_t rat_type;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      8, &rat_type, true, 0, NULL);
 
-  private_data_set_rat_type(actx, (guint8)rat_type);
+  private_data_set_rat_type(actx, (uint8_t)rat_type);
 
 
 
@@ -16391,10 +16391,10 @@ dissect_lte_rrc_T_ueCapabilityRAT_Container(tvbuff_t *tvb _U_, int offset _U_, a
 
 
 if(ue_cap_tvb){
-  guint32 length;
+  uint32_t length;
   proto_item *item;
   proto_tree *subtree, *subtree2;
-  guint8 byte;
+  uint8_t byte;
   subtree = proto_item_add_subtree(actx->created_item, ett_lte_rrc_UE_CapabilityRAT_Container);
   switch(private_data_get_rat_type(actx)){
   case RAT_Type_eutra:
@@ -16562,7 +16562,7 @@ dissect_lte_rrc_NeighCellConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *a
 
 
   if (neigh_cell_config_tvb) {
-    guint bitvalue = tvb_get_bits8(neigh_cell_config_tvb, 0, 2);
+    unsigned bitvalue = tvb_get_bits8(neigh_cell_config_tvb, 0, 2);
     actx->created_item = proto_tree_add_uint(tree, hf_index, neigh_cell_config_tvb, 0, 1, bitvalue);
   }
 
@@ -20554,13 +20554,13 @@ dissect_lte_rrc_CondReconfigurationTriggerEUTRA_r16(tvbuff_t *tvb _U_, int offse
 
 static int
 dissect_lte_rrc_DRB_Identity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             1U, 32U, &value, false);
 
   if (mapping != NULL) {
-    mapping->drbid = (guint8)value;
+    mapping->drbid = (uint8_t)value;
   }
 
 
@@ -23276,14 +23276,14 @@ static const value_string lte_rrc_SN_FieldLength_vals[] = {
 
 static int
 dissect_lte_rrc_SN_FieldLength(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &value, false, 0, NULL);
 
   if (mapping != NULL) {
     mapping->um_sn_length = (value==0) ? 5 : 10;
-    mapping->um_sn_length_present = TRUE;
+    mapping->um_sn_length_present = true;
   }
 
 
@@ -23381,7 +23381,7 @@ static const per_choice_t RLC_Config_choice[] = {
 
 static int
 dissect_lte_rrc_RLC_Config(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_lte_rrc_RLC_Config, RLC_Config_choice,
@@ -23389,11 +23389,11 @@ dissect_lte_rrc_RLC_Config(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _
 
   if (mapping != NULL) {
     mapping->rlcMode = (value==0) ? RLC_AM_MODE : RLC_UM_MODE;
-    mapping->rlcMode_present = TRUE;
+    mapping->rlcMode_present = true;
 
     if (mapping->rlcMode == RLC_AM_MODE) {
         mapping->pdcp_sn_size = 12;
-        mapping->pdcp_sn_size_present = TRUE;
+        mapping->pdcp_sn_size_present = true;
     }
   }
 
@@ -23427,14 +23427,14 @@ dissect_lte_rrc_T_rlc_Config(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx
 
 static int
 dissect_lte_rrc_T_priority(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             1U, 16U, &value, false);
 
   if (mapping != NULL) {
     mapping->ul_priority = value;
-    mapping->ul_priority_present = TRUE;
+    mapping->ul_priority_present = true;
   }
 
 
@@ -24446,14 +24446,14 @@ static const value_string lte_rrc_T_pdcp_SN_Size_vals[] = {
 
 static int
 dissect_lte_rrc_T_pdcp_SN_Size(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &value, false, 0, NULL);
 
   if (mapping != NULL) {
     mapping->pdcp_sn_size = (value==0) ? 7 : 12;
-    mapping->pdcp_sn_size_present = TRUE;
+    mapping->pdcp_sn_size_present = true;
   }
 
 
@@ -24586,7 +24586,7 @@ dissect_lte_rrc_T_pdcp_SN_Size_v1130(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx
 
   if (mapping != NULL) {
     mapping->pdcp_sn_size = 15;
-    mapping->pdcp_sn_size_present = TRUE;
+    mapping->pdcp_sn_size_present = true;
   }
 
 
@@ -24735,7 +24735,7 @@ dissect_lte_rrc_T_pdcp_SN_Size_v1310(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx
 
   if (mapping != NULL) {
     mapping->pdcp_sn_size = 18;
-    mapping->pdcp_sn_size_present = TRUE;
+    mapping->pdcp_sn_size_present = true;
   }
 
 
@@ -25388,14 +25388,14 @@ dissect_lte_rrc_PDCP_Config(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx 
 
 static int
 dissect_lte_rrc_T_logicalChannelIdentity(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             3U, 10U, &value, false);
 
   if (mapping != NULL) {
-    mapping->lcid = (guint8)value;
-    mapping->lcid_present = TRUE;
+    mapping->lcid = (uint8_t)value;
+    mapping->lcid_present = true;
   }
 
 
@@ -25668,14 +25668,14 @@ dissect_lte_rrc_DRB_ToAddMod_eag_4(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t
 
 static int
 dissect_lte_rrc_T_logicalChannelIdentity_r15(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             32U, 38U, &value, false);
 
   if (mapping != NULL) {
-    mapping->lcid = (guint8)value;
-    mapping->lcid_present = TRUE;
+    mapping->lcid = (uint8_t)value;
+    mapping->lcid_present = true;
   }
 
 
@@ -25969,13 +25969,13 @@ static const value_string lte_rrc_T_onDurationTimer_vals[] = {
 
 static int
 dissect_lte_rrc_T_onDurationTimer(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      16, &value, false, 0, NULL);
 
   /* Set 'configured' state so that config can be examine once complete! */
-  config->configured = TRUE;
+  config->configured = true;
   config->onDurationTimer = drx_lookup_onDurationTimer(value);
 
 
@@ -26024,7 +26024,7 @@ static value_string_ext lte_rrc_T_drx_InactivityTimer_vals_ext = VALUE_STRING_EX
 
 static int
 dissect_lte_rrc_T_drx_InactivityTimer(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      32, &value, false, 0, NULL);
@@ -26051,7 +26051,7 @@ static const value_string lte_rrc_T_drx_RetransmissionTimer_vals[] = {
 
 static int
 dissect_lte_rrc_T_drx_RetransmissionTimer(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      8, &value, false, 0, NULL);
@@ -26066,7 +26066,7 @@ dissect_lte_rrc_T_drx_RetransmissionTimer(tvbuff_t *tvb _U_, int offset _U_, asn
 
 static int
 dissect_lte_rrc_T_sf10(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 9U, &value, false);
@@ -26081,7 +26081,7 @@ dissect_lte_rrc_T_sf10(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, 
 
 static int
 dissect_lte_rrc_T_sf20(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 19U, &value, false);
@@ -26096,7 +26096,7 @@ dissect_lte_rrc_T_sf20(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, 
 
 static int
 dissect_lte_rrc_T_sf32(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 31U, &value, false);
@@ -26111,7 +26111,7 @@ dissect_lte_rrc_T_sf32(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, 
 
 static int
 dissect_lte_rrc_T_sf40(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 39U, &value, false);
@@ -26126,7 +26126,7 @@ dissect_lte_rrc_T_sf40(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, 
 
 static int
 dissect_lte_rrc_T_sf64(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 63U, &value, false);
@@ -26141,7 +26141,7 @@ dissect_lte_rrc_T_sf64(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, 
 
 static int
 dissect_lte_rrc_T_sf80(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 79U, &value, false);
@@ -26156,7 +26156,7 @@ dissect_lte_rrc_T_sf80(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, 
 
 static int
 dissect_lte_rrc_T_sf128(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 127U, &value, false);
@@ -26171,7 +26171,7 @@ dissect_lte_rrc_T_sf128(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
 
 static int
 dissect_lte_rrc_T_sf160(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 159U, &value, false);
@@ -26186,7 +26186,7 @@ dissect_lte_rrc_T_sf160(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
 
 static int
 dissect_lte_rrc_T_sf256(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 255U, &value, false);
@@ -26201,7 +26201,7 @@ dissect_lte_rrc_T_sf256(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
 
 static int
 dissect_lte_rrc_T_sf320(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 319U, &value, false);
@@ -26216,7 +26216,7 @@ dissect_lte_rrc_T_sf320(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
 
 static int
 dissect_lte_rrc_T_sf512(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 511U, &value, false);
@@ -26231,7 +26231,7 @@ dissect_lte_rrc_T_sf512(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
 
 static int
 dissect_lte_rrc_T_sf640(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 639U, &value, false);
@@ -26246,7 +26246,7 @@ dissect_lte_rrc_T_sf640(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
 
 static int
 dissect_lte_rrc_T_sf1024(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 1023U, &value, false);
@@ -26261,7 +26261,7 @@ dissect_lte_rrc_T_sf1024(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_
 
 static int
 dissect_lte_rrc_T_sf1280(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 1279U, &value, false);
@@ -26276,7 +26276,7 @@ dissect_lte_rrc_T_sf1280(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_
 
 static int
 dissect_lte_rrc_T_sf2048(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 2047U, &value, false);
@@ -26291,7 +26291,7 @@ dissect_lte_rrc_T_sf2048(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_
 
 static int
 dissect_lte_rrc_T_sf2560(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 2559U, &value, false);
@@ -26345,7 +26345,7 @@ static const per_choice_t T_longDRX_CycleStartOffset_choice[] = {
 
 static int
 dissect_lte_rrc_T_longDRX_CycleStartOffset(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_lte_rrc_T_longDRX_CycleStartOffset, T_longDRX_CycleStartOffset_choice,
@@ -26381,12 +26381,12 @@ static const value_string lte_rrc_T_shortDRX_Cycle_vals[] = {
 
 static int
 dissect_lte_rrc_T_shortDRX_Cycle(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      16, &value, false, 0, NULL);
 
-  config->shortCycleConfigured = TRUE;
+  config->shortCycleConfigured = true;
   config->shortCycle = drx_lookup_shortCycle(value);
 
 
@@ -26397,7 +26397,7 @@ dissect_lte_rrc_T_shortDRX_Cycle(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *
 
 static int
 dissect_lte_rrc_T_drxShortCycleTimer(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 timer;
+  uint32_t timer;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             1U, 16U, &timer, false);
@@ -26589,7 +26589,7 @@ dissect_lte_rrc_T_phr_Config(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx
 
 static int
 dissect_lte_rrc_T_sr_ProhibitTimer_r9(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 timer;
+  uint32_t timer;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 7U, &timer, false);
 
@@ -26651,7 +26651,7 @@ dissect_lte_rrc_T_extendedBSR_Sizes_r10(tvbuff_t *tvb _U_, int offset _U_, asn1_
   p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
   if (p_mac_lte_info != NULL) {
     /* Tell MAC to use extended BSR sizes configuration */
-    set_mac_lte_extended_bsr_sizes(p_mac_lte_info->ueid, TRUE, actx->pinfo);
+    set_mac_lte_extended_bsr_sizes(p_mac_lte_info->ueid, true, actx->pinfo);
   }
 
 
@@ -26764,7 +26764,7 @@ static const value_string lte_rrc_T_drx_RetransmissionTimer_v1130_vals[] = {
 
 static int
 dissect_lte_rrc_T_drx_RetransmissionTimer_v1130(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      1, &value, false, 0, NULL);
@@ -26779,7 +26779,7 @@ dissect_lte_rrc_T_drx_RetransmissionTimer_v1130(tvbuff_t *tvb _U_, int offset _U
 
 static int
 dissect_lte_rrc_T_sf60_v1130(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 59U, &value, false);
@@ -26794,7 +26794,7 @@ dissect_lte_rrc_T_sf60_v1130(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx
 
 static int
 dissect_lte_rrc_T_sf70_v1130(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 69U, &value, false);
@@ -26820,7 +26820,7 @@ static const per_choice_t T_longDRX_CycleStartOffset_v1130_choice[] = {
 
 static int
 dissect_lte_rrc_T_longDRX_CycleStartOffset_v1130(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_choice(tvb, offset, actx, tree, hf_index,
                                  ett_lte_rrc_T_longDRX_CycleStartOffset_v1130, T_longDRX_CycleStartOffset_v1130_choice,
@@ -26841,7 +26841,7 @@ static const value_string lte_rrc_T_shortDRX_Cycle_v1130_vals[] = {
 
 static int
 dissect_lte_rrc_T_shortDRX_Cycle_v1130(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      1, &value, false, 0, NULL);
@@ -27013,7 +27013,7 @@ dissect_lte_rrc_MAC_MainConfig_eag_4(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx
 
 static int
 dissect_lte_rrc_T_sf60_v1310(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drx_config_t* config = private_data_get_drx_config(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 59U, &value, false);
@@ -27882,7 +27882,7 @@ dissect_lte_rrc_MAC_MainConfig(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *ac
     }
 
     /* Clear out state */
-    drx_config->configured = FALSE;
+    drx_config->configured = false;
   }
 
 
@@ -29122,11 +29122,11 @@ dissect_lte_rrc_T_antennaInfo(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *act
 
 static int
 dissect_lte_rrc_T_sr_ConfigIndex(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
-  guint16 periodicity, subframe_offset;
+  uint32_t value;
+  uint16_t periodicity, subframe_offset;
   proto_item *ti;
   proto_tree *subtree;
-  gint index_offset = offset;
+  int index_offset = offset;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 157U, &value, false);
 
@@ -30137,7 +30137,7 @@ dissect_lte_rrc_T_simultaneousPUCCH_PUSCH_r10(tvbuff_t *tvb _U_, int offset _U_,
   p_mac_lte_info = (mac_lte_info *)p_get_proto_data(wmem_file_scope(), actx->pinfo, proto_mac_lte, 0);
   if (p_mac_lte_info != NULL) {
     /* Tell MAC to use simultaneous PUCCH/PUSCH configuration */
-    set_mac_lte_simult_pucch_pusch(p_mac_lte_info->ueid, private_data_get_simult_pucch_pusch_cell_type(actx), TRUE, actx->pinfo);
+    set_mac_lte_simult_pucch_pusch(p_mac_lte_info->ueid, private_data_get_simult_pucch_pusch_cell_type(actx), true, actx->pinfo);
   }
 
 
@@ -42189,7 +42189,7 @@ static const value_string lte_rrc_CipheringAlgorithm_r12_vals[] = {
 
 static int
 dissect_lte_rrc_CipheringAlgorithm_r12(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   pdcp_lte_security_info_t *p_security_algorithms;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      8, &value, true, 0, NULL);
@@ -42217,7 +42217,7 @@ static const value_string lte_rrc_T_integrityProtAlgorithm_vals[] = {
 
 static int
 dissect_lte_rrc_T_integrityProtAlgorithm(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   pdcp_lte_security_info_t *p_security_algorithms;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      8, &value, true, 0, NULL);
@@ -42334,7 +42334,7 @@ dissect_lte_rrc_PHICH_Config(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx
 static int
 dissect_lte_rrc_T_systemFrameNumber(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   tvbuff_t *value_tvb = NULL;
-  guint32 sfn;
+  uint32_t sfn;
   offset = dissect_per_bit_string(tvb, offset, actx, tree, hf_index,
                                      8, 8, false, NULL, 0, &value_tvb, NULL);
 
@@ -42620,7 +42620,7 @@ dissect_lte_rrc_P_Max(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, p
 
 static int
 dissect_lte_rrc_FreqBandIndicator(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             1U, maxFBI, &value, false);
 
@@ -42820,7 +42820,7 @@ dissect_lte_rrc_T_si_WindowLength(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
 
 static int
 dissect_lte_rrc_T_systemInfoValueTag(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 31U, &value, false);
 
@@ -42833,15 +42833,15 @@ dissect_lte_rrc_T_systemInfoValueTag(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx
       wmem_map_insert(lte_rrc_system_info_value_changed_hash, GUINT_TO_POINTER(actx->pinfo->num),
                           GUINT_TO_POINTER(system_info_value_current+1));
     }
-    system_info_value_current_set = TRUE;
+    system_info_value_current_set = true;
     system_info_value_current = value;
   }
   else {
     /* Look up indication of changed info value from hash table */
-    gpointer p_previous = wmem_map_lookup(lte_rrc_system_info_value_changed_hash, GUINT_TO_POINTER(actx->pinfo->num));
+    void *p_previous = wmem_map_lookup(lte_rrc_system_info_value_changed_hash, GUINT_TO_POINTER(actx->pinfo->num));
     if (p_previous != NULL) {
       /* Subtract one from stored result to get previous value */
-      guint32 previous = GPOINTER_TO_UINT(p_previous) - 1;
+      uint32_t previous = GPOINTER_TO_UINT(p_previous) - 1;
       expert_add_info_format(actx->pinfo, actx->created_item, &ei_lte_rrc_si_info_value_changed,
                              "SI Info Value changed (now %u, was %u)", value, previous);
     }
@@ -44596,7 +44596,7 @@ static const per_sequence_t SystemInformationBlockType1_sequence[] = {
 static int
 dissect_lte_rrc_SystemInformationBlockType1(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 
-  if (private_data_get_bcch_dl_sch_msg(actx) == FALSE) {
+  if (private_data_get_bcch_dl_sch_msg(actx) == false) {
     col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "SystemInformationBlockType1");
   }
 
@@ -44714,7 +44714,7 @@ static const value_string lte_rrc_T_numberOfRA_Preambles_vals[] = {
 
 static int
 dissect_lte_rrc_T_numberOfRA_Preambles(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint value;
+  unsigned value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      16, &value, false, 0, NULL);
 
@@ -44748,7 +44748,7 @@ static const value_string lte_rrc_T_sizeOfRA_PreamblesGroupA_vals[] = {
 
 static int
 dissect_lte_rrc_T_sizeOfRA_PreamblesGroupA(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint ra_value, value;
+  unsigned ra_value, value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      15, &value, false, 0, NULL);
 
@@ -51413,11 +51413,11 @@ dissect_lte_rrc_T_pucch_Cell_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *
 
 static int
 dissect_lte_rrc_T_sr_ConfigIndex_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
-  guint16 periodicity, subframe_offset;
+  uint32_t value;
+  uint16_t periodicity, subframe_offset;
   proto_item *ti;
   proto_tree *subtree;
-  gint index_offset = offset;
+  int index_offset = offset;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 157U, &value, false);
 
@@ -64902,7 +64902,7 @@ dissect_lte_rrc_T_synchronousSystemTime(tvbuff_t *tvb _U_, int offset _U_, asn1_
 
 
   if (sync_system_time_tvb) {
-    guint64 bits;
+    uint64_t bits;
     nstime_t ts;
     proto_tree *subtree;
     subtree = proto_item_add_subtree(actx->created_item, ett_lte_rrc_timeInfo);
@@ -64927,7 +64927,7 @@ dissect_lte_rrc_T_asynchronousSystemTime(tvbuff_t *tvb _U_, int offset _U_, asn1
 
 
   if (async_system_time_tvb) {
-    guint64 bits;
+    uint64_t bits;
     nstime_t ts;
     proto_tree *subtree;
     subtree = proto_item_add_subtree(actx->created_item, ett_lte_rrc_timeInfo);
@@ -65786,11 +65786,11 @@ static const value_string lte_rrc_T_warningMessageSegmentType_vals[] = {
 
 static int
 dissect_lte_rrc_T_warningMessageSegmentType(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 segment_type;
+  uint32_t segment_type;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &segment_type, false, 0, NULL);
 
-  private_data_set_warning_message_segment_type(actx, (guint8)segment_type);
+  private_data_set_warning_message_segment_type(actx, (uint8_t)segment_type);
 
 
   return offset;
@@ -65800,11 +65800,11 @@ dissect_lte_rrc_T_warningMessageSegmentType(tvbuff_t *tvb _U_, int offset _U_, a
 
 static int
 dissect_lte_rrc_T_warningMessageSegmentNumber(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 segment_number;
+  uint32_t segment_number;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 63U, &segment_number, false);
 
-  private_data_set_warning_message_segment_number(actx, (guint8)segment_number);
+  private_data_set_warning_message_segment_number(actx, (uint8_t)segment_number);
 
 
   return offset;
@@ -65823,16 +65823,16 @@ dissect_lte_rrc_T_warningMessageSegment(tvbuff_t *tvb _U_, int offset _U_, asn1_
   if (warning_msg_seg_tvb) {
     proto_tree *subtree;
     tvbuff_t *frag_tvb;
-    gpointer p_dcs;
+    void *p_dcs;
     fragment_head *frag_data = fragment_add_seq_check(&lte_rrc_sib11_reassembly_table, warning_msg_seg_tvb, 0, actx->pinfo,
                                                       private_data_get_message_identifier(actx), NULL,
                                                       private_data_get_warning_message_segment_number(actx),
                                                       tvb_reported_length(warning_msg_seg_tvb),
-                                                      private_data_get_warning_message_segment_type(actx) ? FALSE : TRUE);
+                                                      private_data_get_warning_message_segment_type(actx) ? false : true);
     subtree = proto_item_add_subtree(actx->created_item, ett_lte_rrc_warningMessageSegment);
     frag_tvb = process_reassembled_data(warning_msg_seg_tvb, 0, actx->pinfo, "Reassembled SIB11 warning message",
                                         frag_data, &lte_rrc_sib11_frag_items, NULL, subtree);
-    p_dcs = wmem_map_lookup(lte_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((guint)private_data_get_message_identifier(actx)));
+    p_dcs = wmem_map_lookup(lte_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((unsigned)private_data_get_message_identifier(actx)));
     if (frag_tvb && p_dcs) {
       dissect_lte_rrc_warningMessageSegment(frag_tvb, subtree, actx->pinfo, GPOINTER_TO_UINT(p_dcs));
     }
@@ -65853,10 +65853,10 @@ dissect_lte_rrc_T_dataCodingScheme(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t
 
   if (data_coding_scheme_tvb) {
     proto_tree *subtree;
-    guint32 dataCodingScheme;
+    uint32_t dataCodingScheme;
     subtree = proto_item_add_subtree(actx->created_item, ett_lte_rrc_dataCodingScheme);
     dataCodingScheme = dissect_cbs_data_coding_scheme(data_coding_scheme_tvb, actx->pinfo, subtree, 0);
-    wmem_map_insert(lte_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((guint)private_data_get_message_identifier(actx)),
+    wmem_map_insert(lte_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((unsigned)private_data_get_message_identifier(actx)),
                         GUINT_TO_POINTER(dataCodingScheme));
   }
 
@@ -65937,11 +65937,11 @@ static const value_string lte_rrc_T_warningMessageSegmentType_r9_vals[] = {
 
 static int
 dissect_lte_rrc_T_warningMessageSegmentType_r9(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 segment_type;
+  uint32_t segment_type;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      2, &segment_type, false, 0, NULL);
 
-  private_data_set_warning_message_segment_type(actx, (guint8)segment_type);
+  private_data_set_warning_message_segment_type(actx, (uint8_t)segment_type);
 
 
   return offset;
@@ -65951,11 +65951,11 @@ dissect_lte_rrc_T_warningMessageSegmentType_r9(tvbuff_t *tvb _U_, int offset _U_
 
 static int
 dissect_lte_rrc_T_warningMessageSegmentNumber_r9(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 segment_number;
+  uint32_t segment_number;
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             0U, 63U, &segment_number, false);
 
-  private_data_set_warning_message_segment_number(actx, (guint8)segment_number);
+  private_data_set_warning_message_segment_number(actx, (uint8_t)segment_number);
 
 
   return offset;
@@ -65974,16 +65974,16 @@ dissect_lte_rrc_T_warningMessageSegment_r9(tvbuff_t *tvb _U_, int offset _U_, as
   if (warning_msg_seg_tvb) {
     proto_tree *subtree;
     tvbuff_t *frag_tvb;
-    gpointer p_dcs;
+    void *p_dcs;
     fragment_head *frag_data = fragment_add_seq_check(&lte_rrc_sib12_reassembly_table, warning_msg_seg_tvb, 0, actx->pinfo,
                                                       private_data_get_message_identifier(actx), NULL,
                                                       private_data_get_warning_message_segment_number(actx),
                                                       tvb_reported_length(warning_msg_seg_tvb),
-                                                      private_data_get_warning_message_segment_type(actx) ? FALSE : TRUE);
+                                                      private_data_get_warning_message_segment_type(actx) ? false : true);
     subtree = proto_item_add_subtree(actx->created_item, ett_lte_rrc_warningMessageSegment);
     frag_tvb = process_reassembled_data(warning_msg_seg_tvb, 0, actx->pinfo, "Reassembled SIB12 warning message",
                                         frag_data, &lte_rrc_sib12_frag_items, NULL, subtree);
-    p_dcs = wmem_map_lookup(lte_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((guint)private_data_get_message_identifier(actx)));
+    p_dcs = wmem_map_lookup(lte_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((unsigned)private_data_get_message_identifier(actx)));
     if (frag_tvb && p_dcs) {
       dissect_lte_rrc_warningMessageSegment(frag_tvb, subtree, actx->pinfo, GPOINTER_TO_UINT(p_dcs));
     }
@@ -66004,10 +66004,10 @@ dissect_lte_rrc_T_dataCodingScheme_r9(tvbuff_t *tvb _U_, int offset _U_, asn1_ct
 
   if (data_coding_scheme_tvb) {
     proto_tree *subtree;
-    guint32 dataCodingScheme;
+    uint32_t dataCodingScheme;
     subtree = proto_item_add_subtree(actx->created_item, ett_lte_rrc_dataCodingScheme);
     dataCodingScheme = dissect_cbs_data_coding_scheme(data_coding_scheme_tvb, actx->pinfo, subtree, 0);
-    wmem_map_insert(lte_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((guint)private_data_get_message_identifier(actx)),
+    wmem_map_insert(lte_rrc_etws_cmas_dcs_hash, GUINT_TO_POINTER((unsigned)private_data_get_message_identifier(actx)),
                         GUINT_TO_POINTER(dataCodingScheme));
   }
 
@@ -66911,10 +66911,10 @@ dissect_lte_rrc_SystemInformationBlockType15_r11(tvbuff_t *tvb _U_, int offset _
 
 static int
 dissect_lte_rrc_T_timeInfoUTC_r11(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint64 timeInfo;
+  uint64_t timeInfo;
   proto_tree *subtree;
   nstime_t ts;
-  guint32 old_offset = offset;
+  uint32_t old_offset = offset;
   offset = dissect_per_constrained_integer_64b(tvb, offset, actx, tree, hf_index,
                                                             0U, UINT64_C(549755813887), &timeInfo, false);
 
@@ -66940,7 +66940,7 @@ dissect_lte_rrc_T_dayLightSavingTime_r11(tvbuff_t *tvb _U_, int offset _U_, asn1
 
 
   if (daylight_saving_time_tvb) {
-    guint bitvalue = tvb_get_bits8(daylight_saving_time_tvb, 0, 2);
+    unsigned bitvalue = tvb_get_bits8(daylight_saving_time_tvb, 0, 2);
     actx->created_item = proto_tree_add_uint(tree, hf_index, daylight_saving_time_tvb, 0, 1, bitvalue);
   }
 
@@ -71212,7 +71212,7 @@ static const per_sequence_t SystemInformation_sequence[] = {
 static int
 dissect_lte_rrc_SystemInformation(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 
-  if (private_data_get_bcch_dl_sch_msg(actx) == FALSE) {
+  if (private_data_get_bcch_dl_sch_msg(actx) == false) {
     col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "SystemInformation [");
   }
 
@@ -71220,7 +71220,7 @@ dissect_lte_rrc_SystemInformation(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_lte_rrc_SystemInformation, SystemInformation_sequence);
 
-  if (private_data_get_bcch_dl_sch_msg(actx) == FALSE) {
+  if (private_data_get_bcch_dl_sch_msg(actx) == false) {
     col_append_str(actx->pinfo->cinfo, COL_INFO, " ]");
   }
 
@@ -71304,7 +71304,7 @@ dissect_lte_rrc_BCCH_DL_SCH_Message(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_
 static int
 dissect_lte_rrc_SystemInformation_BR_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 
-  private_data_set_bcch_dl_sch_msg(actx, TRUE);
+  private_data_set_bcch_dl_sch_msg(actx, true);
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "SystemInformation-BR-r13 [");
 
 
@@ -71321,7 +71321,7 @@ dissect_lte_rrc_SystemInformation_BR_r13(tvbuff_t *tvb _U_, int offset _U_, asn1
 static int
 dissect_lte_rrc_SystemInformationBlockType1_BR_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 
-  private_data_set_bcch_dl_sch_msg(actx, TRUE);
+  private_data_set_bcch_dl_sch_msg(actx, true);
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "SystemInformationBlockType1-BR-r13");
 
   offset = dissect_lte_rrc_SystemInformationBlockType1(tvb, offset, actx, tree, hf_index);
@@ -71405,7 +71405,7 @@ dissect_lte_rrc_BCCH_DL_SCH_Message_BR(tvbuff_t *tvb _U_, int offset _U_, asn1_c
 static int
 dissect_lte_rrc_SystemInformation_MBMS_r14(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 
-  private_data_set_bcch_dl_sch_msg(actx, TRUE);
+  private_data_set_bcch_dl_sch_msg(actx, true);
   col_append_sep_str(actx->pinfo->cinfo, COL_INFO, NULL, "SystemInformation-MBMS-r14 [");
 
 
@@ -72522,7 +72522,7 @@ dissect_lte_rrc_PagingRecordList(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *
 static int
 dissect_lte_rrc_T_pagingRecordList(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   /* Number of items is (last 3 bits of first byte and first bit of second) + 1 */
-  guint16 number_of_records = ((tvb_get_ntohs(tvb, 0) >> 7) & 0x0f) + 1;
+  uint16_t number_of_records = ((tvb_get_ntohs(tvb, 0) >> 7) & 0x0f) + 1;
   offset = dissect_lte_rrc_PagingRecordList(tvb, offset, actx, tree, hf_index);
 
   col_append_fstr(actx->pinfo->cinfo, COL_INFO, " (%u PagingRecord%s)", number_of_records, plurality(number_of_records, "", "s"));
@@ -73637,10 +73637,10 @@ dissect_lte_rrc_RRCConnectionSetup(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t
     /* as the UE could have locally dropped the previous RRC Connection */
     set_mac_lte_drx_config_release(p_mac_lte_info->ueid, actx->pinfo);
     /* Also tell MAC to release extended BSR sizes configuration */
-    set_mac_lte_extended_bsr_sizes(p_mac_lte_info->ueid, FALSE, actx->pinfo);
+    set_mac_lte_extended_bsr_sizes(p_mac_lte_info->ueid, false, actx->pinfo);
     /* Also tell MAC to release simutaneous PUCCH/PUSCH configuration */
-    set_mac_lte_simult_pucch_pusch(p_mac_lte_info->ueid, SIMULT_PUCCH_PUSCH_PCELL, FALSE, actx->pinfo);
-    set_mac_lte_simult_pucch_pusch(p_mac_lte_info->ueid, SIMULT_PUCCH_PUSCH_PSCELL, FALSE, actx->pinfo);
+    set_mac_lte_simult_pucch_pusch(p_mac_lte_info->ueid, SIMULT_PUCCH_PUSCH_PCELL, false, actx->pinfo);
+    set_mac_lte_simult_pucch_pusch(p_mac_lte_info->ueid, SIMULT_PUCCH_PUSCH_PSCELL, false, actx->pinfo);
     /* TODO: also release PDCP security config here */
   }
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
@@ -74846,11 +74846,11 @@ static const value_string lte_rrc_T_targetRAT_Type_vals[] = {
 
 static int
 dissect_lte_rrc_T_targetRAT_Type(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 target_rat_type;
+  uint32_t target_rat_type;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      8, &target_rat_type, true, 0, NULL);
 
-  private_data_set_rat_target_type(actx, (guint8)target_rat_type);
+  private_data_set_rat_target_type(actx, (uint8_t)target_rat_type);
 
 
   return offset;
@@ -74865,7 +74865,7 @@ dissect_lte_rrc_T_targetRAT_MessageContainer(tvbuff_t *tvb _U_, int offset _U_, 
                                        NO_BOUND, NO_BOUND, false, &target_rat_msg_cont_tvb);
 
   if(target_rat_msg_cont_tvb){
-    guint8 byte;
+    uint8_t byte;
     proto_tree *subtree;
     subtree = proto_item_add_subtree(actx->created_item, ett_lte_rrc_targetRAT_MessageContainer);
     switch (private_data_get_rat_target_type(actx)){
@@ -74884,7 +74884,7 @@ dissect_lte_rrc_T_targetRAT_MessageContainer(tvbuff_t *tvb _U_, int offset _U_, 
       } else {
         if (gsm_rlcmac_dl_handle) {
           tvbuff_t *gsm_rlcmac_dl_tvb = tvb_new_composite();
-          guint8 *pd = (guint8 *) wmem_alloc(actx->pinfo->pool, 1);
+          uint8_t *pd = (uint8_t *) wmem_alloc(actx->pinfo->pool, 1);
           pd[0] = 0x40;
           tvb_composite_append(gsm_rlcmac_dl_tvb, tvb_new_child_real_data(tvb, pd, 1, 1));
           tvb_composite_append(gsm_rlcmac_dl_tvb, target_rat_msg_cont_tvb);
@@ -74924,7 +74924,7 @@ dissect_lte_rrc_T_targetRAT_MessageContainer(tvbuff_t *tvb _U_, int offset _U_, 
 static int
 dissect_lte_rrc_T_nas_SecurityParamFromEUTRA(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   tvbuff_t *nas_sec_param_from_eutra_tvb = NULL;
-  guint32 length;
+  uint32_t length;
   proto_tree *subtree;
 
   offset = dissect_per_octet_string(tvb, offset, actx, tree, hf_index,
@@ -74959,7 +74959,7 @@ dissect_lte_rrc_SystemInfoListGERAN_item(tvbuff_t *tvb _U_, int offset _U_, asn1
       /* SI message */
       if (gsm_a_dtap_handle) {
         tvbuff_t *si_tvb = tvb_new_composite();
-        guint8 *pd = (guint8 *) wmem_alloc(actx->pinfo->pool, 1);
+        uint8_t *pd = (uint8_t *) wmem_alloc(actx->pinfo->pool, 1);
         pd[0] = 0x06;
         tvb_composite_append(si_tvb, tvb_new_child_real_data(tvb, pd, 1, 1));
         tvb_composite_append(si_tvb, sys_info_list_tvb);
@@ -74972,7 +74972,7 @@ dissect_lte_rrc_SystemInfoListGERAN_item(tvbuff_t *tvb _U_, int offset _U_, asn1
       /* PSI message */
       if (gsm_rlcmac_dl_handle) {
         tvbuff_t *gsm_rlcmac_dl_tvb = tvb_new_composite();
-        guint8 *pd = (guint8 *) wmem_alloc(actx->pinfo->pool, 1);
+        uint8_t *pd = (uint8_t *) wmem_alloc(actx->pinfo->pool, 1);
         pd[0] = 0x40;
         tvb_composite_append(gsm_rlcmac_dl_tvb, tvb_new_child_real_data(tvb, pd, 1, 1));
         tvb_composite_append(gsm_rlcmac_dl_tvb, sys_info_list_tvb);
@@ -75008,7 +75008,7 @@ dissect_lte_rrc_SystemInfoListGERAN(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_
 
 static int
 dissect_lte_rrc_T_si(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  private_data_set_si_or_psi_geran(actx, (guint8)SI_OrPSI_GERAN_si); /* SI message */
+  private_data_set_si_or_psi_geran(actx, (uint8_t)SI_OrPSI_GERAN_si); /* SI message */
   offset = dissect_lte_rrc_SystemInfoListGERAN(tvb, offset, actx, tree, hf_index);
 
 
@@ -75020,7 +75020,7 @@ dissect_lte_rrc_T_si(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, pr
 
 static int
 dissect_lte_rrc_T_psi(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  private_data_set_si_or_psi_geran(actx, (guint8)SI_OrPSI_GERAN_psi); /* PSI message */
+  private_data_set_si_or_psi_geran(actx, (uint8_t)SI_OrPSI_GERAN_psi); /* PSI message */
   offset = dissect_lte_rrc_SystemInfoListGERAN(tvb, offset, actx, tree, hf_index);
 
 
@@ -76103,7 +76103,7 @@ dissect_lte_rrc_T_intraLTE(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _
 static int
 dissect_lte_rrc_T_nas_SecurityParamToEUTRA(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   tvbuff_t *nas_sec_param_to_eutra_tvb = NULL;
-  guint32 length;
+  uint32_t length;
   proto_tree *subtree;
 
   offset = dissect_per_octet_string(tvb, offset, actx, tree, hf_index,
@@ -77372,7 +77372,7 @@ static const value_string lte_rrc_ReleaseCause_vals[] = {
 
 static int
 dissect_lte_rrc_ReleaseCause(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
                                      4, &value, false, 0, NULL);
 
@@ -77503,7 +77503,7 @@ dissect_lte_rrc_T_lateNonCriticalExtension_03(tvbuff_t *tvb _U_, int offset _U_,
 
 static int
 dissect_lte_rrc_T_systemInformation_r9(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  private_data_set_si_or_psi_geran(actx, (guint8)SI_OrPSI_GERAN_si); /* SI message */
+  private_data_set_si_or_psi_geran(actx, (uint8_t)SI_OrPSI_GERAN_si); /* SI message */
   offset = dissect_lte_rrc_SystemInfoListGERAN(tvb, offset, actx, tree, hf_index);
 
 
@@ -80112,10 +80112,10 @@ dissect_lte_rrc_AbsoluteTimeInfo_r10(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx
 
 
   if (abs_time_info_tvb) {
-    const gchar *str, *hf_str;
+    const char *str, *hf_str;
     proto_tree *subtree;
     subtree = proto_item_add_subtree(actx->created_item, ett_lte_rrc_absTimeInfo);
-    str = tvb_bcd_dig_to_str(actx->pinfo->pool, abs_time_info_tvb, 0, 6, NULL, FALSE);
+    str = tvb_bcd_dig_to_str(actx->pinfo->pool, abs_time_info_tvb, 0, 6, NULL, false);
     hf_str = wmem_strdup_printf(actx->pinfo->pool, "%c%c-%c%c-%c%c %c%c:%c%c:%c%c", str[0], str[1],
                         str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11]);
     proto_tree_add_string(subtree, hf_lte_rrc_absolute_time, abs_time_info_tvb, 0, 6, hf_str);
@@ -83401,8 +83401,8 @@ dissect_lte_rrc_T_gnss_TOD_msec_r10(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_
 
   if (gnss_tod_msec_tvb) {
     asn1_ctx_t asn1_ctx;
-    asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, FALSE, actx->pinfo);
-    dissect_per_constrained_integer(gnss_tod_msec_tvb, 0, &asn1_ctx, tree, hf_index, 0U, 3599999U, NULL, FALSE);
+    asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, actx->pinfo);
+    dissect_per_constrained_integer(gnss_tod_msec_tvb, 0, &asn1_ctx, tree, hf_index, 0U, 3599999U, NULL, false);
   }
 
 
@@ -87924,7 +87924,7 @@ dissect_lte_rrc_T_n_r12(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
                                      3, 3, false, NULL, 0, &n_r12_tvb, NULL);
 
   if (n_r12_tvb) {
-    guint bitvalue = tvb_get_bits8(n_r12_tvb, 0, 3);
+    unsigned bitvalue = tvb_get_bits8(n_r12_tvb, 0, 3);
     actx->created_item = proto_tree_add_uint(tree, hf_index, n_r12_tvb, 0, 1, bitvalue);
   }
 
@@ -89936,7 +89936,7 @@ dissect_lte_rrc_T_messageSize_r14(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
                                      6, 6, false, NULL, 0, &messageSize_r14_tvb, NULL);
 
   if (messageSize_r14_tvb) {
-    guint bitvalue = tvb_get_bits8(messageSize_r14_tvb, 0, 6);
+    unsigned bitvalue = tvb_get_bits8(messageSize_r14_tvb, 0, 6);
     actx->created_item = proto_tree_add_uint(tree, hf_index, messageSize_r14_tvb, 0, 1, bitvalue);
   }
 
@@ -96522,8 +96522,8 @@ dissect_lte_rrc_InterFreqBandInfo(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
 
   mappings = private_data_meas_capabilities_item_band_mappings(actx);
   if (mappings->number_of_interfreq_serving_read < mappings->number_of_bands_set) {
-    guint16 serving_band = mappings->band_by_item[mappings->number_of_interfreq_serving_read];
-    guint16 target_band = mappings->band_by_item[mappings->number_of_interfreq_target_read++];
+    uint16_t serving_band = mappings->band_by_item[mappings->number_of_interfreq_serving_read];
+    uint16_t target_band = mappings->band_by_item[mappings->number_of_interfreq_target_read++];
     if (mappings->number_of_interfreq_target_read == mappings->number_of_bands_set) {
       mappings->number_of_interfreq_target_read = 0;
       mappings->number_of_interfreq_serving_read++;
@@ -115571,9 +115571,9 @@ dissect_lte_rrc_T_am_01(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_,
 
   if (mapping != NULL) {
     mapping->rlcMode = RLC_AM_MODE;
-    mapping->rlcMode_present = TRUE;
+    mapping->rlcMode_present = true;
     mapping->pdcp_sn_size = 7;
-    mapping->pdcp_sn_size_present = TRUE;
+    mapping->pdcp_sn_size_present = true;
   }
 
 
@@ -115589,11 +115589,11 @@ dissect_lte_rrc_T_um_Bi_Directional_r15_01(tvbuff_t *tvb _U_, int offset _U_, as
 
   if (mapping != NULL) {
     mapping->rlcMode = RLC_UM_MODE;
-    mapping->rlcMode_present = TRUE;
+    mapping->rlcMode_present = true;
     mapping->um_sn_length = 5;
-    mapping->um_sn_length_present = TRUE;
+    mapping->um_sn_length_present = true;
     mapping->pdcp_sn_size = 7;
-    mapping->pdcp_sn_size_present = TRUE;
+    mapping->pdcp_sn_size_present = true;
   }
 
 
@@ -115609,11 +115609,11 @@ dissect_lte_rrc_T_um_Uni_Directional_UL_r15_01(tvbuff_t *tvb _U_, int offset _U_
 
   if (mapping != NULL) {
     mapping->rlcMode = RLC_UM_MODE;
-    mapping->rlcMode_present = TRUE;
+    mapping->rlcMode_present = true;
     mapping->um_sn_length = 5;
-    mapping->um_sn_length_present = TRUE;
+    mapping->um_sn_length_present = true;
     mapping->pdcp_sn_size = 7;
-    mapping->pdcp_sn_size_present = TRUE;
+    mapping->pdcp_sn_size_present = true;
   }
 
 
@@ -115629,11 +115629,11 @@ dissect_lte_rrc_T_um_Uni_Directional_DL_r15_01(tvbuff_t *tvb _U_, int offset _U_
 
   if (mapping != NULL) {
     mapping->rlcMode = RLC_UM_MODE;
-    mapping->rlcMode_present = TRUE;
+    mapping->rlcMode_present = true;
     mapping->um_sn_length = 5;
-    mapping->um_sn_length_present = TRUE;
+    mapping->um_sn_length_present = true;
     mapping->pdcp_sn_size = 7;
-    mapping->pdcp_sn_size_present = TRUE;
+    mapping->pdcp_sn_size_present = true;
   }
 
 
@@ -115692,14 +115692,14 @@ dissect_lte_rrc_T_rlc_Config_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *
 
 static int
 dissect_lte_rrc_T_priority_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             1U, 16U, &value, false);
 
   if (mapping != NULL) {
     mapping->ul_priority = value;
-    mapping->ul_priority_present = TRUE;
+    mapping->ul_priority_present = true;
   }
 
 
@@ -115977,14 +115977,14 @@ dissect_lte_rrc_PDCP_Config_NB_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t
 
 static int
 dissect_lte_rrc_T_logicalChannelIdentity_r13(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  guint32 value;
+  uint32_t value;
   drb_mapping_t *mapping = private_data_get_drb_mapping(actx);
   offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
                                                             3U, 10U, &value, false);
 
   if (mapping != NULL) {
-    mapping->lcid = (guint8)value;
-    mapping->lcid_present = TRUE;
+    mapping->lcid = (uint8_t)value;
+    mapping->lcid_present = true;
   }
 
 
@@ -170815,7 +170815,7 @@ void proto_register_lte_rrc(void) {
   };
 
   /* List of subtrees */
-  static gint *ett[] = {
+  static int *ett[] = {
     &ett_lte_rrc,
     &ett_lte_rrc_HandoverCommand,
     &ett_lte_rrc_T_criticalExtensions,
