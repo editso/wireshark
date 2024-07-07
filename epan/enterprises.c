@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-06-28) */
+/* (last updated 2024-07-05) */
 
 #include "config.h"
 
@@ -1095,7 +1095,7 @@ static const char * const table[] =
     "Telecommunications Industry Association (TIA) Mike",                                 // 1073
     "Boole & Babbage",                                                                    // 1074
     "System Engineering Support, Ltd.",                                                   // 1075
-    "SURFnet",                                                                            // 1076
+    "SURF",                                                                               // 1076
     "OpenConnect Systems, Inc.",                                                          // 1077
     "PDTS (Process Data Technology and Systems)",                                         // 1078
     "Cornet, Inc.",                                                                       // 1079
@@ -19850,7 +19850,7 @@ static const char * const table[] =
     "LBCN Communication Technology Co.,LTD.",                                             // 19828
     "BITSTREAM",                                                                          // 19829
     "VDL SA",                                                                             // 19830
-    "IRT Institut fuer Rundfunktechnik GmbH",                                             // 19831
+    "rbb Rundfunk Berlin Brandenburg",                                                    // 19831
     "Rostrvm Solutions Ltd",                                                              // 19832
     "Team17 Software Ltd.",                                                               // 19833
     "Bulldog Communications Ltd",                                                         // 19834
@@ -23103,7 +23103,7 @@ static const char * const table[] =
     "Opus One, Inc.",                                                                     // 23081
     "Riedell MotorSports",                                                                // 23082
     "University of Bridgeport",                                                           // 23083
-    "SCT Consulting",                                                                     // 23084
+    "Automated Labs",                                                                     // 23084
     "QQ Technology, INC.",                                                                // 23085
     "Major & Minor Exims Pvt Ltd",                                                        // 23086
     "Ross Sampson Consulting",                                                            // 23087
@@ -28151,7 +28151,7 @@ static const char * const table[] =
     "Cleversafe , Inc.",                                                                  // 28129
     "MICHATECH",                                                                          // 28130
     "iBro",                                                                               // 28131
-    "Embarq Holdings Company LLC",                                                        // 28132
+    "Lumen Technologies",                                                                 // 28132
     "INSIST",                                                                             // 28133
     "LOT Polish Airlines",                                                                // 28134
     "Cominfo a.s.",                                                                       // 28135
@@ -31869,7 +31869,7 @@ static const char * const table[] =
     "Bejing XCZY networks Inc.",                                                          // 31847
     "Sherman Finanial Group LLC",                                                         // 31848
     "Jacobsson Programutveckling",                                                        // 31849
-    "OTN Systems NV",                                                                     // 31850
+    "Belden Solutions nv",                                                                // 31850
     "WH-Netz - Verein fuer Netzwerksicherheit und Technologietransfer e.V.",              // 31851
     "Pirean Ltd.",                                                                        // 31852
     "LLC Mail.Ru",                                                                        // 31853
@@ -51065,7 +51065,7 @@ static const char * const table[] =
     "protel Hotelsoftware GmbH",                                                          // 51043
     "in.power GmbH",                                                                      // 51044
     "Arnavsoft India Pvt Ltd",                                                            // 51045
-    "Kungälv Energi AB",                                                                  // 51046
+    "Kungälv Närenergi AB",                                                               // 51046
     "ATI Systems",                                                                        // 51047
     "BIOSENCY",                                                                           // 51048
     "Ratel, Inc.",                                                                        // 51049
@@ -62101,7 +62101,46 @@ static const char * const table[] =
     "ESERA GmbH",                                                                         // 62079
     "Netflash Internet Solutions",                                                        // 62080
     "City and Borough of Juneau",                                                         // 62081
-    "Rosatom Automated Control Systems JSC"                                               // 62082
+    "Rosatom Automated Control Systems JSC",                                              // 62082
+    "丰天鼎业科技有限公司 (Fengtian Dingye Technology Co., Ltd.)",                                  // 62083
+    "ARNOWA PTY LTD",                                                                     // 62084
+    "Neat Path Networks",                                                                 // 62085
+    "BluForce, Inc",                                                                      // 62086
+    "SAL Navigation AB",                                                                  // 62087
+    "Motorola Solutions AD",                                                              // 62088
+    "Centerboard AG",                                                                     // 62089
+    "Bitchief Technolgy Services Private Limited",                                        // 62090
+    "Taichitel Technology Shanghai Co., Ltd.",                                            // 62091
+    "Terra Kognita Limited Liability Company",                                            // 62092
+    "EVRAZ STEEL  BUILDING",                                                              // 62093
+    "Max Planck Institute for Meteorology",                                               // 62094
+    "Stay Informed GmbH",                                                                 // 62095
+    "QT Imaging Inc.",                                                                    // 62096
+    "Ackestens åkeri ab",                                                                 // 62097
+    "SATEL ltd",                                                                          // 62098
+    "Dayou Plus Co Ltd",                                                                  // 62099
+    "ITLook",                                                                             // 62100
+    "Siscom Communication Limited Company",                                               // 62101
+    "Tkl Logistics LLC",                                                                  // 62102
+    "Cordova Courier",                                                                    // 62103
+    "James W Pyle III",                                                                   // 62104
+    "LIGHT IT SOLUTIONS PTY LTD",                                                         // 62105
+    "JSC RVi GROUP",                                                                      // 62106
+    "LRNZ Network Services",                                                              // 62107
+    "Card4B Systems SA",                                                                  // 62108
+    "Armstrong Fluid Technology",                                                         // 62109
+    "Go!Foton",                                                                           // 62110
+    "NOVO Energy R&D",                                                                    // 62111
+    "techssol",                                                                           // 62112
+    "Société wallonne des eaux (SWDE)",                                                   // 62113
+    "TF-Industries GmbH",                                                                 // 62114
+    "VELARTIS GmbH",                                                                      // 62115
+    "TrustForge",                                                                         // 62116
+    "essendi it GmbH",                                                                    // 62117
+    "IMPULSE CCTV NETWORKS INDIA PRIVATE LIMITED",                                        // 62118
+    "County Durham & Darlington NHS Foundation Trust",                                    // 62119
+    "Konstantin L. Metlov",                                                               // 62120
+    "UMBOSS"                                                                              // 62121
 };
 
 const char* global_enterprises_lookup(uint32_t value)
