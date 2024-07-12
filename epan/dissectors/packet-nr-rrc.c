@@ -526,11 +526,14 @@ static int hf_nr_rrc_nr_rrc_NZP_CSI_RS_Resource_PDU;  /* NZP_CSI_RS_Resource */
 static int hf_nr_rrc_nr_rrc_P_Max_PDU;            /* P_Max */
 static int hf_nr_rrc_nr_rrc_PDCCH_ConfigSIB1_PDU;  /* PDCCH_ConfigSIB1 */
 static int hf_nr_rrc_nr_rrc_RACH_ConfigCommon_PDU;  /* RACH_ConfigCommon */
+static int hf_nr_rrc_nr_rrc_RACH_ConfigDedicated_PDU;  /* RACH_ConfigDedicated */
 static int hf_nr_rrc_nr_rrc_RadioBearerConfig_PDU;  /* RadioBearerConfig */
 static int hf_nr_rrc_nr_rrc_ReferenceTime_r16_PDU;  /* ReferenceTime_r16 */
 static int hf_nr_rrc_nr_rrc_ReportConfigToAddMod_PDU;  /* ReportConfigToAddMod */
 static int hf_nr_rrc_nr_rrc_RLC_BearerConfig_PDU;  /* RLC_BearerConfig */
 static int hf_nr_rrc_nr_rrc_SchedulingRequestResourceConfig_PDU;  /* SchedulingRequestResourceConfig */
+static int hf_nr_rrc_nr_rrc_TCI_StateId_PDU;      /* TCI_StateId */
+static int hf_nr_rrc_nr_rrc_TCI_UL_StateId_r17_PDU;  /* TCI_UL_StateId_r17 */
 static int hf_nr_rrc_nr_rrc_TDD_UL_DL_ConfigCommon_PDU;  /* TDD_UL_DL_ConfigCommon */
 static int hf_nr_rrc_nr_rrc_UL_GapFR2_Config_r17_PDU;  /* UL_GapFR2_Config_r17 */
 static int hf_nr_rrc_nr_rrc_UplinkTxDirectCurrentList_PDU;  /* UplinkTxDirectCurrentList */
@@ -547,6 +550,7 @@ static int hf_nr_rrc_nr_rrc_VisitedCellInfoList_r16_PDU;  /* VisitedCellInfoList
 static int hf_nr_rrc_nr_rrc_SL_ConfigDedicatedNR_r16_PDU;  /* SL_ConfigDedicatedNR_r16 */
 static int hf_nr_rrc_nr_rrc_SL_PHY_MAC_RLC_Config_r16_PDU;  /* SL_PHY_MAC_RLC_Config_r16 */
 static int hf_nr_rrc_nr_rrc_SL_RLC_ChannelToAddModList_r17_PDU;  /* SL_RLC_ChannelToAddModList_r17 */
+static int hf_nr_rrc_nr_rrc_SL_PHY_MAC_RLC_Config_v1700_PDU;  /* SL_PHY_MAC_RLC_Config_v1700 */
 static int hf_nr_rrc_nr_rrc_MBS_NeighbourCellList_r17_PDU;  /* MBS_NeighbourCellList_r17 */
 static int hf_nr_rrc_nr_rrc_MRB_PDCP_ConfigBroadcast_r17_PDU;  /* MRB_PDCP_ConfigBroadcast_r17 */
 static int hf_nr_rrc_SBCCH_SL_BCH_Message_PDU;    /* SBCCH_SL_BCH_Message */
@@ -136408,6 +136412,16 @@ int dissect_nr_rrc_RACH_ConfigCommon_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _
   offset += 7; offset >>= 3;
   return offset;
 }
+int dissect_nr_rrc_RACH_ConfigDedicated_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
+  proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
+  proto_item_set_hidden(prot_ti);
+  int offset = 0;
+  asn1_ctx_t asn1_ctx;
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, pinfo);
+  offset = dissect_nr_rrc_RACH_ConfigDedicated(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_nr_rrc_RACH_ConfigDedicated_PDU);
+  offset += 7; offset >>= 3;
+  return offset;
+}
 int dissect_nr_rrc_RadioBearerConfig_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
   proto_item_set_hidden(prot_ti);
@@ -136455,6 +136469,26 @@ int dissect_nr_rrc_SchedulingRequestResourceConfig_PDU(tvbuff_t *tvb _U_, packet
   asn1_ctx_t asn1_ctx;
   asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, pinfo);
   offset = dissect_nr_rrc_SchedulingRequestResourceConfig(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_nr_rrc_SchedulingRequestResourceConfig_PDU);
+  offset += 7; offset >>= 3;
+  return offset;
+}
+int dissect_nr_rrc_TCI_StateId_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
+  proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
+  proto_item_set_hidden(prot_ti);
+  int offset = 0;
+  asn1_ctx_t asn1_ctx;
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, pinfo);
+  offset = dissect_nr_rrc_TCI_StateId(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_nr_rrc_TCI_StateId_PDU);
+  offset += 7; offset >>= 3;
+  return offset;
+}
+int dissect_nr_rrc_TCI_UL_StateId_r17_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
+  proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
+  proto_item_set_hidden(prot_ti);
+  int offset = 0;
+  asn1_ctx_t asn1_ctx;
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, pinfo);
+  offset = dissect_nr_rrc_TCI_UL_StateId_r17(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_nr_rrc_TCI_UL_StateId_r17_PDU);
   offset += 7; offset >>= 3;
   return offset;
 }
@@ -136615,6 +136649,16 @@ int dissect_nr_rrc_SL_RLC_ChannelToAddModList_r17_PDU(tvbuff_t *tvb _U_, packet_
   asn1_ctx_t asn1_ctx;
   asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, pinfo);
   offset = dissect_nr_rrc_SL_RLC_ChannelToAddModList_r17(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_nr_rrc_SL_RLC_ChannelToAddModList_r17_PDU);
+  offset += 7; offset >>= 3;
+  return offset;
+}
+int dissect_nr_rrc_SL_PHY_MAC_RLC_Config_v1700_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
+  proto_item *prot_ti = proto_tree_add_item(tree, proto_nr_rrc, tvb, 0, -1, ENC_NA);
+  proto_item_set_hidden(prot_ti);
+  int offset = 0;
+  asn1_ctx_t asn1_ctx;
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_PER, false, pinfo);
+  offset = dissect_nr_rrc_SL_PHY_MAC_RLC_Config_v1700(tvb, offset, &asn1_ctx, tree, hf_nr_rrc_nr_rrc_SL_PHY_MAC_RLC_Config_v1700_PDU);
   offset += 7; offset >>= 3;
   return offset;
 }
@@ -137130,6 +137174,10 @@ proto_register_nr_rrc(void) {
       { "RACH-ConfigCommon", "nr-rrc.RACH_ConfigCommon_element",
         FT_NONE, BASE_NONE, NULL, 0,
         NULL, HFILL }},
+    { &hf_nr_rrc_nr_rrc_RACH_ConfigDedicated_PDU,
+      { "RACH-ConfigDedicated", "nr-rrc.RACH_ConfigDedicated_element",
+        FT_NONE, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
     { &hf_nr_rrc_nr_rrc_RadioBearerConfig_PDU,
       { "RadioBearerConfig", "nr-rrc.RadioBearerConfig_element",
         FT_NONE, BASE_NONE, NULL, 0,
@@ -137149,6 +137197,14 @@ proto_register_nr_rrc(void) {
     { &hf_nr_rrc_nr_rrc_SchedulingRequestResourceConfig_PDU,
       { "SchedulingRequestResourceConfig", "nr-rrc.SchedulingRequestResourceConfig_element",
         FT_NONE, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_nr_rrc_TCI_StateId_PDU,
+      { "TCI-StateId", "nr-rrc.TCI_StateId",
+        FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_nr_rrc_TCI_UL_StateId_r17_PDU,
+      { "TCI-UL-StateId-r17", "nr-rrc.TCI_UL_StateId_r17",
+        FT_UINT32, BASE_DEC, NULL, 0,
         NULL, HFILL }},
     { &hf_nr_rrc_nr_rrc_TDD_UL_DL_ConfigCommon_PDU,
       { "TDD-UL-DL-ConfigCommon", "nr-rrc.TDD_UL_DL_ConfigCommon_element",
@@ -137213,6 +137269,10 @@ proto_register_nr_rrc(void) {
     { &hf_nr_rrc_nr_rrc_SL_RLC_ChannelToAddModList_r17_PDU,
       { "SL-RLC-ChannelToAddModList-r17", "nr-rrc.SL_RLC_ChannelToAddModList_r17",
         FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_nr_rrc_SL_PHY_MAC_RLC_Config_v1700_PDU,
+      { "SL-PHY-MAC-RLC-Config-v1700", "nr-rrc.SL_PHY_MAC_RLC_Config_v1700_element",
+        FT_NONE, BASE_NONE, NULL, 0,
         NULL, HFILL }},
     { &hf_nr_rrc_nr_rrc_MBS_NeighbourCellList_r17_PDU,
       { "MBS-NeighbourCellList-r17", "nr-rrc.MBS_NeighbourCellList_r17",
