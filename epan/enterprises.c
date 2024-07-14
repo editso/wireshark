@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-07-05) */
+/* (last updated 2024-07-13) */
 
 #include "config.h"
 
@@ -11534,7 +11534,7 @@ static const char * const table[] =
     "St. Joseph's College",                                                               // 11512
     "Strele Informatik",                                                                  // 11513
     "Chris Abernethy",                                                                    // 11514
-    "SUB1 S.A.",                                                                          // 11515
+    "ASAP Technology SRL",                                                                // 11515
     "The Academy of Sciences of the Czech Republic",                                      // 11516
     "Trivadis AG",                                                                        // 11517
     "T-Soft Ltd.",                                                                        // 11518
@@ -44103,7 +44103,7 @@ static const char * const table[] =
     "UNI LEADER INTERNATIONAL LTD",                                                       // 44081
     "Beijing DTLT Technology CO., LTD.",                                                  // 44082
     "GuiLin HYGJ communication technology co., Ltd",                                      // 44083
-    "B. Metzler seel. Sohn & Co. KGaA",                                                   // 44084
+    "B. Metzler seel. Sohn & Co. AG",                                                     // 44084
     "Display Quality Equipment, S.L",                                                     // 44085
     "E-T-A Elektrotechnische Apparate GmbH",                                              // 44086
     "Hammond Consulting Services",                                                        // 44087
@@ -48942,7 +48942,7 @@ static const char * const table[] =
     "Identos Inc.",                                                                       // 48920
     "Mercer Bucks Hematology Oncology",                                                   // 48921
     "Thales Australia",                                                                   // 48922
-    "icomer",                                                                             // 48923
+    "Icomer, Inc",                                                                        // 48923
     "HIST",                                                                               // 48924
     "Invite Services",                                                                    // 48925
     "OOO Tsentr Sistem Svyazi",                                                           // 48926
@@ -62140,7 +62140,48 @@ static const char * const table[] =
     "IMPULSE CCTV NETWORKS INDIA PRIVATE LIMITED",                                        // 62118
     "County Durham & Darlington NHS Foundation Trust",                                    // 62119
     "Konstantin L. Metlov",                                                               // 62120
-    "UMBOSS"                                                                              // 62121
+    "UMBOSS",                                                                             // 62121
+    "AlphaCentri Corporation",                                                            // 62122
+    "Mindset Integrated Co",                                                              // 62123
+    "Jigsolve",                                                                           // 62124
+    "Sameway",                                                                            // 62125
+    "Xovis Germany GmbH",                                                                 // 62126
+    "Shanghai Horizon Networks Co., Ltd",                                                 // 62127
+    "Grand Rapids Community College",                                                     // 62128
+    "DanGo Designs Inc.",                                                                 // 62129
+    "DevRay IT Solutions Pvt. Ltd.",                                                      // 62130
+    "RED Digital Cinema",                                                                 // 62131
+    "Lifeline Data Centers",                                                              // 62132
+    "Kabelbruch",                                                                         // 62133
+    "RxTrail",                                                                            // 62134
+    "California Pickleball Club",                                                         // 62135
+    "Onbitel, Ltd.",                                                                      // 62136
+    "AO Yug-Systema plus",                                                                // 62137
+    "VIDI GmbH",                                                                          // 62138
+    "LOVATO Electric s.p.a.",                                                             // 62139
+    "AQUASYNC INNOVATION (ZHEJIANG) CO., LTD",                                            // 62140
+    "UNEAL - Universidade Estadual de Alagoas",                                           // 62141
+    "WingArc1st Inc.",                                                                    // 62142
+    "TRUSTCLOUD TECH, S.L.",                                                              // 62143
+    "Persistent Telecom",                                                                 // 62144
+    "Phoddo",                                                                             // 62145
+    "Datafire Group",                                                                     // 62146
+    "Wealth Enhancement",                                                                 // 62147
+    "Ignition Networks Limited",                                                          // 62148
+    "Guangdong Hongjun Microelectronics Co., Ltd",                                        // 62149
+    "Mirae Signal Co., Ltd",                                                              // 62150
+    "Jovian Software Consulting LLC",                                                     // 62151
+    "Beijing Cool Shark Technology Co., Ltd.",                                            // 62152
+    "RIX Riga Airport",                                                                   // 62153
+    "Netsend",                                                                            // 62154
+    "NAVIELEKTRO KY",                                                                     // 62155
+    "Bobapps LLC",                                                                        // 62156
+    "yunzhisec",                                                                          // 62157
+    "ORIS Automation",                                                                    // 62158
+    "SGC Technology LLC",                                                                 // 62159
+    "Colegio Dominicano de Notarios",                                                     // 62160
+    "Ambra Solutions",                                                                    // 62161
+    "ABDUL KADIR, M.D. ADULT AND PEDIATRIC NEUROLOGY"                                     // 62162
 };
 
 const char* global_enterprises_lookup(uint32_t value)
