@@ -39073,7 +39073,7 @@ dissect_rrc_GERAN_SystemInfoBlock(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t 
                                        1, 23, false, &parameter_tvb);
 
   if (parameter_tvb){
-    uint8_t byte = tvb_get_guint8(parameter_tvb, 0);
+    uint8_t byte = tvb_get_uint8(parameter_tvb, 0);
     if (byte == 0x06) {
       if (gsm_a_dtap_handle) {
         call_dissector(gsm_a_dtap_handle, parameter_tvb, actx->pinfo, tree);
@@ -110371,7 +110371,7 @@ dissect_rrc_GSM_Classmark2(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _
                                        5, 5, false, &parameter_tvb);
 
   if (parameter_tvb){
-    de_ms_cm_2(parameter_tvb, tree, actx->pinfo, 2, tvb_get_guint8(parameter_tvb,1), NULL, 0);
+    de_ms_cm_2(parameter_tvb, tree, actx->pinfo, 2, tvb_get_uint8(parameter_tvb,1), NULL, 0);
   }
 
 
