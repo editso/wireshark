@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-07-13) */
+/* (last updated 2024-07-19) */
 
 #include "config.h"
 
@@ -31804,7 +31804,7 @@ static const char * const table[] =
     "SyferLock Technology Corporation",                                                   // 31782
     "MetroSouth Medical Center",                                                          // 31783
     "EndlerNET GmbH",                                                                     // 31784
-    "Derouineau",                                                                         // 31785
+    "Aurelien Derouineau",                                                                // 31785
     "Zdravstveni dom Ljubljana",                                                          // 31786
     "Syren Technologies",                                                                 // 31787
     "QSG Verkehrstechnik GmbH",                                                           // 31788
@@ -62181,7 +62181,31 @@ static const char * const table[] =
     "SGC Technology LLC",                                                                 // 62159
     "Colegio Dominicano de Notarios",                                                     // 62160
     "Ambra Solutions",                                                                    // 62161
-    "ABDUL KADIR, M.D. ADULT AND PEDIATRIC NEUROLOGY"                                     // 62162
+    "ABDUL KADIR, M.D. ADULT AND PEDIATRIC NEUROLOGY",                                    // 62162
+    "Guangzhou Guang ha Communications shares Co.,Ltd.",                                  // 62163
+    "City of Vancouver",                                                                  // 62164
+    "MNet Network ./",                                                                    // 62165
+    "NEXXUS NETWORKS INDIA PRIVATE LIMITED",                                              // 62166
+    "IQ Tools LLC",                                                                       // 62167
+    "Octopus IoT srl",                                                                    // 62168
+    "ThinkQuantum s.r.l.",                                                                // 62169
+    "Telid Electronics",                                                                  // 62170
+    "AURIONPRO TRANSIT PTE. LTD.",                                                        // 62171
+    "Fog Hashing Pte. Ltd.",                                                              // 62172
+    "Softdent GmbH",                                                                      // 62173
+    "Universitaetsklinikum Bonn",                                                         // 62174
+    "SL Alabama",                                                                         // 62175
+    "Codemaster",                                                                         // 62176
+    "Meteoric Ltd",                                                                       // 62177
+    "Andrew Baxter, LLC",                                                                 // 62178
+    "Craft Computing",                                                                    // 62179
+    "GridSpark",                                                                          // 62180
+    "Afzar Pardaz To (APT)",                                                              // 62181
+    "Tiger Technologies Limited",                                                         // 62182
+    "Specific-Group Holding GmbH",                                                        // 62183
+    "HWSE3",                                                                              // 62184
+    "Iru, LLC",                                                                           // 62185
+    "ELOOM SYSTEM"                                                                        // 62186
 };
 
 const char* global_enterprises_lookup(uint32_t value)
