@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-07-19) */
+/* (last updated 2024-07-26) */
 
 #include "config.h"
 
@@ -18949,7 +18949,7 @@ static const char * const table[] =
     "tandav enterprises",                                                                 // 18927
     "Areca Technology Corporation",                                                       // 18928
     "Interwise, Inc.",                                                                    // 18929
-    "Skyx.Org",                                                                           // 18930
+    "OXW",                                                                                // 18930
     "DaveLinux",                                                                          // 18931
     "Naeilnet Inc.",                                                                      // 18932
     "ActivNetworks",                                                                      // 18933
@@ -27327,7 +27327,7 @@ static const char * const table[] =
     "Satis Superque Merce BV",                                                            // 27305
     "Automated Computing Machinery, S.L.",                                                // 27306
     "Rankin County School District",                                                      // 27307
-    "Unique Communications Inc.",                                                         // 27308
+    "Unique Communications Solutions Inc.",                                               // 27308
     "SSRC Media, LLC",                                                                    // 27309
     "NetIDEAS, Inc.",                                                                     // 27310
     "Seni Systems, Inc.",                                                                 // 27311
@@ -29396,7 +29396,7 @@ static const char * const table[] =
     "elegiac",                                                                            // 29374
     "Selekron Microcontrol s.l.",                                                         // 29375
     "Trägerverein Bürgernetz Bamberg e.V.",                                               // 29376
-    "Make-A-Byte, Inc.",                                                                  // 29377
+    "Automate The Things, LLC",                                                           // 29377
     "Unium",                                                                              // 29378
     "Lostar Bilgi Guvenligi A.S.",                                                        // 29379
     "Beekhul Holdings Pty Ltd",                                                           // 29380
@@ -36868,7 +36868,7 @@ static const char * const table[] =
     "OOO ""SMU OFISSTROY""",                                                              // 36846
     "International Game Technology, Inc.",                                                // 36847
     "CRE-DO GmbH",                                                                        // 36848
-    "Hanwha Techwin Co., Ltd.",                                                           // 36849
+    "Hanwha Vision Co., Ltd.",                                                            // 36849
     "Dharma Drum Buddhist College (DDBC)",                                                // 36850
     "OutputLinks, Inc.",                                                                  // 36851
     "Bnei Baruch",                                                                        // 36852
@@ -37517,7 +37517,7 @@ static const char * const table[] =
     "MARS Advanced Research Systems",                                                     // 37495
     "ZHEJIANG DAHUA TECHNOLOGY CO.,LTD",                                                  // 37496
     "Delphi Innovations",                                                                 // 37497
-    "NasuTek Enterprises",                                                                // 37498
+    "NasuTek Global Enterprises",                                                         // 37498
     "NetSoft Distributed Solutions Pty Ltd",                                              // 37499
     "Schmid Industrieholding",                                                            // 37500
     "Progetto Archivio S.r.l.",                                                           // 37501
@@ -55880,7 +55880,7 @@ static const char * const table[] =
     "ALL D.S. SECURITY SOLUTIONS LTD",                                                    // 55858
     "Mini-Circuits",                                                                      // 55859
     "Advantech Wireless Technologies Inc.",                                               // 55860
-    "Miranham -CreatorGroups-",                                                           // 55861
+    "Comet Networks",                                                                     // 55861
     "Gold Corporation",                                                                   // 55862
     "COMNET INC.",                                                                        // 55863
     "AMMG",                                                                               // 55864
@@ -59808,7 +59808,7 @@ static const char * const table[] =
     "Nema",                                                                               // 59786
     "Papers AG",                                                                          // 59787
     "LOGOTEC Jerzy Dryndos",                                                              // 59788
-    "ShenZhen PowerQak Newener Co.,Ltd",                                                  // 59789
+    "ShenZhen PowerOak Newener Co.,Ltd",                                                  // 59789
     "Serrala Group GmbH",                                                                 // 59790
     "Beijing Yahong Century Technology Co., Ltd",                                         // 59791
     "Stirlitz Media",                                                                     // 59792
@@ -62205,7 +62205,24 @@ static const char * const table[] =
     "Specific-Group Holding GmbH",                                                        // 62183
     "HWSE3",                                                                              // 62184
     "Iru, LLC",                                                                           // 62185
-    "ELOOM SYSTEM"                                                                        // 62186
+    "ELOOM SYSTEM",                                                                       // 62186
+    "Brooke Chalmers",                                                                    // 62187
+    "Integrated Procurement Technologies",                                                // 62188
+    "RostLab",                                                                            // 62189
+    "Avem Health Partners",                                                               // 62190
+    "SingleID, K.K.",                                                                     // 62191
+    "Julian Keck",                                                                        // 62192
+    "Ryan Goodman",                                                                       // 62193
+    "Testholm IT",                                                                        // 62194
+    "SMAP POWER TECHNOLOGY COMPANY",                                                      // 62195
+    "Sportmaster Lab",                                                                    // 62196
+    "Infinite Tech Labs",                                                                 // 62197
+    "Borderless Technologies GmbH",                                                       // 62198
+    "FlexCom AG",                                                                         // 62199
+    "AD ASTRA ENTERPRISES",                                                               // 62200
+    "Airbus Robotics",                                                                    // 62201
+    "Satellite Industries, Inc.",                                                         // 62202
+    "pdhouse.club"                                                                        // 62203
 };
 
 const char* global_enterprises_lookup(uint32_t value)
