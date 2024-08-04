@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-07-26) */
+/* (last updated 2024-08-02) */
 
 #include "config.h"
 
@@ -6381,7 +6381,7 @@ static const char * const table[] =
     "Cyveillance Inc.",                                                                   // 6359
     "LiveVault Corporation",                                                              // 6360
     "Siemens Building Technologies Ltd",                                                  // 6361
-    "Baumann Technologie",                                                                // 6362
+    "Ritter Technologie",                                                                 // 6362
     "CyberSolutions GmbH",                                                                // 6363
     "Andréa Informatique",                                                                // 6364
     "Novamedia Sistemas S.L.",                                                            // 6365
@@ -11836,7 +11836,7 @@ static const char * const table[] =
     "University of Nantes",                                                               // 11814
     "Yellow Online Inc.",                                                                 // 11815
     "yuantong technology",                                                                // 11816
-    "Zentrale Informatik, Universitaet Zuerich",                                          // 11817
+    "Zentrale Informatik, Universität Zürich",                                            // 11817
     "Z-Star Microelectronics Corporation",                                                // 11818
     "ZX Factory",                                                                         // 11819
     "Fonterra Co-operative Group",                                                        // 11820
@@ -17725,7 +17725,7 @@ static const char * const table[] =
     "Rudjer Boskovic Institute",                                                          // 17703
     "Critical Telecom Corp.",                                                             // 17704
     "Sovelto Oy",                                                                         // 17705
-    "Kidery",                                                                             // 17706
+    "Stefan Kidery",                                                                      // 17706
     "The Meme Factory, Inc",                                                              // 17707
     "sysmango.com",                                                                       // 17708
     "Shanghai Telecommnunications Technological Research Institute",                      // 17709
@@ -41143,7 +41143,7 @@ static const char * const table[] =
     "Terminal plus, LLC",                                                                 // 41121
     "Pindrop Security",                                                                   // 41122
     "Sumo Logic, Inc.",                                                                   // 41123
-    "KfW",                                                                                // 41124
+    "KfW Bankengruppe",                                                                   // 41124
     "Mystic Video, Inc.",                                                                 // 41125
     "SFERA",                                                                              // 41126
     "Linux Router Systems",                                                               // 41127
@@ -45919,7 +45919,7 @@ static const char * const table[] =
     "M H Corbin Inc",                                                                     // 45897
     "KEYLOGIC AB",                                                                        // 45898
     "CASwell Inc",                                                                        // 45899
-    "Weber Schraubautomaten GmbH",                                                        // 45900
+    "WEBER Schraubautomaten GmbH",                                                        // 45900
     "Kellerman Networks",                                                                 // 45901
     "Kellerman Networks",                                                                 // 45902
     "dachsbau",                                                                           // 45903
@@ -62222,7 +62222,40 @@ static const char * const table[] =
     "AD ASTRA ENTERPRISES",                                                               // 62200
     "Airbus Robotics",                                                                    // 62201
     "Satellite Industries, Inc.",                                                         // 62202
-    "pdhouse.club"                                                                        // 62203
+    "pdhouse.club",                                                                       // 62203
+    "Fort Peck Assiniboine & Sioux Tribes",                                               // 62204
+    "CompAct GmbH",                                                                       // 62205
+    "Fiberakuten",                                                                        // 62206
+    "Shenzhen Huarui Intelligent Equipment Co., Ltd",                                     // 62207
+    "APA Family Support Services",                                                        // 62208
+    "Knowledge Computing Lab, USTC",                                                      // 62209
+    "Satcom World",                                                                       // 62210
+    "DB SERIES",                                                                          // 62211
+    "Lowcountry Oncology Associates, LLC",                                                // 62212
+    "rabbit it AG",                                                                       // 62213
+    "tCubeSystem",                                                                        // 62214
+    "微网优联科技（成都）有限公司 (Microgrid Youlian Technology (Chengdu) Co., Ltd.)",                  // 62215
+    "Asociacion Bonao de Ahorros y Prestamos",                                            // 62216
+    "Quanta Storage Inc.",                                                                // 62217
+    "Mobius Software",                                                                    // 62218
+    "WorkSimple GmbH",                                                                    // 62219
+    "Sorenson",                                                                           // 62220
+    "City of Athens",                                                                     // 62221
+    "Aptus Solutions Ltd",                                                                // 62222
+    "Long Zheng",                                                                         // 62223
+    "Edatalia Data Solutions",                                                            // 62224
+    "ScurrNET",                                                                           // 62225
+    "Gteex",                                                                              // 62226
+    "THE SECOND RESEARCH INSTITUTE OF CAAC",                                              // 62227
+    "Pardis Energy Conversion Company (Pec Co.)",                                         // 62228
+    "GLBB Japan",                                                                         // 62229
+    "City of Philadelphia",                                                               // 62230
+    "黄佳鑫 (Huang Jiaxin)",                                                                 // 62231
+    "Protempis",                                                                          // 62232
+    "Ausgrid",                                                                            // 62233
+    "Mubvumela Corporation",                                                              // 62234
+    "Stadtwerke Kapfenberg GmbH",                                                         // 62235
+    "KLM IT AG"                                                                           // 62236
 };
 
 const char* global_enterprises_lookup(uint32_t value)
