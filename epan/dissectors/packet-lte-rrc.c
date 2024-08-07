@@ -33,6 +33,7 @@
 
 #include <wsutil/str_util.h>
 #include <wsutil/epochs.h>
+#include <wsutil/array.h>
 
 #include "packet-per.h"
 #include "packet-rrc.h"
