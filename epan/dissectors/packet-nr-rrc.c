@@ -60,10 +60,15 @@ static dissector_handle_t lte_rrc_dl_dcch_handle;
 
 static wmem_map_t *nr_rrc_etws_cmas_dcs_hash;
 
+static wmem_map_t *nr_rrc_dcch_segment_ueid_count_hash;
+static wmem_tree_t *nr_rrc_dcch_segment_id_tree;
+
 static reassembly_table nr_rrc_sib7_reassembly_table;
 static reassembly_table nr_rrc_sib8_reassembly_table;
+static reassembly_table nr_rrc_dcch_segment_reassembly_table;
 
 static bool nr_rrc_nas_in_root_tree;
+static bool nr_rrc_reassemble_dcch_segments;
 
 extern int proto_mac_nr;
 extern int proto_rlc_nr;
@@ -1202,8 +1207,8 @@ static int hf_nr_rrc_posSibType_r16;              /* T_posSibType_r16 */
 static int hf_nr_rrc_criticalExtensions_10;       /* T_criticalExtensions_10 */
 static int hf_nr_rrc_dlDedicatedMessageSegment_r16_01;  /* DLDedicatedMessageSegment_r16_IEs */
 static int hf_nr_rrc_criticalExtensionsFuture_10;  /* T_criticalExtensionsFuture_10 */
-static int hf_nr_rrc_segmentNumber_r16;           /* INTEGER_0_4 */
-static int hf_nr_rrc_rrc_MessageSegmentContainer_r16;  /* OCTET_STRING */
+static int hf_nr_rrc_segmentNumber_r16;           /* T_segmentNumber_r16 */
+static int hf_nr_rrc_rrc_MessageSegmentContainer_r16;  /* T_rrc_MessageSegmentContainer_r16 */
 static int hf_nr_rrc_rrc_MessageSegmentType_r16;  /* T_rrc_MessageSegmentType_r16 */
 static int hf_nr_rrc_nonCriticalExtension_36;     /* T_nonCriticalExtension_10 */
 static int hf_nr_rrc_criticalExtensions_11;       /* T_criticalExtensions_11 */
@@ -2604,7 +2609,8 @@ static int hf_nr_rrc_scs120_r17;                  /* INTEGER_0_79 */
 static int hf_nr_rrc_criticalExtensions_49;       /* T_criticalExtensions_49 */
 static int hf_nr_rrc_ulDedicatedMessageSegment_r16_01;  /* ULDedicatedMessageSegment_r16_IEs */
 static int hf_nr_rrc_criticalExtensionsFuture_49;  /* T_criticalExtensionsFuture_49 */
-static int hf_nr_rrc_segmentNumber_r16_01;        /* INTEGER_0_15 */
+static int hf_nr_rrc_segmentNumber_r16_01;        /* T_segmentNumber_r16_01 */
+static int hf_nr_rrc_rrc_MessageSegmentContainer_r16_01;  /* T_rrc_MessageSegmentContainer_r16_01 */
 static int hf_nr_rrc_rrc_MessageSegmentType_r16_01;  /* T_rrc_MessageSegmentType_r16_01 */
 static int hf_nr_rrc_nonCriticalExtension_140;    /* T_nonCriticalExtension_50 */
 static int hf_nr_rrc_criticalExtensions_50;       /* T_criticalExtensions_50 */
@@ -12534,6 +12540,17 @@ static int hf_nr_rrc_sib8_fragment_count;
 static int hf_nr_rrc_sib8_reassembled_in;
 static int hf_nr_rrc_sib8_reassembled_length;
 static int hf_nr_rrc_sib8_reassembled_data;
+static int hf_nr_rrc_dcch_segment_fragments;
+static int hf_nr_rrc_dcch_segment_fragment;
+static int hf_nr_rrc_dcch_segment_fragment_overlap;
+static int hf_nr_rrc_dcch_segment_fragment_overlap_conflict;
+static int hf_nr_rrc_dcch_segment_fragment_multiple_tails;
+static int hf_nr_rrc_dcch_segment_fragment_too_long_fragment;
+static int hf_nr_rrc_dcch_segment_fragment_error;
+static int hf_nr_rrc_dcch_segment_fragment_count;
+static int hf_nr_rrc_dcch_segment_reassembled_in;
+static int hf_nr_rrc_dcch_segment_reassembled_length;
+static int hf_nr_rrc_dcch_segment_reassembled_data;
 static int hf_nr_rrc_utc_time;
 static int hf_nr_rrc_local_time;
 static int hf_nr_rrc_absolute_time;
@@ -16995,6 +17012,8 @@ static int ett_nr_rrc_sib7_fragment;
 static int ett_nr_rrc_sib7_fragments;
 static int ett_nr_rrc_sib8_fragment;
 static int ett_nr_rrc_sib8_fragments;
+static int ett_nr_rrc_dcch_segment_fragment;
+static int ett_nr_rrc_dcch_segment_fragments;
 static int ett_nr_rrc_warningMessageSegment;
 static int ett_nr_rrc_timeInfo;
 static int ett_nr_rrc_capabilityRequestFilter;
@@ -17066,6 +17085,9 @@ typedef struct {
   nr_drb_rlc_pdcp_mapping_t drb_pdcp_mapping;
   lpp_pos_sib_type_t pos_sib_type;
   pdcp_nr_security_info_t pdcp_security;
+  uint8_t dcch_segment_number;
+  tvbuff_t *dcch_segment;
+  bool dcch_segment_last;
 } nr_rrc_private_data_t;
 
 /* Helper function to get UE identifier from lower layers (in order MAC, RLC, PDCP) */
@@ -17140,37 +17162,54 @@ static const value_string nr_rrc_warningType_vals[] = {
 };
 
 static const fragment_items nr_rrc_sib7_frag_items = {
-    &ett_nr_rrc_sib7_fragment,
-    &ett_nr_rrc_sib7_fragments,
-    &hf_nr_rrc_sib7_fragments,
-    &hf_nr_rrc_sib7_fragment,
-    &hf_nr_rrc_sib7_fragment_overlap,
-    &hf_nr_rrc_sib7_fragment_overlap_conflict,
-    &hf_nr_rrc_sib7_fragment_multiple_tails,
-    &hf_nr_rrc_sib7_fragment_too_long_fragment,
-    &hf_nr_rrc_sib7_fragment_error,
-    &hf_nr_rrc_sib7_fragment_count,
-    &hf_nr_rrc_sib7_reassembled_in,
-    &hf_nr_rrc_sib7_reassembled_length,
-    &hf_nr_rrc_sib7_reassembled_data,
-    "SIB7 warning message segments"
+  &ett_nr_rrc_sib7_fragment,
+  &ett_nr_rrc_sib7_fragments,
+  &hf_nr_rrc_sib7_fragments,
+  &hf_nr_rrc_sib7_fragment,
+  &hf_nr_rrc_sib7_fragment_overlap,
+  &hf_nr_rrc_sib7_fragment_overlap_conflict,
+  &hf_nr_rrc_sib7_fragment_multiple_tails,
+  &hf_nr_rrc_sib7_fragment_too_long_fragment,
+  &hf_nr_rrc_sib7_fragment_error,
+  &hf_nr_rrc_sib7_fragment_count,
+  &hf_nr_rrc_sib7_reassembled_in,
+  &hf_nr_rrc_sib7_reassembled_length,
+  &hf_nr_rrc_sib7_reassembled_data,
+  "SIB7 warning message segments"
 };
 
 static const fragment_items nr_rrc_sib8_frag_items = {
-    &ett_nr_rrc_sib8_fragment,
-    &ett_nr_rrc_sib8_fragments,
-    &hf_nr_rrc_sib8_fragments,
-    &hf_nr_rrc_sib8_fragment,
-    &hf_nr_rrc_sib8_fragment_overlap,
-    &hf_nr_rrc_sib8_fragment_overlap_conflict,
-    &hf_nr_rrc_sib8_fragment_multiple_tails,
-    &hf_nr_rrc_sib8_fragment_too_long_fragment,
-    &hf_nr_rrc_sib8_fragment_error,
-    &hf_nr_rrc_sib8_fragment_count,
-    &hf_nr_rrc_sib8_reassembled_in,
-    &hf_nr_rrc_sib8_reassembled_length,
-    &hf_nr_rrc_sib8_reassembled_data,
-    "SIB8 warning message segments"
+  &ett_nr_rrc_sib8_fragment,
+  &ett_nr_rrc_sib8_fragments,
+  &hf_nr_rrc_sib8_fragments,
+  &hf_nr_rrc_sib8_fragment,
+  &hf_nr_rrc_sib8_fragment_overlap,
+  &hf_nr_rrc_sib8_fragment_overlap_conflict,
+  &hf_nr_rrc_sib8_fragment_multiple_tails,
+  &hf_nr_rrc_sib8_fragment_too_long_fragment,
+  &hf_nr_rrc_sib8_fragment_error,
+  &hf_nr_rrc_sib8_fragment_count,
+  &hf_nr_rrc_sib8_reassembled_in,
+  &hf_nr_rrc_sib8_reassembled_length,
+  &hf_nr_rrc_sib8_reassembled_data,
+  "SIB8 warning message segments"
+};
+
+static const fragment_items nr_rrc_dcch_segment_frag_items = {
+  &ett_nr_rrc_dcch_segment_fragment,
+  &ett_nr_rrc_dcch_segment_fragments,
+  &hf_nr_rrc_dcch_segment_fragments,
+  &hf_nr_rrc_dcch_segment_fragment,
+  &hf_nr_rrc_dcch_segment_fragment_overlap,
+  &hf_nr_rrc_dcch_segment_fragment_overlap_conflict,
+  &hf_nr_rrc_dcch_segment_fragment_multiple_tails,
+  &hf_nr_rrc_dcch_segment_fragment_too_long_fragment,
+  &hf_nr_rrc_dcch_segment_fragment_error,
+  &hf_nr_rrc_dcch_segment_fragment_count,
+  &hf_nr_rrc_dcch_segment_reassembled_in,
+  &hf_nr_rrc_dcch_segment_reassembled_length,
+  &hf_nr_rrc_dcch_segment_reassembled_data,
+  "DCCH message segments"
 };
 
 static void
@@ -69709,6 +69748,34 @@ dissect_nr_rrc_MobilityFromNRCommand(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx
 }
 
 
+
+static int
+dissect_nr_rrc_T_segmentNumber_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  uint32_t value;
+  offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
+                                                            0U, 4U, &value, false);
+
+  nr_rrc_get_private_data(actx)->dcch_segment_number = value;
+
+
+  return offset;
+}
+
+
+
+static int
+dissect_nr_rrc_T_rrc_MessageSegmentContainer_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  tvbuff_t *segment;
+  offset = dissect_per_octet_string(tvb, offset, actx, tree, hf_index,
+                                       NO_BOUND, NO_BOUND, false, &segment);
+
+  nr_rrc_get_private_data(actx)->dcch_segment = segment;
+
+
+  return offset;
+}
+
+
 static const value_string nr_rrc_T_rrc_MessageSegmentType_r16_vals[] = {
   {   0, "notLastSegment" },
   {   1, "lastSegment" },
@@ -69718,8 +69785,12 @@ static const value_string nr_rrc_T_rrc_MessageSegmentType_r16_vals[] = {
 
 static int
 dissect_nr_rrc_T_rrc_MessageSegmentType_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  uint32_t value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
-                                     2, NULL, false, 0, NULL);
+                                     2, &value, false, 0, NULL);
+
+  nr_rrc_get_private_data(actx)->dcch_segment_last = (value > 0) ? true : false;
+
 
   return offset;
 }
@@ -69739,8 +69810,8 @@ dissect_nr_rrc_T_nonCriticalExtension_10(tvbuff_t *tvb _U_, int offset _U_, asn1
 
 
 static const per_sequence_t DLDedicatedMessageSegment_r16_IEs_sequence[] = {
-  { &hf_nr_rrc_segmentNumber_r16, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_INTEGER_0_4 },
-  { &hf_nr_rrc_rrc_MessageSegmentContainer_r16, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_OCTET_STRING },
+  { &hf_nr_rrc_segmentNumber_r16, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_T_segmentNumber_r16 },
+  { &hf_nr_rrc_rrc_MessageSegmentContainer_r16, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_T_rrc_MessageSegmentContainer_r16 },
   { &hf_nr_rrc_rrc_MessageSegmentType_r16, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_T_rrc_MessageSegmentType_r16 },
   { &hf_nr_rrc_lateNonCriticalExtension, ASN1_NO_EXTENSIONS     , ASN1_OPTIONAL    , dissect_nr_rrc_OCTET_STRING },
   { &hf_nr_rrc_nonCriticalExtension_36, ASN1_NO_EXTENSIONS     , ASN1_OPTIONAL    , dissect_nr_rrc_T_nonCriticalExtension_10 },
@@ -69751,6 +69822,56 @@ static int
 dissect_nr_rrc_DLDedicatedMessageSegment_r16_IEs(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_DLDedicatedMessageSegment_r16_IEs, DLDedicatedMessageSegment_r16_IEs_sequence);
+
+  if (nr_rrc_reassemble_dcch_segments) {
+    uint16_t *p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
+    uint32_t ueid, id, count;
+    fragment_head *frag_data;
+    tvbuff_t *reassembled_tvb;
+    wmem_tree_key_t key[3];
+    nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
+
+    if (p_ueid != NULL) {
+      ueid = *p_ueid;
+    } else {
+      ueid = 0;
+    }
+    key[0].length = 1;
+    key[0].key = &ueid;
+    key[1].length = 1;
+    key[1].key = &actx->pinfo->num;
+    key[2].length = 0;
+    key[2].key = NULL;
+    if (!PINFO_FD_VISITED(actx->pinfo)) {
+      void *value;
+
+      if (wmem_map_lookup_extended(nr_rrc_dcch_segment_ueid_count_hash, GUINT_TO_POINTER((ueid<<16)|(1<<15)), NULL, &value)) {
+        count = GPOINTER_TO_UINT(value);
+      } else {
+        count = 0;
+      }
+      if (nr_priv->dcch_segment_number == 0) {
+        /* new segmented message */
+        count++;
+        wmem_map_insert(nr_rrc_dcch_segment_ueid_count_hash, GUINT_TO_POINTER((ueid<<16)|(1<<15)), GUINT_TO_POINTER(count));
+      }
+      id = (ueid<<16)|(1<<15)|(count&0x7fff);
+      wmem_tree_insert32_array(nr_rrc_dcch_segment_id_tree, key, GUINT_TO_POINTER(id));
+    } else {
+      id = GPOINTER_TO_UINT(wmem_tree_lookup32_array(nr_rrc_dcch_segment_id_tree, key));
+    }
+    if (nr_priv->dcch_segment != NULL) {
+      frag_data = fragment_add_seq_check(&nr_rrc_dcch_segment_reassembly_table, nr_priv->dcch_segment, 0, actx->pinfo,
+                                         id, NULL, nr_priv->dcch_segment_number,
+                                         tvb_reported_length(nr_priv->dcch_segment),
+                                         !nr_priv->dcch_segment_last);
+      reassembled_tvb = process_reassembled_data(nr_priv->dcch_segment, 0, actx->pinfo, "Reassembled DL Dedicated Message",
+                                                 frag_data, &nr_rrc_dcch_segment_frag_items, NULL, tree);
+      if (reassembled_tvb) {
+        dissect_DL_DCCH_Message_PDU(reassembled_tvb, actx->pinfo, tree, NULL);
+      }
+    }
+  }
 
   return offset;
 }
@@ -79299,6 +79420,34 @@ dissect_nr_rrc_T_c1_15(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, 
 }
 
 
+
+static int
+dissect_nr_rrc_T_segmentNumber_r16_01(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  uint32_t value;
+  offset = dissect_per_constrained_integer(tvb, offset, actx, tree, hf_index,
+                                                            0U, 15U, &value, false);
+
+  nr_rrc_get_private_data(actx)->dcch_segment_number = value;
+
+
+  return offset;
+}
+
+
+
+static int
+dissect_nr_rrc_T_rrc_MessageSegmentContainer_r16_01(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  tvbuff_t *segment;
+  offset = dissect_per_octet_string(tvb, offset, actx, tree, hf_index,
+                                       NO_BOUND, NO_BOUND, false, &segment);
+
+  nr_rrc_get_private_data(actx)->dcch_segment = segment;
+
+
+  return offset;
+}
+
+
 static const value_string nr_rrc_T_rrc_MessageSegmentType_r16_01_vals[] = {
   {   0, "notLastSegment" },
   {   1, "lastSegment" },
@@ -79308,8 +79457,12 @@ static const value_string nr_rrc_T_rrc_MessageSegmentType_r16_01_vals[] = {
 
 static int
 dissect_nr_rrc_T_rrc_MessageSegmentType_r16_01(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+  uint32_t value;
   offset = dissect_per_enumerated(tvb, offset, actx, tree, hf_index,
-                                     2, NULL, false, 0, NULL);
+                                     2, &value, false, 0, NULL);
+
+  nr_rrc_get_private_data(actx)->dcch_segment_last = (value > 0) ? true : false;
+
 
   return offset;
 }
@@ -79329,8 +79482,8 @@ dissect_nr_rrc_T_nonCriticalExtension_50(tvbuff_t *tvb _U_, int offset _U_, asn1
 
 
 static const per_sequence_t ULDedicatedMessageSegment_r16_IEs_sequence[] = {
-  { &hf_nr_rrc_segmentNumber_r16_01, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_INTEGER_0_15 },
-  { &hf_nr_rrc_rrc_MessageSegmentContainer_r16, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_OCTET_STRING },
+  { &hf_nr_rrc_segmentNumber_r16_01, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_T_segmentNumber_r16_01 },
+  { &hf_nr_rrc_rrc_MessageSegmentContainer_r16_01, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_T_rrc_MessageSegmentContainer_r16_01 },
   { &hf_nr_rrc_rrc_MessageSegmentType_r16_01, ASN1_NO_EXTENSIONS     , ASN1_NOT_OPTIONAL, dissect_nr_rrc_T_rrc_MessageSegmentType_r16_01 },
   { &hf_nr_rrc_lateNonCriticalExtension, ASN1_NO_EXTENSIONS     , ASN1_OPTIONAL    , dissect_nr_rrc_OCTET_STRING },
   { &hf_nr_rrc_nonCriticalExtension_140, ASN1_NO_EXTENSIONS     , ASN1_OPTIONAL    , dissect_nr_rrc_T_nonCriticalExtension_50 },
@@ -79341,6 +79494,56 @@ static int
 dissect_nr_rrc_ULDedicatedMessageSegment_r16_IEs(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_ULDedicatedMessageSegment_r16_IEs, ULDedicatedMessageSegment_r16_IEs_sequence);
+
+  if (nr_rrc_reassemble_dcch_segments) {
+    uint16_t *p_ueid = nr_rrc_get_ueid_from_lower_layers(wmem_file_scope(), actx->pinfo);
+    uint32_t ueid, id, count;
+    fragment_head *frag_data;
+    tvbuff_t *reassembled_tvb;
+    wmem_tree_key_t key[3];
+    nr_rrc_private_data_t *nr_priv = nr_rrc_get_private_data(actx);
+
+    if (p_ueid != NULL) {
+      ueid = *p_ueid;
+    } else {
+      ueid = 0;
+    }
+    key[0].length = 1;
+    key[0].key = &ueid;
+    key[1].length = 1;
+    key[1].key = &actx->pinfo->num;
+    key[2].length = 0;
+    key[2].key = NULL;
+    if (!PINFO_FD_VISITED(actx->pinfo)) {
+      void *value;
+
+      if (wmem_map_lookup_extended(nr_rrc_dcch_segment_ueid_count_hash, GUINT_TO_POINTER(ueid<<16), NULL, &value)) {
+        count = GPOINTER_TO_UINT(value);
+      } else {
+        count = 0;
+      }
+      if (nr_priv->dcch_segment_number == 0) {
+        /* new segmented message */
+        count++;
+        wmem_map_insert(nr_rrc_dcch_segment_ueid_count_hash, GUINT_TO_POINTER(ueid<<16), GUINT_TO_POINTER(count));
+      }
+      id = (ueid<<16)|(count&0x7fff);
+      wmem_tree_insert32_array(nr_rrc_dcch_segment_id_tree, key, GUINT_TO_POINTER(id));
+    } else {
+      id = GPOINTER_TO_UINT(wmem_tree_lookup32_array(nr_rrc_dcch_segment_id_tree, key));
+    }
+    if (nr_priv->dcch_segment != NULL) {
+      frag_data = fragment_add_seq_check(&nr_rrc_dcch_segment_reassembly_table, nr_priv->dcch_segment, 0, actx->pinfo,
+                                         id, NULL, nr_priv->dcch_segment_number,
+                                         tvb_reported_length(nr_priv->dcch_segment),
+                                         !nr_priv->dcch_segment_last);
+      reassembled_tvb = process_reassembled_data(nr_priv->dcch_segment, 0, actx->pinfo, "Reassembled UL Dedicated Message",
+                                                 frag_data, &nr_rrc_dcch_segment_frag_items, NULL, tree);
+      if (reassembled_tvb) {
+        dissect_nr_rrc_UL_DCCH_Message_PDU(reassembled_tvb, actx->pinfo, tree, NULL);
+      }
+    }
+  }
 
   return offset;
 }
@@ -178391,11 +178594,11 @@ proto_register_nr_rrc(void) {
     { &hf_nr_rrc_segmentNumber_r16,
       { "segmentNumber-r16", "nr-rrc.segmentNumber_r16",
         FT_UINT32, BASE_DEC, NULL, 0,
-        "INTEGER_0_4", HFILL }},
+        NULL, HFILL }},
     { &hf_nr_rrc_rrc_MessageSegmentContainer_r16,
       { "rrc-MessageSegmentContainer-r16", "nr-rrc.rrc_MessageSegmentContainer_r16",
         FT_BYTES, BASE_NONE, NULL, 0,
-        "OCTET_STRING", HFILL }},
+        NULL, HFILL }},
     { &hf_nr_rrc_rrc_MessageSegmentType_r16,
       { "rrc-MessageSegmentType-r16", "nr-rrc.rrc_MessageSegmentType_r16",
         FT_UINT32, BASE_DEC, VALS(nr_rrc_T_rrc_MessageSegmentType_r16_vals), 0,
@@ -183999,7 +184202,11 @@ proto_register_nr_rrc(void) {
     { &hf_nr_rrc_segmentNumber_r16_01,
       { "segmentNumber-r16", "nr-rrc.segmentNumber_r16",
         FT_UINT32, BASE_DEC, NULL, 0,
-        "INTEGER_0_15", HFILL }},
+        "T_segmentNumber_r16_01", HFILL }},
+    { &hf_nr_rrc_rrc_MessageSegmentContainer_r16_01,
+      { "rrc-MessageSegmentContainer-r16", "nr-rrc.rrc_MessageSegmentContainer_r16",
+        FT_BYTES, BASE_NONE, NULL, 0,
+        "T_rrc_MessageSegmentContainer_r16_01", HFILL }},
     { &hf_nr_rrc_rrc_MessageSegmentType_r16_01,
       { "rrc-MessageSegmentType-r16", "nr-rrc.rrc_MessageSegmentType_r16",
         FT_UINT32, BASE_DEC, VALS(nr_rrc_T_rrc_MessageSegmentType_r16_01_vals), 0,
@@ -223713,6 +223920,50 @@ proto_register_nr_rrc(void) {
       { "Reassembled Data", "nr-rrc.warningMessageSegment.reassembled_data",
          FT_BYTES, BASE_NONE, NULL, 0,
         NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_fragments,
+      { "Fragments", "nr-rrc.dedicatedMessageSegment_r16.fragments",
+         FT_NONE, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_fragment,
+      { "Fragment", "nr-rrc.dedicatedMessageSegment_r16.fragment",
+         FT_FRAMENUM, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_fragment_overlap,
+      { "Fragment Overlap", "nr-rrc.dedicatedMessageSegment_r16.fragment_overlap",
+         FT_BOOLEAN, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_fragment_overlap_conflict,
+      { "Fragment Overlap Conflict", "nr-rrc.dedicatedMessageSegment_r16.fragment_overlap_conflict",
+         FT_BOOLEAN, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_fragment_multiple_tails,
+      { "Fragment Multiple Tails", "nr-rrc.dedicatedMessageSegment_r16.fragment_multiple_tails",
+         FT_BOOLEAN, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_fragment_too_long_fragment,
+      { "Too Long Fragment", "nr-rrc.dedicatedMessageSegment_r16.fragment_too_long_fragment",
+         FT_BOOLEAN, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_fragment_error,
+      { "Fragment Error", "nr-rrc.dedicatedMessageSegment_r16.fragment_error",
+         FT_FRAMENUM, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_fragment_count,
+      { "Fragment Count", "nr-rrc.dedicatedMessageSegment_r16.fragment_count",
+         FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_reassembled_in,
+      { "Reassembled In", "nr-rrc.dedicatedMessageSegment_r16.reassembled_in",
+         FT_FRAMENUM, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_reassembled_length,
+      { "Reassembled Length", "nr-rrc.dedicatedMessageSegment_r16.reassembled_length",
+         FT_UINT32, BASE_DEC, NULL, 0,
+        NULL, HFILL }},
+    { &hf_nr_rrc_dcch_segment_reassembled_data,
+      { "Reassembled Data", "nr-rrc.dedicatedMessageSegment_r16.reassembled_data",
+         FT_BYTES, BASE_NONE, NULL, 0,
+        NULL, HFILL }},
     { &hf_nr_rrc_utc_time,
       { "UTC   time", "nr-rrc.utc_time",
         FT_ABSOLUTE_TIME, ABSOLUTE_TIME_UTC, NULL, 0x0,
@@ -228184,6 +228435,8 @@ proto_register_nr_rrc(void) {
     &ett_nr_rrc_sib7_fragments,
     &ett_nr_rrc_sib8_fragment,
     &ett_nr_rrc_sib8_fragments,
+    &ett_nr_rrc_dcch_segment_fragment,
+    &ett_nr_rrc_dcch_segment_fragments,
     &ett_nr_rrc_warningMessageSegment,
     &ett_nr_rrc_timeInfo,
     &ett_nr_rrc_capabilityRequestFilter,
@@ -228314,10 +228567,15 @@ proto_register_nr_rrc(void) {
 
   nr_rrc_etws_cmas_dcs_hash = wmem_map_new_autoreset(wmem_epan_scope(), wmem_file_scope(),
                                                      g_direct_hash, g_direct_equal);
+  nr_rrc_dcch_segment_ueid_count_hash = wmem_map_new_autoreset(wmem_epan_scope(), wmem_file_scope(),
+                                                               g_direct_hash, g_direct_equal);
+  nr_rrc_dcch_segment_id_tree = wmem_tree_new_autoreset(wmem_epan_scope(), wmem_file_scope());
 
   reassembly_table_register(&nr_rrc_sib7_reassembly_table,
                             &addresses_reassembly_table_functions);
   reassembly_table_register(&nr_rrc_sib8_reassembly_table,
+                            &addresses_reassembly_table_functions);
+  reassembly_table_register(&nr_rrc_dcch_segment_reassembly_table,
                             &addresses_reassembly_table_functions);
 
   /* Register configuration preferences */
@@ -228326,6 +228584,10 @@ proto_register_nr_rrc(void) {
                                  "Show NAS PDU in root packet details",
                                  "Whether the NAS PDU should be shown in the root packet details tree",
                                  &nr_rrc_nas_in_root_tree);
+  prefs_register_bool_preference(nr_rrc_module, "reassemble_dcch_segments",
+                                 "Try to reassemble DCCH segmented messages",
+                                 "Whether the NR RRC dissector should attempt to reassemble DCCH segmented messages",
+                                 &nr_rrc_reassemble_dcch_segments);
 }
 
 void
