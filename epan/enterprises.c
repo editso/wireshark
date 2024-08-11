@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-08-02) */
+/* (last updated 2024-08-10) */
 
 #include "config.h"
 
@@ -18681,7 +18681,7 @@ static const char * const table[] =
     "Chung Hua University",                                                               // 18659
     "WebKMS",                                                                             // 18660
     "Elitech Information Technology Co.,Ltd.",                                            // 18661
-    "Mathias Kettner",                                                                    // 18662
+    "Checkmk GmbH",                                                                       // 18662
     "Laakirchen Papier AG",                                                               // 18663
     "IPnP",                                                                               // 18664
     "Axelero Internet Szolgáltató Rt.",                                                   // 18665
@@ -62255,7 +62255,47 @@ static const char * const table[] =
     "Ausgrid",                                                                            // 62233
     "Mubvumela Corporation",                                                              // 62234
     "Stadtwerke Kapfenberg GmbH",                                                         // 62235
-    "KLM IT AG"                                                                           // 62236
+    "KLM IT AG",                                                                          // 62236
+    "James Anderson",                                                                     // 62237
+    "KTC Medical",                                                                        // 62238
+    "SMARTMETER SMARTMETER INOVACOES TECNOLOGICAS LTDA",                                  // 62239
+    "World Media Group, LLC",                                                             // 62240
+    "Russell Mangel",                                                                     // 62241
+    "Banco Municipal de Rosario",                                                         // 62242
+    "SW7 Holdings Limited",                                                               // 62243
+    "EOX IT Services GmbH",                                                               // 62244
+    "Politecnico di Milano Cryptography Group",                                           // 62245
+    "Energa Informatyka i Technologie",                                                   // 62246
+    "VOSTOK Trading LLC",                                                                 // 62247
+    "言创智信（北京）科技有限公司 (Yanchuang Zhixin (Beijing) Technology Co., Ltd.)",                   // 62248
+    "廖雷 (Liao Lei)",                                                                      // 62249
+    "Australian Centre for International Agricultural Research",                          // 62250
+    "OOO ""Softime""",                                                                    // 62251
+    "Softime LLC",                                                                        // 62252
+    "Bas Westerbaan",                                                                     // 62253
+    "KWD Automotive AG & Co. KG",                                                         // 62254
+    "Mats Klepsland",                                                                     // 62255
+    "Trusthub, LLC",                                                                      // 62256
+    "candifloss.cc",                                                                      // 62257
+    "Blokkus S.A.S.",                                                                     // 62258
+    "MD West One",                                                                        // 62259
+    "Hangzhou Yagena Technology Co., Ltd",                                                // 62260
+    "Intravis GmbH",                                                                      // 62261
+    "IBI Verde Sp. z o.o.",                                                               // 62262
+    "Mariner Innovations",                                                                // 62263
+    "embeX GmbH",                                                                         // 62264
+    "Sixpolys",                                                                           // 62265
+    "Stadtwerke Zweibruecken",                                                            // 62266
+    "Website Pipeline, Inc.",                                                             // 62267
+    "Greater Regional Health",                                                            // 62268
+    "CFE Laguna Verde",                                                                   // 62269
+    "华鲲 (Huakun)",                                                                        // 62270
+    "MyDress Holdings Limited",                                                           // 62271
+    "Boardwalk Pipelines, LP.",                                                           // 62272
+    "Skynet sp. z o.o.",                                                                  // 62273
+    "Brits & Dale B.V.",                                                                  // 62274
+    "AMEGA Corporation",                                                                  // 62275
+    "Fundación Raúl Roberto Steimbach"                                                    // 62276
 };
 
 const char* global_enterprises_lookup(uint32_t value)
