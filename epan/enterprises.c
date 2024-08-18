@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-08-10) */
+/* (last updated 2024-08-16) */
 
 #include "config.h"
 
@@ -62295,7 +62295,33 @@ static const char * const table[] =
     "Skynet sp. z o.o.",                                                                  // 62273
     "Brits & Dale B.V.",                                                                  // 62274
     "AMEGA Corporation",                                                                  // 62275
-    "Fundación Raúl Roberto Steimbach"                                                    // 62276
+    "Fundación Raúl Roberto Steimbach",                                                   // 62276
+    "LIT LLC",                                                                            // 62277
+    "PT. Jalur Nugraha Ekakurir (JNE)",                                                   // 62278
+    "EByte",                                                                              // 62279
+    "Profundities LLC",                                                                   // 62280
+    "Saman Tadbir Fartak",                                                                // 62281
+    "Shanghai Belong Technology Co., Ltd.",                                               // 62282
+    "LLC ""Remer automation""",                                                           // 62283
+    "Skogsfraktarna i Sundsvall AB",                                                      // 62284
+    "Aodun (Beijing) Technology Co., Ltd.",                                               // 62285
+    "Vidya Sagar",                                                                        // 62286
+    "DYNESS AUS PTY LTD.",                                                                // 62287
+    "Resideo Technologies, Inc.",                                                         // 62288
+    "ROWI TECH LLC",                                                                      // 62289
+    "Honducert S.A.",                                                                     // 62290
+    "Viasat, Inc.",                                                                       // 62291
+    "Penguin Securities Pte. Ltd.",                                                       // 62292
+    "BIGGE ENERGIE GmbH & Co. KG",                                                        // 62293
+    "Migration Department under the Ministry of the Interior of the Republic of Lithuania",// 62294
+    "LoBoCOM",                                                                            // 62295
+    "Roamability LLC.",                                                                   // 62296
+    "TeleTeam Call-Center und Service GmbH",                                              // 62297
+    "EKF Group",                                                                          // 62298
+    "PDM Precast Inc.",                                                                   // 62299
+    "PEAKAIO Limited",                                                                    // 62300
+    "Akses Femto Indonesia",                                                              // 62301
+    "Mini workgroups ltd"                                                                 // 62302
 };
 
 const char* global_enterprises_lookup(uint32_t value)
