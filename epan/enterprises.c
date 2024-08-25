@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-08-16) */
+/* (last updated 2024-08-23) */
 
 #include "config.h"
 
@@ -11882,7 +11882,7 @@ static const char * const table[] =
     "wossname.org.uk",                                                                    // 11860
     "Codenet",                                                                            // 11861
     "Columbia University in the City of New York",                                        // 11862
-    "TP-Link Corporation Limited.",                                                       // 11863
+    "TP-Link Systems Inc.",                                                               // 11863
     "Böke and Walterfang Electronic Systems Ltd",                                         // 11864
     "Explo-IT Research",                                                                  // 11865
     "GDTTI",                                                                              // 11866
@@ -22713,7 +22713,7 @@ static const char * const table[] =
     "APL Ltd.",                                                                           // 22691
     "Magma Soft",                                                                         // 22692
     "Alpha Venega Corporation",                                                           // 22693
-    "Broadcast Service Danmark A/S",                                                      // 22694
+    "Cibicom A/S",                                                                        // 22694
     "EPCglobal",                                                                          // 22695
     "Netadmin System i Sverige AB",                                                       // 22696
     "First Point Global Pty Ltd",                                                         // 22697
@@ -62321,7 +62321,36 @@ static const char * const table[] =
     "PDM Precast Inc.",                                                                   // 62299
     "PEAKAIO Limited",                                                                    // 62300
     "Akses Femto Indonesia",                                                              // 62301
-    "Mini workgroups ltd"                                                                 // 62302
+    "Mini workgroups ltd",                                                                // 62302
+    "Wasp Enterprise",                                                                    // 62303
+    "Millitronic Co., LTD",                                                               // 62304
+    "Lima Besparingsskog",                                                                // 62305
+    "SK ID Solution AS",                                                                  // 62306
+    "Len Bourgeois",                                                                      // 62307
+    "Just Great Software",                                                                // 62308
+    "SCF Ti",                                                                             // 62309
+    "Indefinity Inc. IT Services",                                                        // 62310
+    "Herzog Technologies, Inc.",                                                          // 62311
+    "Cloonar e.U.",                                                                       // 62312
+    "delta enigma",                                                                       // 62313
+    "ITI Operations Limited",                                                             // 62314
+    "Sensetechno Solutions",                                                              // 62315
+    "Ken Garff Automotive Group",                                                         // 62316
+    "Zentec LLC",                                                                         // 62317
+    "Иван Ивантей (Ivan Ivantey)",                                                        // 62318
+    "Fall River Deaconess Home",                                                          // 62319
+    "National TsingHua University Blockchain Club",                                       // 62320
+    "EmbedWay Technologies (Shanghai) Corporation",                                       // 62321
+    "Jutos Timber AB",                                                                    // 62322
+    "Quarto Centro Integrado de Defesa Aérea e Controle de Tráfego Aéreo (CINDACTA IV)",  // 62323
+    "MPLR Consultants",                                                                   // 62324
+    "Syslog Works",                                                                       // 62325
+    "DEHOCO (Deutschland) GmbH",                                                          // 62326
+    "EveryWare Ltd",                                                                      // 62327
+    "Waters Limited",                                                                     // 62328
+    "Icebreaker One Limited",                                                             // 62329
+    "Sandhya Sharma",                                                                     // 62330
+    "Watermark Auto Group"                                                                // 62331
 };
 
 const char* global_enterprises_lookup(uint32_t value)
