@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-08-23) */
+/* (last updated 2024-08-30) */
 
 #include "config.h"
 
@@ -48973,7 +48973,7 @@ static const char * const table[] =
     "UNION TANK Eckstein GmbH & Co. KG",                                                  // 48951
     "ATA Timber AB",                                                                      // 48952
     "UbuntuNet Alliance",                                                                 // 48953
-    "ieBep.cn",                                                                           // 48954
+    "KosmoNeko OU",                                                                       // 48954
     "Schoeller Technocell GmbH & Co KG",                                                  // 48955
     "T4MGroup.com",                                                                       // 48956
     "awaii.net",                                                                          // 48957
@@ -62350,7 +62350,29 @@ static const char * const table[] =
     "Waters Limited",                                                                     // 62328
     "Icebreaker One Limited",                                                             // 62329
     "Sandhya Sharma",                                                                     // 62330
-    "Watermark Auto Group"                                                                // 62331
+    "Watermark Auto Group",                                                               // 62331
+    "EcoFlow Inc.",                                                                       // 62332
+    "CertMe GmbH",                                                                        // 62333
+    "Lakewood Communications",                                                            // 62334
+    "Cyber Privilege Private Limited",                                                    // 62335
+    "British Business Bank plc",                                                          // 62336
+    "Datask B.V.",                                                                        // 62337
+    "NTEX Inrikes AB",                                                                    // 62338
+    "AmerisourceBergen - Cencora",                                                        // 62339
+    "Motorola Solutions Poland",                                                          // 62340
+    "Impregilo  B. Ewing",                                                                // 62341
+    "Li Auto",                                                                            // 62342
+    "A. Frauenrath Bauunternehmen GmbH",                                                  // 62343
+    "Smartmatica LLC",                                                                    // 62344
+    "ToastStudios",                                                                       // 62345
+    "Marché du Film",                                                                     // 62346
+    "The Thompson Consultancy",                                                           // 62347
+    "云上北斗股份有限公司 (Yunshang Beidou Co., Ltd.)",                                             // 62348
+    "Qian Qian",                                                                          // 62349
+    "Ecole des Roches",                                                                   // 62350
+    "SOFTBRIDGE Corporation",                                                             // 62351
+    "TELCON LLC",                                                                         // 62352
+    "Peculiar Tech"                                                                       // 62353
 };
 
 const char* global_enterprises_lookup(uint32_t value)
