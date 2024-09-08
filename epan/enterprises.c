@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-08-30) */
+/* (last updated 2024-09-07) */
 
 #include "config.h"
 
@@ -17626,7 +17626,7 @@ static const char * const table[] =
     "ScySoft Multimedia",                                                                 // 17604
     "Jens Bräuer",                                                                        // 17605
     "helloWorld Inc.",                                                                    // 17606
-    "RETIA, Inc",                                                                         // 17607
+    "ReDat Recording",                                                                    // 17607
     "GIE AGORA",                                                                          // 17608
     "AZ Mercury Ltd.",                                                                    // 17609
     "Sadhu Software Services Pvt. Ltd.",                                                  // 17610
@@ -58986,7 +58986,7 @@ static const char * const table[] =
     "P4 Sp. z o.o.",                                                                      // 58964
     "Dalys Automotive Group, LTD",                                                        // 58965
     "Old Gold",                                                                           // 58966
-    "DASABO GROUP FZCO",                                                                  // 58967
+    "DASABO OÜ",                                                                          // 58967
     "Bayhealth Medical Center",                                                           // 58968
     "Santo Domingo Motors",                                                               // 58969
     "W&W Nordic Forest AB",                                                               // 58970
@@ -62372,7 +62372,31 @@ static const char * const table[] =
     "Ecole des Roches",                                                                   // 62350
     "SOFTBRIDGE Corporation",                                                             // 62351
     "TELCON LLC",                                                                         // 62352
-    "Peculiar Tech"                                                                       // 62353
+    "Peculiar Tech",                                                                      // 62353
+    "Szkola Glowna Gospodarstwa Wiejskiego w Warszawie (Warsaw University of Life Sciences)",// 62354
+    "Zyle Moore",                                                                         // 62355
+    "Intelligence Research Systems",                                                      // 62356
+    "Alicorn",                                                                            // 62357
+    "RELICK",                                                                             // 62358
+    "Quilt",                                                                              // 62359
+    "Hinen Australia",                                                                    // 62360
+    "Misr for Central Clearing, Depository and Registry",                                 // 62361
+    "Invisplus",                                                                          // 62362
+    "Owl of Minerva Press",                                                               // 62363
+    "pafin Inc.",                                                                         // 62364
+    "The Charlton Family",                                                                // 62365
+    "Surgical Reality",                                                                   // 62366
+    "CRmep",                                                                              // 62367
+    "Henrik Carlqvist",                                                                   // 62368
+    "中科启迪光电子科技（广州）有限公司 (Zhongkeqidi Optoelectronics Technology (Guangzhou) Co., Ltd.)",   // 62369
+    "Atrinet LTD.",                                                                       // 62370
+    "Sonio",                                                                              // 62371
+    "Zyax AB",                                                                            // 62372
+    "Astera Cancer Care",                                                                 // 62373
+    "America Movil S.A.B",                                                                // 62374
+    "Solmani SA",                                                                         // 62375
+    "Frankfurter Bankgesellschaft (Schweiz) AG",                                          // 62376
+    "Airbus Defence and Space GmbH"                                                       // 62377
 };
 
 const char* global_enterprises_lookup(uint32_t value)
