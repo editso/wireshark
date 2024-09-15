@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-09-07) */
+/* (last updated 2024-09-13) */
 
 #include "config.h"
 
@@ -1276,7 +1276,7 @@ static const char * const table[] =
     "Siemens Plessey Electronics Systems",                                                // 1254
     "Applied Communications Inc,",                                                        // 1255
     "Transaction Technology, Inc.",                                                       // 1256
-    "HST Ltd",                                                                            // 1257
+    "HST Systems and Technology INC",                                                     // 1257
     "Michigan Technological University Onwuka",                                           // 1258
     "Next Level Communications",                                                          // 1259
     "Instinet Corp.",                                                                     // 1260
@@ -6404,7 +6404,7 @@ static const char * const table[] =
     "SAGA Software, Incorporated",                                                        // 6382
     "OC",                                                                                 // 6383
     "V&S Multimedia S.A.",                                                                // 6384
-    "Pfizer",                                                                             // 6385
+    "Pfizer, Inc.",                                                                       // 6385
     "Saturn Technologies",                                                                // 6386
     "Big Band Networks, Ltd",                                                             // 6387
     "TeleRelay",                                                                          // 6388
@@ -29077,7 +29077,7 @@ static const char * const table[] =
     "American International Distribution Corporation, Inc.",                              // 29055
     "logicfish.org",                                                                      // 29056
     "Universitaet fuer Bodenkultur, Wien (BOKU)",                                         // 29057
-    "Neology Corporation",                                                                // 29058
+    "Neology Inc",                                                                        // 29058
     "FAL Solutions",                                                                      // 29059
     "Schnapper Vision Studios",                                                           // 29060
     "AFORE Solutions, Inc.",                                                              // 29061
@@ -47294,7 +47294,7 @@ static const char * const table[] =
     "Evrotrust JSC",                                                                      // 47272
     "LLAMMA SK",                                                                          // 47273
     "CPK Interior Products",                                                              // 47274
-    "Hirschmann Multimedia B.V.",                                                         // 47275
+    "Beanetiq B.V.",                                                                      // 47275
     "Helsana Versicherungen AG",                                                          // 47276
     "Hochschule Weihenstephan-Triesdorf",                                                 // 47277
     "TeskaLabs Ltd",                                                                      // 47278
@@ -62396,7 +62396,33 @@ static const char * const table[] =
     "America Movil S.A.B",                                                                // 62374
     "Solmani SA",                                                                         // 62375
     "Frankfurter Bankgesellschaft (Schweiz) AG",                                          // 62376
-    "Airbus Defence and Space GmbH"                                                       // 62377
+    "Airbus Defence and Space GmbH",                                                      // 62377
+    "Li Xiaowei",                                                                         // 62378
+    "Adam Walz",                                                                          // 62379
+    "SoundNodes",                                                                         // 62380
+    "CineLab Digital Lounge",                                                             // 62381
+    "Allen Independent School District",                                                  // 62382
+    "IIEP-UNESCO",                                                                        // 62383
+    "Tagel Vasiliy",                                                                      // 62384
+    "netwidedata.com",                                                                    // 62385
+    "Chuanqi Zhang",                                                                      // 62386
+    "SEI Robotics",                                                                       // 62387
+    "Te Wananga o Aotearoa",                                                              // 62388
+    "Vlada Brčko distrikta BiH",                                                          // 62389
+    "RSP GmbH & Co. KG",                                                                  // 62390
+    "JOWENN.NET",                                                                         // 62391
+    "Great Scott Gadgets",                                                                // 62392
+    "Cyphercor Inc.",                                                                     // 62393
+    "Torres Family",                                                                      // 62394
+    "QKAZ Kuantera Sdn Bhd",                                                              // 62395
+    "DNA Energy Pty Ltd",                                                                 // 62396
+    "Hashforest Technology LLC",                                                          // 62397
+    "AFScott",                                                                            // 62398
+    "TelHi Corporation",                                                                  // 62399
+    "Audisec, Seguridad de la Información S.L.",                                          // 62400
+    "Medplum",                                                                            // 62401
+    "Datagroup Bremen GmbH",                                                              // 62402
+    "Topicus.Education B.V."                                                              // 62403
 };
 
 const char* global_enterprises_lookup(uint32_t value)
