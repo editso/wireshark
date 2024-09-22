@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-09-13) */
+/* (last updated 2024-09-20) */
 
 #include "config.h"
 
@@ -127,7 +127,7 @@ static const char * const table[] =
     "Process Software Corporation",                                                       // 105
     "EMC Data General Division",                                                          // 106
     "Bull Company",                                                                       // 107
-    "Emulex Corporation",                                                                 // 108
+    "Broadcom Emulex Connectivity Division",                                              // 108
     "Warwick University Computing Services",                                              // 109
     "NetScout Systems, Inc.",                                                             // 110
     "Oracle",                                                                             // 111
@@ -62422,7 +62422,45 @@ static const char * const table[] =
     "Audisec, Seguridad de la Información S.L.",                                          // 62400
     "Medplum",                                                                            // 62401
     "Datagroup Bremen GmbH",                                                              // 62402
-    "Topicus.Education B.V."                                                              // 62403
+    "Topicus.Education B.V.",                                                             // 62403
+    "Solve Industrial Motion Group",                                                      // 62404
+    "USINA ALTA MOGIANA S/A-ACUCAR E ALCOOL",                                             // 62405
+    "Pangea Connected",                                                                   // 62406
+    "LLC ""FoxyTrade""",                                                                  // 62407
+    "江苏航天七零六信息科技有限公司 (Jiangsu Aerospace 706 Information Technology Co., Ltd.)",           // 62408
+    "Bluewater Health",                                                                   // 62409
+    "ITtechCA",                                                                           // 62410
+    "Neon Dynamics Pty Ltd",                                                              // 62411
+    "2adventure Studios Ltd",                                                             // 62412
+    "HORSE Powertrain Solutions",                                                         // 62413
+    "Scharmüller Gesellschaft m.b.H. & Co. KG.",                                          // 62414
+    "El Delta Electronic Systems",                                                        // 62415
+    "Devoli",                                                                             // 62416
+    "Skykraft Pty Ltd",                                                                   // 62417
+    "NAXO Labs LLC",                                                                      // 62418
+    "F.A.C.C.T. MXDR",                                                                    // 62419
+    "Pyrocell",                                                                           // 62420
+    "BACKUP FILE S.L.",                                                                   // 62421
+    "Upgrade-Store EDV-Service GbR",                                                      // 62422
+    "Masonite",                                                                           // 62423
+    "Plugout",                                                                            // 62424
+    "Intuito S.A.",                                                                       // 62425
+    "REMSGOLD Chemie GmbH & Co. KG",                                                      // 62426
+    "Autohaus Parente GmbH",                                                              // 62427
+    "ILG+SULZBERGER GmbH",                                                                // 62428
+    "Bean",                                                                               // 62429
+    "Associates In Otolaryngology of NJ",                                                 // 62430
+    "APPFIRMAS S.A.",                                                                     // 62431
+    "Enviogt S.A",                                                                        // 62432
+    "AirLive Technology Corporation",                                                     // 62433
+    "Eksjö Industri AB",                                                                  // 62434
+    "GREE ELECTRIC APPLIANCES, INC. OF ZHUHAI",                                           // 62435
+    "Hochschule fuer Gestaltung Offenbach am Main",                                       // 62436
+    "Stefan Malek",                                                                       // 62437
+    "Althea Networks",                                                                    // 62438
+    "Omnitouch Pty. Ltd.",                                                                // 62439
+    "JPS Interoperability Solutions inc",                                                 // 62440
+    "Minebea Intec"                                                                       // 62441
 };
 
 const char* global_enterprises_lookup(uint32_t value)
