@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-09-20) */
+/* (last updated 2024-09-27) */
 
 #include "config.h"
 
@@ -5424,7 +5424,7 @@ static const char * const table[] =
     "IDF",                                                                                // 5402
     "Vircom",                                                                             // 5403
     "eConvergence Pty Ltd.",                                                              // 5404
-    "Start Printer equipment co. Ltd.",                                                   // 5405
+    "Start Computer Equipment Co. Ltd.",                                                  // 5405
     "Nick Conte, Inc.",                                                                   // 5406
     "NetSupport GmbH",                                                                    // 5407
     "Intellitel Communications",                                                          // 5408
@@ -23645,7 +23645,7 @@ static const char * const table[] =
     "Icon Multimedia",                                                                    // 23623
     "První certifikaèní autorita, a.s.",                                                  // 23624
     "Intechgral Inc.",                                                                    // 23625
-    "Poggs Computer Services",                                                            // 23626
+    "OpenTrainTimes",                                                                     // 23626
     "Interlix",                                                                           // 23627
     "California State University Dominguez Hills",                                        // 23628
     "SafeNet, Inc.",                                                                      // 23629
@@ -53577,7 +53577,7 @@ static const char * const table[] =
     "Asthma and Lung Clinic",                                                             // 53555
     "RIWELA LTD",                                                                         // 53556
     "Networking Services",                                                                // 53557
-    "ordinator",                                                                          // 53558
+    "deus ordinator",                                                                     // 53558
     "GHIFARI160",                                                                         // 53559
     "Trustgrid",                                                                          // 53560
     "Toyota Motor Corporation Australia (CVS)",                                           // 53561
@@ -56614,7 +56614,7 @@ static const char * const table[] =
     "Moog Defense and Space",                                                             // 56592
     "Niedersaechsisches Justizministerium (Ministry of Justice, State of Lower Saxony)",  // 56593
     "noortec.com",                                                                        // 56594
-    "Siera",                                                                              // 56595
+    "PG Siera",                                                                           // 56595
     "MTK LLC",                                                                            // 56596
     "RiverHills Bank",                                                                    // 56597
     "Nettie Trust Services",                                                              // 56598
@@ -62392,7 +62392,7 @@ static const char * const table[] =
     "Atrinet LTD.",                                                                       // 62370
     "Sonio",                                                                              // 62371
     "Zyax AB",                                                                            // 62372
-    "Astera Cancer Care",                                                                 // 62373
+    NULL,                                                                                 // 62373
     "America Movil S.A.B",                                                                // 62374
     "Solmani SA",                                                                         // 62375
     "Frankfurter Bankgesellschaft (Schweiz) AG",                                          // 62376
@@ -62460,7 +62460,40 @@ static const char * const table[] =
     "Althea Networks",                                                                    // 62438
     "Omnitouch Pty. Ltd.",                                                                // 62439
     "JPS Interoperability Solutions inc",                                                 // 62440
-    "Minebea Intec"                                                                       // 62441
+    "Minebea Intec",                                                                      // 62441
+    "Mike Wu",                                                                            // 62442
+    "Altasciences Company Inc.",                                                          // 62443
+    "Beta Solutions Limited",                                                             // 62444
+    "Electricity Generation and Retail Corporation",                                      // 62445
+    "Shenzhen Inovance Technology Co., Ltd.",                                             // 62446
+    "Varius Technology Pte Ltd",                                                          // 62447
+    "Steven Allen",                                                                       // 62448
+    "APEXSHA SMARTTECH PRIVATE LIMITED",                                                  // 62449
+    "Norton Site",                                                                        // 62450
+    "Carly Grace Fleischmann",                                                            // 62451
+    "Dsk-it",                                                                             // 62452
+    "REDUTELCO",                                                                          // 62453
+    "Hugo Baca",                                                                          // 62454
+    "Neurona Lab a.s.",                                                                   // 62455
+    "Broekhuis Automatisering",                                                           // 62456
+    "ANDA TELECOM PVT LTD",                                                               // 62457
+    "Ministry of Internal Affairs - General Directorate for Persons Record",              // 62458
+    "Beijing WINDEO-Vision Co.,Ltd",                                                      // 62459
+    "Halla Bálint",                                                                       // 62460
+    "SHENZHEN DIANMING TECH. CO., LTD",                                                   // 62461
+    "NEXT LEVEL TELECOM LTDA",                                                            // 62462
+    "Instituto de Astrofísica de Canarias",                                               // 62463
+    "Beijing Golding Netsec Information Technology Co., Ltd",                             // 62464
+    "Chelion Australia Pty Ltd",                                                          // 62465
+    "BE YS TRUSTED SOLUTIONS FRANCE S.A.S.",                                              // 62466
+    "EIOTCLUB TECHNOLOGY CO,LIMITED",                                                     // 62467
+    "NexCon.io ApS",                                                                      // 62468
+    "VEGA Grieshaber KG",                                                                 // 62469
+    "Fourway Communication",                                                              // 62470
+    "SERA Network INC.",                                                                  // 62471
+    "INTERCONNECT s.r.o.",                                                                // 62472
+    "DjoDjo Delivery",                                                                    // 62473
+    "CAIRNIS"                                                                             // 62474
 };
 
 const char* global_enterprises_lookup(uint32_t value)
