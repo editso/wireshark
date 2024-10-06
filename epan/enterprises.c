@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-09-27) */
+/* (last updated 2024-10-04) */
 
 #include "config.h"
 
@@ -44162,7 +44162,7 @@ static const char * const table[] =
     "Rapp Management AG",                                                                 // 44140
     "Rosbank",                                                                            // 44141
     "Edidin Group, Inc",                                                                  // 44142
-    "kazalo GmbH",                                                                        // 44143
+    "Menzel IT GmbH",                                                                     // 44143
     "Formulus Black",                                                                     // 44144
     "Pokazz sp. z o.o.",                                                                  // 44145
     "INSYS K.Bartkowski, P.Czekala sp.j.",                                                // 44146
@@ -62493,7 +62493,32 @@ static const char * const table[] =
     "SERA Network INC.",                                                                  // 62471
     "INTERCONNECT s.r.o.",                                                                // 62472
     "DjoDjo Delivery",                                                                    // 62473
-    "CAIRNIS"                                                                             // 62474
+    "CAIRNIS",                                                                            // 62474
+    "LYLINK LIMITED",                                                                     // 62475
+    "IRTEYA LLC",                                                                         // 62476
+    "Futurion Innovations LLC",                                                           // 62477
+    "Brianna Schoonewolff",                                                               // 62478
+    "Deslicer",                                                                           // 62479
+    "The Chefs Warehouse",                                                                // 62480
+    "ECx Labs",                                                                           // 62481
+    "cassandra henderson",                                                                // 62482
+    "Turnkey Communication Services Public Company Limited",                              // 62483
+    "Teslemetry",                                                                         // 62484
+    "Ithaca City School District",                                                        // 62485
+    "DICERT DISTRIBUIDORA INTERNACIONAL DE CERTIFICACION ELECTRONICA",                    // 62486
+    "Queensland Museum",                                                                  // 62487
+    "Fifth Judicial Circuit of Florida",                                                  // 62488
+    "actina-interchange AG",                                                              // 62489
+    "Ernst KNOLL Feinmechanik GmbH",                                                      // 62490
+    "Holm Security",                                                                      // 62491
+    "Shaka Telecommunications LTD",                                                       // 62492
+    "Ruckli Automation und Elektrotechnik",                                               // 62493
+    "City of Pelham",                                                                     // 62494
+    "Q*Bird B.V.",                                                                        // 62495
+    "Finnos Oy",                                                                          // 62496
+    "Fatima hayat",                                                                       // 62497
+    "Soft-Control LLC",                                                                   // 62498
+    "International Procurement and Logistics, ltd"                                        // 62499
 };
 
 const char* global_enterprises_lookup(uint32_t value)
