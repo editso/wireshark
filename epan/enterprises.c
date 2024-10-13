@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-10-04) */
+/* (last updated 2024-10-11) */
 
 #include "config.h"
 
@@ -5025,7 +5025,7 @@ static const char * const table[] =
     "AudioCodes LTD",                                                                     // 5003
     "Predictive Networks",                                                                // 5004
     "NCvision",                                                                           // 5005
-    "Vishwnet India",                                                                     // 5006
+    "Vishwnet India Private Limited",                                                     // 5006
     "Effective Computer Solutions, Inc.",                                                 // 5007
     "drugstore.com",                                                                      // 5008
     "Schiano",                                                                            // 5009
@@ -21225,7 +21225,7 @@ static const char * const table[] =
     "ARES Inc.",                                                                          // 21203
     "MHGS",                                                                               // 21204
     "Webdyn",                                                                             // 21205
-    "MobileRRD",                                                                          // 21206
+    "Solventus",                                                                          // 21206
     "Technische Universitaet Bergakademie Freiberg",                                      // 21207
     "IKS GmbH Jena",                                                                      // 21208
     "Mayr-Melnhof Packaging International GmbH",                                          // 21209
@@ -31765,7 +31765,7 @@ static const char * const table[] =
     "eXerp ApS",                                                                          // 31743
     "ADESA, Inc.",                                                                        // 31744
     "Centro Federal de Educação Tecnológica de Pelotas",                                  // 31745
-    "Gemalto",                                                                            // 31746
+    "Thales DIS",                                                                         // 31746
     "AAP Communications, LLC",                                                            // 31747
     "JED Capital, LLC",                                                                   // 31748
     "Need To Know News, LLC",                                                             // 31749
@@ -39675,7 +39675,7 @@ static const char * const table[] =
     "Imbio",                                                                              // 39653
     "TISSOT",                                                                             // 39654
     "Humbug Telecom Labs Limited",                                                        // 39655
-    "Nationale Nederlanden",                                                              // 39656
+    "NN Group",                                                                           // 39656
     "Administration of the Vladimir Region",                                              // 39657
     "TollNet a.s.",                                                                       // 39658
     "NSD CO., LTD.",                                                                      // 39659
@@ -44234,7 +44234,7 @@ static const char * const table[] =
     "Oncology Hematology Care of Connecticut, LLC",                                       // 44212
     "Happy Gears Inc",                                                                    // 44213
     "Erie Indemnity Company",                                                             // 44214
-    "Arsslensoft",                                                                        // 44215
+    "Arsslen Idadi",                                                                      // 44215
     "FUYOH VIDEO INDUSTRY CO.,LTD.",                                                      // 44216
     "FiberRoad",                                                                          // 44217
     "Buffalo Boots GmbH",                                                                 // 44218
@@ -51663,7 +51663,7 @@ static const char * const table[] =
     "Allianz Technology SE - Global Document and Archive Management",                     // 51641
     "IIC Workshop",                                                                       // 51642
     "Janus Henderson Investors",                                                          // 51643
-    "IP-Only Networks AB",                                                                // 51644
+    "Globalconnect",                                                                      // 51644
     "The Trustee for KM Licence Trust",                                                   // 51645
     "Becker Nachrichtentechnik GmbH",                                                     // 51646
     "Rennes Métropole",                                                                   // 51647
@@ -58017,7 +58017,7 @@ static const char * const table[] =
     "YUAN High-Tech Development Co., Ltd.",                                               // 57995
     "Parazzini",                                                                          // 57996
     "SURVICE Engineering Company",                                                        // 57997
-    "SURVICE Engineering Company",                                                        // 57998
+    NULL,                                                                                 // 57998
     "Coastal Pulmonary, P.A.",                                                            // 57999
     "银君皮鞋服装超市 (Yinjun Leather Shoes and Clothing Supermarket)",                           // 58000
     "SCUT Machine Intelligence Lab",                                                      // 58001
@@ -62518,7 +62518,50 @@ static const char * const table[] =
     "Finnos Oy",                                                                          // 62496
     "Fatima hayat",                                                                       // 62497
     "Soft-Control LLC",                                                                   // 62498
-    "International Procurement and Logistics, ltd"                                        // 62499
+    "International Procurement and Logistics, ltd",                                       // 62499
+    "EG4 Electronics LLC",                                                                // 62500
+    "Henry Gutte",                                                                        // 62501
+    "Microwave Power Products, Inc.",                                                     // 62502
+    "COL GIOVANNI PAOLO SPA",                                                             // 62503
+    "Eagle Seven LLC",                                                                    // 62504
+    "Concierge Sports and Family Health, Inc",                                            // 62505
+    "Simcomm Advance Services",                                                           // 62506
+    "Pinnacle Digital Analytics Pvt. ltd",                                                // 62507
+    "GlobalTrust SRL",                                                                    // 62508
+    "Vasilii Ozerov",                                                                     // 62509
+    "ExamFortress",                                                                       // 62510
+    "Sparkoper",                                                                          // 62511
+    "DREN",                                                                               // 62512
+    "TVS next CO.,LTD.",                                                                  // 62513
+    "DingoSoft",                                                                          // 62514
+    "Zhang Jinwei",                                                                       // 62515
+    "Zhejiang Benyi New Energy Co.,Ltd.",                                                 // 62516
+    "ATRIA Innovation",                                                                   // 62517
+    "Tecnofluid do Brasil Eireli",                                                        // 62518
+    "Guangdong BaoLun Electronics Co., Ltd.",                                             // 62519
+    "nox Germany GmbH",                                                                   // 62520
+    "Five Five One",                                                                      // 62521
+    "Leigh Butler",                                                                       // 62522
+    "Unifone New Zealand Limited",                                                        // 62523
+    "Trufo Inc.",                                                                         // 62524
+    "Virke Småland",                                                                      // 62525
+    "GasStation360",                                                                      // 62526
+    "TravelWifi",                                                                         // 62527
+    "Compukitty",                                                                         // 62528
+    "Leonardo UK - SENTINEL CWE",                                                         // 62529
+    "BEC Systems, LLC",                                                                   // 62530
+    "SpiNNcloud Systems GmbH",                                                            // 62531
+    "RF MAH Sp. z o.o.",                                                                  // 62532
+    "Congrand",                                                                           // 62533
+    "Lithion Battery Inc.",                                                               // 62534
+    "Princeton Radiology Associates",                                                     // 62535
+    "STS Consulting",                                                                     // 62536
+    "Point72, L.P.",                                                                      // 62537
+    "Brightspeed Technology Advancement Center",                                          // 62538
+    "CDG Engineers, Inc",                                                                 // 62539
+    "iPotisEdge Co.,Ltd.",                                                                // 62540
+    "ltllabs",                                                                            // 62541
+    "Delaware Division of Libraries"                                                      // 62542
 };
 
 const char* global_enterprises_lookup(uint32_t value)
