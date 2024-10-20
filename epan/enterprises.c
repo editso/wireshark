@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-10-11) */
+/* (last updated 2024-10-16) */
 
 #include "config.h"
 
@@ -14407,7 +14407,7 @@ static const char * const table[] =
     "RTE Software",                                                                       // 14385
     "soLNet, s.r.o",                                                                      // 14386
     "Absolute Systems (PTY) Ltd",                                                         // 14387
-    "Toll Collect",                                                                       // 14388
+    "Toll Collect GmbH",                                                                  // 14388
     "Spider Internet Technologies, Inc.",                                                 // 14389
     "QRS Healthcare Solutions",                                                           // 14390
     "Ace Suares",                                                                         // 14391
@@ -18950,7 +18950,7 @@ static const char * const table[] =
     "Areca Technology Corporation",                                                       // 18928
     "Interwise, Inc.",                                                                    // 18929
     "OXW",                                                                                // 18930
-    "DaveLinux",                                                                          // 18931
+    "cybersekkin",                                                                        // 18931
     "Naeilnet Inc.",                                                                      // 18932
     "ActivNetworks",                                                                      // 18933
     "Vivex GmbH",                                                                         // 18934
@@ -62561,7 +62561,22 @@ static const char * const table[] =
     "CDG Engineers, Inc",                                                                 // 62539
     "iPotisEdge Co.,Ltd.",                                                                // 62540
     "ltllabs",                                                                            // 62541
-    "Delaware Division of Libraries"                                                      // 62542
+    "Delaware Division of Libraries",                                                     // 62542
+    "Gitari Douglas",                                                                     // 62543
+    "Lineup Korea",                                                                       // 62544
+    "QTRANS",                                                                             // 62545
+    "PoINT Software & Systems GmbH",                                                      // 62546
+    "EDGE POWER SOLUTIONS INC",                                                           // 62547
+    "Perpetual Limited",                                                                  // 62548
+    "Law Family Companies, Inc.",                                                         // 62549
+    "Shrike Aero Products Co.",                                                           // 62550
+    "University of Pikeville",                                                            // 62551
+    "Collett Park Networks",                                                              // 62552
+    "SIMCom",                                                                             // 62553
+    "Triangle Networks Ltd",                                                              // 62554
+    "​​​​​​SLOVENIA CONTROL, Slovenian​ Air Navigation Services, Limited",                // 62555
+    "NiDaKuDE",                                                                           // 62556
+    "Cancer Center of Middle Georgia, LLC"                                                // 62557
 };
 
 const char* global_enterprises_lookup(uint32_t value)
