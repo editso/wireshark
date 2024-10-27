@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-10-16) */
+/* (last updated 2024-10-25) */
 
 #include "config.h"
 
@@ -22610,7 +22610,7 @@ static const char * const table[] =
     "LucaS web studio",                                                                   // 22588
     "P6R, Inc.",                                                                          // 22589
     "BHG Security Consulting",                                                            // 22590
-    "Fachhochschule Muenchen - ZaK",                                                      // 22591
+    "Hochschule Muenchen - IT",                                                           // 22591
     "Informatec LTDA",                                                                    // 22592
     "Emily Carr College of Art and Design",                                               // 22593
     "GoldKrush",                                                                          // 22594
@@ -61209,7 +61209,7 @@ static const char * const table[] =
     "Integrated Concepts",                                                                // 61187
     "FassaBortolo",                                                                       // 61188
     "Goldplate",                                                                          // 61189
-    "Theo Koulayan",                                                                      // 61190
+    "Koulayan Systemes d'Information",                                                    // 61190
     "James Hackett",                                                                      // 61191
     "ncubed B.V.",                                                                        // 61192
     "Intrust JSC",                                                                        // 61193
@@ -62576,7 +62576,51 @@ static const char * const table[] =
     "Triangle Networks Ltd",                                                              // 62554
     "​​​​​​SLOVENIA CONTROL, Slovenian​ Air Navigation Services, Limited",                // 62555
     "NiDaKuDE",                                                                           // 62556
-    "Cancer Center of Middle Georgia, LLC"                                                // 62557
+    "Cancer Center of Middle Georgia, LLC",                                               // 62557
+    "Coalition for Content Provenance and Authenticity (C2PA)",                           // 62558
+    "RHerzog",                                                                            // 62559
+    "Shenzhen Lemon Network Technology Co., Ltd",                                         // 62560
+    "Decon Corporation",                                                                  // 62561
+    "Advanced Acoustic Concepts",                                                         // 62562
+    "JURONG PORT PTE LTD",                                                                // 62563
+    """ICT"" Srl.",                                                                       // 62564
+    "Huntsville International Airport",                                                   // 62565
+    "Letmi Ecuador S.A",                                                                  // 62566
+    "JFE Plant Engineering Co., Ltd.",                                                    // 62567
+    "PTN Electronics",                                                                    // 62568
+    "THEGREENBOW",                                                                        // 62569
+    "RL TECH GLOBAL PTE LTD",                                                             // 62570
+    "noslabs",                                                                            // 62571
+    "zeroRISC, Inc.",                                                                     // 62572
+    "Sealight Technologies",                                                              // 62573
+    "ICT Energo, s.r.o.",                                                                 // 62574
+    "Jared Pool Consulting",                                                              // 62575
+    "MobileFi, Inc.",                                                                     // 62576
+    "Nybsys Inc",                                                                         // 62577
+    "CyberGamp",                                                                          // 62578
+    "EZDAN Smart System",                                                                 // 62579
+    "Telegrafia",                                                                         // 62580
+    "Effortel",                                                                           // 62581
+    "Connecticut Oncology Group P.C.",                                                    // 62582
+    "Quanzhou Nan'an Teyitong Electronics Co., Ltd.",                                     // 62583
+    "Adair Group",                                                                        // 62584
+    "Simpcw Resources Group",                                                             // 62585
+    "Asgard Security OÜ",                                                                 // 62586
+    "Ali Fırat ARI",                                                                      // 62587
+    "IsiDaya",                                                                            // 62588
+    "TV Nova s.r.o.",                                                                     // 62589
+    "NTR-RRL LIMITED LIABILITY COMPANY",                                                  // 62590
+    "EasyCall Srl",                                                                       // 62591
+    "Markus Toran",                                                                       // 62592
+    "XNET Inc",                                                                           // 62593
+    "Scandbio AB",                                                                        // 62594
+    "Quentin Airault",                                                                    // 62595
+    "TINNO",                                                                              // 62596
+    "ideant",                                                                             // 62597
+    "Beijing Yuanlixin Technology Co., Ltd.",                                             // 62598
+    "Nippon Primex",                                                                      // 62599
+    "nds Netzwerksysteme GmbH",                                                           // 62600
+    "EFI Automotive"                                                                      // 62601
 };
 
 const char* global_enterprises_lookup(uint32_t value)
