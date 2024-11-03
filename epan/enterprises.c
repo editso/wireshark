@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-10-25) */
+/* (last updated 2024-11-01) */
 
 #include "config.h"
 
@@ -34456,7 +34456,7 @@ static const char * const table[] =
     "HongTEC (BeiJing) Co., Ltd",                                                         // 34434
     "North Loop Networks",                                                                // 34435
     "TS-Associates plc",                                                                  // 34436
-    "Consequor Consulting AG",                                                            // 34437
+    "Gönninger B&T GmbH",                                                                 // 34437
     "DOHMEN, HERZOG & Partner GmbH",                                                      // 34438
     "West Virginia State University",                                                     // 34439
     "Velocix Limited",                                                                    // 34440
@@ -62606,7 +62606,7 @@ static const char * const table[] =
     "Adair Group",                                                                        // 62584
     "Simpcw Resources Group",                                                             // 62585
     "Asgard Security OÜ",                                                                 // 62586
-    "Ali Fırat ARI",                                                                      // 62587
+    "Elveriş",                                                                            // 62587
     "IsiDaya",                                                                            // 62588
     "TV Nova s.r.o.",                                                                     // 62589
     "NTR-RRL LIMITED LIABILITY COMPANY",                                                  // 62590
@@ -62620,7 +62620,36 @@ static const char * const table[] =
     "Beijing Yuanlixin Technology Co., Ltd.",                                             // 62598
     "Nippon Primex",                                                                      // 62599
     "nds Netzwerksysteme GmbH",                                                           // 62600
-    "EFI Automotive"                                                                      // 62601
+    "EFI Automotive",                                                                     // 62601
+    "Behpaya",                                                                            // 62602
+    "Beijing Chenyu Network Technology Co., Ltd",                                         // 62603
+    "Gilmour Technologies Ltd",                                                           // 62604
+    "Fruchthof Nagel GmbH",                                                               // 62605
+    "Michael Soule",                                                                      // 62606
+    "E220 Labs",                                                                          // 62607
+    "Carlos I. Morales",                                                                  // 62608
+    "Adamed Pharma S.A.",                                                                 // 62609
+    "Yeti Move AS",                                                                       // 62610
+    "Acacia Energy Pty Ltd",                                                              // 62611
+    "Vista Kencana Sdn Bhd",                                                              // 62612
+    "Rodolfo Vega",                                                                       // 62613
+    "Kontron Canada",                                                                     // 62614
+    "JC-Lab",                                                                             // 62615
+    "AKAYLA Inc",                                                                         // 62616
+    "Bottlelife Ventures, LLC",                                                           // 62617
+    "Virke impex",                                                                        // 62618
+    "Biofuel impex Sweden AB",                                                            // 62619
+    "AnchorZ Inc.",                                                                       // 62620
+    "Amber Electric",                                                                     // 62621
+    "Paiotech",                                                                           // 62622
+    "suppenschussel",                                                                     // 62623
+    "Toho GPS",                                                                           // 62624
+    "Zhong Jiu Defence Technology & Equipment Co. LTD",                                   // 62625
+    "NRGi Holding A/S",                                                                   // 62626
+    "Department of State Growth (Tasmania)",                                              // 62627
+    "Medina Tunglyfttransporter AB",                                                      // 62628
+    "Sellgrens Skogstransporter",                                                         // 62629
+    "White Castle"                                                                        // 62630
 };
 
 const char* global_enterprises_lookup(uint32_t value)
