@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-11-01) */
+/* (last updated 2024-11-08) */
 
 #include "config.h"
 
@@ -17811,7 +17811,7 @@ static const char * const table[] =
     "sitharus.com internet services",                                                     // 17789
     "IPAD Owners Association",                                                            // 17790
     "Turoks.Net",                                                                         // 17791
-    "Billing Concepts, Inc.",                                                             // 17792
+    "Single Digits Inc.",                                                                 // 17792
     "Hong Kong Broadband Network Ltd.",                                                   // 17793
     "EXARTECH International Corp.",                                                       // 17794
     "Echo Communications",                                                                // 17795
@@ -28142,7 +28142,7 @@ static const char * const table[] =
     "Pinacono Software Studio",                                                           // 28120
     "Hyperband Networks, Inc.",                                                           // 28121
     "ObjectMastery Pty Ltd",                                                              // 28122
-    "Intermodus d.o.o",                                                                   // 28123
+    "Znatko d.o.o",                                                                       // 28123
     "C-Group",                                                                            // 28124
     "TRINAPS",                                                                            // 28125
     "ERAMON GmbH",                                                                        // 28126
@@ -45121,7 +45121,7 @@ static const char * const table[] =
     "Pentaho Corporation",                                                                // 45099
     "Cloud Vision Networks Technology Co.,Ltd. (cvn)",                                    // 45100
     "Yew Tree Services, Inc.",                                                            // 45101
-    "Yawns.com Limited",                                                                  // 45102
+    "maikit ltd",                                                                         // 45102
     "Satel Spain, S.L.",                                                                  // 45103
     "infoworxx GmbH",                                                                     // 45104
     "Samsung Poland R&D Center",                                                          // 45105
@@ -62529,7 +62529,7 @@ static const char * const table[] =
     "Pinnacle Digital Analytics Pvt. ltd",                                                // 62507
     "GlobalTrust SRL",                                                                    // 62508
     "Vasilii Ozerov",                                                                     // 62509
-    "ExamFortress",                                                                       // 62510
+    "Kirch Technology",                                                                   // 62510
     "Sparkoper",                                                                          // 62511
     "DREN",                                                                               // 62512
     "TVS next CO.,LTD.",                                                                  // 62513
@@ -62633,7 +62633,7 @@ static const char * const table[] =
     "Acacia Energy Pty Ltd",                                                              // 62611
     "Vista Kencana Sdn Bhd",                                                              // 62612
     "Rodolfo Vega",                                                                       // 62613
-    "Kontron Canada",                                                                     // 62614
+    "KTNA",                                                                               // 62614
     "JC-Lab",                                                                             // 62615
     "AKAYLA Inc",                                                                         // 62616
     "Bottlelife Ventures, LLC",                                                           // 62617
@@ -62649,7 +62649,57 @@ static const char * const table[] =
     "Department of State Growth (Tasmania)",                                              // 62627
     "Medina Tunglyfttransporter AB",                                                      // 62628
     "Sellgrens Skogstransporter",                                                         // 62629
-    "White Castle"                                                                        // 62630
+    "White Castle",                                                                       // 62630
+    "Särna-Idre Besparingsskog",                                                          // 62631
+    "Norra Venjans Besparingsskog",                                                       // 62632
+    "Landbobyns Besparingsskog",                                                          // 62633
+    "PowerMeter srls",                                                                    // 62634
+    "Shenzhen v-king Ner  Technology Co., Ltd.",                                          // 62635
+    "Fermi National Accelerator Laboratory",                                              // 62636
+    "XP Plc",                                                                             // 62637
+    "Techship AB",                                                                        // 62638
+    "Nationaal Archief",                                                                  // 62639
+    "Day 3 Bits",                                                                         // 62640
+    "WITTE Automotive",                                                                   // 62641
+    "Midwest Surgical Hospital",                                                          // 62642
+    "Wise Global Solutions",                                                              // 62643
+    "Technical Operations Group",                                                         // 62644
+    "AKI TECH GROUP, LLC.",                                                               // 62645
+    "Solano Comercial Ltda.",                                                             // 62646
+    "Redflex Traffic Systems Ltd",                                                        // 62647
+    "Verra Mobility",                                                                     // 62648
+    "AXASOFT, a.s.",                                                                      // 62649
+    "Moscow State University ""ROSBIOTECH""",                                             // 62650
+    "Transition Technologies Advanced Solutions Sp. z o. o.",                             // 62651
+    "Emanuele Faranda",                                                                   // 62652
+    "Brodinger IT-Sicherheitstechnik",                                                    // 62653
+    "Jason Ellison",                                                                      // 62654
+    "Simetric, Inc.",                                                                     // 62655
+    "Digicom Pty Ltd",                                                                    // 62656
+    "Trendy Technologies",                                                                // 62657
+    "ZIMT Universität Siegen",                                                            // 62658
+    "Gray Hunter Stenn LLP",                                                              // 62659
+    "Cybernet Systems Co., Ltd.",                                                         // 62660
+    "Acadia Tech Services",                                                               // 62661
+    "Gemeente Heerenveen",                                                                // 62662
+    "Bierman IT-Consult",                                                                 // 62663
+    "Intellidata B.V.",                                                                   // 62664
+    "JMF Solutions Inc",                                                                  // 62665
+    "Uddevalla Kraft AB",                                                                 // 62666
+    "OPEN LAKE TECHNOLOGY",                                                               // 62667
+    "svetlana-k",                                                                         // 62668
+    "MACH AG",                                                                            // 62669
+    "Stichting governmental roaming Nederland",                                           // 62670
+    "simplen",                                                                            // 62671
+    "IPT Powertech",                                                                      // 62672
+    "Kassel",                                                                             // 62673
+    "PROFESSIONAL RADIOLOGY OUTCOMES PTY. LTD.",                                          // 62674
+    "Keeta",                                                                              // 62675
+    "RADIUSdesk",                                                                         // 62676
+    "Liechtensteinische Landesbank AG",                                                   // 62677
+    "WeVerify",                                                                           // 62678
+    "Hillsborough County Aviation Authority",                                             // 62679
+    "Bretzel"                                                                             // 62680
 };
 
 const char* global_enterprises_lookup(uint32_t value)
