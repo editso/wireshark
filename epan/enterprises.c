@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-11-08) */
+/* (last updated 2024-11-15) */
 
 #include "config.h"
 
@@ -58730,7 +58730,7 @@ static const char * const table[] =
     "Relaycorp, Inc.",                                                                    // 58708
     "ESSILORLUXOTTICA",                                                                   // 58709
     "IgniSign",                                                                           // 58710
-    "Candy Horses LLC",                                                                   // 58711
+    "Saddle Networks LLC",                                                                // 58711
     "Martin Winter",                                                                      // 58712
     "SANEF",                                                                              // 58713
     "NC Systems GmbH",                                                                    // 58714
@@ -62699,7 +62699,35 @@ static const char * const table[] =
     "Liechtensteinische Landesbank AG",                                                   // 62677
     "WeVerify",                                                                           // 62678
     "Hillsborough County Aviation Authority",                                             // 62679
-    "Bretzel"                                                                             // 62680
+    "Bretzel",                                                                            // 62680
+    "SPC Doza",                                                                           // 62681
+    "Bycoded",                                                                            // 62682
+    "ISMK",                                                                               // 62683
+    "pdhome.club",                                                                        // 62684
+    "yumar",                                                                              // 62685
+    "Triple Acoustics",                                                                   // 62686
+    "Kenpat USA",                                                                         // 62687
+    "Town of Rocky Hill",                                                                 // 62688
+    "Huizhou Epever Technology Co., Ltd.",                                                // 62689
+    "Gentek Information",                                                                 // 62690
+    "Avineering AS",                                                                      // 62691
+    "Unitik Technology Corp.",                                                            // 62692
+    "Diehl Defence GmbH & Co. KG",                                                        // 62693
+    "VMO2",                                                                               // 62694
+    "eeble.net",                                                                          // 62695
+    "Irene Knapp",                                                                        // 62696
+    "Aida Innovazione S.r.l.",                                                            // 62697
+    "Fsas Technologies Inc.",                                                             // 62698
+    "Monogoto Ltd.",                                                                      // 62699
+    "Triple Solar",                                                                       // 62700
+    "Synacktiv",                                                                          // 62701
+    "AFTI Numerique",                                                                     // 62702
+    "Rafi Gana",                                                                          // 62703
+    "Yeastar",                                                                            // 62704
+    "Institut Mihajlo Pupin DOO Beograd",                                                 // 62705
+    "Universidad Pontificia de Salamanca",                                                // 62706
+    "B9 Company",                                                                         // 62707
+    "MARA Holdings Inc"                                                                   // 62708
 };
 
 const char* global_enterprises_lookup(uint32_t value)
