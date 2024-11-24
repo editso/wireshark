@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-11-15) */
+/* (last updated 2024-11-22) */
 
 #include "config.h"
 
@@ -26042,7 +26042,7 @@ static const char * const table[] =
     "DePratti Consulting LLC",                                                            // 26020
     "Ligos Corporation",                                                                  // 26021
     "Kamayo",                                                                             // 26022
-    "Fachschaft MPI, TU München",                                                         // 26023
+    "Fachschaft MPIC, TU München",                                                        // 26023
     "subnet - platform for media art and experimental technologies",                      // 26024
     "Ari Voutilainen",                                                                    // 26025
     "arm4.org",                                                                           // 26026
@@ -30638,7 +30638,7 @@ static const char * const table[] =
     "MagmaTec (Pty) Ltd",                                                                 // 30616
     "Advanced Digital Systems Inc. (ADS)",                                                // 30617
     "Rostocker Freizeitzentrum e.V.",                                                     // 30618
-    "TOSHIBA MITSUBISHI-ELECTRIC INDUSTRIAL SYSTEMS CORPORATION",                         // 30619
+    "TMEIC CORPORATION",                                                                  // 30619
     "Sloka Telecom Private Limited",                                                      // 30620
     "Global Holdings Group",                                                              // 30621
     "Centre des technologies de l'information  de l'Etat , Luxembourg",                   // 30622
@@ -32641,7 +32641,7 @@ static const char * const table[] =
     "Movik Networks, Inc.",                                                               // 32619
     "AnueSystems",                                                                        // 32620
     "Franklin University",                                                                // 32621
-    "CACE Technologies",                                                                  // 32622
+    "Wireshark Foundation",                                                               // 32622
     "Kuni Automotive",                                                                    // 32623
     "Khomp Ind. e Com. Ltda",                                                             // 32624
     "GoPC Pty Ltd",                                                                       // 32625
@@ -61389,7 +61389,7 @@ static const char * const table[] =
     "Big Ticket Solutions LLC",                                                           // 61367
     "Subledger",                                                                          // 61368
     "CV Bilişim Teknoloji Ticaret Ltd.",                                                  // 61369
-    "Big Geek Computer Sales and Service",                                                // 61370
+    "Big Geek Consulting",                                                                // 61370
     "BAW SAS",                                                                            // 61371
     "Fritz Kübler GmbH",                                                                  // 61372
     "JetStream Software Inc.",                                                            // 61373
@@ -61908,7 +61908,7 @@ static const char * const table[] =
     "Paweł Worwąg",                                                                       // 61886
     "EcoFlow",                                                                            // 61887
     "Ballpoint",                                                                          // 61888
-    "Hazel",                                                                              // 61889
+    "Ember Ana",                                                                          // 61889
     "The Funkin' Crew Inc.",                                                              // 61890
     "MELCOMP S.A.",                                                                       // 61891
     "WATSONGALAXY.COM",                                                                   // 61892
@@ -62727,7 +62727,47 @@ static const char * const table[] =
     "Institut Mihajlo Pupin DOO Beograd",                                                 // 62705
     "Universidad Pontificia de Salamanca",                                                // 62706
     "B9 Company",                                                                         // 62707
-    "MARA Holdings Inc"                                                                   // 62708
+    "MARA Holdings Inc",                                                                  // 62708
+    "Michael W Murphy",                                                                   // 62709
+    "SiboTech Automation Co., Ltd.",                                                      // 62710
+    "Yongmin Hong",                                                                       // 62711
+    "Flex Group",                                                                         // 62712
+    "EcoJoule Energy Pty Ltd",                                                            // 62713
+    "be ys Trusted Solutions Luxembourg",                                                 // 62714
+    "Meunier Holdings Co., LLC",                                                          // 62715
+    "Sønderborg Varme",                                                                   // 62716
+    "Patchblox",                                                                          // 62717
+    "JSC Valta pet Products",                                                             // 62718
+    "Khampus, Inc",                                                                       // 62719
+    "Grzegorz Orchel",                                                                    // 62720
+    "Matheus Vianna Silveira",                                                            // 62721
+    "奇安信科技集团股份有限公司 (Qi'anxin Technology Group Co., Ltd.)",                                // 62722
+    "ZHUHAI GLORY TECHNOLOGY",                                                            // 62723
+    "Pioneer Dynamics",                                                                   // 62724
+    "Aligent",                                                                            // 62725
+    "Delta Electronics, Inc. (ICTBG)",                                                    // 62726
+    "PPF Hasco-lek S.A.",                                                                 // 62727
+    "Barreda Martin, Carles",                                                             // 62728
+    "Collier Technologies LLC",                                                           // 62729
+    "Universiti Tun Hussein Onn Malaysia (UTHM)",                                         // 62730
+    "Jospro Electronics",                                                                 // 62731
+    "DapuStor Corporation",                                                               // 62732
+    "ITK Harburg AöR",                                                                    // 62733
+    "Emirates Biotech LLC",                                                               // 62734
+    "Realize IT d.o.o.",                                                                  // 62735
+    "Pente Networks, Inc",                                                                // 62736
+    "inVia Robotics, Inc.",                                                               // 62737
+    "Martin's Electronic Devices & Instruments",                                          // 62738
+    "Juergen Waldl",                                                                      // 62739
+    "Loewenstein Medical Innovation GmbH & Co. KG",                                       // 62740
+    "Controlgate LLC",                                                                    // 62741
+    "IR Pros",                                                                            // 62742
+    "Lerato Khambule",                                                                    // 62743
+    "ArwenSys Monitoring and Services",                                                   // 62744
+    "MultiPlex Networks LLC",                                                             // 62745
+    "Antrapolation Technology Sdn Bhd",                                                   // 62746
+    "Asga Pensionskasse",                                                                 // 62747
+    "HI-TECH SOFT"                                                                        // 62748
 };
 
 const char* global_enterprises_lookup(uint32_t value)
