@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-11-22) */
+/* (last updated 2024-11-28) */
 
 #include "config.h"
 
@@ -57549,7 +57549,7 @@ static const char * const table[] =
     "SPAIRAL COMMERCE SL",                                                                // 57527
     "Vinteo LLC",                                                                         // 57528
     "Cayman Islands Health Services Authority",                                           // 57529
-    "Transmex Systems International Private Limited",                                     // 57530
+    "TSI Tech Pte Ltd",                                                                   // 57530
     "ELI-Beamlines",                                                                      // 57531
     "TELROAMING ADVANCED COMMUNICATION SOLUTION LTD",                                     // 57532
     "Due Date Logistics",                                                                 // 57533
@@ -62767,7 +62767,32 @@ static const char * const table[] =
     "MultiPlex Networks LLC",                                                             // 62745
     "Antrapolation Technology Sdn Bhd",                                                   // 62746
     "Asga Pensionskasse",                                                                 // 62747
-    "HI-TECH SOFT"                                                                        // 62748
+    "HI-TECH SOFT",                                                                       // 62748
+    "Stephen Tuck",                                                                       // 62749
+    "Wizard Hat Consulting",                                                              // 62750
+    "JOSA s.r.o.",                                                                        // 62751
+    "Neoway",                                                                             // 62752
+    "Shenzhen Powering Co., Ltd",                                                         // 62753
+    "Signel Services inc.",                                                               // 62754
+    "Alpha Data Parallel System Ltd.",                                                    // 62755
+    "DawnMUD",                                                                            // 62756
+    "ACTIA Automotive",                                                                   // 62757
+    "SST Automation",                                                                     // 62758
+    "Banco G&T Continental",                                                              // 62759
+    "Blue Origin",                                                                        // 62760
+    "Fábio José Lourenço",                                                                // 62761
+    "Pylon Technologies Co., Ltd.",                                                       // 62762
+    "GRAF + CIE AG",                                                                      // 62763
+    "Spectratronix",                                                                      // 62764
+    "Aschendorff Medien GmbH & Co. KG",                                                   // 62765
+    "Williams Jet Tenders Limited",                                                       // 62766
+    "Lenovoconnect",                                                                      // 62767
+    "Beijing Tsingteng Microsystem Co.,Ltd",                                              // 62768
+    "digitalphobia Ltd",                                                                  // 62769
+    "Mobileye",                                                                           // 62770
+    "SkogexAB",                                                                           // 62771
+    "Nordic Paper Bäckhammar AB",                                                         // 62772
+    "Edera"                                                                               // 62773
 };
 
 const char* global_enterprises_lookup(uint32_t value)
