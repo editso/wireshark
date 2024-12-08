@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-11-28) */
+/* (last updated 2024-12-06) */
 
 #include "config.h"
 
@@ -62792,7 +62792,47 @@ static const char * const table[] =
     "Mobileye",                                                                           // 62770
     "SkogexAB",                                                                           // 62771
     "Nordic Paper Bäckhammar AB",                                                         // 62772
-    "Edera"                                                                               // 62773
+    "Edera",                                                                              // 62773
+    "Brittany Mccarthy",                                                                  // 62774
+    "BI Incorporated",                                                                    // 62775
+    "BI Innovation Labs",                                                                 // 62776
+    "Beijing Cincc Co., Ltd",                                                             // 62777
+    "W & J Linney Ltd",                                                                   // 62778
+    "Tempo (Aust) Pty Ltd",                                                               // 62779
+    "MSG Gruppen AB 559148-7516",                                                         // 62780
+    "Kreisverwaltung Birkenfeld",                                                         // 62781
+    "NAVAIR",                                                                             // 62782
+    "EFR GmbH",                                                                           // 62783
+    "Enginetech Computer Co.,LTD",                                                        // 62784
+    "Base4Kids",                                                                          // 62785
+    "Third Coast Bank",                                                                   // 62786
+    "Narrowlink",                                                                         // 62787
+    "Shenzhen Dptek Technology Co., Ltd.",                                                // 62788
+    "Armen Petrossian",                                                                   // 62789
+    "Testyle Technology Co. LTD.",                                                        // 62790
+    "LoneStar Voyager",                                                                   // 62791
+    "Darricator",                                                                         // 62792
+    "Ruemkens",                                                                           // 62793
+    "Pablo Salvador Campo Carrera",                                                       // 62794
+    "Metsä Tissue AB",                                                                    // 62795
+    "Ehya LTD",                                                                           // 62796
+    "ortner-software",                                                                    // 62797
+    "Design1st Inc.",                                                                     // 62798
+    "Defendable Technologies Pty Ltd",                                                    // 62799
+    "北京北斗邦泰科技有限公司 (Beijing Beidou Bangtai Technology Co., Ltd.)",                         // 62800
+    "Beeline KAZ",                                                                        // 62801
+    "EveryoneTrust Network Group",                                                        // 62802
+    "FLAVIA IT-Management GmbH",                                                          // 62803
+    "iLife",                                                                              // 62804
+    "Gransås Skogs & Lantbruks AB",                                                       // 62805
+    "Lartech Telecom LLC",                                                                // 62806
+    "Dry Box, Inc",                                                                       // 62807
+    "Koma Studios UG",                                                                    // 62808
+    "Linkam Scientific Instruments Ltd",                                                  // 62809
+    "Bundesamt für Strassen (ASTRA)",                                                     // 62810
+    "Goldilock Secure Ltd",                                                               // 62811
+    "Adam Trant",                                                                         // 62812
+    "Hyterm S.r.l."                                                                       // 62813
 };
 
 const char* global_enterprises_lookup(uint32_t value)
