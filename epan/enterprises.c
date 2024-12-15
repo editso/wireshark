@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-12-06) */
+/* (last updated 2024-12-12) */
 
 #include "config.h"
 
@@ -3589,7 +3589,7 @@ static const char * const table[] =
     "Scott Supply Service, Inc.",                                                         // 3567
     "Service Co LLC",                                                                     // 3568
     "Electronic Payment Services, Inc.",                                                  // 3569
-    "Tait Limited",                                                                       // 3570
+    "Tait International Limited",                                                         // 3570
     "Gift-Trek Malaysia Sdn. Bhd.",                                                       // 3571
     "HanA Systems, Inc.",                                                                 // 3572
     "South African Networking People (Pty) Ltd",                                          // 3573
@@ -4705,7 +4705,7 @@ static const char * const table[] =
     "Trading Technologies International, Inc.",                                           // 4683
     "Ambit Microsystems Corporation",                                                     // 4684
     "TONTRU Information Industry Group Co. Ltd.",                                         // 4685
-    "VegaStream",                                                                         // 4686
+    "Sangoma Technologies",                                                               // 4686
     "Digitro Tecnologia Ltda",                                                            // 4687
     "Luimes Computer Consulting",                                                         // 4688
     "Urbis.Net Ltd",                                                                      // 4689
@@ -16273,7 +16273,7 @@ static const char * const table[] =
     "Bonuso Industries",                                                                  // 16251
     "Mätäsahon suku",                                                                     // 16252
     "Mätäsahon suku",                                                                     // 16253
-    "Holmen Paper AB",                                                                    // 16254
+    "Holmen Board And Paper AB",                                                          // 16254
     "Action Engine Corp.",                                                                // 16255
     "Develtech",                                                                          // 16256
     "The Hong Kong Polytechnic University",                                               // 16257
@@ -22755,7 +22755,7 @@ static const char * const table[] =
     "NorBelle, LLC",                                                                      // 22733
     "synetics gmbh",                                                                      // 22734
     "GSC Mobile Solutions",                                                               // 22735
-    "Digium",                                                                             // 22736
+    "Sangoma Technologies",                                                               // 22736
     "SmarTone Mobile Communications Limited",                                             // 22737
     "WiNetworks",                                                                         // 22738
     "Network Technology Research Group",                                                  // 22739
@@ -62832,7 +62832,32 @@ static const char * const table[] =
     "Bundesamt für Strassen (ASTRA)",                                                     // 62810
     "Goldilock Secure Ltd",                                                               // 62811
     "Adam Trant",                                                                         // 62812
-    "Hyterm S.r.l."                                                                       // 62813
+    "Hyterm S.r.l.",                                                                      // 62813
+    "杨维 (Yang Wei)",                                                                      // 62814
+    "Communauté Agglomération Rochefort Océan",                                           // 62815
+    "PVS SSC GmbH",                                                                       // 62816
+    "TurboLight Solutions",                                                               // 62817
+    "Makerere University",                                                                // 62818
+    "LionGate AG",                                                                        // 62819
+    "ACB04",                                                                              // 62820
+    "WIS NETWORKS LIMITED",                                                               // 62821
+    "Intellectual Technology, Inc.",                                                      // 62822
+    "James Spencer",                                                                      // 62823
+    "Electric Toast",                                                                     // 62824
+    "QUANTUM INC.",                                                                       // 62825
+    "XCNT GmbH",                                                                          // 62826
+    "Oscar Real",                                                                         // 62827
+    "AWTG LIMITED",                                                                       // 62828
+    "RHOTHETA Elektronik GmbH",                                                           // 62829
+    "Ladenbau Innenausbau Hemling GmbH",                                                  // 62830
+    "成都悦刻通信技术有限公司 (Chengdu Yocto Communication Technologies Ltd.)",                       // 62831
+    "Anderson Area Cancer Center",                                                        // 62832
+    "SimCorp A/S",                                                                        // 62833
+    "SEAVAN TECHNOLOGY LIMITED",                                                          // 62834
+    "Yusen-Illuminate Companies",                                                         // 62835
+    "Rail Delivery Group Ltd",                                                            // 62836
+    "LMCS",                                                                               // 62837
+    "Vienna Insurance Group Polska Sp. z o.o."                                            // 62838
 };
 
 const char* global_enterprises_lookup(uint32_t value)
