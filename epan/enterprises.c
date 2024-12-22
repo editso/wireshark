@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-12-12) */
+/* (last updated 2024-12-20) */
 
 #include "config.h"
 
@@ -16273,7 +16273,7 @@ static const char * const table[] =
     "Bonuso Industries",                                                                  // 16251
     "Mätäsahon suku",                                                                     // 16252
     "Mätäsahon suku",                                                                     // 16253
-    "Holmen Board And Paper AB",                                                          // 16254
+    "Holmen Paper AB",                                                                    // 16254
     "Action Engine Corp.",                                                                // 16255
     "Develtech",                                                                          // 16256
     "The Hong Kong Polytechnic University",                                               // 16257
@@ -34708,7 +34708,7 @@ static const char * const table[] =
     "Sunet Technology LLC",                                                               // 34686
     "Gale",                                                                               // 34687
     "King Abdullah University of Science and Technology",                                 // 34688
-    "Tekron International Ltd",                                                           // 34689
+    "Microchip Technology Inc.",                                                          // 34689
     "National Gypsum Company",                                                            // 34690
     "EON Co.,Ltd",                                                                        // 34691
     "DICOM Grid, Inc",                                                                    // 34692
@@ -43820,7 +43820,7 @@ static const char * const table[] =
     "NANJING SAND TECHNOLOGY CO., LTD",                                                   // 43798
     "TRUMPF GmbH + Co. KG",                                                               // 43799
     "OraSentry",                                                                          // 43800
-    "Dolphin Systems AG",                                                                 // 43801
+    "F24 Schweiz AG",                                                                     // 43801
     "Avaloq Evolution AG",                                                                // 43802
     "University of South Wales",                                                          // 43803
     "Bombardier Aerospace",                                                               // 43804
@@ -62857,7 +62857,46 @@ static const char * const table[] =
     "Yusen-Illuminate Companies",                                                         // 62835
     "Rail Delivery Group Ltd",                                                            // 62836
     "LMCS",                                                                               // 62837
-    "Vienna Insurance Group Polska Sp. z o.o."                                            // 62838
+    "Vienna Insurance Group Polska Sp. z o.o.",                                           // 62838
+    "South Texas Kidney Specialists, P.A.",                                               // 62839
+    "Shrine Maiden Heavy Industries",                                                     // 62840
+    "FIBRAIN Sp. z o. o.",                                                                // 62841
+    "Esro Vlees B.V.",                                                                    // 62842
+    "Cysec SA",                                                                           // 62843
+    "Whale Cloud",                                                                        // 62844
+    "Higley Unified School District",                                                     // 62845
+    "Hye Tech Network & Security Solutions, LLC",                                         // 62846
+    "B-TU Cottbus Senftenberg",                                                           // 62847
+    "eddylab GmbH",                                                                       // 62848
+    "Enqura A.S.",                                                                        // 62849
+    "United States Office of Personnel Management (OPM)",                                 // 62850
+    "David Tichý",                                                                        // 62851
+    "Cory Pechon",                                                                        // 62852
+    "Avara Software",                                                                     // 62853
+    "Ville de Montréal - Arrondissement Montréal-Nord",                                   // 62854
+    "knks",                                                                               // 62855
+    "myPKI, LLC",                                                                         // 62856
+    "Peel Ports London Medway",                                                           // 62857
+    "ADELTA FINANZ AG",                                                                   // 62858
+    "Velasea",                                                                            // 62859
+    "CUF",                                                                                // 62860
+    "Uline",                                                                              // 62861
+    "Glydways, Inc",                                                                      // 62862
+    "Questrans Sdn Bhd",                                                                  // 62863
+    "GreenGrid Energy Storage Inc.",                                                      // 62864
+    "Chorke",                                                                             // 62865
+    "Bonneville Power Administration",                                                    // 62866
+    "panamaus",                                                                           // 62867
+    "MYP Productions",                                                                    // 62868
+    "Sesami",                                                                             // 62869
+    "Infinity Labs Ltd",                                                                  // 62870
+    "Tamtron AB",                                                                         // 62871
+    "OOOLT",                                                                              // 62872
+    "Marcus Nelle",                                                                       // 62873
+    "Tsa Lynx Process",                                                                   // 62874
+    "Moscow plant ""Fizpribor"" Ltd.",                                                    // 62875
+    "neoom",                                                                              // 62876
+    "Grundfos Holding A/S"                                                                // 62877
 };
 
 const char* global_enterprises_lookup(uint32_t value)
