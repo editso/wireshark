@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-12-20) */
+/* (last updated 2024-12-26) */
 
 #include "config.h"
 
@@ -641,7 +641,7 @@ static const char * const table[] =
     "DGA Ltd.",                                                                           // 619
     "Elegant Communications Inc.",                                                        // 620
     "Experdata",                                                                          // 621
-    "Unisource Business Networks Sweden AB",                                              // 622
+    NULL,                                                                                 // 622
     "Molex, Inc.",                                                                        // 623
     "Quay Financial Software",                                                            // 624
     "VMX Inc.",                                                                           // 625
@@ -43960,7 +43960,7 @@ static const char * const table[] =
     "Memorable Images",                                                                   // 43938
     "invliD",                                                                             // 43939
     "WISAG Dienstleistungsholding GmbH",                                                  // 43940
-    "Event Store Ltd",                                                                    // 43941
+    "Kurrent, Inc",                                                                       // 43941
     "Luma Pictures",                                                                      // 43942
     "VOLTRONIC POWER TECHNOLOGY CORP.",                                                   // 43943
     "VOLTRONIC POWER TECHNOLOGY CORP.",                                                   // 43944
@@ -62896,7 +62896,27 @@ static const char * const table[] =
     "Tsa Lynx Process",                                                                   // 62874
     "Moscow plant ""Fizpribor"" Ltd.",                                                    // 62875
     "neoom",                                                                              // 62876
-    "Grundfos Holding A/S"                                                                // 62877
+    "Grundfos Holding A/S",                                                               // 62877
+    "BIP",                                                                                // 62878
+    "杭州领祺科技有限公司 (Hangzhou Lingqi Technology Co., Ltd.)",                                  // 62879
+    "Soul Software Inc.",                                                                 // 62880
+    "Belarus Passport Center, VšĮ",                                                       // 62881
+    "Marco Benzoni",                                                                      // 62882
+    "NETPRISMA SG PTE. LTD.",                                                             // 62883
+    "Suboxone and Wellness Clinic",                                                       // 62884
+    "Canuckduck Research Corporation",                                                    // 62885
+    "Innosip Ltd",                                                                        // 62886
+    "Perigee Solutions",                                                                  // 62887
+    "CrosbyNet",                                                                          // 62888
+    "Biomemory",                                                                          // 62889
+    "Goldenbay Turizm Yatırımları A.Ş.",                                                  // 62890
+    "Yulun Wu",                                                                           // 62891
+    "Alex Jennings",                                                                      // 62892
+    "Guangzhou Getwell Electronics Co., Ltd",                                             // 62893
+    "AGK LLC",                                                                            // 62894
+    "The Silent Trust CA",                                                                // 62895
+    "The Music Place",                                                                    // 62896
+    "YUSUR Technology CO., LTD."                                                          // 62897
 };
 
 const char* global_enterprises_lookup(uint32_t value)
