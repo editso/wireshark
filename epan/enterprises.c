@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2024-12-26) */
+/* (last updated 2025-01-03) */
 
 #include "config.h"
 
@@ -34833,7 +34833,7 @@ static const char * const table[] =
     "Stollmann E+V GmbH",                                                                 // 34811
     "Mirifice Ltd",                                                                       // 34812
     "Multilink",                                                                          // 34813
-    "Zpend Pty. Ltd.",                                                                    // 34814
+    "OpenExpertise Pty. Ltd.",                                                            // 34814
     "Angry Dog Business Sytems",                                                          // 34815
     "Icon Power Solutions Pvt. Ltd.",                                                     // 34816
     "Tamtron Oy",                                                                         // 34817
@@ -62916,7 +62916,31 @@ static const char * const table[] =
     "AGK LLC",                                                                            // 62894
     "The Silent Trust CA",                                                                // 62895
     "The Music Place",                                                                    // 62896
-    "YUSUR Technology CO., LTD."                                                          // 62897
+    "YUSUR Technology CO., LTD.",                                                         // 62897
+    "aktivistisch.de",                                                                    // 62898
+    "Miatel LLC",                                                                         // 62899
+    "Wurth Argentina S.A.",                                                               // 62900
+    "zhiyan114",                                                                          // 62901
+    "Tarik Hodzic",                                                                       // 62902
+    "Anyum",                                                                              // 62903
+    "Born Creativity, LLC.",                                                              // 62904
+    "AGMAH",                                                                              // 62905
+    "littleroot",                                                                         // 62906
+    "Stites & Harbison PLLC",                                                             // 62907
+    "Mount Horeb Area School District",                                                   // 62908
+    "Knorrie",                                                                            // 62909
+    "Polizei Sachsen-Anhalt",                                                             // 62910
+    "Elment",                                                                             // 62911
+    "HyperX Technologies",                                                                // 62912
+    "Medtronic Endoscopy OU",                                                             // 62913
+    "Ovavi Fluid",                                                                        // 62914
+    "SZTFH",                                                                              // 62915
+    "Thorsten Seiler",                                                                    // 62916
+    "Utila Inc.",                                                                         // 62917
+    "Victor Barbu",                                                                       // 62918
+    "IP Technology Labs LLC",                                                             // 62919
+    "Redbrick",                                                                           // 62920
+    "CONVEY INDIA PRIVATE LIMITED"                                                        // 62921
 };
 
 const char* global_enterprises_lookup(uint32_t value)
