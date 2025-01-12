@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-01-03) */
+/* (last updated 2025-01-11) */
 
 #include "config.h"
 
@@ -285,7 +285,7 @@ static const char * const table[] =
     "Seiko Instruments, Inc.",                                                            // 263
     "RCE (Reseaux de Communication d'Entreprise S.A.)",                                   // 264
     "Xenocom, Inc.",                                                                      // 265
-    "Nexans Deutschland Industries",                                                      // 266
+    "Aginode Germany GmbH",                                                               // 266
     "Systech Computer Corporation",                                                       // 267
     "Visual",                                                                             // 268
     "CSC Airline Solutions Denmark A/S",                                                  // 269
@@ -35459,7 +35459,7 @@ static const char * const table[] =
     "SERPRO - Serviço Federal de Processamento de Dados",                                 // 35437
     "ekom21 - KGRZ Hessen",                                                               // 35438
     "App B.V.",                                                                           // 35439
-    "Faivre et Mahon",                                                                    // 35440
+    "ADNT Sàrl",                                                                          // 35440
     "corporacion empresarial iunka",                                                      // 35441
     "deZem GmbH",                                                                         // 35442
     "Cat Consulting, Inc",                                                                // 35443
@@ -46108,7 +46108,7 @@ static const char * const table[] =
     "CONDIS SA",                                                                          // 46086
     "IT Scharschinger",                                                                   // 46087
     "Sylvain Girod",                                                                      // 46088
-    "edisonlee55",                                                                        // 46089
+    "yuna0x0",                                                                            // 46089
     "namotronic GmbH",                                                                    // 46090
     "ICM University of Warsaw",                                                           // 46091
     "Ingenieurgesellschaft für Gebäudeautomation mbH",                                    // 46092
@@ -62940,7 +62940,34 @@ static const char * const table[] =
     "Victor Barbu",                                                                       // 62918
     "IP Technology Labs LLC",                                                             // 62919
     "Redbrick",                                                                           // 62920
-    "CONVEY INDIA PRIVATE LIMITED"                                                        // 62921
+    "CONVEY INDIA PRIVATE LIMITED",                                                       // 62921
+    "Euroclear Bank",                                                                     // 62922
+    "PNO Solutions Limited",                                                              // 62923
+    "Elmwood Local School District",                                                      // 62924
+    "Pacific Energy Inc",                                                                 // 62925
+    "DEC",                                                                                // 62926
+    "IE Tecnologia",                                                                      // 62927
+    "Eloi Holding, Inc.",                                                                 // 62928
+    "BIZMATTERS CONSULTING",                                                              // 62929
+    "Kopparfors Fastigheter AB",                                                          // 62930
+    "AKYTEC LLC",                                                                         // 62931
+    "Heru, Inc.",                                                                         // 62932
+    "Verkada",                                                                            // 62933
+    "Acuvity Inc",                                                                        // 62934
+    "Side Asset Management Ltd.",                                                         // 62935
+    "Força Aérea Portuguesa",                                                             // 62936
+    "Datamarx Inc. dba Primary",                                                          // 62937
+    "Cloud Artificial Intelligence Service Engineering (CAISE) Platform",                 // 62938
+    "Blueday Technology AS",                                                              // 62939
+    "Tayftech",                                                                           // 62940
+    "OpenText",                                                                           // 62941
+    "Echo Neurotechnologies",                                                             // 62942
+    "Jackery Inc.",                                                                       // 62943
+    "Filigran",                                                                           // 62944
+    "Secureist Inc.",                                                                     // 62945
+    "Ever Fortune.AI Co., Ltd.",                                                          // 62946
+    "Waxwing Epitome Ltd",                                                                // 62947
+    "Ampacity Ltd"                                                                        // 62948
 };
 
 const char* global_enterprises_lookup(uint32_t value)
