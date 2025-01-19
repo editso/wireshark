@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-01-11) */
+/* (last updated 2025-01-17) */
 
 #include "config.h"
 
@@ -26119,7 +26119,7 @@ static const char * const table[] =
     "Linux Training NZ",                                                                  // 26097
     "King County",                                                                        // 26098
     "Shanghai Engineering Research Center for Broadband Technologies & Applications(B-STAR) Co., Ltd.",// 26099
-    "Cypress Integrated Systems, Inc.",                                                   // 26100
+    "FigureOne, Inc.",                                                                    // 26100
     "NUPPEAD - Núcleo de Pesquisa e Projetos em Educação a Distância",                    // 26101
     "Advance Internet, Inc.",                                                             // 26102
     "WOBCOM GmbH",                                                                        // 26103
@@ -44850,7 +44850,7 @@ static const char * const table[] =
     "SilverNet Ltd.",                                                                     // 44828
     "Ganymed Pharmaceuticals AG",                                                         // 44829
     "Trio Motion Technology Ltd",                                                         // 44830
-    "Nuvotex Solutions GmbH & Co KG",                                                     // 44831
+    "Nuvotex GmbH",                                                                       // 44831
     "Product Ventures Ltd",                                                               // 44832
     "peteheilig.com",                                                                     // 44833
     "SYSTEMS AND TECHNOLOGIES, ZAO",                                                      // 44834
@@ -62967,7 +62967,43 @@ static const char * const table[] =
     "Secureist Inc.",                                                                     // 62945
     "Ever Fortune.AI Co., Ltd.",                                                          // 62946
     "Waxwing Epitome Ltd",                                                                // 62947
-    "Ampacity Ltd"                                                                        // 62948
+    "Ampacity Ltd",                                                                       // 62948
+    "Naomi Amethyst",                                                                     // 62949
+    "Grzegorz Zieliński",                                                                 // 62950
+    "matmair",                                                                            // 62951
+    "RELICUS TECHNOLOGIES PRIVATE LIMITED",                                               // 62952
+    "OOO NovoScript",                                                                     // 62953
+    "STAMPEE",                                                                            // 62954
+    "Эмилинк (Emilink)",                                                                  // 62955
+    "Koncado Ltd",                                                                        // 62956
+    "Xpota Limited",                                                                      // 62957
+    "Nantava",                                                                            // 62958
+    "Copernik",                                                                           // 62959
+    "FooBar LLC",                                                                         // 62960
+    "Distril Ltd",                                                                        // 62961
+    "Noctys Technologies, Inc.",                                                          // 62962
+    "SmartSite",                                                                          // 62963
+    "RUBRICAE BUSINESS SOLUTIONS SL",                                                     // 62964
+    "Moelven Notnäs Ransby AB",                                                           // 62965
+    "Bambang Sugiharto",                                                                  // 62966
+    "Business Cyber Guardian",                                                            // 62967
+    "NEWare Info Technology LTD",                                                         // 62968
+    "Agilence, Inc.",                                                                     // 62969
+    "Usramambo",                                                                          // 62970
+    "ZAO PATIO (PATIO, CJSC)",                                                            // 62971
+    "Goldtech Information",                                                               // 62972
+    "Kwizda Holding GmbH",                                                                // 62973
+    "OLLY IT",                                                                            // 62974
+    "Novem Operations Inc",                                                               // 62975
+    "Documatica",                                                                         // 62976
+    "Ingenieurgruppe IVV GmbH & Co. KG",                                                  // 62977
+    "MARU International Business Consulting",                                             // 62978
+    "Hiconics Eco-energy Drive Technology Co.,LTD",                                       // 62979
+    "Moelven Valåsen AB",                                                                 // 62980
+    "Moelven Vänerply AB",                                                                // 62981
+    "Moelven Edanesågen AB",                                                              // 62982
+    "Moelven Årjäng Såg AB",                                                              // 62983
+    "Moelven Dalaträ AB"                                                                  // 62984
 };
 
 const char* global_enterprises_lookup(uint32_t value)
