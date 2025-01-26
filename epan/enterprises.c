@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-01-17) */
+/* (last updated 2025-01-25) */
 
 #include "config.h"
 
@@ -9697,7 +9697,7 @@ static const char * const table[] =
     "Grupo Financiero Uno",                                                               // 9675
     "hottis.de",                                                                          // 9676
     "Hydriads",                                                                           // 9677
-    "K.U. Leuven",                                                                        // 9678
+    "KU Leuven",                                                                          // 9678
     "mBalance",                                                                           // 9679
     "SelectMetrics, Inc.",                                                                // 9680
     "Mortgage Systems International",                                                     // 9681
@@ -44794,7 +44794,7 @@ static const char * const table[] =
     "West Genesee Central School District",                                               // 44772
     "Sistemas de Seguridade A1",                                                          // 44773
     "Alameda Health Services",                                                            // 44774
-    "City Network International AB",                                                      // 44775
+    "Cleura AB",                                                                          // 44775
     "Hedberg Produtions",                                                                 // 44776
     "MEAZON SA",                                                                          // 44777
     "thinkindifferent.net",                                                               // 44778
@@ -63003,7 +63003,33 @@ static const char * const table[] =
     "Moelven Vänerply AB",                                                                // 62981
     "Moelven Edanesågen AB",                                                              // 62982
     "Moelven Årjäng Såg AB",                                                              // 62983
-    "Moelven Dalaträ AB"                                                                  // 62984
+    "Moelven Dalaträ AB",                                                                 // 62984
+    "EVABANK",                                                                            // 62985
+    "Tom Plant",                                                                          // 62986
+    "DMS DivTel",                                                                         // 62987
+    "BlueRock Security, Inc.",                                                            // 62988
+    "Mirion Technologies",                                                                // 62989
+    "ADT System",                                                                         // 62990
+    "AppsHandler S.A.S.",                                                                 // 62991
+    "Sunshine Quality Solutions",                                                         // 62992
+    "Praha1.net",                                                                         // 62993
+    "Delairco",                                                                           // 62994
+    "Hosenso GmbH und Co. KG",                                                            // 62995
+    "ZStudio",                                                                            // 62996
+    "Gregory Smith",                                                                      // 62997
+    "TOMAS CHOTT",                                                                        // 62998
+    "Sitehop Ltd",                                                                        // 62999
+    "MLVision",                                                                           // 63000
+    "Neurology Center",                                                                   // 63001
+    "Homerun Management AG",                                                              // 63002
+    "Eltronic Group",                                                                     // 63003
+    "Döhler GmbH",                                                                        // 63004
+    "Alerta d.o.o.",                                                                      // 63005
+    "Southeastern Medical Oncology Center",                                               // 63006
+    "The Performing, Endurance, and Artistic Athlete Clinic, PLLC",                       // 63007
+    "Aberia",                                                                             // 63008
+    "Instituut van de Belastingadviseurs en de Accountants (ITAA)",                       // 63009
+    "MTower"                                                                              // 63010
 };
 
 const char* global_enterprises_lookup(uint32_t value)
