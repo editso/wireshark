@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-01-25) */
+/* (last updated 2025-02-01) */
 
 #include "config.h"
 
@@ -2107,7 +2107,7 @@ static const char * const table[] =
     "Isolation Systems Limited",                                                          // 2085
     "AVIDIA Systems, Inc.",                                                               // 2086
     "Cidera-Mainstream Services",                                                         // 2087
-    "Radstone Technology Plc",                                                            // 2088
+    "Abaco Systems",                                                                      // 2088
     "Philips Business Communications",                                                    // 2089
     "FMS Services",                                                                       // 2090
     "Supernova Communications",                                                           // 2091
@@ -4365,7 +4365,7 @@ static const char * const table[] =
     "Boundless Technologies",                                                             // 4343
     "Post-Industrial Training Institute",                                                 // 4344
     "Thomas & Betts",                                                                     // 4345
-    "Phoenix Contact GmbH & Co.",                                                         // 4346
+    "Phoenix Contact GmbH & Co. KG",                                                      // 4346
     "MessageWise Inc.",                                                                   // 4347
     "Domino Computers Nigeria Ltd",                                                       // 4348
     "LXCO Technologies AG",                                                               // 4349
@@ -4393,7 +4393,7 @@ static const char * const table[] =
     "Digital United Inc.",                                                                // 4371
     "Softlink s.r.o.",                                                                    // 4372
     "Rivere Corporation",                                                                 // 4373
-    "Motive Communications, Inc.",                                                        // 4374
+    "Motive Software Solutions",                                                          // 4374
     "DT Research, Inc",                                                                   // 4375
     "Nettech Systems, Inc.",                                                              // 4376
     "X-Point Communications",                                                             // 4377
@@ -23448,7 +23448,7 @@ static const char * const table[] =
     "Louverturenet",                                                                      // 23426
     "The Home Depot Supply MRO",                                                          // 23427
     "NOC, School of Engineering, Morgan State University",                                // 23428
-    "Eurocis",                                                                            // 23429
+    "Philippe Duveau",                                                                    // 23429
     "Lumigent Technologies, Inc.",                                                        // 23430
     "CAMed",                                                                              // 23431
     "Packet Island Inc.",                                                                 // 23432
@@ -41035,7 +41035,7 @@ static const char * const table[] =
     "Miyagi University of Education",                                                     // 41013
     "Attam Ltd",                                                                          // 41014
     "Intelligenza",                                                                       // 41015
-    "Héonium SARL",                                                                       // 41016
+    "Kapsule Production SAS",                                                             // 41016
     "EDV-Studio Stephan Konheiser",                                                       // 41017
     "WaldiNetwork Ltd. Home",                                                             // 41018
     "Axians",                                                                             // 41019
@@ -59037,7 +59037,7 @@ static const char * const table[] =
     "Transports Baché",                                                                   // 59015
     "JusonTech",                                                                          // 59016
     "Beyondbell",                                                                         // 59017
-    "STAXCON",                                                                            // 59018
+    NULL,                                                                                 // 59018
     "ISSM Consulting SRL",                                                                // 59019
     "Yashiro Laboratory",                                                                 // 59020
     "Miln",                                                                               // 59021
@@ -63029,7 +63029,43 @@ static const char * const table[] =
     "The Performing, Endurance, and Artistic Athlete Clinic, PLLC",                       // 63007
     "Aberia",                                                                             // 63008
     "Instituut van de Belastingadviseurs en de Accountants (ITAA)",                       // 63009
-    "MTower"                                                                              // 63010
+    "MTower",                                                                             // 63010
+    "Hansestadt Lübeck",                                                                  // 63011
+    "Andreas Resch",                                                                      // 63012
+    "Automatio",                                                                          // 63013
+    "The American University of Paris",                                                   // 63014
+    "Shape Technology Limited",                                                           // 63015
+    "OpenCloud GmbH",                                                                     // 63016
+    "Canford Group Limited",                                                              // 63017
+    "CabalServices",                                                                      // 63018
+    "Caritas Schweiz",                                                                    // 63019
+    "PECO Foods",                                                                         // 63020
+    "TryBuy CZ",                                                                          // 63021
+    "Block Solution",                                                                     // 63022
+    "SREE Hotels",                                                                        // 63023
+    "Computerservice ips",                                                                // 63024
+    "Tampa Electric Company",                                                             // 63025
+    "CatchSystems B.V.",                                                                  // 63026
+    "Shi Qiu",                                                                            // 63027
+    "GBT Solutions",                                                                      // 63028
+    "Steve Gauvin",                                                                       // 63029
+    "Trafficlight de México",                                                             // 63030
+    "HANAOKA MUSEN DENKI CO.,LTD",                                                        // 63031
+    "Engage USA",                                                                         // 63032
+    "Axiado Corporation",                                                                 // 63033
+    "Tecnologias Plexus S.L.",                                                            // 63034
+    "COFO e.K.",                                                                          // 63035
+    "Onsite Women's Health",                                                              // 63036
+    "Limited liability company ""Mobil Telecom""",                                        // 63037
+    "Nikolay Zaytsev",                                                                    // 63038
+    "vaettir.net",                                                                        // 63039
+    "TOAD Consulting",                                                                    // 63040
+    "Jimzy.ca",                                                                           // 63041
+    "New Inergy GmbH",                                                                    // 63042
+    "TMC, LLC",                                                                           // 63043
+    "Harrison  County Health Department",                                                 // 63044
+    "Nlets",                                                                              // 63045
+    "Yass Valley Council"                                                                 // 63046
 };
 
 const char* global_enterprises_lookup(uint32_t value)
