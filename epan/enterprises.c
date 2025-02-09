@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-02-01) */
+/* (last updated 2025-02-07) */
 
 #include "config.h"
 
@@ -44668,7 +44668,7 @@ static const char * const table[] =
     "Emko Elektronik Sanayi ve Ticaret A.Ş.",                                             // 44646
     "Argus der Presse AG",                                                                // 44647
     "Manet Ltd",                                                                          // 44648
-    "Alma Technologies",                                                                  // 44649
+    "John K. Hinsdale",                                                                   // 44649
     "Hemotology Oncology Care of Northern VA",                                            // 44650
     "University of Detroit Jesuit High School and Academy",                               // 44651
     "LaMarche Mfg. Company",                                                              // 44652
@@ -63065,7 +63065,45 @@ static const char * const table[] =
     "TMC, LLC",                                                                           // 63043
     "Harrison  County Health Department",                                                 // 63044
     "Nlets",                                                                              // 63045
-    "Yass Valley Council"                                                                 // 63046
+    "Yass Valley Council",                                                                // 63046
+    "UCDPN Freelance",                                                                    // 63047
+    "The Cyber Security Clinic",                                                          // 63048
+    "Trevor",                                                                             // 63049
+    "Roskilde Festival",                                                                  // 63050
+    "Plugnotes",                                                                          // 63051
+    "Agile Design Services Pvt Ltd",                                                      // 63052
+    "MIND Software",                                                                      // 63053
+    "Nplus S.r.l.",                                                                       // 63054
+    "Cardiff Students' Union",                                                            // 63055
+    "طراحان ارتباط پایدار آروین, (Tarahan Ertabat Payedar Arvin)",                        // 63056
+    "Barrientos FRG",                                                                     // 63057
+    "InbisPlus",                                                                          // 63058
+    "Qingdao Haier New Energy Technology Co.,Ltd.",                                       // 63059
+    "FAFO e.V.",                                                                          // 63060
+    "Michael Vostrikov",                                                                  // 63061
+    "SpiderOak",                                                                          // 63062
+    "Marceco LTD",                                                                        // 63063
+    "Squared Paper",                                                                      // 63064
+    "ESDEE BUSINESS MACHINE PVT.LTD.",                                                    // 63065
+    "MCS IT Distribution Limited",                                                        // 63066
+    "Wiremax s.r.o.",                                                                     // 63067
+    "Klinikum der Stadt Ludwigshafen am Rhein gGmbH",                                     // 63068
+    "MightyFalcon DMCC",                                                                  // 63069
+    "Tilt Brand Solutions",                                                               // 63070
+    "Dirección de Gestión de Resultados",                                                 // 63071
+    "Procescom",                                                                          // 63072
+    "Scene Above, Inc.",                                                                  // 63073
+    "Nexthop Systems Inc.",                                                               // 63074
+    "Peter Döhle Schiffahrts-KG",                                                         // 63075
+    "Credit Agricole Consumer Finance",                                                   // 63076
+    "NOREST-TELECOM",                                                                     // 63077
+    "Slate",                                                                              // 63078
+    "influence.money LLC",                                                                // 63079
+    "Nanjing Aozheng Information Technology Co., Ltd.",                                   // 63080
+    "Unscrew IT",                                                                         // 63081
+    "Bioinformation and DDBJ Center",                                                     // 63082
+    "ARQUUS DEFENSE",                                                                     // 63083
+    "CryptoNext Security"                                                                 // 63084
 };
 
 const char* global_enterprises_lookup(uint32_t value)
