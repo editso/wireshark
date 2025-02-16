@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-02-07) */
+/* (last updated 2025-02-14) */
 
 #include "config.h"
 
@@ -23115,7 +23115,7 @@ static const char * const table[] =
     "ANAGRAN",                                                                            // 23093
     "Kuehne + Nagel (AG&Co.) KG",                                                         // 23094
     "ClarioNet, s.r.o.",                                                                  // 23095
-    "jminet.com",                                                                         // 23096
+    NULL,                                                                                 // 23096
     "Municipalidad de Rosario",                                                           // 23097
     "ServicePilot Technologies",                                                          // 23098
     "NeTAMS",                                                                             // 23099
@@ -40171,7 +40171,7 @@ static const char * const table[] =
     "PFA Pension",                                                                        // 40149
     "Kenium",                                                                             // 40150
     "G²mobility SA",                                                                      // 40151
-    "Trimtab.ca",                                                                         // 40152
+    NULL,                                                                                 // 40152
     "Abraxas Informatik AG",                                                              // 40153
     "North-Caucasus Federal University",                                                  // 40154
     "Groundhog Technologies",                                                             // 40155
@@ -47111,7 +47111,7 @@ static const char * const table[] =
     "Ramp Holdings, Inc.",                                                                // 47089
     "Exdev",                                                                              // 47090
     "Cancer and Blood Specialist of Northern Virginia, PC",                               // 47091
-    "Tangible Trade",                                                                     // 47092
+    NULL,                                                                                 // 47092
     "DeMaTech HB",                                                                        // 47093
     "Sielte S.p.A.",                                                                      // 47094
     "Subtopia Ltd",                                                                       // 47095
@@ -63103,7 +63103,34 @@ static const char * const table[] =
     "Unscrew IT",                                                                         // 63081
     "Bioinformation and DDBJ Center",                                                     // 63082
     "ARQUUS DEFENSE",                                                                     // 63083
-    "CryptoNext Security"                                                                 // 63084
+    "CryptoNext Security",                                                                // 63084
+    "FreeIPA.xyz",                                                                        // 63085
+    "GDU_SIUS_OVESZI",                                                                    // 63086
+    "Finanz Informatik GmbH & Co. KG",                                                    // 63087
+    "Pixop",                                                                              // 63088
+    "Moose Interactive Entertainment LTD",                                                // 63089
+    "Järvi-Suomen Uittoyhdistys",                                                         // 63090
+    "elektronik-labor CARLS GmbH & Co. KG",                                               // 63091
+    """RUBICON WIRELESS COMMUNICATION"" LLC",                                             // 63092
+    "TJ Innovation",                                                                      // 63093
+    "3um",                                                                                // 63094
+    "OpenSensie.org",                                                                     // 63095
+    "Vidau Systems",                                                                      // 63096
+    "Natech SA",                                                                          // 63097
+    "KUNBUS GmbH",                                                                        // 63098
+    "Riverside Partners LLC",                                                             // 63099
+    "Zoobook Systems LLC",                                                                // 63100
+    "TripleCyber Corp",                                                                   // 63101
+    "Gauriganj Secondary School",                                                         // 63102
+    "ANSATRADINGMARKETING",                                                               // 63103
+    "Pemerintah Kota Magelang",                                                           // 63104
+    "Encore Property Group",                                                              // 63105
+    "Colway Industrial S.L.",                                                             // 63106
+    "OLT Cloud",                                                                          // 63107
+    "Standards & Companies",                                                              // 63108
+    "Panasonic Avionics Corporation - Security Services",                                 // 63109
+    "Data catcher",                                                                       // 63110
+    "LexWell Foundation"                                                                  // 63111
 };
 
 const char* global_enterprises_lookup(uint32_t value)
