@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-02-14) */
+/* (last updated 2025-02-21) */
 
 #include "config.h"
 
@@ -11933,7 +11933,7 @@ static const char * const table[] =
     NULL,                                                                                 // 11911
     "NetMotion Wireless Inc.",                                                            // 11912
     "netsys.com",                                                                         // 11913
-    "National Information Infrastructure Development Institute",                          // 11914
+    "National Information Infrastructure Development Program",                            // 11914
     "Oldring & Associates, Inc.",                                                         // 11915
     "Pablix",                                                                             // 11916
     "PAR3 Communications",                                                                // 11917
@@ -15137,7 +15137,7 @@ static const char * const table[] =
     "Obvius LLc",                                                                         // 15115
     "Liberty IT Solutions",                                                               // 15116
     "Protection One Inc.",                                                                // 15117
-    "Westar Energy",                                                                      // 15118
+    "Evergy Inc",                                                                         // 15118
     "Fidelity National Information Solutions",                                            // 15119
     "CRCnet Wireless Network",                                                            // 15120
     "Mentata Systems",                                                                    // 15121
@@ -54817,7 +54817,7 @@ static const char * const table[] =
     "HiveMQ / dc-square GmbH",                                                            // 54795
     "Department of Public Instruction - State of Wisconsin",                              // 54796
     "New England Hernia Center LLC",                                                      // 54797
-    "Dalian Neusoft Education Technology Group Co., Ltd.",                                // 54798
+    "Neutech Group Limited",                                                              // 54798
     "SVD Gmbh",                                                                           // 54799
     "Apparent Inc.",                                                                      // 54800
     "County of Kern",                                                                     // 54801
@@ -63108,7 +63108,7 @@ static const char * const table[] =
     "GDU_SIUS_OVESZI",                                                                    // 63086
     "Finanz Informatik GmbH & Co. KG",                                                    // 63087
     "Pixop",                                                                              // 63088
-    "Moose Interactive Entertainment LTD",                                                // 63089
+    "Moose Interactive LTD",                                                              // 63089
     "Järvi-Suomen Uittoyhdistys",                                                         // 63090
     "elektronik-labor CARLS GmbH & Co. KG",                                               // 63091
     """RUBICON WIRELESS COMMUNICATION"" LLC",                                             // 63092
@@ -63130,7 +63130,38 @@ static const char * const table[] =
     "Standards & Companies",                                                              // 63108
     "Panasonic Avionics Corporation - Security Services",                                 // 63109
     "Data catcher",                                                                       // 63110
-    "LexWell Foundation"                                                                  // 63111
+    "LexWell Foundation",                                                                 // 63111
+    "St. John's Episcopal Hospital",                                                      // 63112
+    "mvtel",                                                                              // 63113
+    "Western Seminary",                                                                   // 63114
+    "Arizona Network",                                                                    // 63115
+    "GREEN ESS PTY LTD",                                                                  // 63116
+    "Info21, spol. s r.o.",                                                               // 63117
+    "URC systems",                                                                        // 63118
+    "Altowav",                                                                            // 63119
+    "Alexey D. Filimonov",                                                                // 63120
+    "OJV De Koornbeurs",                                                                  // 63121
+    "Suxun Yunlian Technology",                                                           // 63122
+    "2p10 Internal Infrastructure",                                                       // 63123
+    "XAYONE SOLUTIONS",                                                                   // 63124
+    "ABUS August Bremicker Söhne KG",                                                     // 63125
+    "CRT ELECTRONIC s.r.o.",                                                              // 63126
+    "Hallersrums Skogstjänst AB",                                                         // 63127
+    "UNEXSYS Technologies, LLC",                                                          // 63128
+    "Ting Chen",                                                                          // 63129
+    "HEISEY JEFFREY WALTER",                                                              // 63130
+    "INOVA DC",                                                                           // 63131
+    "Universidad Carlos III de Madrid",                                                   // 63132
+    "MIO Partners",                                                                       // 63133
+    "Abakus Plus d.o.o.",                                                                 // 63134
+    "Chemicals Incorportated",                                                            // 63135
+    "Gruhn IT GmbH",                                                                      // 63136
+    "Altowav AltoReach",                                                                  // 63137
+    "Östgöta Rundvirke",                                                                  // 63138
+    "Skövde Energi AB",                                                                   // 63139
+    "Karlstads Energi AB",                                                                // 63140
+    "Nova banka AD Banja Luka",                                                           // 63141
+    "LUIS+ LTD"                                                                           // 63142
 };
 
 const char* global_enterprises_lookup(uint32_t value)
