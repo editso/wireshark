@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-02-21) */
+/* (last updated 2025-02-28) */
 
 #include "config.h"
 
@@ -2885,7 +2885,7 @@ static const char * const table[] =
     "Thomson Inc.",                                                                       // 2863
     "Digitel S/A Industria Eletronica",                                                   // 2864
     "Nortel Networks - Optical Metro",                                                    // 2865
-    "Technical Insights",                                                                 // 2866
+    "Virginia Computer Solutions, Inc",                                                   // 2866
     "NKF Electronics",                                                                    // 2867
     "Glasshouse Business Networks B.V.",                                                  // 2868
     "VSI Enterprises",                                                                    // 2869
@@ -26843,7 +26843,7 @@ static const char * const table[] =
     "Agent Logic",                                                                        // 26821
     "Beijing Telestone Technology Co.,Ltd.",                                              // 26822
     "MarzhillStudios",                                                                    // 26823
-    "Conseil Général de Meurthe et Moselle",                                              // 26824
+    "Conseil Départemental de Meurthe et Moselle",                                        // 26824
     "netWerkz IT Solutions",                                                              // 26825
     "Eon Corporation",                                                                    // 26826
     "ICT 4 Schools",                                                                      // 26827
@@ -29393,7 +29393,7 @@ static const char * const table[] =
     "CDC Arkhineo",                                                                       // 29371
     "BidiX",                                                                              // 29372
     "Dillet.net",                                                                         // 29373
-    "elegiac",                                                                            // 29374
+    NULL,                                                                                 // 29374
     "Selekron Microcontrol s.l.",                                                         // 29375
     "Trägerverein Bürgernetz Bamberg e.V.",                                               // 29376
     "Automate The Things, LLC",                                                           // 29377
@@ -34100,7 +34100,7 @@ static const char * const table[] =
     "Informtekhnika & Communication, LLC",                                                // 34078
     "Axios Systems",                                                                      // 34079
     "rtCamp Solutions Pvt. Ltd.",                                                         // 34080
-    "INSYS Microelectronics GmbH",                                                        // 34081
+    "INSYS icom GmbH",                                                                    // 34081
     "CitySync Limited",                                                                   // 34082
     "Erayd LTD",                                                                          // 34083
     "Universidade Federal de Juiz de Fora",                                               // 34084
@@ -55020,7 +55020,7 @@ static const char * const table[] =
     "Keramist",                                                                           // 54998
     "Uniview Europe B.V.",                                                                // 54999
     "Local",                                                                              // 55000
-    "eSite Power Systems AB",                                                             // 55001
+    "Clear blue technologies",                                                            // 55001
     "Shenzhen Putianan Network Technology Co., Ltd.",                                     // 55002
     "mapway",                                                                             // 55003
     "Bridge Alliance",                                                                    // 55004
@@ -63154,14 +63154,67 @@ static const char * const table[] =
     "Universidad Carlos III de Madrid",                                                   // 63132
     "MIO Partners",                                                                       // 63133
     "Abakus Plus d.o.o.",                                                                 // 63134
-    "Chemicals Incorportated",                                                            // 63135
+    "Chemicals Incorporated",                                                             // 63135
     "Gruhn IT GmbH",                                                                      // 63136
     "Altowav AltoReach",                                                                  // 63137
     "Östgöta Rundvirke",                                                                  // 63138
     "Skövde Energi AB",                                                                   // 63139
     "Karlstads Energi AB",                                                                // 63140
     "Nova banka AD Banja Luka",                                                           // 63141
-    "LUIS+ LTD"                                                                           // 63142
+    "LUIS+ LTD",                                                                          // 63142
+    "Axians SE",                                                                          // 63143
+    "Michael Kieffer",                                                                    // 63144
+    "Jedda Wignall",                                                                      // 63145
+    "Einzelunternehmen Tassilo Philipp",                                                  // 63146
+    "Techniken Tecnologia",                                                               // 63147
+    "Community Bankshares, Inc.",                                                         // 63148
+    "BBSakura Networks, Inc.",                                                            // 63149
+    "Vinnergi AB",                                                                        // 63150
+    "Oxyfi AB",                                                                           // 63151
+    "Kristiansand kommune",                                                               // 63152
+    "Mark Schöppler",                                                                     // 63153
+    "Falkenberg Energi AB",                                                               // 63154
+    "Samet Keskin",                                                                       // 63155
+    "OTGH Cloud Ltd",                                                                     // 63156
+    "Bayross Technologies Inc.",                                                          // 63157
+    "siut.eu",                                                                            // 63158
+    "Visser BV",                                                                          // 63159
+    "PMA-275 Poway",                                                                      // 63160
+    "Yukishige Yoshida",                                                                  // 63161
+    "March Health Information Systems",                                                   // 63162
+    "SANJEEV PREMI",                                                                      // 63163
+    "Waggeryd Cell AB",                                                                   // 63164
+    "Västervik Miljö & Energi AB",                                                        // 63165
+    "Scanvaegt Systems AB",                                                               // 63166
+    "FUNDACIÓN COOLTURE4KIDS",                                                            // 63167
+    "UnipartRail",                                                                        // 63168
+    "TEXAS DEPARTMENT OF DEVELOPMENT",                                                    // 63169
+    "XYC INDUSTRY CO.,LIMITED",                                                           // 63170
+    "C4 Energi AB",                                                                       // 63171
+    "Brueterei Weser-Ems GmbH & Co. KG",                                                  // 63172
+    "Etcbase Yazilim",                                                                    // 63173
+    "LD Invest",                                                                          // 63174
+    "VAN BRAND",                                                                          // 63175
+    "PNS Data GmbH",                                                                      // 63176
+    "Sylvamo",                                                                            // 63177
+    "Beijing Yukuan Technology Co., Ltd",                                                 // 63178
+    "University of Applied Sciences and Arts Dortmund",                                   // 63179
+    "Affärsverken Karlskrona AB",                                                         // 63180
+    "Kopjra S.R.L.",                                                                      // 63181
+    "Ystad Energi AB",                                                                    // 63182
+    "Prewen AG",                                                                          // 63183
+    "Lenovo AIO",                                                                         // 63184
+    "Brighton Fire Rescue District",                                                      // 63185
+    "OneWeb",                                                                             // 63186
+    "Krycklinge Skog AB",                                                                 // 63187
+    "Neoway Technology",                                                                  // 63188
+    "Mälarenergi AB",                                                                     // 63189
+    "Gällivare Energi AB",                                                                // 63190
+    "Episcopal Health Services",                                                          // 63191
+    "Fjärrvärme i Osby AB",                                                               // 63192
+    "Minnetonka Public School District (ISD 276)",                                        // 63193
+    "Vissing & Company",                                                                  // 63194
+    "Alexandre LEVAVASSEUR"                                                               // 63195
 };
 
 const char* global_enterprises_lookup(uint32_t value)
