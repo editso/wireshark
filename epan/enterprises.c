@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-02-28) */
+/* (last updated 2025-03-08) */
 
 #include "config.h"
 
@@ -6645,7 +6645,7 @@ static const char * const table[] =
     "servizi2000",                                                                        // 6623
     "Sauro Prosperi",                                                                     // 6624
     "PVT, a.s.",                                                                          // 6625
-    "Tekotelecom S.p.A.",                                                                 // 6626
+    "JMA Servizi e Industria srl",                                                        // 6626
     "Telematica International B.V.",                                                      // 6627
     "Juaben",                                                                             // 6628
     "ulticom",                                                                            // 6629
@@ -13701,7 +13701,7 @@ static const char * const table[] =
     "AltiGen Communications Inc.",                                                        // 13679
     "Aviva Solutions Inc.",                                                               // 13680
     "CHILDLOCK solutions",                                                                // 13681
-    "Ecole des Mines de Nantes",                                                          // 13682
+    "IMT Atlantique",                                                                     // 13682
     "EFTechnologies, Inc.",                                                               // 13683
     "ELPROMA Elektronika",                                                                // 13684
     "Faculty of Mathematics and Computer Science, Nicholas Copernicus University of Torun",// 13685
@@ -14797,7 +14797,7 @@ static const char * const table[] =
     "Peak Internet",                                                                      // 14775
     "Mystic Coders",                                                                      // 14776
     "izenpe s.a.",                                                                        // 14777
-    "GEV - Ecole des Mines",                                                              // 14778
+    "IMT Atlantique - Feue GEV",                                                          // 14778
     "e2 Technology Inc.",                                                                 // 14779
     "KAEVEE",                                                                             // 14780
     "ThoughtPort Authority of Chicacgo",                                                  // 14781
@@ -26788,7 +26788,7 @@ static const char * const table[] =
     ".vantronix secure systems",                                                          // 26766
     "Alcatel-Lucent TMC",                                                                 // 26767
     "Comune di Rimini",                                                                   // 26768
-    "Raytheon Technologies Corporation",                                                  // 26769
+    "RTX Corporation",                                                                    // 26769
     "Virtutility Ltd",                                                                    // 26770
     "Versaterm Inc.",                                                                     // 26771
     "The Royal Conservatoire",                                                            // 26772
@@ -32047,7 +32047,7 @@ static const char * const table[] =
     "Primal Research",                                                                    // 32025
     "Sigma ITS Co., Ltd.",                                                                // 32026
     "Edvina AB",                                                                          // 32027
-    "Tray International Services and Administration (Pty) Ltd",                           // 32028
+    "Overseas Administration Management (Pty) Ltd",                                       // 32028
     "The Rafferty Patent Law Firm, PC",                                                   // 32029
     "Commodity Systems",                                                                  // 32030
     "XITIJ INDIA",                                                                        // 32031
@@ -32307,7 +32307,7 @@ static const char * const table[] =
     "Sumavision Technologies Co.,Ltd",                                                    // 32285
     "ACD Elektronik GmbH",                                                                // 32286
     "Sattvik Software & Technology Resources, Ltd. Co.",                                  // 32287
-    "eg-electronic GmbH",                                                                 // 32288
+    "EIZO Technologies GmbH",                                                             // 32288
     "CellSpotting.com",                                                                   // 32289
     "Records For Living, Inc.",                                                           // 32290
     "lingzhou NetWork",                                                                   // 32291
@@ -35172,7 +35172,7 @@ static const char * const table[] =
     "inno-networks",                                                                      // 35150
     "Raiffeisen Bank Aval",                                                               // 35151
     "AvroRAID",                                                                           // 35152
-    "Kynetics srl",                                                                       // 35153
+    "Kynetics Inc",                                                                       // 35153
     "PowerShield Ltd.",                                                                   // 35154
     "IP Cube Co.,Ltd",                                                                    // 35155
     "Unbit",                                                                              // 35156
@@ -37479,7 +37479,7 @@ static const char * const table[] =
     "Medas S.R.L.",                                                                       // 37457
     "QualCare, Inc",                                                                      // 37458
     "Yealink",                                                                            // 37459
-    "Nova banka AD",                                                                      // 37460
+    NULL,                                                                                 // 37460
     "Peakwork GmbH",                                                                      // 37461
     "COGISTICS, INC.",                                                                    // 37462
     "Leitwelt GmbH",                                                                      // 37463
@@ -43470,7 +43470,7 @@ static const char * const table[] =
     "THEFEINERS.COM",                                                                     // 43448
     "mobilcom-debitel GmbH",                                                              // 43449
     "Agencja Restrukturyzacji i Modernizacji Rolnictwa",                                  // 43450
-    "Australian Customs and Border Protection Service",                                   // 43451
+    "Department of Home Affairs",                                                         // 43451
     "Pragtec inc.",                                                                       // 43452
     "Visiometrics S.L.",                                                                  // 43453
     "Wiccess",                                                                            // 43454
@@ -52690,7 +52690,7 @@ static const char * const table[] =
     "jörg giencke | internet design",                                                     // 52668
     "Cognida Foundation",                                                                 // 52669
     "ZULU",                                                                               // 52670
-    "arvato",                                                                             // 52671
+    "Document Channel",                                                                   // 52671
     "Teleservice Bredband Skane AB",                                                      // 52672
     "VPSign Ltd.",                                                                        // 52673
     "Schneider Electric / APC NetBotz",                                                   // 52674
@@ -63214,7 +63214,47 @@ static const char * const table[] =
     "Fjärrvärme i Osby AB",                                                               // 63192
     "Minnetonka Public School District (ISD 276)",                                        // 63193
     "Vissing & Company",                                                                  // 63194
-    "Alexandre LEVAVASSEUR"                                                               // 63195
+    "Alexandre LEVAVASSEUR",                                                              // 63195
+    "Cumberland County CommuniCare Inc.",                                                 // 63196
+    "New York Oncology Hematology",                                                       // 63197
+    "Kraftringen AB",                                                                     // 63198
+    "imID CJSC",                                                                          // 63199
+    "IT Black",                                                                           // 63200
+    "accesso",                                                                            // 63201
+    "Erbe Elektromedizin",                                                                // 63202
+    "Mediactive Connect",                                                                 // 63203
+    "Institut Camille Miret",                                                             // 63204
+    "EUTOP Group",                                                                        // 63205
+    "Koninklijke Philips Electronics NV",                                                 // 63206
+    "Andrea Filoso",                                                                      // 63207
+    "MOSTYLE CORPORATION",                                                                // 63208
+    "Vision Intelligence",                                                                // 63209
+    "Kreisfeuerwehrzentrale Paderborn",                                                   // 63210
+    "Mälarenergi AB/ Kungsör",                                                            // 63211
+    "ANDRITZ Hydro GmbH",                                                                 // 63212
+    "Ljusdal Energi",                                                                     // 63213
+    "Reolink Innovation Limited",                                                         // 63214
+    "OpenSSL Corporation",                                                                // 63215
+    "SwissSign AG",                                                                       // 63216
+    "Sarat Chandra Prasad Ginjupalli",                                                    // 63217
+    "PenAir Credit Union",                                                                // 63218
+    "AuthorityGate Inc",                                                                  // 63219
+    "Biral AG",                                                                           // 63220
+    "ABB Oy Distribution Solutions",                                                      // 63221
+    "PlumSpace",                                                                          // 63222
+    "Mysecuregift",                                                                       // 63223
+    "Tomasz Sobon",                                                                       // 63224
+    "Anvilcraft",                                                                         // 63225
+    "Telemach Slovenia",                                                                  // 63226
+    "Business Card Associates",                                                           // 63227
+    "HANGZHOU INNOWAVEPOWER ELECTRIONIC TECHNOLOGY CO.,LTD",                              // 63228
+    "Spaeth Technologies",                                                                // 63229
+    "持久钟表 (Long-lasting Clock)",                                                          // 63230
+    "Genelach Dáil Cuinn Project™",                                                       // 63231
+    "Harman Connected Services Corporation India Pvt. Ltd.",                              // 63232
+    "Layer Acht Software GmbH & Co. KG",                                                  // 63233
+    "Compass Group Italia spa",                                                           // 63234
+    "Rivos Inc."                                                                          // 63235
 };
 
 const char* global_enterprises_lookup(uint32_t value)
