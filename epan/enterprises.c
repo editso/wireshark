@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-03-08) */
+/* (last updated 2025-03-14) */
 
 #include "config.h"
 
@@ -6120,7 +6120,7 @@ static const char * const table[] =
     "AvantGo",                                                                            // 6098
     "INTELLIDEN, Incorporated",                                                           // 6099
     "Covalent Technologies, Inc.",                                                        // 6100
-    "Trend Micro Inc.",                                                                   // 6101
+    "Trend Micro Incorporated",                                                           // 6101
     "Integrated Research Ltd.",                                                           // 6102
     "Al Rasheed",                                                                         // 6103
     "Cosmobridge Co., Ltd.",                                                              // 6104
@@ -10753,7 +10753,7 @@ static const char * const table[] =
     "Silicon Energy",                                                                     // 10731
     "Symbidia Limited",                                                                   // 10732
     "The Mercury File System",                                                            // 10733
-    "TippingPoint Technologies",                                                          // 10734
+    "Trend Micro Inc.",                                                                   // 10734
     "Unicorn Holding a.s.",                                                               // 10735
     "University of Denver",                                                               // 10736
     "Web Simulation",                                                                     // 10737
@@ -23404,7 +23404,7 @@ static const char * const table[] =
     "Swissphone Telecom AG",                                                              // 23382
     "Azienda Sanitaria Locale N.4 Chiavarese",                                            // 23383
     "Aptus Elektronik AB",                                                                // 23384
-    "GESIS Gesellschaft für Informationssysteme mit beschraenkter Haftung",               // 23385
+    "Salzgitter Digital Solutions GmbH",                                                  // 23385
     "Pole Universitaire Leonard de Vinci",                                                // 23386
     "iXTS Software GmbH",                                                                 // 23387
     "Hypercube Systems Ltd.",                                                             // 23388
@@ -35665,7 +35665,7 @@ static const char * const table[] =
     "EURIX srl",                                                                          // 35643
     "Olson Consulting",                                                                   // 35644
     "ZiChen Tech. Co. Ltd.",                                                              // 35645
-    "Arca Technologies S.r.l.",                                                           // 35646
+    "SESAMI Technologies Srl",                                                            // 35646
     "G4S Deposita (RF) (Pty) Ltd",                                                        // 35647
     "Broadband Solutions Technology Pty Ltd",                                             // 35648
     "Direct Payment Solutions Limited",                                                   // 35649
@@ -61053,7 +61053,7 @@ static const char * const table[] =
     "PyCERR Beta",                                                                        // 61031
     "Oltiva Hong Kong Limited",                                                           // 61032
     "Energie Service Biel/Bienne",                                                        // 61033
-    "EDEKA Südbayern Handels Stiftung & Co. KG",                                          // 61034
+    NULL,                                                                                 // 61034
     "Hotel President SA",                                                                 // 61035
     "SEE Critical Comms",                                                                 // 61036
     "Alzheimer's Research UK",                                                            // 61037
@@ -61802,7 +61802,7 @@ static const char * const table[] =
     "Beijing Maker 6 Technology Co. Ltd.",                                                // 61780
     "Noosphere Technologies, Inc.",                                                       // 61781
     "Century Autogroep BV",                                                               // 61782
-    "RLKM UG",                                                                            // 61783
+    "FabInfra",                                                                           // 61783
     "CIUSSS du Centre-Sud-de-l'Île-de-Montréal",                                          // 61784
     "上海源中信息科技有限公司 (Shanghai Yuanzhong Information Technology Co., Ltd.)",                 // 61785
     "Medicalholodeck",                                                                    // 61786
@@ -63254,7 +63254,31 @@ static const char * const table[] =
     "Harman Connected Services Corporation India Pvt. Ltd.",                              // 63232
     "Layer Acht Software GmbH & Co. KG",                                                  // 63233
     "Compass Group Italia spa",                                                           // 63234
-    "Rivos Inc."                                                                          // 63235
+    "Rivos Inc.",                                                                         // 63235
+    "Hunan Zhizhou Technology Co., Ltd.",                                                 // 63236
+    "William Nyman",                                                                      // 63237
+    "Kideco",                                                                             // 63238
+    "Galactic Fortress 4",                                                                // 63239
+    "Silver IT Co.",                                                                      // 63240
+    "Digity.Tech",                                                                        // 63241
+    "CryptoStudio",                                                                       // 63242
+    "BitTechnology",                                                                      // 63243
+    "BRDSOFT Soluções de T.i e Telecomunicações",                                         // 63244
+    "mcnsky",                                                                             // 63245
+    "深圳众达威科技有限公司 (Shenzhen Zhongdawei Technology Co., Ltd.)",                             // 63246
+    "Guangdong Showmac Technology Co., LTD",                                              // 63247
+    "DER Security Corp",                                                                  // 63248
+    "LLC «SPE Sensor Technologies»",                                                      // 63249
+    "Pontiro Ltd.",                                                                       // 63250
+    "Kaon Ltd",                                                                           // 63251
+    "Harlan Connor",                                                                      // 63252
+    "Corning Community College",                                                          // 63253
+    "AUTOCRYPT Co., Ltd.",                                                                // 63254
+    "Massie Manufacturing Inc",                                                           // 63255
+    "Hans Johnson",                                                                       // 63256
+    "Renesas Electronics Corporation",                                                    // 63257
+    "Pediatric Services of Springfield, Inc.",                                            // 63258
+    "Beatson Clark Ltd"                                                                   // 63259
 };
 
 const char* global_enterprises_lookup(uint32_t value)
