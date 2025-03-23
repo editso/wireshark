@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-03-14) */
+/* (last updated 2025-03-21) */
 
 #include "config.h"
 
@@ -13052,7 +13052,7 @@ static const char * const table[] =
     "Monitor724 Services Limited",                                                        // 13030
     "NextGen Business Solution, Inc.",                                                    // 13031
     "Reach Technologies",                                                                 // 13032
-    "DragonBoxSolar",                                                                     // 13033
+    "DragonBoxSolar npub13fux9a5rzcrty5van2uedgqwreszzzwl38qufmnftfpe922w675qlagzfe",     // 13033
     "SoftNet Systems, Inc.",                                                              // 13034
     "Sonangol",                                                                           // 13035
     "Stradient, Inc.",                                                                    // 13036
@@ -63278,7 +63278,38 @@ static const char * const table[] =
     "Hans Johnson",                                                                       // 63256
     "Renesas Electronics Corporation",                                                    // 63257
     "Pediatric Services of Springfield, Inc.",                                            // 63258
-    "Beatson Clark Ltd"                                                                   // 63259
+    "Beatson Clark Ltd",                                                                  // 63259
+    "Datawaves",                                                                          // 63260
+    "WCG Clinical",                                                                       // 63261
+    "Ondřej Hošek",                                                                       // 63262
+    "DatACT GmbH",                                                                        // 63263
+    "Timo Kokkonen",                                                                      // 63264
+    "Sequans Communications",                                                             // 63265
+    "Neovox Technology",                                                                  // 63266
+    "QSR System LLC",                                                                     // 63267
+    "BenzGroup",                                                                          // 63268
+    "Saskatchewan Rivers Public School Division",                                         // 63269
+    "SA Power Networks",                                                                  // 63270
+    "Kompaniya BIS",                                                                      // 63271
+    "FotoFinder Systems GmbH",                                                            // 63272
+    "SOCIETE PUBLIQUE DE GESTION DE L'EAU",                                               // 63273
+    "Clinton Bunch",                                                                      // 63274
+    "Carver Automation Corporation",                                                      // 63275
+    "Microsoft WebXT Core Infra",                                                         // 63276
+    "Hotwire Communication",                                                              // 63277
+    "Koris 365 Limited",                                                                  // 63278
+    "Aron Lennart Starnitzke",                                                            // 63279
+    "Renaissance Health, LLC",                                                            // 63280
+    "Långemåla Energileveranser AB",                                                      // 63281
+    "Funke IT",                                                                           // 63282
+    "tvONE",                                                                              // 63283
+    "Yoet Ltd",                                                                           // 63284
+    "Uherskohradišťská nemocnice a. s.",                                                  // 63285
+    "PESCO Information Technologies",                                                     // 63286
+    "Comesta",                                                                            // 63287
+    "Potix Corporation",                                                                  // 63288
+    "Delta Energy Systems (Germany) GmbH",                                                // 63289
+    "Rumi Mind Health Inc"                                                                // 63290
 };
 
 const char* global_enterprises_lookup(uint32_t value)
