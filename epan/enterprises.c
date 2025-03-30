@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-03-21) */
+/* (last updated 2025-03-28) */
 
 #include "config.h"
 
@@ -41456,7 +41456,7 @@ static const char * const table[] =
     "Rolamasao.org",                                                                      // 41434
     "Smart Associates Limited",                                                           // 41435
     "Allwin Telecommunication Co., Ltd.",                                                 // 41436
-    "Geoffroy Gramaize",                                                                  // 41437
+    "Célestine Gramaize",                                                                 // 41437
     "HITOTEK Co.,Ltd",                                                                    // 41438
     "Moscow Psychological and Social University",                                         // 41439
     "Stabilus GmbH",                                                                      // 41440
@@ -51853,7 +51853,7 @@ static const char * const table[] =
     "Gratika",                                                                            // 51831
     "EnableIT Technologies Ltd",                                                          // 51832
     "Macadam",                                                                            // 51833
-    "Atam Id",                                                                            // 51834
+    "Atam Ltd",                                                                           // 51834
     "French-Road",                                                                        // 51835
     "SUNY College of Optometry",                                                          // 51836
     "INVEST - M, Ltd.",                                                                   // 51837
@@ -62084,7 +62084,7 @@ static const char * const table[] =
     "4MITECH",                                                                            // 62062
     "EasyNet Industry (Shenzhen) Co., Ltd",                                               // 62063
     "ООО ""Новые облачные технологии"" (LLC ""New cloud technologies"")",                 // 62064
-    "CommScope Italy SRL",                                                                // 62065
+    "ANDREW, an Amphenol company",                                                        // 62065
     "CloudXP Ltd",                                                                        // 62066
     "ORLEN Oddział Centralny PGNiG w Warszawie",                                          // 62067
     "Qasky",                                                                              // 62068
@@ -63309,7 +63309,46 @@ static const char * const table[] =
     "Comesta",                                                                            // 63287
     "Potix Corporation",                                                                  // 63288
     "Delta Energy Systems (Germany) GmbH",                                                // 63289
-    "Rumi Mind Health Inc"                                                                // 63290
+    "Rumi Mind Health Inc",                                                               // 63290
+    "Beisheim Holding",                                                                   // 63291
+    "Roselle Public Schools",                                                             // 63292
+    "Attacking-Lab",                                                                      // 63293
+    "Chengdu Chengdian Feibo International Trading Co.Ltd",                               // 63294
+    "Wuertt. VWA e.V.",                                                                   // 63295
+    "CONCON",                                                                             // 63296
+    "Berghof Group GmbH",                                                                 // 63297
+    "Baker Hughes Inteq GmbH",                                                            // 63298
+    "EMBLEM TECHNOLOGY TRANSFER GMBH",                                                    // 63299
+    "Qubic Trading LLC",                                                                  // 63300
+    "Ken MacDougall",                                                                     // 63301
+    "Mate Precision Technologies",                                                        // 63302
+    "The Health Care Authority for Baptist Health, An Affiliate of UAB Health System",    // 63303
+    "AD-Secure.net",                                                                      // 63304
+    "M-MOT Sp. z o. o.",                                                                  // 63305
+    "Keydom Smart Technology Co., Ltd.",                                                  // 63306
+    "Notruf NÖ GmbH",                                                                     // 63307
+    "Adam Schubert",                                                                      // 63308
+    "Beautiful Card Corporation",                                                         // 63309
+    "Alekso",                                                                             // 63310
+    "Alvicom Ltd.",                                                                       // 63311
+    "Alternetivo",                                                                        // 63312
+    "OID Hosting",                                                                        // 63313
+    "Solvegio Limited",                                                                   // 63314
+    "Patrick Michael McMahon",                                                            // 63315
+    "OyuAI",                                                                              // 63316
+    "INNOLOGY SRL",                                                                       // 63317
+    "IREM S.p.A.",                                                                        // 63318
+    "PKI Quest",                                                                          // 63319
+    "TextNow Inc.",                                                                       // 63320
+    "WavTek Technologies, Inc",                                                           // 63321
+    "Office of the Indiana State Chemist",                                                // 63322
+    "YoctoTech",                                                                          // 63323
+    "IF LOGIC PTE. LTD",                                                                  // 63324
+    "Elysium Security",                                                                   // 63325
+    "Allen Kemp",                                                                         // 63326
+    "GapAsk Inc.,",                                                                       // 63327
+    "Emergent Solutions Inc.",                                                            // 63328
+    "Dictalabs LLC"                                                                       // 63329
 };
 
 const char* global_enterprises_lookup(uint32_t value)
