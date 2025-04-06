@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-03-28) */
+/* (last updated 2025-04-03) */
 
 #include "config.h"
 
@@ -1310,7 +1310,7 @@ static const char * const table[] =
     "ALFA, Inc.",                                                                         // 1288
     "TELEFONICA SISTEMAS, S.A.",                                                          // 1289
     "Image Sciences, Inc.",                                                               // 1290
-    "MITSUBISHI ELECTRIC INFORMATION NETWORK CORPORATION (MIND)",                         // 1291
+    "Mitsubishi Electric Digital Innovation Corporation",                                 // 1291
     "Central Flow Management Unit",                                                       // 1292
     "Woods Hole Oceanographic Institution",                                               // 1293
     "Raptor Systems, Inc.",                                                               // 1294
@@ -12204,7 +12204,7 @@ static const char * const table[] =
     "Airbus Space and Defence",                                                           // 12182
     "Baldwin Hackett & Meeks, Inc.",                                                      // 12183
     "Bamsco",                                                                             // 12184
-    "Ben Nederland BV",                                                                   // 12185
+    "Odido Netherlands B.V.",                                                             // 12185
     "Compagnon AG",                                                                       // 12186
     "Direct Solutions",                                                                   // 12187
     "GBase Communications",                                                               // 12188
@@ -28905,7 +28905,7 @@ static const char * const table[] =
     "Tomas Bata University in Zlín",                                                      // 28883
     "Kucko",                                                                              // 28884
     "Spolka Inzynierow SIM Sp. z o.o.",                                                   // 28885
-    "OQ Chemicals",                                                                       // 28886
+    "OXEA",                                                                               // 28886
     "LabSET",                                                                             // 28887
     "UXtechnology B.V.",                                                                  // 28888
     "NemoQ Iberica, S.A.",                                                                // 28889
@@ -31812,7 +31812,7 @@ static const char * const table[] =
     "Compressus, Inc",                                                                    // 31790
     "County of Erie, New York",                                                           // 31791
     "Adways Co., Ltd.",                                                                   // 31792
-    "TEMIX S.p.A.",                                                                       // 31793
+    "TEMIX Communications Srl",                                                           // 31793
     "Infinovate, Inc.",                                                                   // 31794
     "Board of Regents of The University System of Georgia",                               // 31795
     "IdentiPHI, Inc",                                                                     // 31796
@@ -44730,7 +44730,7 @@ static const char * const table[] =
     "Crews Banking corporation",                                                          // 44708
     "Xolphin B.V.",                                                                       // 44709
     "Ensured B.V.",                                                                       // 44710
-    "T-Mobile Nederland BV",                                                              // 44711
+    "Odido Netherlands B.V.",                                                             // 44711
     "AGAT-System",                                                                        // 44712
     "COSMOS-SOFT.net",                                                                    // 44713
     "Transdata",                                                                          // 44714
@@ -48101,7 +48101,7 @@ static const char * const table[] =
     "NEC Enterprise Communication Technologies",                                          // 48079
     "Mimetrix Design Group",                                                              // 48080
     "Max Planck Institute for Plant Breeding Research",                                   // 48081
-    "Stromnetz Hamburg GmbH",                                                             // 48082
+    "Hamburger Energienetze GmbH",                                                        // 48082
     "AIRESERVICES",                                                                       // 48083
     "Stewart Investors",                                                                  // 48084
     "RCCA COMMUNITY HEMATOLOGY ONOCOLGY",                                                 // 48085
@@ -57750,7 +57750,7 @@ static const char * const table[] =
     "InsidePacket Inc",                                                                   // 57728
     "Foundry Health - an IQVIA business",                                                 // 57729
     "Brayden Automation Corporation",                                                     // 57730
-    "Zoom Video Communications, Inc.",                                                    // 57731
+    "Zoom Communications, Inc.",                                                          // 57731
     "Frontier KZ LLP",                                                                    // 57732
     "Neom Company",                                                                       // 57733
     "Trasna Solutions Telecom Limited",                                                   // 57734
@@ -63348,7 +63348,35 @@ static const char * const table[] =
     "Allen Kemp",                                                                         // 63326
     "GapAsk Inc.,",                                                                       // 63327
     "Emergent Solutions Inc.",                                                            // 63328
-    "Dictalabs LLC"                                                                       // 63329
+    "Dictalabs LLC",                                                                      // 63329
+    "MC2",                                                                                // 63330
+    "Skydive",                                                                            // 63331
+    "Magnus Roth",                                                                        // 63332
+    "Altasec Co., Ltd",                                                                   // 63333
+    "Elektrokem d.o.o.",                                                                  // 63334
+    "Native American Church of Turtle Island",                                            // 63335
+    "Frontgrade Technologies",                                                            // 63336
+    "Catalyst Brands",                                                                    // 63337
+    "Edgeofcali Media Network LLC",                                                       // 63338
+    "Merededdo",                                                                          // 63339
+    "O'Jive, Inc",                                                                        // 63340
+    "Bistum Osnabrueck",                                                                  // 63341
+    "TEZ IT SOLUTIONS LLC",                                                               // 63342
+    "Sellox B.V.",                                                                        // 63343
+    "BUREAU NATIONAL D'ETUDES TECHNIQUES ET DE DEVELOPPEMENT (BNETD)",                    // 63344
+    "SIGN8 AG",                                                                           // 63345
+    "Shenzhen EverExceed Industrial Co., Ltd.",                                           // 63346
+    "NOTIX DOO BEOGRAD",                                                                  // 63347
+    "SJP INFORMATION SYSTEM COMPANY LIMITED",                                             // 63348
+    "Telethings d.o.o.",                                                                  // 63349
+    "IRE SOLUTION",                                                                       // 63350
+    "ARCHIMEDIC Sp. z o.o. Sp.k.",                                                        // 63351
+    "Senegal Numérique (Senum)",                                                          // 63352
+    "EPSI",                                                                               // 63353
+    "Nanjing Fiberhome StarrySky  Co., Ltd.",                                             // 63354
+    "AM Smart Company Ltd",                                                               // 63355
+    "Medperion GmbH",                                                                     // 63356
+    "Artillence Kft."                                                                     // 63357
 };
 
 const char* global_enterprises_lookup(uint32_t value)
