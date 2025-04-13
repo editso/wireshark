@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-04-03) */
+/* (last updated 2025-04-11) */
 
 #include "config.h"
 
@@ -15776,7 +15776,7 @@ static const char * const table[] =
     "Vancouver Community Network",                                                        // 15754
     "PIVoD Technologies",                                                                 // 15755
     "Wistron NeWeb Corporation",                                                          // 15756
-    "MITSUBISHI ELECTRIC INFORMATION TECHNOLOGY CORPORATION(MDIT)",                       // 15757
+    "Mitsubishi Electric Digital Innovation Corporation",                                 // 15757
     "suntek beijingyanjiuyuan",                                                           // 15758
     "Greener Pastures Innovations",                                                       // 15759
     "NMSWorks  Software Limited",                                                         // 15760
@@ -21315,7 +21315,7 @@ static const char * const table[] =
     "Fabric7 Systems, Inc.",                                                              // 21293
     "KIKA S.A.",                                                                          // 21294
     "Cunningham and Othen",                                                               // 21295
-    "Infinera Corp.",                                                                     // 21296
+    "Nokia",                                                                              // 21296
     "U.Z.KULeuven",                                                                       // 21297
     "Odyssey Pharmaceuticals, Inc.",                                                      // 21298
     "BigFix, Inc.",                                                                       // 21299
@@ -42248,7 +42248,7 @@ static const char * const table[] =
     "Evolve Media LLC",                                                                   // 42226
     "Max-Planck-Institut fuer Mikrostrukturphysik",                                       // 42227
     "Center Group",                                                                       // 42228
-    "Coriant R&D GmbH",                                                                   // 42229
+    "Nokia",                                                                              // 42229
     "HiProCall GmbH",                                                                     // 42230
     "AlfaTrein Ltd",                                                                      // 42231
     "Fanzz",                                                                              // 42232
@@ -42629,7 +42629,7 @@ static const char * const table[] =
     "Brekford International",                                                             // 42607
     "Alan Seedhouse",                                                                     // 42608
     "Boundary, Inc.",                                                                     // 42609
-    "Superior Power solutions (HK) Co.,Ltd",                                              // 42610
+    "Powertek Limited",                                                                   // 42610
     "Valdrea, LLC",                                                                       // 42611
     "Koninklijke BAM Groep nv",                                                           // 42612
     "POLYONE CORPORATION",                                                                // 42613
@@ -56393,7 +56393,7 @@ static const char * const table[] =
     "DOTSCREEN",                                                                          // 56371
     "CONEXTOP Technologies Co., Ltd.",                                                    // 56372
     "CSSF",                                                                               // 56373
-    "Media-Tel",                                                                          // 56374
+    "April Innovation",                                                                   // 56374
     "Elektro Celje d.d.",                                                                 // 56375
     "New Technologies",                                                                   // 56376
     "Penzagrazhdanproekt",                                                                // 56377
@@ -63228,7 +63228,7 @@ static const char * const table[] =
     "Koninklijke Philips Electronics NV",                                                 // 63206
     "Andrea Filoso",                                                                      // 63207
     "MOSTYLE CORPORATION",                                                                // 63208
-    "Vision Intelligence",                                                                // 63209
+    "Vision Intelligence Pty Ltd",                                                        // 63209
     "Kreisfeuerwehrzentrale Paderborn",                                                   // 63210
     "Mälarenergi AB/ Kungsör",                                                            // 63211
     "ANDRITZ Hydro GmbH",                                                                 // 63212
@@ -63376,7 +63376,49 @@ static const char * const table[] =
     "Nanjing Fiberhome StarrySky  Co., Ltd.",                                             // 63354
     "AM Smart Company Ltd",                                                               // 63355
     "Medperion GmbH",                                                                     // 63356
-    "Artillence Kft."                                                                     // 63357
+    "Artillence Kft.",                                                                    // 63357
+    "Revo Health",                                                                        // 63358
+    "Blount County Schools",                                                              // 63359
+    "Skutskärs Trä AB",                                                                   // 63360
+    "Design and Manufacturing Vista Electronics Pvt.Ltd.",                                // 63361
+    "Synot ICT",                                                                          // 63362
+    "BackBenchDevs",                                                                      // 63363
+    "HitchPin",                                                                           // 63364
+    "accelerate",                                                                         // 63365
+    "Leaf Tecnologia Ltda",                                                               // 63366
+    "Netzorange IT-Dienstleistungen GmbH",                                                // 63367
+    "EPI Company SE",                                                                     // 63368
+    "Miraworx",                                                                           // 63369
+    "Shenzhen Daren High Tech Electronic Co., Ltd.",                                      // 63370
+    "Kassenärztliche Vereinigung Hamburg",                                                // 63371
+    "PER CLAESSON ÅKERI AB",                                                              // 63372
+    "Buderus Edelstahl GmbH",                                                             // 63373
+    "Guangdong Vecentek information technology Co., Ltd",                                 // 63374
+    "SCADAHAWK",                                                                          // 63375
+    "Hudson Community Enterprises",                                                       // 63376
+    "STUDENT AGENCY k.s.",                                                                // 63377
+    "SESOM2 AB",                                                                          // 63378
+    "Byte25",                                                                             // 63379
+    "Nanjing OME NEW Energy Co., Ltd",                                                    // 63380
+    "Markus Heinze",                                                                      // 63381
+    "Beijing Horiscale Information Technology Co., Ltd.",                                 // 63382
+    "danpatrick.net",                                                                     // 63383
+    "Minut, Inc.",                                                                        // 63384
+    "Forever Engineering Systems Pvt. Ltd.",                                              // 63385
+    "Novatel d.o.o.",                                                                     // 63386
+    "Dongguan Onyx Electronics Co.,Ltd",                                                  // 63387
+    "Waterworld_B1",                                                                      // 63388
+    "Alexander Trofimovich",                                                              // 63389
+    "Ocaka Bosco",                                                                        // 63390
+    "CRRC Zhuzhou Electric Locomotive Research Institute Co.",                            // 63391
+    "Otogenetics Corporation",                                                            // 63392
+    "Shenzhen Sinexcel Isuna Energy Technology Co., Ltd.",                                // 63393
+    "Paperman",                                                                           // 63394
+    "Interventus - Huissiers de Justice",                                                 // 63395
+    "Sound Track Israel LTD",                                                             // 63396
+    "Paris Consolidated School District",                                                 // 63397
+    "Bruce Power",                                                                        // 63398
+    "SIU TELECOMMUNICATIONS NETWORK LTD"                                                  // 63399
 };
 
 const char* global_enterprises_lookup(uint32_t value)
