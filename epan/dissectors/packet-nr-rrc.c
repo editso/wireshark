@@ -34453,7 +34453,7 @@ static const per_sequence_t SIB11_r16_sequence[] = {
 
 static int
 dissect_nr_rrc_SIB11_r16(tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB11");
+  col_append_str(actx->pinfo->cinfo, COL_INFO, "SIB11 ");
 
   offset = dissect_per_sequence(tvb, offset, actx, tree, hf_index,
                                    ett_nr_rrc_SIB11_r16, SIB11_r16_sequence);
