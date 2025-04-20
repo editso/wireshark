@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-04-11) */
+/* (last updated 2025-04-17) */
 
 #include "config.h"
 
@@ -8727,7 +8727,7 @@ static const char * const table[] =
     "Israel Local Authorities Data Processing Center LTD",                                // 8705
     NULL,                                                                                 // 8706
     "SpiderNet Services Ltd",                                                             // 8707
-    "Lumentis AB",                                                                        // 8708
+    "Nokia",                                                                              // 8708
     "Landesamt für Besoldung und Versorgung NRW",                                         // 8709
     "Envoy Networks",                                                                     // 8710
     "THALES Broadcast & Multimedia",                                                      // 8711
@@ -11876,7 +11876,7 @@ static const char * const table[] =
     "Healthvision",                                                                       // 11854
     "Retirement By Design",                                                               // 11855
     "TNT Logistics North America",                                                        // 11856
-    "Transmode Systems AB",                                                               // 11857
+    "Nokia",                                                                              // 11857
     "UANGEL",                                                                             // 11858
     "WorldChain Inc.",                                                                    // 11859
     "wossname.org.uk",                                                                    // 11860
@@ -37638,7 +37638,7 @@ static const char * const table[] =
     "SATS Holding AB",                                                                    // 37616
     "Ventek Sistemas e Automação",                                                        // 37617
     "Tumblr",                                                                             // 37618
-    "SCHIEx",                                                                             // 37619
+    "SCeHA",                                                                              // 37619
     "Alegent Health",                                                                     // 37620
     "Ename, S.A.",                                                                        // 37621
     "Chrysalis Utah, Inc.",                                                               // 37622
@@ -47851,7 +47851,7 @@ static const char * const table[] =
     "Fornetix",                                                                           // 47829
     "MovingStar Corporation",                                                             // 47830
     "Robert Half Inc.",                                                                   // 47831
-    "NBCUniversal",                                                                       // 47832
+    NULL,                                                                                 // 47832
     "Teleworks Co., Ltd.",                                                                // 47833
     "OOO NPP ""POLUS""",                                                                  // 47834
     "ARCHIVECO",                                                                          // 47835
@@ -63262,7 +63262,7 @@ static const char * const table[] =
     "Silver IT Co.",                                                                      // 63240
     "Digity.Tech",                                                                        // 63241
     "CryptoStudio",                                                                       // 63242
-    "BitTechnology",                                                                      // 63243
+    "BitTech LLC",                                                                        // 63243
     "BRDSOFT Soluções de T.i e Telecomunicações",                                         // 63244
     "mcnsky",                                                                             // 63245
     "深圳众达威科技有限公司 (Shenzhen Zhongdawei Technology Co., Ltd.)",                             // 63246
@@ -63418,7 +63418,47 @@ static const char * const table[] =
     "Sound Track Israel LTD",                                                             // 63396
     "Paris Consolidated School District",                                                 // 63397
     "Bruce Power",                                                                        // 63398
-    "SIU TELECOMMUNICATIONS NETWORK LTD"                                                  // 63399
+    "SIU TELECOMMUNICATIONS NETWORK LTD",                                                 // 63399
+    "Berlemann Torbau GmbH",                                                              // 63400
+    "PEDIATRIC CONSULTANTS OF KENDALL, P.A.",                                             // 63401
+    "Laser North, Inc.",                                                                  // 63402
+    "Kwantlen Polytechnic University",                                                    // 63403
+    "OpenAI",                                                                             // 63404
+    "Elreg AS",                                                                           // 63405
+    "Network Visor",                                                                      // 63406
+    "广西电网能源科技有限责任公司 (Guangxi Grid Energy Technology Co., Ltd.)",                          // 63407
+    "Summitronics",                                                                       // 63408
+    "TeamHope",                                                                           // 63409
+    "Mössner-IT",                                                                         // 63410
+    "Pushtab",                                                                            // 63411
+    "ORGCERT S.R.L.",                                                                     // 63412
+    "NetExpert",                                                                          // 63413
+    "Group 1001",                                                                         // 63414
+    "Shenzhen Microtest Automation Technology Co., Ltd.",                                 // 63415
+    "Giełda Papierów Wartościowych w Warszawie S.A.",                                     // 63416
+    "Acoustic Technology Inc.",                                                           // 63417
+    "Trygve Bengtsons Åkeri AB",                                                          // 63418
+    "WG",                                                                                 // 63419
+    "Zhang Anjun",                                                                        // 63420
+    "Anthony Rielly",                                                                     // 63421
+    "北京中科大洋信息技术有限公司 (Beijing Zhongke Dayang Information Technology Co., Ltd.)",           // 63422
+    "Gray & Company, Inc.",                                                               // 63423
+    "Florian Bauer",                                                                      // 63424
+    "MONTANA Energie-Handel GmbH & Co. KG",                                               // 63425
+    "Quargentan S.p.A.",                                                                  // 63426
+    "Beijing  Digital Ocean Technology Co., LTD",                                         // 63427
+    "Illuminati",                                                                         // 63428
+    "Children's Endocrinology and Diabetes Center",                                       // 63429
+    "Essentia Health",                                                                    // 63430
+    "Ketnet",                                                                             // 63431
+    "Micro-X",                                                                            // 63432
+    "EWR GmbH",                                                                           // 63433
+    "Maple Systems Inc.",                                                                 // 63434
+    "lalasoft",                                                                           // 63435
+    "Howarth Labs",                                                                       // 63436
+    "TaoCloud Technology Co.,Ltd",                                                        // 63437
+    "Helmholz GmbH & Co. KG",                                                             // 63438
+    "LibreCode coop"                                                                      // 63439
 };
 
 const char* global_enterprises_lookup(uint32_t value)
