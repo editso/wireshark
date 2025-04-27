@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-04-17) */
+/* (last updated 2025-04-25) */
 
 #include "config.h"
 
@@ -4599,7 +4599,7 @@ static const char * const table[] =
     "Internet Research",                                                                  // 4577
     "SSE Telecom",                                                                        // 4578
     "Vest Internett",                                                                     // 4579
-    "Diversified Business Group",                                                         // 4580
+    "Progressive Casualty Insurance Company",                                             // 4580
     "Seeburger GmbH",                                                                     // 4581
     "World Telecom plc",                                                                  // 4582
     "NetStar",                                                                            // 4583
@@ -63434,7 +63434,7 @@ static const char * const table[] =
     "ORGCERT S.R.L.",                                                                     // 63412
     "NetExpert",                                                                          // 63413
     "Group 1001",                                                                         // 63414
-    "Shenzhen Microtest Automation Technology Co., Ltd.",                                 // 63415
+    "ShenZhen Microtest Automation Co.,Ltd",                                              // 63415
     "Giełda Papierów Wartościowych w Warszawie S.A.",                                     // 63416
     "Acoustic Technology Inc.",                                                           // 63417
     "Trygve Bengtsons Åkeri AB",                                                          // 63418
@@ -63458,7 +63458,60 @@ static const char * const table[] =
     "Howarth Labs",                                                                       // 63436
     "TaoCloud Technology Co.,Ltd",                                                        // 63437
     "Helmholz GmbH & Co. KG",                                                             // 63438
-    "LibreCode coop"                                                                      // 63439
+    "LibreCode coop",                                                                     // 63439
+    "TePSEG",                                                                             // 63440
+    "Congyue Wang",                                                                       // 63441
+    "Editorial Mar Caribe",                                                               // 63442
+    "Vizrt NDI AB",                                                                       // 63443
+    "HANGANG MECHATRONICS CO.,LTD",                                                       // 63444
+    "Solarmonthus",                                                                       // 63445
+    "chijiu",                                                                             // 63446
+    "Changkuai Computing Information Industry (Beijing) Co., Ltd.",                       // 63447
+    "대한전력전자(주) (Daehan Power Electronics Co., Ltd.)",                                     // 63448
+    "WayFi Wireless",                                                                     // 63449
+    "Accommodating Software Ltd.",                                                        // 63450
+    "Longchester Ltd",                                                                    // 63451
+    "Phramongkutklao College of Medicine",                                                // 63452
+    "Phramongkutklao Hospital",                                                           // 63453
+    "Zhongying Medical Technology Co., Ltd",                                              // 63454
+    "LYSORA TECHNOLOGY INC.",                                                             // 63455
+    "SharpVNC Limited",                                                                   // 63456
+    "Capital Digestive Care",                                                             // 63457
+    "Atopos LLC",                                                                         // 63458
+    "Sole Proprietor Varnavskij Vyacheslav Grigor'evich",                                 // 63459
+    "Inori Lee",                                                                          // 63460
+    "ChinaNetwork",                                                                       // 63461
+    "Aetina Corporation",                                                                 // 63462
+    "Ekova systems Sdn bhd",                                                              // 63463
+    "baisenvar",                                                                          // 63464
+    "HCInfoTech, LLC",                                                                    // 63465
+    "E-Sign (UK) Ltd",                                                                    // 63466
+    "Laila Technologies Inc.",                                                            // 63467
+    "Illustra (JCI)",                                                                     // 63468
+    "iSoftStone Computer Co.,Ltd",                                                        // 63469
+    "Radboudumc Nijmegen",                                                                // 63470
+    "Phramongkutklao Medical Command Center",                                             // 63471
+    "moveero Ltd",                                                                        // 63472
+    "Military Medical City Hospital (MMCH)",                                              // 63473
+    "bwi suisse ag",                                                                      // 63474
+    "Instituto de Seguridad Social del Estado de Tabasco",                                // 63475
+    "BandShell Ltd",                                                                      // 63476
+    "Expedium Consulting",                                                                // 63477
+    "Haroon Rashidi",                                                                     // 63478
+    "EDAC Electronics Australasia",                                                       // 63479
+    "HealthDrive",                                                                        // 63480
+    "JMV LPS Limited",                                                                    // 63481
+    "Wave1 Pty Ltd",                                                                      // 63482
+    "Global Precision Group",                                                             // 63483
+    "Coulter Clinic, LLC",                                                                // 63484
+    "Toyota Boshoku AKI USA, LLC",                                                        // 63485
+    "Beijing Golding Dsec Technology Co.,Ltd",                                            // 63486
+    "Norddeutscher Rundfunk",                                                             // 63487
+    "Aivres Systems Inc.",                                                                // 63488
+    "LISS Technologies",                                                                  // 63489
+    "European Economic and Social Committee",                                             // 63490
+    "European Committee of the Regions",                                                  // 63491
+    "Storax Oy"                                                                           // 63492
 };
 
 const char* global_enterprises_lookup(uint32_t value)
