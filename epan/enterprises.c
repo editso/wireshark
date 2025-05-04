@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-04-25) */
+/* (last updated 2025-05-01) */
 
 #include "config.h"
 
@@ -19198,7 +19198,7 @@ static const char * const table[] =
     "SCOMCENTER",                                                                         // 19176
     "Tandem Systems, Ltd.",                                                               // 19177
     "Skill Corporation",                                                                  // 19178
-    "Raysis Co.,Ltd",                                                                     // 19179
+    "Vieworks Co.,Ltd",                                                                   // 19179
     "Guidewire Software, Inc.",                                                           // 19180
     "Optimum Holding Inc.",                                                               // 19181
     "JDA Software",                                                                       // 19182
@@ -51354,7 +51354,7 @@ static const char * const table[] =
     "Shenzhen Taishan Technology Co., Ltd.",                                              // 51332
     "EduBase LLC",                                                                        // 51333
     "PolarPower, Inc.",                                                                   // 51334
-    "Austrian Federal Ministry of Education, Science and Research",                       // 51335
+    "Austrian Federal Ministry of Women, Science and Research",                           // 51335
     "Big River Communications",                                                           // 51336
     "Freesat Limited",                                                                    // 51337
     "Frederick County Bank",                                                              // 51338
@@ -63511,7 +63511,45 @@ static const char * const table[] =
     "LISS Technologies",                                                                  // 63489
     "European Economic and Social Committee",                                             // 63490
     "European Committee of the Regions",                                                  // 63491
-    "Storax Oy"                                                                           // 63492
+    "Storax Oy",                                                                          // 63492
+    "Hicham REDA",                                                                        // 63493
+    "KIPP NC Public Schools",                                                             // 63494
+    "REALTECH AG",                                                                        // 63495
+    "ASEE BSS Dooel - Macedonia",                                                         // 63496
+    "Leuchter CLOUD",                                                                     // 63497
+    "GBM Securities Limited",                                                             // 63498
+    "Metsän Woima Oy",                                                                    // 63499
+    "Highland Engineering, Inc.",                                                         // 63500
+    "Camping World",                                                                      // 63501
+    "Conn-Selmer",                                                                        // 63502
+    "NetBrain Technologies, Inc.",                                                        // 63503
+    "Ragam Kode Aplikasi",                                                                // 63504
+    "PUBLIC JOINT-STOCK COMPANY WORLD TRADE CENTER MOSCOW",                               // 63505
+    "Virginia Cloud Technologies",                                                        // 63506
+    "Mifotec GmbH",                                                                       // 63507
+    "PEWETA KG (GmbH+Co.)",                                                               // 63508
+    "Varnum Law LLP",                                                                     // 63509
+    "KAD Research Systems LLC",                                                           // 63510
+    "EdiEyes",                                                                            // 63511
+    "itdesign",                                                                           // 63512
+    "Zhejiang WonCloud Technology Co., Ltd",                                              // 63513
+    "Lamatel",                                                                            // 63514
+    "Lightyear",                                                                          // 63515
+    "DB Investment Services GmbH",                                                        // 63516
+    "SIA u.one.pro",                                                                      // 63517
+    "Newland Vi-Challenging",                                                             // 63518
+    "Tablebound",                                                                         // 63519
+    "SMART DCC LIMITED",                                                                  // 63520
+    "Shanghai Yoocar Network Technology Co., Ltd.",                                       // 63521
+    "Thoracic & Vascular Associates of New Jersey",                                       // 63522
+    "WestEd",                                                                             // 63523
+    "Ho&Bros Tech Co., Ltd.",                                                             // 63524
+    "Charleston County School District (CCSD)",                                           // 63525
+    "ELIUS LLC",                                                                          // 63526
+    "Redwood Group LLC",                                                                  // 63527
+    "U4me.4u",                                                                            // 63528
+    "Dole plc",                                                                           // 63529
+    "The State Hospitals Board for Scotland"                                              // 63530
 };
 
 const char* global_enterprises_lookup(uint32_t value)
