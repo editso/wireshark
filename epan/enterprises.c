@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-05-01) */
+/* (last updated 2025-05-10) */
 
 #include "config.h"
 
@@ -2625,7 +2625,7 @@ static const char * const table[] =
     "Allot Communications",                                                               // 2603
     "Sophos Plc",                                                                         // 2604
     "TaylorMade-Math",                                                                    // 2605
-    "Rittal-Werk Rudolf Loh GmbH & Co.KG",                                                // 2606
+    "Rittal GmbH & Co. KG",                                                               // 2606
     "LAN International, Inc.",                                                            // 2607
     "Precise Software Solutions",                                                         // 2608
     "New Prime Inc.",                                                                     // 2609
@@ -63186,7 +63186,7 @@ static const char * const table[] =
     "Waggeryd Cell AB",                                                                   // 63164
     "Västervik Miljö & Energi AB",                                                        // 63165
     "Scanvaegt Systems AB",                                                               // 63166
-    "FUNDACIÓN COOLTURE4KIDS",                                                            // 63167
+    "FUNDACIÓN CIVITANA",                                                                 // 63167
     "UnipartRail",                                                                        // 63168
     "TEXAS DEPARTMENT OF DEVELOPMENT",                                                    // 63169
     "XYC INDUSTRY CO.,LIMITED",                                                           // 63170
@@ -63549,7 +63549,49 @@ static const char * const table[] =
     "Redwood Group LLC",                                                                  // 63527
     "U4me.4u",                                                                            // 63528
     "Dole plc",                                                                           // 63529
-    "The State Hospitals Board for Scotland"                                              // 63530
+    "The State Hospitals Board for Scotland",                                             // 63530
+    "Unified Technologies",                                                               // 63531
+    "The Wade Agency",                                                                    // 63532
+    "NetFire, LLC",                                                                       // 63533
+    "Matrix Design Group, LLC.",                                                          // 63534
+    "SONiC Foundation",                                                                   // 63535
+    "Oran Palmach Tzuba A.C.C. Ltd.",                                                     // 63536
+    "Anton Kokarev",                                                                      // 63537
+    "CVR Data GmbH",                                                                      // 63538
+    "Rail Power Systems GmbH",                                                            // 63539
+    "Yupiii Co. PSA",                                                                     // 63540
+    "MiHome",                                                                             // 63541
+    "PRIMECORELAT S.A.S B.I.C.",                                                          // 63542
+    "NIITFA, JSC",                                                                        // 63543
+    "Bellobrick BV",                                                                      // 63544
+    "Objectify, s. r. o.",                                                                // 63545
+    "Quoin Inc.",                                                                         // 63546
+    "SIMM.PRO",                                                                           // 63547
+    "Zhang Hao",                                                                          // 63548
+    "SELTAR",                                                                             // 63549
+    "MAEM Sp. z o.o",                                                                     // 63550
+    "Zhonglian Huanuo (Beijing) Technology Co., Ltd.",                                    // 63551
+    "mitocode.eu",                                                                        // 63552
+    "City of Laurel",                                                                     // 63553
+    "Movyon S.p.A.",                                                                      // 63554
+    "Belden Inc.",                                                                        // 63555
+    "Salus CM Inc.",                                                                      // 63556
+    "Forest Systems, Inc.",                                                               // 63557
+    "Alpamayo",                                                                           // 63558
+    "Fisher Investments",                                                                 // 63559
+    "LEGTECH sàrl",                                                                       // 63560
+    "Robert Josef Wolf GmbH & Co. KG",                                                    // 63561
+    "Peraso Inc.",                                                                        // 63562
+    "Hangzhou Jingtang Communication Tech Co, Ltd",                                       // 63563
+    "Rheinbahn AG",                                                                       // 63564
+    "Hanab Connectivity Solutions",                                                       // 63565
+    "Onoff Telecom",                                                                      // 63566
+    "Madison City Schools",                                                               // 63567
+    "Paradigm Geospatial, Inc.",                                                          // 63568
+    "DI3 Infotech LLP",                                                                   // 63569
+    "Skryptek",                                                                           // 63570
+    "KERRYJ INVESTMENT PTY LTD",                                                          // 63571
+    "TrustNXT GmbH"                                                                       // 63572
 };
 
 const char* global_enterprises_lookup(uint32_t value)
