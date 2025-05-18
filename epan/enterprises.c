@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-05-10) */
+/* (last updated 2025-05-16) */
 
 #include "config.h"
 
@@ -63591,7 +63591,45 @@ static const char * const table[] =
     "DI3 Infotech LLP",                                                                   // 63569
     "Skryptek",                                                                           // 63570
     "KERRYJ INVESTMENT PTY LTD",                                                          // 63571
-    "TrustNXT GmbH"                                                                       // 63572
+    "TrustNXT GmbH",                                                                      // 63572
+    "JSC ""STC UPS""",                                                                    // 63573
+    "Standards and Interoperability Lab",                                                 // 63574
+    "NEXGOV",                                                                             // 63575
+    "Lanboss Limited",                                                                    // 63576
+    "Shenzhen Hellornd Tech Limited",                                                     // 63577
+    "SIMPLIWORKS SRL",                                                                    // 63578
+    "SPARK CAPITAL SYSTEMS SRL",                                                          // 63579
+    "ifb Institut zur Fortbildung von Betriebsräten GmbH & Co. KG",                       // 63580
+    "DevMiner Labs",                                                                      // 63581
+    "Triboelectric",                                                                      // 63582
+    "Hank Evans",                                                                         // 63583
+    "XENOptics Ltd.",                                                                     // 63584
+    "COSLINK DIGITAL ENERGY TECHNOLOGY CO.,LTD",                                          // 63585
+    "Holzfred",                                                                           // 63586
+    "St George's University Hospitals NHS Foundation Trust",                              // 63587
+    "Cygnus Platform",                                                                    // 63588
+    "Siretta Ltd",                                                                        // 63589
+    "Caleb Fleming",                                                                      // 63590
+    "CENTREVILLE",                                                                        // 63591
+    "Abria, Inc.",                                                                        // 63592
+    "Observable Space",                                                                   // 63593
+    "NationGate Computing Sdn. Bhd",                                                      // 63594
+    "Konecranes",                                                                         // 63595
+    "HAMTEX Project",                                                                     // 63596
+    "AOSTAR information technologies co.,LTD",                                            // 63597
+    "Ironwave Technologies",                                                              // 63598
+    "HEINE Optotechnik GmbH & Co. KG",                                                    // 63599
+    "Beijing WIT Technology Ltd.",                                                        // 63600
+    "County of Carroll, NH",                                                              // 63601
+    "Beijing Wisdomstar Technology Co., Ltd",                                             // 63602
+    "teslab",                                                                             // 63603
+    "Hengji Jiaye (Hangzhou) Technology Co., Ltd",                                        // 63604
+    "BRD GmbH",                                                                           // 63605
+    "PRIZOR VIZTECH LTD",                                                                 // 63606
+    "Nedinsco B.V.",                                                                      // 63607
+    "Marshall Land Systems",                                                              // 63608
+    "PT. Teman Baik Sejahtera",                                                           // 63609
+    "Letmi Panamá S.A"                                                                    // 63610
 };
 
 const char* global_enterprises_lookup(uint32_t value)
