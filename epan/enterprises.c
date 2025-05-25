@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-05-16) */
+/* (last updated 2025-05-23) */
 
 #include "config.h"
 
@@ -63505,7 +63505,7 @@ static const char * const table[] =
     "Global Precision Group",                                                             // 63483
     "Coulter Clinic, LLC",                                                                // 63484
     "Toyota Boshoku AKI USA, LLC",                                                        // 63485
-    "Beijing Golding Dsec Technology Co.,Ltd",                                            // 63486
+    "Beijing Golding Digital Security Technology Co., Ltd",                               // 63486
     "Norddeutscher Rundfunk",                                                             // 63487
     "Aivres Systems Inc.",                                                                // 63488
     "LISS Technologies",                                                                  // 63489
@@ -63605,7 +63605,7 @@ static const char * const table[] =
     "Hank Evans",                                                                         // 63583
     "XENOptics Ltd.",                                                                     // 63584
     "COSLINK DIGITAL ENERGY TECHNOLOGY CO.,LTD",                                          // 63585
-    "Holzfred",                                                                           // 63586
+    NULL,                                                                                 // 63586
     "St George's University Hospitals NHS Foundation Trust",                              // 63587
     "Cygnus Platform",                                                                    // 63588
     "Siretta Ltd",                                                                        // 63589
@@ -63629,7 +63629,51 @@ static const char * const table[] =
     "Nedinsco B.V.",                                                                      // 63607
     "Marshall Land Systems",                                                              // 63608
     "PT. Teman Baik Sejahtera",                                                           // 63609
-    "Letmi Panamá S.A"                                                                    // 63610
+    "Letmi Panamá S.A",                                                                   // 63610
+    "Rhombergbau Holding GmbH",                                                           // 63611
+    "Green Source Information (Beijing) Technology Co., Ltd",                             // 63612
+    "KNESS GROUP LLC",                                                                    // 63613
+    "Kuttler Tech",                                                                       // 63614
+    "Area Science Park",                                                                  // 63615
+    "Coop7",                                                                              // 63616
+    "LIMITED LIABILITY COMPANY ""TA-INFORMATION TECHNOLOGIES"" (TA-IT LLC)",              // 63617
+    "ATAN LLC",                                                                           // 63618
+    "TM Ausbau GmbH",                                                                     // 63619
+    "SAE EVPKI",                                                                          // 63620
+    "RESIX",                                                                              // 63621
+    "Nexus Energy Consulting and Technology Co., Ltd.",                                   // 63622
+    "cell-O",                                                                             // 63623
+    "AutoDomo",                                                                           // 63624
+    "TPV Display Technology (Xiamen) Co., Ltd.",                                          // 63625
+    "monowi e.K.",                                                                        // 63626
+    "Neuner AS",                                                                          // 63627
+    "Esys Srl",                                                                           // 63628
+    "Guangzhou Gateway Electronics Co.,Ltd",                                              // 63629
+    "RWG (Repair & Overhaul) Limited",                                                    // 63630
+    "Christian Egger",                                                                    // 63631
+    "Companies Office of Jamaica",                                                        // 63632
+    "Marine Express",                                                                     // 63633
+    "Samtgemeinde Elbtalaue",                                                             // 63634
+    "深圳明仕杰科技有限公司 (Shenzhen Mingshijie Technology Co., Ltd.)",                             // 63635
+    "Dwi Apriawan",                                                                       // 63636
+    "Drakes Computers",                                                                   // 63637
+    "Wellcon Gesellschaft für Prävention und Arbeitsmedizin GmbH",                        // 63638
+    "Agency for Information and Communication Technologies of Republic of Srpska",        // 63639
+    "D.A.S. právní ochrana, pobočka ERGO Versicherung Aktiengesellschaft pro ČR",         // 63640
+    "Saechsische Staatskanzlei",                                                          // 63641
+    "Leppäkoski Group Oy",                                                                // 63642
+    "Fortran Traffic Systems Limited",                                                    // 63643
+    "Elevate Mental Wellness",                                                            // 63644
+    "Wuchuan Water",                                                                      // 63645
+    "Bezirk Mittelfranken",                                                               // 63646
+    "SINAM",                                                                              // 63647
+    "VERO NUTRITION WELLNESS, LLC.",                                                      // 63648
+    "Shanghai Vaddsoft Network Technology Co., Ltd.vaddsoft",                             // 63649
+    "YSMART ECT LTDA",                                                                    // 63650
+    "Global Tech China Ltd.",                                                             // 63651
+    "Banedanmark",                                                                        // 63652
+    "iDeed Pty Ltd",                                                                      // 63653
+    "Mahlet Consulting"                                                                   // 63654
 };
 
 const char* global_enterprises_lookup(uint32_t value)
