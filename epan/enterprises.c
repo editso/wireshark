@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-05-23) */
+/* (last updated 2025-05-30) */
 
 #include "config.h"
 
@@ -4017,7 +4017,7 @@ static const char * const table[] =
     "VASCO Data Security International, Inc.",                                            // 3995
     "Open Systems AG",                                                                    // 3996
     "ImproWare AG",                                                                       // 3997
-    "Cherus",                                                                             // 3998
+    "Mediagroup Vtoroy",                                                                  // 3998
     "dydx",                                                                               // 3999
     "Hi-net Research Group",                                                              // 4000
     "KADAK Products Ltd.",                                                                // 4001
@@ -50881,7 +50881,7 @@ static const char * const table[] =
     "dilling.dev",                                                                        // 50859
     "BIOT sp. z o.o.",                                                                    // 50860
     "Stadtverwaltung Herzogenaurach",                                                     // 50861
-    "Hotspring Ventures Ltd",                                                             // 50862
+    "Treatwell Ltd",                                                                      // 50862
     "Figment Design Laboratories (Pty) Ltd",                                              // 50863
     "GLIWA GmbH",                                                                         // 50864
     "ilah",                                                                               // 50865
@@ -52694,7 +52694,7 @@ static const char * const table[] =
     "Teleservice Bredband Skane AB",                                                      // 52672
     "VPSign Ltd.",                                                                        // 52673
     "Schneider Electric / APC NetBotz",                                                   // 52674
-    "Peddie Institute Co., Ltd.",                                                         // 52675
+    "Nanyang Maker Education Technology Company",                                         // 52675
     "Hawaiki Cable Ltd.",                                                                 // 52676
     "iFuture Service Co., Ltd.",                                                          // 52677
     "Jit Team Sp. z o.o.",                                                                // 52678
@@ -57261,7 +57261,7 @@ static const char * const table[] =
     "DraffeLabs LLC",                                                                     // 57239
     "Latvijas Daudzbērnu ģimeņu apvienība",                                               // 57240
     "ATC Labs",                                                                           // 57241
-    "Sturgeon Services International",                                                    // 57242
+    "Sturgeon Services Intl, Inc.",                                                       // 57242
     "Central Rural Electric Cooperative",                                                 // 57243
     "FoxTrot AeroWorks",                                                                  // 57244
     "Dorel Home Furnishings Inc.",                                                        // 57245
@@ -63673,7 +63673,39 @@ static const char * const table[] =
     "Global Tech China Ltd.",                                                             // 63651
     "Banedanmark",                                                                        // 63652
     "iDeed Pty Ltd",                                                                      // 63653
-    "Mahlet Consulting"                                                                   // 63654
+    "Mahlet Consulting",                                                                  // 63654
+    "Jonathan Moler",                                                                     // 63655
+    "TIMELESS VETERINARY SYSTEMS INC.",                                                   // 63656
+    "Trantor Standard Systems Inc.",                                                      // 63657
+    "AthaLabs",                                                                           // 63658
+    "Intergraph Corporation Pty Ltd",                                                     // 63659
+    "IoT lab one d.o.o.",                                                                 // 63660
+    "aleph0",                                                                             // 63661
+    "Irancell Labs",                                                                      // 63662
+    "Original Products Private Limited",                                                  // 63663
+    "Original Innovation LLP",                                                            // 63664
+    "Qingdao Zhipai Information Technology Co., Ltd.",                                    // 63665
+    "辽宁广烁科技有限公司 (Liaoning Guangshuo Technology Co., Ltd.)",                               // 63666
+    "OOO AiTiLab Plus",                                                                   // 63667
+    "Gottwald GmbH & Co KG",                                                              // 63668
+    "German Sport University Cologne",                                                    // 63669
+    "Purple Team Software",                                                               // 63670
+    "Nexalogic IT Solutions",                                                             // 63671
+    "Bestinet Sdn Bhd",                                                                   // 63672
+    "Mendaera, Inc.",                                                                     // 63673
+    "Altipeak SA",                                                                        // 63674
+    "MAIA LABS s.r.o.",                                                                   // 63675
+    "JustATechie",                                                                        // 63676
+    "iTEDIUM",                                                                            // 63677
+    "West Feliciana Hospital",                                                            // 63678
+    "CLTCC",                                                                              // 63679
+    "did.coop",                                                                           // 63680
+    "qsphere",                                                                            // 63681
+    "北京融通智慧科技集团有限公司 (BEIJING  ACCOMMODATION  WISDOM  TECHNOLOGY GROUP  CO., LTD.)",       // 63682
+    "AMBK SIA",                                                                           // 63683
+    "Dmytro M. Barabash",                                                                 // 63684
+    "Suzhou RCT Power Energy Technology Co., Ltd",                                        // 63685
+    "Adam Popik"                                                                          // 63686
 };
 
 const char* global_enterprises_lookup(uint32_t value)
