@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-05-30) */
+/* (last updated 2025-06-06) */
 
 #include "config.h"
 
@@ -14886,7 +14886,7 @@ static const char * const table[] =
     "TNCE",                                                                               // 14864
     "Interplex Telecom",                                                                  // 14865
     "Cottonwood Technology Group, Inc.",                                                  // 14866
-    "Halcyon Software Limited",                                                           // 14867
+    "Fortra",                                                                             // 14867
     "MAV INFORMATIKA Ltd.",                                                               // 14868
     "Saudi Telecom",                                                                      // 14869
     "AVAYA",                                                                              // 14870
@@ -25642,7 +25642,7 @@ static const char * const table[] =
     "Ost-West Handelsbank AG",                                                            // 25620
     "Z Microsystems",                                                                     // 25621
     "JANET(UK)",                                                                          // 25622
-    "OpenVAS",                                                                            // 25623
+    "Greenbone AG",                                                                       // 25623
     "Kent School District",                                                               // 25624
     "ChattenAssociates, Inc.",                                                            // 25625
     "Crufty",                                                                             // 25626
@@ -35866,7 +35866,7 @@ static const char * const table[] =
     "Stormont-Vail HealthCare",                                                           // 35844
     "Heraklion Wireless",                                                                 // 35845
     "Parsons",                                                                            // 35846
-    "Greenbone Networks GmbH",                                                            // 35847
+    "Greenbone AG",                                                                       // 35847
     "Multipolaris Ltd.",                                                                  // 35848
     "Telefonica International Wholesale Services",                                        // 35849
     "Horns And Hooves",                                                                   // 35850
@@ -57881,7 +57881,7 @@ static const char * const table[] =
     "CHROMANET",                                                                          // 57859
     "Brighton Corporation",                                                               // 57860
     "Vita Medical Associates",                                                            // 57861
-    "MetaGeek, LLC",                                                                      // 57862
+    "Oscium",                                                                             // 57862
     "ASETEC Ingenieria de Sistemas S.L.",                                                 // 57863
     "City of Decatur, AL",                                                                // 57864
     "Eltako GmbH",                                                                        // 57865
@@ -63705,7 +63705,32 @@ static const char * const table[] =
     "AMBK SIA",                                                                           // 63683
     "Dmytro M. Barabash",                                                                 // 63684
     "Suzhou RCT Power Energy Technology Co., Ltd",                                        // 63685
-    "Adam Popik"                                                                          // 63686
+    "Adam Popik",                                                                         // 63686
+    "Andi Bellstedt",                                                                     // 63687
+    "XYMOGEN",                                                                            // 63688
+    "Shin Kwang Electronics Co.",                                                         // 63689
+    "Rhe-Ma Steuerberatungsgesellschaft mbH",                                             // 63690
+    "Jost PLASTEC GmbH",                                                                  // 63691
+    "City of Gulf Shores",                                                                // 63692
+    "Proof.com",                                                                          // 63693
+    "Federal Public Service Employment, Labour and Social Dialogue",                      // 63694
+    "Patrick Hochstein",                                                                  // 63695
+    "STORE Capital LLC",                                                                  // 63696
+    "Juan Dario Mansilla",                                                                // 63697
+    "Authara Inc.",                                                                       // 63698
+    "Sweda Informatica Ltda",                                                             // 63699
+    "GLOBAL TECHNOLOGY CENTER",                                                           // 63700
+    "Savoy Life",                                                                         // 63701
+    "A Woman's Place",                                                                    // 63702
+    "Argo Group",                                                                         // 63703
+    "Diamond Drake Ventures, LLC",                                                        // 63704
+    "nzyme LLC",                                                                          // 63705
+    "PathConnect GmbH",                                                                   // 63706
+    "Musson Industrial",                                                                  // 63707
+    "RMIT University",                                                                    // 63708
+    "KogiTEK UG",                                                                         // 63709
+    "Enzo Ablack",                                                                        // 63710
+    "Gatewatcher"                                                                         // 63711
 };
 
 const char* global_enterprises_lookup(uint32_t value)
