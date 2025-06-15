@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-06-06) */
+/* (last updated 2025-06-11) */
 
 #include "config.h"
 
@@ -25642,7 +25642,7 @@ static const char * const table[] =
     "Ost-West Handelsbank AG",                                                            // 25620
     "Z Microsystems",                                                                     // 25621
     "JANET(UK)",                                                                          // 25622
-    "Greenbone AG",                                                                       // 25623
+    "OpenVAS",                                                                            // 25623
     "Kent School District",                                                               // 25624
     "ChattenAssociates, Inc.",                                                            // 25625
     "Crufty",                                                                             // 25626
@@ -44336,7 +44336,7 @@ static const char * const table[] =
     "Democritus University of Thrace",                                                    // 44314
     "Guido Di Fazio",                                                                     // 44315
     "Softneta UAB",                                                                       // 44316
-    "Kanton Zug (www.zg.ch)",                                                             // 44317
+    "Kanton Zug (zg.ch)",                                                                 // 44317
     "PT. Telekomunikasi Indonesia",                                                       // 44318
     "Oklahoma Cancer Specialists and Research Institute",                                 // 44319
     "Lake Norman Hematology Oncology",                                                    // 44320
@@ -63730,7 +63730,27 @@ static const char * const table[] =
     "RMIT University",                                                                    // 63708
     "KogiTEK UG",                                                                         // 63709
     "Enzo Ablack",                                                                        // 63710
-    "Gatewatcher"                                                                         // 63711
+    "Gatewatcher",                                                                        // 63711
+    "OmniChain Holdings, Inc.",                                                           // 63712
+    "Justitiele ICT Organisatie",                                                         // 63713
+    "OpForge",                                                                            // 63714
+    "Enervaro Pty Ltd",                                                                   // 63715
+    "Scott Guyton",                                                                       // 63716
+    "KUTTER GmbH & Co. KG",                                                               // 63717
+    "ACKNetworks,Inc.",                                                                   // 63718
+    "Builtlayer LLC",                                                                     // 63719
+    "Melissa Martinez",                                                                   // 63720
+    "Walker Morris LLP",                                                                  // 63721
+    "Jade Wurzer",                                                                        // 63722
+    "Maxime DERCHE Information System Consulting France",                                 // 63723
+    "Stack AV",                                                                           // 63724
+    "Kadec",                                                                              // 63725
+    "IT Route, LLC",                                                                      // 63726
+    "Resillion UK Limited",                                                               // 63727
+    "Ares LTD",                                                                           // 63728
+    "Department of Communication Security",                                               // 63729
+    "Beijing Huahong IC Design Co., Ltd.",                                                // 63730
+    "SAS TECHVAR"                                                                         // 63731
 };
 
 const char* global_enterprises_lookup(uint32_t value)
