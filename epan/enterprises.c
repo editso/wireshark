@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-06-11) */
+/* (last updated 2025-06-20) */
 
 #include "config.h"
 
@@ -2088,7 +2088,7 @@ static const char * const table[] =
     "Control Resources Corporation",                                                      // 2066
     "Advanced Fibre Communications (AFC)",                                                // 2067
     "Elproma Electronica B.V.",                                                           // 2068
-    "MTA SZTAKI",                                                                         // 2069
+    "SZTAKI",                                                                             // 2069
     "Consensys Computers Inc",                                                            // 2070
     "Jade Digital Research Co.",                                                          // 2071
     "Byte This Interactive Pty.Ltd. Mike",                                                // 2072
@@ -19764,7 +19764,7 @@ static const char * const table[] =
     "Kazeon Systems, Inc",                                                                // 19742
     "jpwebworks Pty Ltd",                                                                 // 19743
     "Novacoast, Inc.",                                                                    // 19744
-    "netz.ooo",                                                                           // 19745
+    "plyp",                                                                               // 19745
     "Data Domain, Inc",                                                                   // 19746
     "The Open and Free Technology Community",                                             // 19747
     "Affiliated Computer Services, Inc. TripPak SERVICES",                                // 19748
@@ -63750,7 +63750,45 @@ static const char * const table[] =
     "Ares LTD",                                                                           // 63728
     "Department of Communication Security",                                               // 63729
     "Beijing Huahong IC Design Co., Ltd.",                                                // 63730
-    "SAS TECHVAR"                                                                         // 63731
+    "SAS TECHVAR",                                                                        // 63731
+    "数炬新技术（深圳）有限公司 (Shuju New Technology (Shenzhen) Co., Ltd.)",                          // 63732
+    "Masovskiy International Organization - MIO",                                         // 63733
+    "Mathias Müller",                                                                     // 63734
+    "EasyPay",                                                                            // 63735
+    "Madeiranit",                                                                         // 63736
+    "ZERO Labs",                                                                          // 63737
+    "Landes-Feuerwehrverband Tirol",                                                      // 63738
+    "Goldpac Limited",                                                                    // 63739
+    "Systemair AB",                                                                       // 63740
+    "Geonica",                                                                            // 63741
+    "Doctornow Inc",                                                                      // 63742
+    "LEW Service & Consulting GmbH",                                                      // 63743
+    "Moya",                                                                               // 63744
+    "Vyskumny ustav vodneho hospodarstva",                                                // 63745
+    "Noshaq",                                                                             // 63746
+    "EAJ Global",                                                                         // 63747
+    "HEQA Security",                                                                      // 63748
+    "MATTERS (Winb Estrategia)",                                                          // 63749
+    "Vincent Nic",                                                                        // 63750
+    "Ictrek",                                                                             // 63751
+    "Vicente",                                                                            // 63752
+    "Jisnu Communications Private Limited",                                               // 63753
+    "Rene Anton Castillo",                                                                // 63754
+    "AStA der Universität zu Lübeck",                                                     // 63755
+    "Imply Tecnologia",                                                                   // 63756
+    "SHEN ZHEN CLOU ELECTRONICS CO.,LTD.",                                                // 63757
+    "OpenYard",                                                                           // 63758
+    "Southeast Medical Imaging",                                                          // 63759
+    "Novedades kay",                                                                      // 63760
+    "dkt",                                                                                // 63761
+    "Zonit Structured Solutions",                                                         // 63762
+    "Plaid Inc.",                                                                         // 63763
+    "Conservative Fund Canada",                                                           // 63764
+    "Maxim Parygin",                                                                      // 63765
+    "AZORG VZW",                                                                          // 63766
+    "Telcore",                                                                            // 63767
+    "Firstwave Cloud",                                                                    // 63768
+    "Useful Data LLC"                                                                     // 63769
 };
 
 const char* global_enterprises_lookup(uint32_t value)
