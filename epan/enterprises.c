@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-06-20) */
+/* (last updated 2025-06-27) */
 
 #include "config.h"
 
@@ -56055,7 +56055,7 @@ static const char * const table[] =
     "Die Autobahn GmbH des Bundes",                                                       // 56033
     "ALS Laboratory Group",                                                               // 56034
     "GALDERMA S.A.",                                                                      // 56035
-    "Gentlent UG (haftungsbeschränkt)",                                                   // 56036
+    "Gentlent GmbH",                                                                      // 56036
     "Argo AI",                                                                            // 56037
     "Nroad",                                                                              // 56038
     "Bold City Tech",                                                                     // 56039
@@ -61107,7 +61107,7 @@ static const char * const table[] =
     "Terra Sound",                                                                        // 61085
     "Chengdu BeiZhongWangXin Technology Co.Ltd",                                          // 61086
     "shenzhen real linkShenzhen Real Link Technology Co.,Ltd",                            // 61087
-    "Anuvu",                                                                              // 61088
+    "MTNSAT",                                                                             // 61088
     "Lighthouse Credit Union",                                                            // 61089
     "PKITNEXT LABS",                                                                      // 61090
     "DMIM",                                                                               // 61091
@@ -63783,12 +63783,56 @@ static const char * const table[] =
     "dkt",                                                                                // 63761
     "Zonit Structured Solutions",                                                         // 63762
     "Plaid Inc.",                                                                         // 63763
-    "Conservative Fund Canada",                                                           // 63764
+    NULL,                                                                                 // 63764
     "Maxim Parygin",                                                                      // 63765
     "AZORG VZW",                                                                          // 63766
     "Telcore",                                                                            // 63767
     "Firstwave Cloud",                                                                    // 63768
-    "Useful Data LLC"                                                                     // 63769
+    "Useful Data LLC",                                                                    // 63769
+    "Javier Espino Sáenz",                                                                // 63770
+    "E.C. Styberg Engineering",                                                           // 63771
+    "Guerbet",                                                                            // 63772
+    "Orange Cyberdefense",                                                                // 63773
+    "Digisol Systems Limited",                                                            // 63774
+    "Silent Sentinel Ltd",                                                                // 63775
+    "SYN-bit",                                                                            // 63776
+    "MRB Desenvolvimento de Software",                                                    // 63777
+    "Montage Technology",                                                                 // 63778
+    "McCrae Hospitals (Thailand) Limited",                                                // 63779
+    "亿阳信通股份有限公司 (BOCO Inter-Telecom Co., Ltd.)",                                          // 63780
+    "Emeika Jones",                                                                       // 63781
+    "Leland Cheung",                                                                      // 63782
+    "New Idea LLC",                                                                       // 63783
+    "Exotic Shell",                                                                       // 63784
+    "AURCORE TECHNOLOGY INC.",                                                            // 63785
+    "Xi‘an BetterCtrl  Intelligent Technology Co., Ltd",                                  // 63786
+    "Logical Innovations, LLC",                                                           // 63787
+    "Crestava",                                                                           // 63788
+    "Ernest Wong",                                                                        // 63789
+    "VoidTrust LLC",                                                                      // 63790
+    "Whiskey House of Kentucky",                                                          // 63791
+    "Educational Institution ALMATY MANAGEMENT UNIVERSITY",                               // 63792
+    "聆维思（上海）科技有限公司 (Lingweisi (Shanghai) Technology Co., Ltd.)",                          // 63793
+    "KJO Investments LLC",                                                                // 63794
+    "Yinergy Digital Power Technology Co.,Ltd",                                           // 63795
+    "Franklin Edward Bridges",                                                            // 63796
+    "HBQ Technology",                                                                     // 63797
+    "SHOTO",                                                                              // 63798
+    "Utah State Courts",                                                                  // 63799
+    "Quantium",                                                                           // 63800
+    "NSTEK",                                                                              // 63801
+    "OOO BASF",                                                                           // 63802
+    "Uanataca Colombia",                                                                  // 63803
+    "CCArchitect Inc.",                                                                   // 63804
+    "RTEL Telecom LLP",                                                                   // 63805
+    "CS-Tech s.r.o.",                                                                     // 63806
+    "United Urology",                                                                     // 63807
+    "CottonWay",                                                                          // 63808
+    "Constructor University Bremen gGmbH",                                                // 63809
+    "Österreichisches Siedlungswerk Gemeinnützige Wohnungs­aktien­gesellschaft",          // 63810
+    "Fundacion Bosques Verdes",                                                           // 63811
+    "Periland Eco Park",                                                                  // 63812
+    "GABBATRON INCORPORATED"                                                              // 63813
 };
 
 const char* global_enterprises_lookup(uint32_t value)
