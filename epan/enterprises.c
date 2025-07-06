@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-06-27) */
+/* (last updated 2025-07-03) */
 
 #include "config.h"
 
@@ -4486,7 +4486,7 @@ static const char * const table[] =
     "MPB Communications Inc.",                                                            // 4464
     "ViewCast.com",                                                                       // 4465
     "Harmonic Video Network",                                                             // 4466
-    "FibroLan",                                                                           // 4467
+    "Fibrolan",                                                                           // 4467
     "Telkoor-QPS",                                                                        // 4468
     "Diversinet Corp.",                                                                   // 4469
     "TeleDream Inc.",                                                                     // 4470
@@ -44587,7 +44587,7 @@ static const char * const table[] =
     "Tobias Mandjik",                                                                     // 44565
     "OOO Komandor-holding",                                                               // 44566
     "Agencja Rozwoju Przemyslu S.A.",                                                     // 44567
-    "Om7Sense GmbH",                                                                      // 44568
+    "PDU5",                                                                               // 44568
     "Regional Networks, Ltd.",                                                            // 44569
     "Lancaster Cancer Center",                                                            // 44570
     "Solinea, Inc",                                                                       // 44571
@@ -62016,7 +62016,7 @@ static const char * const table[] =
     "Guangzhou Huisheng Electronic Technology Co., Ltd",                                  // 61994
     "Rogers Behavioral Health",                                                           // 61995
     "Raymond Sin",                                                                        // 61996
-    "Technologies Ssmidge",                                                               // 61997
+    "Ssmidge Technologies",                                                               // 61997
     "Umeå Energi AB",                                                                     // 61998
     "de.borderline",                                                                      // 61999
     "GVS Ko",                                                                             // 62000
@@ -63822,7 +63822,7 @@ static const char * const table[] =
     "Quantium",                                                                           // 63800
     "NSTEK",                                                                              // 63801
     "OOO BASF",                                                                           // 63802
-    "Uanataca Colombia",                                                                  // 63803
+    "Uanataca Colombia S.A.S.",                                                           // 63803
     "CCArchitect Inc.",                                                                   // 63804
     "RTEL Telecom LLP",                                                                   // 63805
     "CS-Tech s.r.o.",                                                                     // 63806
@@ -63832,7 +63832,32 @@ static const char * const table[] =
     "Österreichisches Siedlungswerk Gemeinnützige Wohnungs­aktien­gesellschaft",          // 63810
     "Fundacion Bosques Verdes",                                                           // 63811
     "Periland Eco Park",                                                                  // 63812
-    "GABBATRON INCORPORATED"                                                              // 63813
+    "GABBATRON INCORPORATED",                                                             // 63813
+    "Industeel Belgium",                                                                  // 63814
+    "Pcoo Limited",                                                                       // 63815
+    "Ai-Pygmalion",                                                                       // 63816
+    "Dron Edge India Private Limited",                                                    // 63817
+    "IT Confidence A/S",                                                                  // 63818
+    "First Impression Labels SA Pty Ltd.",                                                // 63819
+    "Techland",                                                                           // 63820
+    "Quantified Imaging Limited",                                                         // 63821
+    "Daniel Absi",                                                                        // 63822
+    "iNDIGENT eNTERPRISES",                                                               // 63823
+    "World WLAN Application Alliance",                                                    // 63824
+    "Zhengzhou ECLinkey Technology Co., LTD",                                             // 63825
+    "Info Space d.o.o.",                                                                  // 63826
+    "MAROC TELECOM",                                                                      // 63827
+    "Hancock County Government, Indiana",                                                 // 63828
+    "Zerosla",                                                                            // 63829
+    "Acceldata Inc",                                                                      // 63830
+    "Seemi Technology Corporation",                                                       // 63831
+    "pronoco",                                                                            // 63832
+    "Brentwood College School",                                                           // 63833
+    "Pimser Proje Elektronik A.Ş.",                                                       // 63834
+    "AOL-HUVM",                                                                           // 63835
+    "IMBIL TELECOM SOLUTIONS NIGERIA LIMITED",                                            // 63836
+    "WY7EMT",                                                                             // 63837
+    "West Point Medical Group"                                                            // 63838
 };
 
 const char* global_enterprises_lookup(uint32_t value)
