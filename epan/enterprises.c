@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-/* (last updated 2025-07-03) */
+/* (last updated 2025-07-10) */
 
 #include "config.h"
 
@@ -48360,7 +48360,7 @@ static const char * const table[] =
     "Orion Power Systems",                                                                // 48338
     "Seldiame Software",                                                                  // 48339
     "Public Sector Pension Investment Board",                                             // 48340
-    "DevLounge",                                                                          // 48341
+    "Nicola Delle Foglie",                                                                // 48341
     "Ransnet Singapore Pte Ltd",                                                          // 48342
     "Industrial Bank of Kuwait",                                                          // 48343
     "SHW Automotive GmbH",                                                                // 48344
@@ -63857,7 +63857,39 @@ static const char * const table[] =
     "AOL-HUVM",                                                                           // 63835
     "IMBIL TELECOM SOLUTIONS NIGERIA LIMITED",                                            // 63836
     "WY7EMT",                                                                             // 63837
-    "West Point Medical Group"                                                            // 63838
+    "West Point Medical Group",                                                           // 63838
+    "J&R Technology Limited",                                                             // 63839
+    "Tienda Alcaraván",                                                                   // 63840
+    "Kwantlen Polytechnic University - Kwt.priv",                                         // 63841
+    "Integre Technologies LLC",                                                           // 63842
+    "R Consulting EOOD",                                                                  // 63843
+    "Froze Communications Private Limited",                                               // 63844
+    "Michael Butash",                                                                     // 63845
+    "Instituto de Previsión Social de la Provincia de Buenos Aires",                      // 63846
+    "labapart UG",                                                                        // 63847
+    "Hielscher Ultrasonics GmbH",                                                         // 63848
+    "Bitfocus AS",                                                                        // 63849
+    "KUNTURAD S.A.S.",                                                                    // 63850
+    "Domsjö Fiber AB",                                                                    // 63851
+    "Beyond Expectations",                                                                // 63852
+    "PT. Data Integrasi Semesta",                                                         // 63853
+    "Baichuan Chen",                                                                      // 63854
+    "Aaroni Limited",                                                                     // 63855
+    "ANF AC URUGUAY SAS",                                                                 // 63856
+    "ng-voice GmbH",                                                                      // 63857
+    "AuthUSB S.L.",                                                                       // 63858
+    "SDA DMS Zrt.",                                                                       // 63859
+    "ANF AC ECD COLOMBIA S.A.S.",                                                         // 63860
+    "pan-cloud",                                                                          // 63861
+    "Yablochkov Charging Stations",                                                       // 63862
+    "Student Transportation of America",                                                  // 63863
+    "Solis Energy Australia",                                                             // 63864
+    "Rabbity Labs",                                                                       // 63865
+    "Accadco Technology Co. Ltd",                                                         // 63866
+    "Queclink Wireless Solutions Co., Ltd.",                                              // 63867
+    "Maastricht University",                                                              // 63868
+    "Z Elektronika Kft.",                                                                 // 63869
+    "Wifirst"                                                                             // 63870
 };
 
 const char* global_enterprises_lookup(uint32_t value)
