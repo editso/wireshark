@@ -2088,6 +2088,9 @@ set(USHARK_DISSECTOR_FILES
         #${CMAKE_CURRENT_SOURCE_DIR}/packet-gsm_a_gm.c
         ${CMAKE_CURRENT_SOURCE_DIR}/packet-tls.c
         ${CMAKE_CURRENT_SOURCE_DIR}/packet-tls-utils.c
+	${CMAKE_CURRENT_SOURCE_DIR}/packet-udp.c
+	${CMAKE_CURRENT_SOURCE_DIR}/packet-dns.c
+	${CMAKE_CURRENT_SOURCE_DIR}/packet-icmp.c
 
         # quic
         #${CMAKE_CURRENT_SOURCE_DIR}/packet-gquic.c
