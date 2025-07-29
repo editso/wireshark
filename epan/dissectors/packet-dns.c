@@ -4771,7 +4771,9 @@ proto_reg_handoff_dns(void)
   ssl_dissector_add(TCP_PORT_DNS_TLS, dns_handle);
   // RFC 7858 - registration via https://mailarchive.ietf.org/arch/msg/dns-privacy/iZ2rDIhFB2ZWsGC3PcdBVLGa8Do
   dissector_add_string("tls.alpn", "dot", dns_handle);
+#ifndef USHARK_BUILD
   dtls_dissector_add(UDP_PORT_DNS_DTLS, dns_handle);
+#endif
   dissector_add_uint_range_with_preference("tcp.port", DEFAULT_DNS_TCP_PORT_RANGE, dns_handle);
   dissector_add_uint_range_with_preference("udp.port", DEFAULT_DNS_PORT_RANGE, dns_handle);
   dissector_add_string("media_type", "application/dns-message", dns_handle); /* since draft-ietf-doh-dns-over-https-07 */
