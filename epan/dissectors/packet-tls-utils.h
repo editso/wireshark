@@ -2542,6 +2542,17 @@ ssl_common_register_dtls_alpn_dissector_table(const char *name,
 extern void
 ssl_common_register_options(module_t *module, ssl_common_options_t *options, gboolean is_dtls);
 
+typedef struct {
+  GHashTable *table;
+  const char *label;
+  StringInfo *client_random;
+}load_secret_fallback_t;
+
+typedef void (*tls13_load_secret_fallback_fn_t)(load_secret_fallback_t *load_secret);
+
+__attribute__((visibility("default"))) 
+extern void tls13_set_load_secret_fallback_fn(tls13_load_secret_fallback_fn_t fallback_fn);
+
 #ifdef SSL_DECRYPT_DEBUG
 extern void
 ssl_debug_printf(const gchar* fmt,...) G_GNUC_PRINTF(1,2);

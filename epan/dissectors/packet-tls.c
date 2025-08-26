@@ -1073,6 +1073,15 @@ decrypt_ssl3_record(tvbuff_t *tvb, packet_info *pinfo, guint32 offset, SslDecryp
     data_for_iv_len = (record_length < 24) ? record_length : 24;
     ssl_data_set(data_for_iv, (const guchar*)tvb_get_ptr(tvb, offset + record_length - data_for_iv_len, data_for_iv_len), data_for_iv_len);
 
+   if (!decoder) {
+     tls13_change_key(ssl, &ssl_master_key_map, direction != 0, TLS_SECRET_APP);
+     if (direction != 0) {
+       decoder = ssl->server;
+     } else {
+       decoder = ssl->client;
+     }
+   }
+
     if (!decoder) {
         ssl_debug_printf("decrypt_ssl3_record: no decoder available\n");
         return FALSE;

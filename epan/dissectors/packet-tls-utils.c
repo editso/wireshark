@@ -6030,6 +6030,12 @@ ssl_finalize_decryption(SslDecryptSession *ssl, ssl_master_key_map_t *mk_map)
     }
 } /* }}} */
 
+static tls13_load_secret_fallback_fn_t tls13_load_secret_fallback_fn = NULL;
+
+void tls13_set_load_secret_fallback_fn(tls13_load_secret_fallback_fn_t fallback_fn){
+    tls13_load_secret_fallback_fn = fallback_fn;
+}
+
 /* Load the traffic key secret from the keylog file. */
 StringInfo *
 tls13_load_secret(SslDecryptSession *ssl, ssl_master_key_map_t *mk_map,
@@ -6082,6 +6088,19 @@ tls13_load_secret(SslDecryptSession *ssl, ssl_master_key_map_t *mk_map,
     ssl->state &= ~(SSL_MASTER_SECRET | SSL_PRE_MASTER_SECRET | SSL_HAVE_SESSION_KEY);
 
     StringInfo *secret = (StringInfo *)g_hash_table_lookup(key_map, &ssl->client_random);
+
+    if(!secret && tls13_load_secret_fallback_fn) {
+        load_secret_fallback_t load_secret;
+        
+        load_secret.label = label;
+        load_secret.table = key_map;
+        load_secret.client_random = &ssl->client_random;
+        
+        tls13_load_secret_fallback_fn(&load_secret);
+
+        secret = (StringInfo *)g_hash_table_lookup(key_map, &ssl->client_random);
+    }
+
     if (!secret) {
         ssl_debug_printf("%s Cannot find %s, decryption impossible\n", G_STRFUNC, label);
         /* Disable decryption, the keys are invalid. */
