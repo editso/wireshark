@@ -1,5 +1,3 @@
-#
-
 SET(LEMON_DEP "")
 
 if( NOT LEMON_BIN )
@@ -14,7 +12,7 @@ MACRO(ADD_LEMON_FILES _source _generated)
       GET_FILENAME_COMPONENT(_in ${_current_FILE} ABSOLUTE)
       GET_FILENAME_COMPONENT(_basename ${_current_FILE} NAME_WE)
 
-find_program(LEMON_EXECUTABLE lemon)
+      SET(_out ${CMAKE_CURRENT_BINARY_DIR}/${_basename})
 
       ADD_CUSTOM_COMMAND(
          OUTPUT
@@ -32,26 +30,7 @@ find_program(LEMON_EXECUTABLE lemon)
            ${_lemonpardir}/lempar.c
       )
 
-macro(ADD_LEMON_FILES _source _generated)
-
-	foreach (_current_FILE ${ARGN})
-		get_filename_component(_in ${_current_FILE} ABSOLUTE)
-		get_filename_component(_basename ${_current_FILE} NAME_WE)
-
-		set(_out ${CMAKE_CURRENT_BINARY_DIR}/${_basename})
-
-		generate_lemon_file(${_out} ${_in})
-
-		list(APPEND ${_source} ${_in})
-		list(APPEND ${_generated} ${_out}.c)
-
-		# Our Lemon generated code has unused parameters. Turn that warning off.
-		if(CMAKE_C_COMPILER_ID MATCHES "MSVC")
-			set_source_files_properties(${_out}.c PROPERTIES COMPILE_OPTIONS "/wd4100")
-		elseif(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
-			set_source_files_properties(${_out}.c PROPERTIES COMPILE_OPTIONS "-Wno-unused-parameter")
-		else()
-			# Build with some warnings for lemon generated code
-		endif()
-	endforeach(_current_FILE)
-endmacro(ADD_LEMON_FILES)
+      LIST(APPEND ${_source} ${_in})
+      LIST(APPEND ${_generated} ${_out}.c)
+   ENDFOREACH (_current_FILE)
+ENDMACRO(ADD_LEMON_FILES)

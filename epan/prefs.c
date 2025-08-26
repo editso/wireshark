@@ -5725,6 +5725,7 @@ deprecated_port_pref(char *pref_name, const char *value)
     module_t *module;
     pref_t *pref;
 
+#ifndef USHARK_BUILD
     static gboolean sanity_checked;
     if (!sanity_checked) {
         sanity_checked = true;

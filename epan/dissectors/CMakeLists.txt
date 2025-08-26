@@ -2195,6 +2195,7 @@ set(USHARK_DISSECTOR_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/packet-udp.c
 	${CMAKE_CURRENT_SOURCE_DIR}/packet-dns.c
 	${CMAKE_CURRENT_SOURCE_DIR}/packet-icmp.c
+	${CMAKE_CURRENT_SOURCE_DIR}/packet-media-type.c
 
         # quic
         #${CMAKE_CURRENT_SOURCE_DIR}/packet-gquic.c

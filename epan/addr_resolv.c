@@ -380,7 +380,9 @@ static ares_channel ghbn_chan; /* ares_gethostbyname -- Usually interactive, tim
 #endif
 
 static  gboolean  async_dns_initialized = FALSE;
+#ifdef HAS_CARES
 static  guint       async_dns_in_flight = 0;
+#endif
 static  wmem_list_t *async_dns_queue_head = NULL;
 
 //UAT for providing a list of DNS servers to C-ARES for name resolution
@@ -682,10 +684,11 @@ set_resolution_synchrony(bool synchronous)
 {
     resolve_synchronously = synchronous;
     maxmind_db_set_synchrony(synchronous);
-
+#ifdef HAVE_CARES
     if (synchronous) {
         wait_for_async_queue();
     }
+#endif
 }
 
 static void
@@ -1313,7 +1316,8 @@ c_ares_ghba_cb(void *arg, int status, int timeouts _U_, struct hostent *he) {
 #endif
 
 /* --------------- */
-static hashipv4_t *
+
+hashipv4_t *
 new_ipv4(const guint addr)
 {
     hashipv4_t *tp = wmem_new(addr_resolv_scope, hashipv4_t);
@@ -3332,6 +3336,7 @@ disable_name_resolution(void) {
 
 bool
 host_name_lookup_process(void) {
+#ifdef HAS_CARES
     async_dns_queue_msg_t *caqm;
     struct timeval tv = { 0, 0 };
     int nfds;
@@ -3381,7 +3386,7 @@ _host_name_lookup_cleanup(void) {
     ares_library_cleanup();
 #endif
 #endif
-    async_dns_initialized = false;
+    async_dns_initialized = FALSE;
 }
 
 const char *
@@ -3995,6 +4000,7 @@ get_host_ipaddr(const char *host, uint32_t *addrp)
         if (ahe.addr_size == ahe.copied) {
             return true;
         }
+#endif
         return FALSE;
     }
 
@@ -4064,7 +4070,7 @@ get_host_ipaddr6(const char *host, ws_in6_addr *addrp)
     if (ahe.addr_size == ahe.copied) {
         return true;
     }
-
+#endif
     return FALSE;
 }
 
