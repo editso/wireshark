@@ -16,6 +16,7 @@ SetCompressorDictSize 64 ; MB
 !include "WordFunc.nsh"
 
 ${StrRep}
+${UnStrRep}
 
 ; See https://nsis.sourceforge.io/Check_if_a_file_exists_at_compile_time for documentation
 !macro !defineifexist _VAR_NAME _FILE_NAME
@@ -38,9 +39,11 @@ ${StrRep}
 ; ============================================================================
 
 ; The file to write
-OutFile "${OUTFILE_DIR}\${PROGRAM_NAME}-${WIRESHARK_TARGET_PLATFORM}-${VERSION}.exe"
+OutFile "${OUTFILE_DIR}\${PROGRAM_NAME}-${VERSION}-${WIRESHARK_TARGET_PLATFORM}.exe"
 ; Installer icon
 Icon "${TOP_SRC_DIR}\resources\icons\wiresharkinst.ico"
+; Uninstaller icon
+UninstallIcon "${TOP_SRC_DIR}\resources\icons\wiresharkinst.ico"
 
 ; ============================================================================
 ; Modern UI
@@ -56,6 +59,7 @@ Icon "${TOP_SRC_DIR}\resources\icons\wiresharkinst.ico"
 ;!addplugindir ".\Plugins"
 
 !define MUI_ICON "${TOP_SRC_DIR}\resources\icons\wiresharkinst.ico"
+!define MUI_UNICON "${TOP_SRC_DIR}\resources\icons\wiresharkinst.ico"
 BrandingText "Wireshark${U+00ae} Installer"
 
 !define MUI_COMPONENTSPAGE_SMALLDESC
@@ -70,8 +74,8 @@ BrandingText "Wireshark${U+00ae} Installer"
 ; is usually not associated with an appropriate text editor. We should use extension "txt"
 ; for a text file or "html" for an html README file.
 !define MUI_FINISHPAGE_TITLE_3LINES
-!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\NEWS.txt"
-!define MUI_FINISHPAGE_SHOWREADME_TEXT "Show News"
+!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\release-notes.html"
+!define MUI_FINISHPAGE_SHOWREADME_TEXT "Open the release notes"
 !define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
 ; NSIS runs as Administrator and will run Wireshark as Administrator
 ; if these are enabled.
@@ -91,6 +95,8 @@ BrandingText "Wireshark${U+00ae} Installer"
 !define MUI_LICENSEPAGE_BUTTON "Noted"
 !insertmacro MUI_PAGE_LICENSE "${STAGING_DIR}\COPYING.txt"
 
+Page custom DisplayDonatePage
+
 !insertmacro MUI_PAGE_COMPONENTS
 !ifdef QT_DIR
 Page custom DisplayAdditionalTasksPage LeaveAdditionalTasksPage
@@ -100,6 +106,21 @@ Page custom DisplayNpcapPage
 Page custom DisplayUSBPcapPage
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
+
+; Uninstall stuff (NSIS 2.08: "\r\n" don't work here)
+!define MUI_UNCONFIRMPAGE_TEXT_TOP "The following ${PROGRAM_NAME} installation will be removed. Click 'Next' to continue."
+; Uninstall stuff (this text isn't used with the MODERN_UI!)
+;UninstallText "This will uninstall ${PROGRAM_NAME}.\r\nBefore starting the uninstallation, make sure ${PROGRAM_NAME} is not running.\r\nClick 'Next' to continue."
+
+!define MUI_UNFINISHPAGE_NOAUTOCLOSE
+!define MUI_WELCOMEPAGE_TITLE_3LINES
+!define MUI_FINISHPAGE_TITLE_3LINES
+
+!insertmacro MUI_UNPAGE_WELCOME
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_COMPONENTS
+!insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
 
 ; ============================================================================
 ; MUI Languages
@@ -117,6 +138,7 @@ Page custom DisplayUSBPcapPage
   ; Old Modern 1 UI: https://nsis.sourceforge.io/Docs/Modern%20UI/Readme.html
   ; To do: Upgrade to the Modern 2 UI:
   ;ReserveFile "AdditionalTasksPage.ini"
+  ReserveFile "DonatePage.ini"
   ReserveFile "NpcapPage.ini"
   ReserveFile "USBPcapPage.ini"
   ReserveFile /plugin InstallOptions.dll
@@ -147,7 +169,7 @@ Page custom DisplayUSBPcapPage
   SetOutPath $INSTDIR
   File "${STAGING_DIR}\${EXTCAP_NAME}.html"
   SetOutPath $INSTDIR\extcap
-  File "${STAGING_DIR}\extcap\${EXTCAP_NAME}.exe"
+  File "${STAGING_DIR}\extcap\wireshark\${EXTCAP_NAME}.exe"
 
 !macroend
 
@@ -204,7 +226,7 @@ DirText "Choose a directory in which to install ${PROGRAM_NAME}."
 InstallDir $PROGRAMFILES64\${PROGRAM_NAME}
 
 ; See if this is an upgrade; if so, use the old InstallDir as default
-InstallDirRegKey HKEY_LOCAL_MACHINE SOFTWARE\${PROGRAM_NAME} "InstallDir"
+InstallDirRegKey HKEY_LOCAL_MACHINE SOFTWARE\${PROGRAM_NAME} InstallDir
 
 
 ; ============================================================================
@@ -260,24 +282,32 @@ Var WIX_DISPLAYVERSION
 Var WIX_UNINSTALLSTRING
 
 ; ============================================================================
-; 64-bit support
+; Platform and OS version checks
 ; ============================================================================
-!include x64.nsh
 
-!include "GetWindowsVersion.nsh"
+!include x64.nsh
+!include WinVer.nsh
 !include WinMessages.nsh
 
 Function .onInit
-  !if ${WIRESHARK_TARGET_PLATFORM} == "win64"
-    ; http://forums.winamp.com/printthread.php?s=16ffcdd04a8c8d52bee90c0cae273ac5&threadid=262873
-    ${IfNot} ${RunningX64}
-      MessageBox MB_OK "Wireshark only runs on x64 machines.$\nTry installing a 32-bit version (3.6 or earlier) instead." /SD IDOK
-      Abort
+  ; http://forums.winamp.com/printthread.php?s=16ffcdd04a8c8d52bee90c0cae273ac5&threadid=262873
+  ${IfNot} ${RunningX64}
+    MessageBox MB_OK "Wireshark only runs on 64 bit machines.$\nTry installing a 32 bit version (3.6 or earlier) instead." /SD IDOK
+    Abort
+  ${EndIf}
+
+  !if ${WIRESHARK_TARGET_PLATFORM} == "x64"
+    ${If} ${IsNativeARM64}
+      MessageBox MB_OK "You're installing the x64 version of Wireshark on an Arm64 system.$\nThe native Arm64 installer might work better." /SD IDOK
     ${EndIf}
   !endif
 
-  ; Get the Windows version
-  ${GetWindowsVersion} $R0
+  !if ${WIRESHARK_TARGET_PLATFORM} == "arm64"
+    ${IfNot} ${IsNativeARM64}
+      MessageBox MB_OK "You're trying to install the Arm64 version of Wireshark on an x64 system.$\nTry the native x64 installer instead." /SD IDOK
+      Abort
+    ${EndIf}
+  !endif
 
   ; This should match the following:
   ; - The NTDDI_VERSION and _WIN32_WINNT parts of cmakeconfig.h.in
@@ -287,49 +317,51 @@ Function .onInit
   ; Uncomment to test.
   ; MessageBox MB_OK "You're running Windows $R0."
 
-  ; Check if we're able to run with this version
-  StrCmp $R0 '95' lbl_winversion_unsupported
-  StrCmp $R0 '98' lbl_winversion_unsupported
-  StrCmp $R0 'ME' lbl_winversion_unsupported
-  StrCmp $R0 'NT 4.0' lbl_winversion_unsupported_nt4
-  StrCmp $R0 '2000' lbl_winversion_unsupported_2000
-  StrCmp $R0 'XP' lbl_winversion_unsupported_xp_2003
-  StrCmp $R0 '2003' lbl_winversion_unsupported_xp_2003
-  StrCmp $R0 'Vista' lbl_winversion_unsupported_vista_2008
-  StrCmp $R0 '2008' lbl_winversion_unsupported_vista_2008
-  Goto lbl_winversion_supported
-
-lbl_winversion_unsupported:
+${If} ${AtMostWinME}
   MessageBox MB_OK \
-      "Windows $R0 is no longer supported.$\nPlease install Ethereal 0.99.0 instead." \
-      /SD IDOK
+    "Windows 95, 98, and ME are no longer supported.$\nPlease install Ethereal 0.99.0 instead." \
+    /SD IDOK
   Quit
+${EndIf}
 
-lbl_winversion_unsupported_nt4:
+${If} ${IsWinNT4}
   MessageBox MB_OK \
-          "Windows $R0 is no longer supported.$\nPlease install Wireshark 0.99.4 instead." \
-          /SD IDOK
+    "Windows NT 4.0 is no longer supported.$\nPlease install Wireshark 0.99.4 instead." \
+    /SD IDOK
   Quit
+${EndIf}
 
-lbl_winversion_unsupported_2000:
+${If} ${IsWin2000}
   MessageBox MB_OK \
-      "Windows $R0 is no longer supported.$\nPlease install Wireshark 1.2 or 1.0 instead." \
-      /SD IDOK
+    "Windows 2000 is no longer supported.$\nPlease install Wireshark 1.2 or 1.0 instead." \
+    /SD IDOK
   Quit
+${EndIf}
 
-lbl_winversion_unsupported_xp_2003:
+${If} ${IsWinXP}
+${OrIf} ${IsWin2003}
   MessageBox MB_OK \
-      "Windows $R0 is no longer supported.$\nPlease install ${PROGRAM_NAME} 1.12 or 1.10 instead." \
-      /SD IDOK
+    "Windows XP and Server 2003 are no longer supported.$\nPlease install ${PROGRAM_NAME} 1.12 or 1.10 instead." \
+    /SD IDOK
   Quit
+${EndIf}
 
-lbl_winversion_unsupported_vista_2008:
+${If} ${IsWinVista}
+${OrIf} ${IsWin2008}
   MessageBox MB_OK \
-      "Windows $R0 is no longer supported.$\nPlease install ${PROGRAM_NAME} 2.2 instead." \
-      /SD IDOK
+    "Windows Vista and Server 2008 are no longer supported.$\nPlease install ${PROGRAM_NAME} 2.2 instead." \
+    /SD IDOK
   Quit
+${EndIf}
 
-lbl_winversion_supported:
+${If} ${AtMostWin8.1}
+${OrIf} ${AtMostWin2012R2}
+  MessageBox MB_OK \
+    "Windows 7, 8, 8.1, Server 2008R2, and Server 2012 are no longer supported.$\nPlease install ${PROGRAM_NAME} 4.0 instead." \
+    /SD IDOK
+  Quit
+${EndIf}
+
 !insertmacro IsWiresharkRunning
 
   ; Default control values.
@@ -453,6 +485,7 @@ done:
 
   ;Extract InstallOptions INI files
   ;!insertmacro INSTALLOPTIONS_EXTRACT "AdditionalTasksPage.ini"
+  !insertmacro INSTALLOPTIONS_EXTRACT "DonatePage.ini"
   !insertmacro INSTALLOPTIONS_EXTRACT "NpcapPage.ini"
   !insertmacro INSTALLOPTIONS_EXTRACT "USBPcapPage.ini"
 FunctionEnd
@@ -463,8 +496,13 @@ Function DisplayAdditionalTasksPage
 FunctionEnd
 !endif
 
+Function DisplayDonatePage
+  !insertmacro MUI_HEADER_TEXT "Your donations keep these releases coming" "Donate today"
+  !insertmacro INSTALLOPTIONS_DISPLAY "DonatePage.ini"
+FunctionEnd
+
 Function DisplayNpcapPage
-  !insertmacro MUI_HEADER_TEXT "Packet Capture" "Wireshark requires either Npcap or WinPcap to capture live network data."
+  !insertmacro MUI_HEADER_TEXT "Packet Capture" "Wireshark requires Npcap to capture live network data."
   !insertmacro INSTALLOPTIONS_DISPLAY "NpcapPage.ini"
 FunctionEnd
 
@@ -489,7 +527,9 @@ Section "-Required"
 SetShellVarContext all
 
 SetOutPath $INSTDIR
-File "${STAGING_DIR}\${UNINSTALLER_NAME}"
+!ifndef SKIP_UNINSTALLER
+WriteUninstaller "$INSTDIR\${UNINSTALLER_NAME}"
+!endif
 File "${STAGING_DIR}\libwiretap.dll"
 File "${STAGING_DIR}\libwireshark.dll"
 File "${STAGING_DIR}\libwsutil.dll"
@@ -497,13 +537,8 @@ File "${STAGING_DIR}\libwsutil.dll"
 !include wireshark-manifest.nsh
 
 File "${STAGING_DIR}\COPYING.txt"
-File "${STAGING_DIR}\NEWS.txt"
 File "${STAGING_DIR}\README.txt"
-File "${STAGING_DIR}\README.windows.txt"
-File "${STAGING_DIR}\AUTHORS-SHORT"
-File "${STAGING_DIR}\manuf"
 File "${STAGING_DIR}\wka"
-File "${STAGING_DIR}\services"
 File "${STAGING_DIR}\pdml2html.xsl"
 File "${STAGING_DIR}\ws.css"
 File "${STAGING_DIR}\wireshark.html"
@@ -512,9 +547,9 @@ File "${STAGING_DIR}\dumpcap.exe"
 File "${STAGING_DIR}\dumpcap.html"
 File "${STAGING_DIR}\extcap.html"
 File "${STAGING_DIR}\ipmap.html"
-File "${STAGING_DIR}\gpl-2.0-standalone.html"
-File "${STAGING_DIR}\Acknowledgements.md"
+File "${STAGING_DIR}\release-notes.html"
 
+!ifdef USE_VCREDIST
 ; C-runtime redistributable
 ; vc_redist.x64.exe or vc_redist.x86.exe - copy and execute the redistributable installer
 File "${VCREDIST_DIR}\${VCREDIST_EXE}"
@@ -547,6 +582,7 @@ ${Switch} $0
 ${EndSwitch}
 
 Delete "$INSTDIR\${VCREDIST_EXE}"
+!endif
 
 
 ; global config files - don't overwrite if already existing
@@ -558,9 +594,6 @@ File "${STAGING_DIR}\colorfilters"
 ;dont_overwrite_colorfilters:
 ;IfFileExists dfilters dont_overwrite_dfilters
 File "${STAGING_DIR}\dfilters"
-;dont_overwrite_dfilters:
-;IfFileExists enterprises.tsv dont_overwrite_enterprises_tsv
-File "${STAGING_DIR}\enterprises.tsv"
 ;dont_overwrite_dfilters:
 ;IfFileExists smi_modules dont_overwrite_smi_modules
 File "${STAGING_DIR}\smi_modules"
@@ -601,6 +634,7 @@ File "${STAGING_DIR}\diameter\sunping.xml"
 File "${STAGING_DIR}\diameter\Telefonica.xml"
 File "${STAGING_DIR}\diameter\TGPP.xml"
 File "${STAGING_DIR}\diameter\TGPP2.xml"
+File "${STAGING_DIR}\diameter\Travelping.xml"
 File "${STAGING_DIR}\diameter\Vodafone.xml"
 File "${STAGING_DIR}\diameter\VerizonWireless.xml"
 !include "custom_diameter_xmls.txt"
@@ -621,12 +655,15 @@ File "${STAGING_DIR}\radius\dictionary.5x9"
 File "${STAGING_DIR}\radius\dictionary.acc"
 File "${STAGING_DIR}\radius\dictionary.acme"
 File "${STAGING_DIR}\radius\dictionary.actelis"
+File "${STAGING_DIR}\radius\dictionary.adtran"
+File "${STAGING_DIR}\radius\dictionary.adva"
 File "${STAGING_DIR}\radius\dictionary.aerohive"
 File "${STAGING_DIR}\radius\dictionary.airespace"
 File "${STAGING_DIR}\radius\dictionary.alcatel"
 File "${STAGING_DIR}\radius\dictionary.alcatel-lucent.aaa"
 File "${STAGING_DIR}\radius\dictionary.alcatel.esam"
 File "${STAGING_DIR}\radius\dictionary.alcatel.sr"
+File "${STAGING_DIR}\radius\dictionary.alphion"
 File "${STAGING_DIR}\radius\dictionary.alteon"
 File "${STAGING_DIR}\radius\dictionary.altiga"
 File "${STAGING_DIR}\radius\dictionary.alvarion"
@@ -635,15 +672,20 @@ File "${STAGING_DIR}\radius\dictionary.apc"
 File "${STAGING_DIR}\radius\dictionary.aptilo"
 File "${STAGING_DIR}\radius\dictionary.aptis"
 File "${STAGING_DIR}\radius\dictionary.arbor"
+File "${STAGING_DIR}\radius\dictionary.arista"
 File "${STAGING_DIR}\radius\dictionary.aruba"
 File "${STAGING_DIR}\radius\dictionary.ascend"
+File "${STAGING_DIR}\radius\dictionary.ascend.illegal"
 File "${STAGING_DIR}\radius\dictionary.asn"
 File "${STAGING_DIR}\radius\dictionary.audiocodes"
 File "${STAGING_DIR}\radius\dictionary.avaya"
 File "${STAGING_DIR}\radius\dictionary.azaire"
 File "${STAGING_DIR}\radius\dictionary.bay"
 File "${STAGING_DIR}\radius\dictionary.bintec"
+File "${STAGING_DIR}\radius\dictionary.bigswitch"
+File "${STAGING_DIR}\radius\dictionary.bintec"
 File "${STAGING_DIR}\radius\dictionary.bluecoat"
+File "${STAGING_DIR}\radius\dictionary.boingo"
 File "${STAGING_DIR}\radius\dictionary.bristol"
 File "${STAGING_DIR}\radius\dictionary.broadsoft"
 File "${STAGING_DIR}\radius\dictionary.brocade"
@@ -651,14 +693,20 @@ File "${STAGING_DIR}\radius\dictionary.bskyb"
 File "${STAGING_DIR}\radius\dictionary.bt"
 File "${STAGING_DIR}\radius\dictionary.cablelabs"
 File "${STAGING_DIR}\radius\dictionary.cabletron"
+File "${STAGING_DIR}\radius\dictionary.calix"
+File "${STAGING_DIR}\radius\dictionary.cambium"
 File "${STAGING_DIR}\radius\dictionary.camiant"
+File "${STAGING_DIR}\radius\dictionary.centec"
+File "${STAGING_DIR}\radius\dictionary.checkpoint"
 File "${STAGING_DIR}\radius\dictionary.chillispot"
+File "${STAGING_DIR}\radius\dictionary.ciena"
 File "${STAGING_DIR}\radius\dictionary.cisco"
 File "${STAGING_DIR}\radius\dictionary.cisco.asa"
 File "${STAGING_DIR}\radius\dictionary.cisco.bbsm"
 File "${STAGING_DIR}\radius\dictionary.cisco.vpn3000"
 File "${STAGING_DIR}\radius\dictionary.cisco.vpn5000"
 File "${STAGING_DIR}\radius\dictionary.citrix"
+File "${STAGING_DIR}\radius\dictionary.ckey"
 File "${STAGING_DIR}\radius\dictionary.clavister"
 File "${STAGING_DIR}\radius\dictionary.cnergee"
 File "${STAGING_DIR}\radius\dictionary.colubris"
@@ -666,13 +714,14 @@ File "${STAGING_DIR}\radius\dictionary.columbia_university"
 File "${STAGING_DIR}\radius\dictionary.compat"
 File "${STAGING_DIR}\radius\dictionary.compatible"
 File "${STAGING_DIR}\radius\dictionary.cosine"
+File "${STAGING_DIR}\radius\dictionary.covaro"
 File "${STAGING_DIR}\radius\dictionary.dante"
 File "${STAGING_DIR}\radius\dictionary.dellemc"
-File "${STAGING_DIR}\radius\dictionary.dhcp"
 File "${STAGING_DIR}\radius\dictionary.digium"
 File "${STAGING_DIR}\radius\dictionary.dlink"
 File "${STAGING_DIR}\radius\dictionary.dragonwave"
 File "${STAGING_DIR}\radius\dictionary.efficientip"
+File "${STAGING_DIR}\radius\dictionary.eleven"
 File "${STAGING_DIR}\radius\dictionary.eltex"
 File "${STAGING_DIR}\radius\dictionary.enterasys"
 File "${STAGING_DIR}\radius\dictionary.epygi"
@@ -680,24 +729,29 @@ File "${STAGING_DIR}\radius\dictionary.equallogic"
 File "${STAGING_DIR}\radius\dictionary.ericsson"
 File "${STAGING_DIR}\radius\dictionary.ericsson.ab"
 File "${STAGING_DIR}\radius\dictionary.ericsson.packet.core.networks"
+File "${STAGING_DIR}\radius\dictionary.erx"
 File "${STAGING_DIR}\radius\dictionary.extreme"
 File "${STAGING_DIR}\radius\dictionary.f5"
 File "${STAGING_DIR}\radius\dictionary.fdxtended"
+File "${STAGING_DIR}\radius\dictionary.force10"
 File "${STAGING_DIR}\radius\dictionary.fortinet"
 File "${STAGING_DIR}\radius\dictionary.foundry"
 File "${STAGING_DIR}\radius\dictionary.freedhcp"
 File "${STAGING_DIR}\radius\dictionary.freeradius"
+File "${STAGING_DIR}\radius\dictionary.freeradius.evs5"
 File "${STAGING_DIR}\radius\dictionary.freeradius.internal"
 File "${STAGING_DIR}\radius\dictionary.freeswitch"
 File "${STAGING_DIR}\radius\dictionary.gandalf"
 File "${STAGING_DIR}\radius\dictionary.garderos"
 File "${STAGING_DIR}\radius\dictionary.gemtek"
 File "${STAGING_DIR}\radius\dictionary.h3c"
+File "${STAGING_DIR}\radius\dictionary.hillstone"
 File "${STAGING_DIR}\radius\dictionary.hp"
 File "${STAGING_DIR}\radius\dictionary.huawei"
 File "${STAGING_DIR}\radius\dictionary.iana"
 File "${STAGING_DIR}\radius\dictionary.identity_engines"
 File "${STAGING_DIR}\radius\dictionary.iea"
+File "${STAGING_DIR}\radius\dictionary.infinera"
 File "${STAGING_DIR}\radius\dictionary.infoblox"
 File "${STAGING_DIR}\radius\dictionary.infonet"
 File "${STAGING_DIR}\radius\dictionary.ipunplugged"
@@ -708,39 +762,50 @@ File "${STAGING_DIR}\radius\dictionary.juniper"
 File "${STAGING_DIR}\radius\dictionary.karlnet"
 File "${STAGING_DIR}\radius\dictionary.kineto"
 File "${STAGING_DIR}\radius\dictionary.lancom"
+File "${STAGING_DIR}\radius\dictionary.lantronix"
 File "${STAGING_DIR}\radius\dictionary.livingston"
 File "${STAGING_DIR}\radius\dictionary.localweb"
 File "${STAGING_DIR}\radius\dictionary.lucent"
 File "${STAGING_DIR}\radius\dictionary.manzara"
 File "${STAGING_DIR}\radius\dictionary.meinberg"
+File "${STAGING_DIR}\radius\dictionary.mellanox"
 File "${STAGING_DIR}\radius\dictionary.meraki"
 File "${STAGING_DIR}\radius\dictionary.merit"
 File "${STAGING_DIR}\radius\dictionary.meru"
 File "${STAGING_DIR}\radius\dictionary.microsemi"
 File "${STAGING_DIR}\radius\dictionary.microsoft"
 File "${STAGING_DIR}\radius\dictionary.mikrotik"
+File "${STAGING_DIR}\radius\dictionary.mimosa"
 File "${STAGING_DIR}\radius\dictionary.motorola"
+File "${STAGING_DIR}\radius\dictionary.motorola.illegal"
 File "${STAGING_DIR}\radius\dictionary.motorola.wimax"
 File "${STAGING_DIR}\radius\dictionary.navini"
+File "${STAGING_DIR}\radius\dictionary.net"
+File "${STAGING_DIR}\radius\dictionary.netelastic"
 File "${STAGING_DIR}\radius\dictionary.netscreen"
 File "${STAGING_DIR}\radius\dictionary.networkphysics"
 File "${STAGING_DIR}\radius\dictionary.nexans"
+File "${STAGING_DIR}\radius\dictionary.nile"
 File "${STAGING_DIR}\radius\dictionary.nokia"
 File "${STAGING_DIR}\radius\dictionary.nokia.conflict"
 File "${STAGING_DIR}\radius\dictionary.nomadix"
 File "${STAGING_DIR}\radius\dictionary.nortel"
 File "${STAGING_DIR}\radius\dictionary.ntua"
 File "${STAGING_DIR}\radius\dictionary.openser"
+File "${STAGING_DIR}\radius\dictionary.openwifi"
 File "${STAGING_DIR}\radius\dictionary.packeteer"
 File "${STAGING_DIR}\radius\dictionary.paloalto"
 File "${STAGING_DIR}\radius\dictionary.patton"
 File "${STAGING_DIR}\radius\dictionary.perle"
+File "${STAGING_DIR}\radius\dictionary.pfsense"
+File "${STAGING_DIR}\radius\dictionary.pica8"
 File "${STAGING_DIR}\radius\dictionary.propel"
 File "${STAGING_DIR}\radius\dictionary.prosoft"
 File "${STAGING_DIR}\radius\dictionary.proxim"
 File "${STAGING_DIR}\radius\dictionary.purewave"
 File "${STAGING_DIR}\radius\dictionary.quiconnect"
 File "${STAGING_DIR}\radius\dictionary.quintum"
+File "${STAGING_DIR}\radius\dictionary.rcntec"
 File "${STAGING_DIR}\radius\dictionary.redcreek"
 File "${STAGING_DIR}\radius\dictionary.rfc2865"
 File "${STAGING_DIR}\radius\dictionary.rfc2866"
@@ -774,6 +839,8 @@ File "${STAGING_DIR}\radius\dictionary.rfc7155"
 File "${STAGING_DIR}\radius\dictionary.rfc7268"
 File "${STAGING_DIR}\radius\dictionary.rfc7499"
 File "${STAGING_DIR}\radius\dictionary.rfc7930"
+File "${STAGING_DIR}\radius\dictionary.rfc8045"
+File "${STAGING_DIR}\radius\dictionary.rfc8559"
 File "${STAGING_DIR}\radius\dictionary.riverbed"
 File "${STAGING_DIR}\radius\dictionary.riverstone"
 File "${STAGING_DIR}\radius\dictionary.roaringpenguin"
@@ -785,7 +852,9 @@ File "${STAGING_DIR}\radius\dictionary.shasta"
 File "${STAGING_DIR}\radius\dictionary.shiva"
 File "${STAGING_DIR}\radius\dictionary.siemens"
 File "${STAGING_DIR}\radius\dictionary.slipstream"
+File "${STAGING_DIR}\radius\dictionary.smartsharesystems"
 File "${STAGING_DIR}\radius\dictionary.sofaware"
+File "${STAGING_DIR}\radius\dictionary.softbank"
 File "${STAGING_DIR}\radius\dictionary.sonicwall"
 File "${STAGING_DIR}\radius\dictionary.springtide"
 File "${STAGING_DIR}\radius\dictionary.starent"
@@ -795,22 +864,27 @@ File "${STAGING_DIR}\radius\dictionary.symbol"
 File "${STAGING_DIR}\radius\dictionary.t_systems_nova"
 File "${STAGING_DIR}\radius\dictionary.telebit"
 File "${STAGING_DIR}\radius\dictionary.telkom"
+File "${STAGING_DIR}\radius\dictionary.telrad"
 File "${STAGING_DIR}\radius\dictionary.terena"
+File "${STAGING_DIR}\radius\dictionary.tplink"
 File "${STAGING_DIR}\radius\dictionary.trapeze"
 File "${STAGING_DIR}\radius\dictionary.travelping"
+File "${STAGING_DIR}\radius\dictionary.tripplite"
 File "${STAGING_DIR}\radius\dictionary.tropos"
 File "${STAGING_DIR}\radius\dictionary.ukerna"
 File "${STAGING_DIR}\radius\dictionary.unisphere"
 File "${STAGING_DIR}\radius\dictionary.unix"
 File "${STAGING_DIR}\radius\dictionary.usr"
+File "${STAGING_DIR}\radius\dictionary.usr.illegal"
 File "${STAGING_DIR}\radius\dictionary.utstarcom"
 File "${STAGING_DIR}\radius\dictionary.valemount"
-File "${STAGING_DIR}\radius\dictionary.versanet"
+File "${STAGING_DIR}\radius\dictionary.vasexperts"
 File "${STAGING_DIR}\radius\dictionary.verizon"
-File "${STAGING_DIR}\radius\dictionary.vqp"
+File "${STAGING_DIR}\radius\dictionary.versanet"
 File "${STAGING_DIR}\radius\dictionary.walabi"
 File "${STAGING_DIR}\radius\dictionary.waverider"
 File "${STAGING_DIR}\radius\dictionary.wichorus"
+File "${STAGING_DIR}\radius\dictionary.wifialliance"
 File "${STAGING_DIR}\radius\dictionary.wimax"
 File "${STAGING_DIR}\radius\dictionary.wimax.alvarion"
 File "${STAGING_DIR}\radius\dictionary.wimax.wichorus"
@@ -863,6 +937,9 @@ SetOutPath $INSTDIR\wimaxasncp
 File "${STAGING_DIR}\wimaxasncp\dictionary.xml"
 File "${STAGING_DIR}\wimaxasncp\dictionary.dtd"
 SetOutPath $INSTDIR
+
+; Write the installation path into the registry for InstallDirRegKey
+WriteRegStr HKEY_LOCAL_MACHINE SOFTWARE\${PROGRAM_NAME} InstallDir "$INSTDIR"
 
 ; Write the uninstall keys for Windows
 ; https://nsis.sourceforge.io/Add_uninstall_information_to_Add/Remove_Programs
@@ -965,7 +1042,10 @@ File "${QT_DIR}\${PROGRAM_NAME_PATH}"
 ; Write an entry for ShellExecute
 WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\App Paths\${PROGRAM_NAME_PATH}" "" '$INSTDIR\${PROGRAM_NAME_PATH}'
 WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\App Paths\${PROGRAM_NAME_PATH}" "Path" '$INSTDIR'
+
+!ifndef SKIP_NSIS_QT_DLLS
 !include wireshark-qt-manifest.nsh
+!endif
 
 ${!defineifexist} TRANSLATIONS_FOLDER "${QT_DIR}\translations"
 SetOutPath $INSTDIR
@@ -996,63 +1076,31 @@ File "${STAGING_DIR}\tshark.exe"
 File "${STAGING_DIR}\tshark.html"
 SectionEnd
 
-SectionGroup "Plugins & Extensions" SecPluginsGroup
+Section "-Plugins & Extensions"
 
-Section "Dissector Plugins" SecPlugins
-;-------------------------------------------
-SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan'
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\ethercat.dll"
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\gryphon.dll"
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\irda.dll"
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\opcua.dll"
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\profinet.dll"
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\unistim.dll"
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\wimax.dll"
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\wimaxasncp.dll"
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\wimaxmacphy.dll"
-!include "custom_plugins.txt"
-SectionEnd
-
-Section "Tree Statistics Plugin" SecStatsTree
-;-------------------------------------------
-SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan'
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\stats_tree.dll"
-SectionEnd
-
-Section "Mate - Meta Analysis and Tracing Engine" SecMate
-;-------------------------------------------
-SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan'
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\mate.dll"
-SectionEnd
-
-
-Section "TRANSUM - network and application performance analysis" SecTransum
-;-------------------------------------------
-SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan'
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\transum.dll"
-SectionEnd
-
-Section "File type plugins - capture file support" SecWiretap
-;-------------------------------------------
-SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\wiretap'
-File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\wiretap\usbdump.dll"
-SectionEnd
-
-Section "Codec plugins" SecCodec
-;-------------------------------------------
 SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs'
 File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs\g711.dll"
+!ifdef SPANDSP_FOUND
 File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs\g722.dll"
 File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs\g726.dll"
+!endif
+!ifdef BCG729_FOUND
 File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs\g729.dll"
+!endif
 File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs\l16mono.dll"
+!ifdef SBC_FOUND
 File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs\sbc.dll"
+!endif
+!ifdef ILBC_FOUND
 File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs\ilbc.dll"
+!endif
+!ifdef OPUS_FOUND
 File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs\opus_dec.dll"
-SectionEnd
+!endif
+!ifdef AMRNB_FOUND
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\codecs\amrnb.dll"
+!endif
 
-Section "Configuration Profiles" SecProfiles
-;-------------------------------------------
 ; This should be a function or macro
 SetOutPath '$INSTDIR\profiles\Bluetooth'
 File "${STAGING_DIR}\profiles\Bluetooth\colorfilters"
@@ -1061,11 +1109,27 @@ SetOutPath '$INSTDIR\profiles\Classic'
 File "${STAGING_DIR}\profiles\Classic\colorfilters"
 SetOutPath '$INSTDIR\profiles\No Reassembly'
 File "${STAGING_DIR}\profiles\No Reassembly\preferences"
-SectionEnd
+
+SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan'
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\ethercat.dll"
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\gryphon.dll"
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\ipaddr.dll"
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\irda.dll"
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\opcua.dll"
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\profinet.dll"
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\unistim.dll"
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\wimax.dll"
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\wimaxasncp.dll"
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\wimaxmacphy.dll"
+!include "custom_plugins.txt"
+
+SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\wiretap'
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\wiretap\usbdump.dll"
+
+SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan'
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\mate.dll"
 
 !ifdef SMI_DIR
-Section "SNMP MIBs" SecMIBs
-;-------------------------------------------
 SetOutPath '$INSTDIR\snmp\mibs'
 File "${SMI_DIR}\share\mibs\iana\*"
 File "${SMI_DIR}\share\mibs\ietf\*"
@@ -1074,86 +1138,54 @@ File "${SMI_DIR}\share\mibs\tubs\*"
 File "${SMI_DIR}\share\pibs\*"
 File "${SMI_DIR}\share\yang\*.yang"
 !include "custom_mibs.txt"
-SectionEnd
 !endif
 
-SectionGroupEnd ; "Plugins / Extensions"
+SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan'
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\transum.dll"
 
+SetOutPath '$INSTDIR\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan'
+File "${STAGING_DIR}\plugins\${MAJOR_VERSION}.${MINOR_VERSION}\epan\stats_tree.dll"
 
-SectionGroup "Tools" SecToolsGroup
+SectionEnd ; "Plugins / Extensions"
 
-Section "Editcap" SecEditcap
-;-------------------------------------------
-SetOutPath $INSTDIR
-File "${STAGING_DIR}\editcap.exe"
-File "${STAGING_DIR}\editcap.html"
-SectionEnd
+Section "-Additional command line tools"
 
-Section "Text2Pcap" SecText2Pcap
-;-------------------------------------------
-SetOutPath $INSTDIR
-File "${STAGING_DIR}\text2pcap.exe"
-File "${STAGING_DIR}\text2pcap.html"
-SectionEnd
-
-Section "Mergecap" SecMergecap
-;-------------------------------------------
-SetOutPath $INSTDIR
-File "${STAGING_DIR}\mergecap.exe"
-File "${STAGING_DIR}\mergecap.html"
-SectionEnd
-
-Section "Reordercap" SecReordercap
-;-------------------------------------------
-SetOutPath $INSTDIR
-File "${STAGING_DIR}\reordercap.exe"
-File "${STAGING_DIR}\reordercap.html"
-SectionEnd
-
-Section "DFTest" SecDFTest
-;-------------------------------------------
-SetOutPath $INSTDIR
-File "${STAGING_DIR}\dftest.exe"
-File "${STAGING_DIR}\dftest.html"
-SectionEnd
-
-Section "Capinfos" SecCapinfos
-;-------------------------------------------
 SetOutPath $INSTDIR
 File "${STAGING_DIR}\capinfos.exe"
 File "${STAGING_DIR}\capinfos.html"
-SectionEnd
 
-Section "Captype" SecCaptype
-;-------------------------------------------
-SetOutPath $INSTDIR
 File "${STAGING_DIR}\captype.exe"
 File "${STAGING_DIR}\captype.html"
-SectionEnd
 
-Section "Rawshark" SecRawshark
-;-------------------------------------------
-SetOutPath $INSTDIR
-File "${STAGING_DIR}\rawshark.exe"
-File "${STAGING_DIR}\rawshark.html"
-SectionEnd
+File "${STAGING_DIR}\editcap.exe"
+File "${STAGING_DIR}\editcap.html"
 
-Section /o "Randpkt" SecRandpkt
-;-------------------------------------------
-SetOutPath $INSTDIR
-File "${STAGING_DIR}\randpkt.exe"
-File "${STAGING_DIR}\randpkt.html"
-SectionEnd
+File "${STAGING_DIR}\mergecap.exe"
+File "${STAGING_DIR}\mergecap.html"
 
 !ifdef MMDBRESOLVE_EXE
-Section "MMDBResolve" SecMMDBResolve
-;-------------------------------------------
-SetOutPath $INSTDIR
 File "${STAGING_DIR}\mmdbresolve.html"
-SetOutPath $INSTDIR
 File "${STAGING_DIR}\mmdbresolve.exe"
-SectionEnd
 !endif
+
+File "${STAGING_DIR}\randpkt.exe"
+File "${STAGING_DIR}\randpkt.html"
+
+File "${STAGING_DIR}\rawshark.exe"
+File "${STAGING_DIR}\rawshark.html"
+
+File "${STAGING_DIR}\reordercap.exe"
+File "${STAGING_DIR}\reordercap.html"
+
+File "${STAGING_DIR}\sharkd.exe"
+;File "${STAGING_DIR}\sharkd.html"
+
+File "${STAGING_DIR}\text2pcap.exe"
+File "${STAGING_DIR}\text2pcap.html"
+
+SectionEnd ; "Tools"
+
+SectionGroup /e "External capture tools (extcap)" SecExtcapGroup
 
 Section /o "Androiddump" SecAndroiddump
 ;-------------------------------------------
@@ -1161,6 +1193,21 @@ Section /o "Androiddump" SecAndroiddump
 SectionEnd
 !insertmacro CheckExtrasFlag "androiddump"
 
+!ifdef BUILD_etwdump
+Section "Etwdump" SecEtwdump
+;-------------------------------------------
+  !insertmacro InstallExtcap "Etwdump"
+SectionEnd
+!insertmacro CheckExtrasFlag "Etwdump"
+!endif
+
+Section /o "Randpktdump" SecRandpktdump
+;-------------------------------------------
+  !insertmacro InstallExtcap "randpktdump"
+SectionEnd
+!insertmacro CheckExtrasFlag "randpktdump"
+
+!ifdef LIBSSH_FOUND
 Section /o "Sshdump, Ciscodump, and Wifidump" SecSshdump
 ;-------------------------------------------
   !insertmacro InstallExtcap "sshdump"
@@ -1170,6 +1217,7 @@ SectionEnd
 !insertmacro CheckExtrasFlag "sshdump"
 !insertmacro CheckExtrasFlag "ciscodump"
 !insertmacro CheckExtrasFlag "wifidump"
+!endif
 
 Section /o "UDPdump" SecUDPdump
 ;-------------------------------------------
@@ -1177,28 +1225,20 @@ Section /o "UDPdump" SecUDPdump
 SectionEnd
 !insertmacro CheckExtrasFlag "udpdump"
 
-Section /o "Randpktdump" SecRandpktdump
-;-------------------------------------------
-  !insertmacro InstallExtcap "randpktdump"
+SectionGroupEnd ; "External Capture (extcap)"
+
+Section "-Clear Partial Selected"
+!insertmacro ClearSectionFlag ${SecExtcapGroup} ${SF_PSELECTED}
 SectionEnd
-!insertmacro CheckExtrasFlag "randpktdump"
 
-Section /o "Etwdump" SecEtwdump
-;-------------------------------------------
-  !insertmacro InstallExtcap "Etwdump"
-SectionEnd
-!insertmacro CheckExtrasFlag "Etwdump"
+!ifdef DOC_DIR
+Section "-Documentation"
 
-SectionGroupEnd ; "Tools"
-
-!ifdef DOCBOOK_DIR
-Section "Documentation" SecDocumentation
-;-------------------------------------------
 SetOutPath "$INSTDIR\Wireshark User's Guide"
-File /r "${DOCBOOK_DIR}\wsug_html_chunked\*.*"
+File /r "${DOC_DIR}\wsug_html_chunked\*.*"
 
 SetOutPath $INSTDIR
-File "${DOCBOOK_DIR}\faq.html"
+File "${DOC_DIR}\faq.html"
 SectionEnd
 !endif
 
@@ -1214,6 +1254,294 @@ WriteRegDWORD HKEY_LOCAL_MACHINE "${UNINSTALL_PATH}" "EstimatedSize" "$0"
 SectionEnd
 
 ; ============================================================================
+; Section macros
+; ============================================================================
+!include "Sections.nsh"
+
+; ============================================================================
+; Uninstall page configuration
+; ============================================================================
+ShowUninstDetails show
+
+; ============================================================================
+; Functions and macros
+; ============================================================================
+
+Function un.Disassociate
+  Push $R0
+!insertmacro PushFileExtensions
+
+  Pop $EXTENSION
+  ${DoUntil} $EXTENSION == ${FILE_EXTENSION_MARKER}
+    ReadRegStr $R0 HKCR $EXTENSION ""
+    StrCmp $R0 ${WIRESHARK_ASSOC} un.Disassociate.doDeregister
+    Goto un.Disassociate.end
+un.Disassociate.doDeregister:
+    ; The extension is associated with Wireshark so, we must destroy this!
+    DeleteRegKey HKCR $EXTENSION
+    DetailPrint "Deregistered file type: $EXTENSION"
+un.Disassociate.end:
+    Pop $EXTENSION
+  ${Loop}
+
+  Pop $R0
+FunctionEnd
+
+Section "-Required"
+SectionEnd
+
+!define EXECUTABLE_MARKER "EXECUTABLE_MARKER"
+Var EXECUTABLE
+
+Section /o "Un.USBPcap" un.SecUSBPcap
+;-------------------------------------------
+SectionIn 2
+${If} ${RunningX64}
+    ${DisableX64FSRedirection}
+    SetRegView 64
+${EndIf}
+ReadRegStr $1 HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\USBPcap" "UninstallString"
+${If} ${RunningX64}
+    ${EnableX64FSRedirection}
+    SetRegView 32
+${EndIf}
+${If} $1 != ""
+    ${UnStrRep} $2 '$1' '\Uninstall.exe' ''
+    ${UnStrRep} $3 '$2' '"' ''
+    ExecWait '$1 _?=$3' $0
+    DetailPrint "USBPcap uninstaller returned $0"
+    ${If} $0 == "0"
+        Delete "$3\Uninstall.exe"
+        Delete "$INSTDIR\extcap\wireshark\USBPcapCMD.exe"
+    ${EndIf}
+${EndIf}
+ClearErrors
+SectionEnd
+
+
+Section "Uninstall" un.SecUinstall
+;-------------------------------------------
+;
+; UnInstall for every user
+;
+SectionIn 1 2
+SetShellVarContext all
+
+!insertmacro IsWiresharkRunning
+
+Push "${EXECUTABLE_MARKER}"
+Push "${PROGRAM_NAME}"
+Push "capinfos"
+Push "captype"
+Push "dftest"
+Push "dumpcap"
+Push "editcap"
+Push "mergecap"
+Push "randpkt"
+Push "rawshark"
+Push "reordercap"
+Push "sharkd"
+Push "text2pcap"
+Push "tshark"
+
+!ifdef MMDBRESOLVE_EXE
+Push "mmdbresolve"
+!endif
+
+Pop $EXECUTABLE
+${DoUntil} $EXECUTABLE == ${EXECUTABLE_MARKER}
+
+  ; IsWiresharkRunning should make sure everything is closed down so we *shouldn't* run
+  ; into any problems here.
+  Delete "$INSTDIR\$EXECUTABLE.exe"
+  IfErrors 0 deletionSuccess
+    MessageBox MB_OK "$EXECUTABLE.exe could not be removed. Is it in use?" /SD IDOK IDOK 0
+    Abort "$EXECUTABLE.exe could not be removed. Aborting the uninstall process."
+
+deletionSuccess:
+  Pop $EXECUTABLE
+
+${Loop}
+
+
+DeleteRegKey HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PROGRAM_NAME}"
+DeleteRegKey HKEY_LOCAL_MACHINE "Software\${PROGRAM_NAME}"
+DeleteRegKey HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\App Paths\${PROGRAM_NAME}.exe"
+
+Call un.Disassociate
+
+DeleteRegKey HKCR ${WIRESHARK_ASSOC}
+DeleteRegKey HKCR "${WIRESHARK_ASSOC}\Shell\open\command"
+DeleteRegKey HKCR "${WIRESHARK_ASSOC}\DefaultIcon"
+
+Delete "$INSTDIR\*.dll"
+Delete "$INSTDIR\*.exe"
+Delete "$INSTDIR\*.html"
+Delete "$INSTDIR\*.qm"
+Delete "$INSTDIR\accessible\*.*"
+Delete "$INSTDIR\AUTHORS-SHORT"
+Delete "$INSTDIR\COPYING*"
+Delete "$INSTDIR\audio\*.*"
+Delete "$INSTDIR\bearer\*.*"
+Delete "$INSTDIR\diameter\*.*"
+Delete "$INSTDIR\extcap\androiddump.*"
+Delete "$INSTDIR\extcap\ciscodump.*"
+Delete "$INSTDIR\extcap\etwdump.*"
+Delete "$INSTDIR\extcap\randpktdump.*"
+Delete "$INSTDIR\extcap\sshdump.*"
+Delete "$INSTDIR\extcap\udpdump.*"
+Delete "$INSTDIR\extcap\wifidump.*"
+Delete "$INSTDIR\gpl-2.0-standalone.html"
+Delete "$INSTDIR\Acknowledgements.md"
+Delete "$INSTDIR\generic\*.*"
+Delete "$INSTDIR\help\*.*"
+Delete "$INSTDIR\iconengines\*.*"
+Delete "$INSTDIR\imageformats\*.*"
+Delete "$INSTDIR\mediaservice\*.*"
+Delete "$INSTDIR\multimedia\*.*"
+Delete "$INSTDIR\networkinformation\*.*"
+Delete "$INSTDIR\platforms\*.*"
+Delete "$INSTDIR\playlistformats\*.*"
+Delete "$INSTDIR\printsupport\*.*"
+Delete "$INSTDIR\share\glib-2.0\schemas\*.*"
+Delete "$INSTDIR\snmp\*.*"
+Delete "$INSTDIR\snmp\mibs\*.*"
+Delete "$INSTDIR\styles\translations\*.*"
+Delete "$INSTDIR\styles\*.*"
+Delete "$INSTDIR\protobuf\*.*"
+Delete "$INSTDIR\tls\*.*"
+Delete "$INSTDIR\tpncp\*.*"
+Delete "$INSTDIR\translations\*.*"
+Delete "$INSTDIR\ui\*.*"
+Delete "$INSTDIR\wimaxasncp\*.*"
+Delete "$INSTDIR\ws.css"
+; previous versions installed these files
+Delete "$INSTDIR\*.manifest"
+; previous versions installed this file
+Delete "$INSTDIR\AUTHORS-SHORT-FORMAT"
+Delete "$INSTDIR\README*"
+Delete "$INSTDIR\NEWS.txt"
+Delete "$INSTDIR\manuf"
+Delete "$INSTDIR\wka"
+Delete "$INSTDIR\services"
+Delete "$INSTDIR\pdml2html.xsl"
+Delete "$INSTDIR\pcrepattern.3.txt"
+Delete "$INSTDIR\user-guide.chm"
+Delete "$INSTDIR\example_snmp_users_file"
+Delete "$INSTDIR\ipmap.html"
+Delete "$INSTDIR\radius\*.*"
+Delete "$INSTDIR\dtds\*.*"
+Delete "$INSTDIR\browser_sslkeylog.lua"
+Delete "$INSTDIR\console.lua"
+Delete "$INSTDIR\dtd_gen.lua"
+Delete "$INSTDIR\init.lua"
+Delete "$INSTDIR\release-notes.html"
+
+RMDir "$INSTDIR\accessible"
+RMDir "$INSTDIR\audio"
+RMDir "$INSTDIR\bearer"
+RMDir "$INSTDIR\extcap"
+RMDir "$INSTDIR\extcap"
+RMDir "$INSTDIR\iconengines"
+RMDir "$INSTDIR\imageformats"
+RMDir "$INSTDIR\mediaservice"
+RMDir "$INSTDIR\multimedia"
+RMDir "$INSTDIR\networkinformation"
+RMDir "$INSTDIR\platforms"
+RMDir "$INSTDIR\playlistformats"
+RMDir "$INSTDIR\printsupport"
+RMDir "$INSTDIR\styles\translations"
+RMDir "$INSTDIR\styles"
+RMDir "$SMPROGRAMS\${PROGRAM_NAME}"
+RMDir "$INSTDIR\help"
+RMDir "$INSTDIR\generic"
+RMDir /r "$INSTDIR\Wireshark User's Guide"
+RMDir "$INSTDIR\diameter"
+RMDir "$INSTDIR\snmp\mibs"
+RMDir "$INSTDIR\snmp"
+RMDir "$INSTDIR\radius"
+RMDir "$INSTDIR\dtds"
+RMDir "$INSTDIR\protobuf"
+RMDir "$INSTDIR\tls"
+RMDir "$INSTDIR\tpncp"
+RMDir "$INSTDIR\translations"
+RMDir "$INSTDIR\ui"
+RMDir "$INSTDIR\wimaxasncp"
+RMDir "$INSTDIR"
+
+SectionEnd ; "Uinstall"
+
+Section "Un.Plugins" un.SecPlugins
+;-------------------------------------------
+SectionIn 1 2
+;Delete "$INSTDIR\plugins\${VERSION}\*.*"
+;Delete "$INSTDIR\plugins\*.*"
+;RMDir "$INSTDIR\plugins\${VERSION}"
+;RMDir "$INSTDIR\plugins"
+RMDir /r "$INSTDIR\plugins"
+SectionEnd
+
+Section "Un.Global Profiles" un.SecProfiles
+;-------------------------------------------
+SectionIn 1 2
+RMDir /r "$INSTDIR\profiles"
+SectionEnd
+
+Section "Un.Global Settings" un.SecGlobalSettings
+;-------------------------------------------
+SectionIn 1 2
+Delete "$INSTDIR\cfilters"
+Delete "$INSTDIR\colorfilters"
+Delete "$INSTDIR\dfilters"
+Delete "$INSTDIR\enterprises.tsv"
+Delete "$INSTDIR\smi_modules"
+RMDir "$INSTDIR"
+SectionEnd
+
+Section /o "Un.Personal Settings" un.SecPersonalSettings
+;-------------------------------------------
+SectionIn 2
+SetShellVarContext current
+Delete "$APPDATA\${PROGRAM_NAME}\*.*"
+RMDir "$APPDATA\${PROGRAM_NAME}"
+DeleteRegKey HKCU "Software\${PROGRAM_NAME}"
+SectionEnd
+
+;VAR un.NPCAP_UNINSTALL
+
+Section /o "Un.Npcap" un.SecNpcap
+;-------------------------------------------
+SectionIn 2
+ReadRegStr $1 HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NpcapInst" "UninstallString"
+;IfErrors un.lbl_npcap_notinstalled ;if RegKey is unavailable, Npcap is not installed
+${If} $1 != ""
+  ;MessageBox MB_OK "Npcap $1" /SD IDOK
+  ExecWait '$1' $0
+  DetailPrint "Npcap uninstaller returned $0"
+  ;SetRebootFlag true
+${EndIf}
+;un.lbl_npcap_notinstalled:
+SectionEnd
+
+Section "-Un.Finally"
+;-------------------------------------------
+SectionIn 1 2
+
+!insertmacro UpdateIcons
+
+; this test must be done after all other things uninstalled (e.g. Global Settings)
+IfFileExists "$INSTDIR" 0 NoFinalErrorMsg
+    MessageBox MB_OK "Unable to remove $INSTDIR." /SD IDOK IDOK 0 ; skipped if dir doesn't exist
+NoFinalErrorMsg:
+SectionEnd
+
+; Sign our installer and uninstaller during compilation.
+!ifdef ENABLE_SIGNED_NSIS
+!finalize 'sign-wireshark.bat "%1"' = 0 ; %1 is replaced by the installer exe to be signed.
+!uninstfinalize 'sign-wireshark.bat "%1"' = 0 ; %1 is replaced by the uninstaller exe to be signed.
+!endif
+
+; ============================================================================
 ; PLEASE MAKE SURE, THAT THE DESCRIPTIVE TEXT FITS INTO THE DESCRIPTION FIELD!
 ; ============================================================================
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
@@ -1222,40 +1550,28 @@ SectionEnd
 !endif
   !insertmacro MUI_DESCRIPTION_TEXT ${SecTShark} "Text based network protocol analyzer."
 
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecPluginsGroup} "Plugins and extensions for both ${PROGRAM_NAME} and TShark."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecPlugins} "Additional protocol dissectors."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecStatsTree} "Extended statistics."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecMate} "Plugin - Meta Analysis and Tracing Engine (Experimental)."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecTransum} "TRANSUM plugin - network and application performance analysis."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecWiretap} "Additional capture file support."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecCodec} "Additional codec support."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecProfiles} "Configuration profiles"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecExtcapGroup} "External Capture Interfaces"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecAndroiddump} "Provide capture interfaces from Android devices."
+  !ifdef BUILD_etwdump
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecEtwdump} "Provide an interface to read Event Tracing for Windows (ETW) event trace (ETL)."
+  !endif
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecRandpktdump} "Provide an interface to the random packet generator. (see also randpkt)"
+  !ifdef LIBSSH_FOUND
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecSshdump} "Provide remote capture through SSH. (tcpdump, Cisco EPC, wifi)"
+  !endif
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecUDPdump} "Provide capture interface to receive UDP packets streamed from network devices."
 
-!ifdef SMI_DIR
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecMIBs} "SNMP MIBs for better SNMP dissection."
-!endif
-
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecToolsGroup} "Additional command line based tools."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecAndroiddump} "Provide capture interfaces from Android devices"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecSshdump} "Provide remote capture through SSH"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecUDPdump} "Provide capture interface that gets UDP packets from network devices"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecRandpktdump} "Provide random packet generator"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecEtwdump} "Provide ETW reader"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecEditCap} "Copy packets to a new file, optionally trimming packets, omitting them, or saving to a different format."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecText2Pcap} "Read an ASCII hex dump and write the data into a libpcap-style capture file."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecMergecap} "Combine multiple saved capture files into a single output file"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecReordercap} "Copy packets to a new file, sorted by time."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecDFTest} "Shows display filter byte-code, for debugging dfilter routines"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecCapinfos} "Print information about capture files."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecCaptype} "Print the types capture files."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecRawshark} "Raw packet filter."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecRandpkt} "Random packet generator."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecMMDBResolve} "MaxMind Database resolution tool"
-
-!ifdef DOCBOOK_DIR
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecDocumentation} "Install an offline copy of the User's Guide and FAQ."
-!endif
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
+
+!insertmacro MUI_UNFUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${un.SecUinstall} "Uninstall all ${PROGRAM_NAME} components."
+  !insertmacro MUI_DESCRIPTION_TEXT ${un.SecPlugins} "Uninstall all Plugins (even from previous ${PROGRAM_NAME} versions)."
+  !insertmacro MUI_DESCRIPTION_TEXT ${un.SecProfiles} "Uninstall all global configuration profiles."
+  !insertmacro MUI_DESCRIPTION_TEXT ${un.SecGlobalSettings} "Uninstall global settings like: $INSTDIR\cfilters"
+  !insertmacro MUI_DESCRIPTION_TEXT ${un.SecPersonalSettings} "Delete personal configuration folder: $APPDATA\${PROGRAM_NAME}."
+  !insertmacro MUI_DESCRIPTION_TEXT ${un.SecNpcap} "Call Npcap's uninstall program."
+  !insertmacro MUI_DESCRIPTION_TEXT ${un.SecUSBPcap} "Call USBPcap's uninstall program."
+!insertmacro MUI_UNFUNCTION_DESCRIPTION_END
 
 ; ============================================================================
 ; Callback functions

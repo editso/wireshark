@@ -12,10 +12,9 @@
 
 #include "config.h"
 
-#include <glib.h>
-
 #include <ui/qt/models/atap_data_model.h>
 #include <ui/qt/filter_action.h>
+#include <ui/qt/widgets/traffic_tree.h>
 #include <ui/qt/widgets/detachable_tabwidget.h>
 #include <ui/qt/widgets/traffic_types_list.h>
 
@@ -94,18 +93,17 @@ public:
      *
      * @see ATapModelCallback
      */
-    void setProtocolInfo(QString tableName, TrafficTypesList * trafficList, GList ** recentColumnList, ATapModelCallback createModel);
+    void setProtocolInfo(QString tableName, TrafficTypesList * trafficList, GList ** recentList, GList ** recentColumnList, ATapModelCallback createModel);
 
     /**
-     * @brief Set the Delegate object for a specific column
+     * @brief Set the Delegate object for the tab. It will apply for all
+     * models residing in this tab object
      *
-     * @param column the column to set the delegate for. It will apply for all models
-     * residing inside this tab object
      * @param createDelegate the callback for the delegate creation
      *
      * @see ATapCreateDelegate
      */
-    void setDelegate(int column, ATapCreateDelegate createDelegate);
+    void setDelegate(ATapCreateDelegate createDelegate);
 
     /**
      * @brief Set the filter or remove it by providing an empty filter
@@ -221,21 +219,24 @@ private:
     QList<int> _allProtocols;
     QMap<int, int> _tabs;
     ATapModelCallback _createModel;
-    QMap<int, ATapCreateDelegate> _createDelegates;
+    ATapCreateDelegate _createDelegate;
+    GList ** _recentList;
     GList ** _recentColumnList;
 
     bool _disableTaps;
     bool _nameResolution;
 
     QTreeView * createTree(int protoId);
-    ATapDataModel * modelForTabIndex(int tabIdx = -1);
-    ATapDataModel * modelForWidget(QWidget * widget);
+    TrafficDataFilterProxy * modelForTabIndex(int tabIdx = -1);
+    TrafficDataFilterProxy * modelForWidget(QWidget * widget);
+    ATapDataModel * dataModelForTabIndex(int tabIdx = -1);
+    ATapDataModel * dataModelForWidget(QWidget * widget);
 
     void insertProtoTab(int protoId, bool emitSignals = true);
     void removeProtoTab(int protoId, bool emitSignals = true);
 
 #ifdef HAVE_MAXMINDDB
-    bool writeGeoIPMapFile(QFile * fp, bool json_only, ATapDataModel * dataModel);
+    bool writeGeoIPMapFile(QFile * fp, bool json_only, TrafficDataFilterProxy * model);
 #endif
 
 private slots:

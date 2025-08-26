@@ -9,14 +9,12 @@
 
 #include "rtp_audio_graph.h"
 
-#include <glib.h>
-
 #include <epan/prefs.h>
 #include <ui/qt/utils/color_utils.h>
 
 static const double wf_graph_normal_width_ = 0.5;
 
-RtpAudioGraph::RtpAudioGraph(QCustomPlot *audio_plot, QRgb color)
+RtpAudioGraph::RtpAudioGraph(QCustomPlot *audio_plot, QRgb color) : QObject(audio_plot)
 {
     QPen p;
     QPalette sel_pal;

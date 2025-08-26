@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include <epan/packet.h>
+#include <epan/tfs.h>
 #include "packet-link16.h"
 
 #define DEFAULT_DIS_UDP_PORT 3000 /* Not IANA registered */
@@ -623,7 +624,7 @@ typedef enum
     DIS_TDL_TYPE_TCDL                         = 64,
     DIS_TDL_TYPE_LLAPI                        = 65,
     DIS_TDL_TYPE_WEAPONS_DL                   = 66,
-    DIS_TDL_TYPE_AIS                          = 67, 
+    DIS_TDL_TYPE_AIS                          = 67,
     DIS_TDL_TYPE_GC3                          = 99,
     DIS_TDL_TYPE_LINK16_STD                   = 100,
     DIS_TDL_TYPE_LINK16_EDR                   = 101,
@@ -4193,13 +4194,6 @@ static const value_string DIS_PDU_IffChangeIndicator_Strings[] =
     {  0, NULL }
 };
 
-static const value_string DIS_PDU_IffNoYes_Strings[] =
-{
-    {  0, "No" },
-    {  1, "Yes" },
-    {  0, NULL }
-};
-
 static const value_string DIS_PDU_IffHeartbeat_Strings[] =
 {
     {  0, "No Heartbeat" },
@@ -4220,13 +4214,6 @@ static const value_string DIS_PDU_IffSimulation_Mode_Strings[] =
 {
     {  0, "Regeneration" },
     {  1, "Interactive" },
-    {  0, NULL }
-};
-
-static const value_string DIS_PDU_IffOffOn_Strings[] =
-{
-    {  0, "Off" },
-    {  1, "On" },
     {  0, NULL }
 };
 
@@ -4319,13 +4306,6 @@ static const value_string DIS_PDU_IffAlternateMode4_Strings[] =
     {  0, NULL }
 };
 
-static const value_string DIS_PDU_IffPresent_Strings[] =
-{
-    {  0, "Not Present" },
-    {  1, "Present" },
-    {  0, NULL }
-};
-
 static const value_string DIS_PDU_IffDamaged_Strings[] =
 {
     {  0, "No damage" },
@@ -4359,600 +4339,600 @@ static const value_string DIS_PDU_IffModeC_Strings[] =
 *******************************************************************************/
 
 /* DIS global */
-static gint proto_dis = -1;
-static int hf_dis_proto_ver = -1;
-static int hf_dis_exercise_id = -1;
-static int hf_dis_pdu_type = -1;
-static int hf_dis_proto_fam = -1;
-static int hf_dis_header_rel_ts = -1;
-static int hf_dis_pdu_length = -1;
-static int hf_dis_padding = -1;
-static int hf_dis_pdu_status = -1;
-static int hf_pdu_status_tei = -1;
-static int hf_pdu_status_lvc = -1;
-static int hf_pdu_status_cei = -1;
-static int hf_pdu_status_fti = -1;
-static int hf_pdu_status_dti = -1;
-static int hf_pdu_status_rai = -1;
-static int hf_pdu_status_iai = -1;
-static int hf_pdu_status_ism = -1;
-static int hf_pdu_status_aii = -1;
-static int hf_pdu_status_field = -1;
-static int hf_dis_event_type = -1;
-static int hf_dis_model_type = -1;
-static int hf_dis_po_ver = -1;
-static int hf_dis_po_pdu_type = -1;
-static int hf_dis_po_database_id = -1;
-static int hf_dis_po_length = -1;
-static int hf_dis_po_pdu_count = -1;
-static int hf_dis_entity_id_site = -1;
-static int hf_dis_entity_id_application = -1;
-static int hf_dis_entity_id_entity = -1;
-static int hf_dis_emitter_id = -1;
-static int hf_dis_beam_id = -1;
-static int hf_dis_num_art_params = -1;
-static int hf_dis_clocktime = -1;
-static int hf_dis_entityKind = -1;
-static int hf_dis_entityDomain = -1;
-static int hf_dis_category_land = -1;
-static int hf_dis_category_air = -1;
-static int hf_dis_category_surface = -1;
-static int hf_dis_category_subsurface = -1;
-static int hf_dis_category_space = -1;
-static int hf_dis_category = -1;
-static int hf_dis_country = -1;
-static int hf_dis_subcategory = -1;
-static int hf_dis_specific = -1;
-static int hf_dis_extra = -1;
-static int hf_dis_site = -1;
-static int hf_dis_request_id = -1;
-static int hf_dis_reason = -1;
-static int hf_dis_frozen_behavior = -1;
-static int hf_dis_acknowledge_flag = -1;
-static int hf_dis_response_flag = -1;
-static int hf_dis_application = -1;
-static int hf_dis_action_id = -1;
-static int hf_dis_request_status = -1;
-static int hf_dis_num_fixed_data = -1;
-static int hf_dis_num_variable_data = -1;
-static int hf_dis_datum_id = -1;
-static int hf_dis_fixed_datum_value = -1;
-static int hf_dis_datum_length = -1;
-static int hf_dis_variable_datum_value = -1;
-static int hf_dis_variable_datum_value_as_text = -1;
-static int hf_dis_time_interval8 = -1;
-static int hf_dis_time_interval32 = -1;
-static int hf_dis_num_fixed_datum_id = -1;
-static int hf_dis_num_variable_datum_id = -1;
-static int hf_dis_reliability = -1;
-static int hf_dis_control_id = -1;
-static int hf_dis_orig_app_type = -1;
-static int hf_dis_recv_app_type = -1;
-static int hf_dis_num_parts = -1;
-static int hf_dis_current_part = -1;
-static int hf_dis_num_variable_records = -1;
-static int hf_dis_variable_record_type = -1;
-static int hf_dis_variable_record_len = -1;
-static int hf_dis_event_number = -1;
-static int hf_dis_num_electromagnetic_emission_systems = -1;
-static int hf_dis_emitter_name = -1;
-static int hf_dis_emission_function = -1;
-static int hf_dis_em_data_length = -1;
-static int hf_dis_em_num_beams = -1;
-static int hf_dis_emitter_id_number = -1;
-static int hf_dis_em_location_x = -1;
-static int hf_dis_em_location_y = -1;
-static int hf_dis_em_location_z = -1;
-static int hf_dis_beam_function = -1;
-static int hf_dis_radio_id = -1;
-static int hf_dis_transmitter_radio_id = -1;
-static int hf_dis_ens = -1;
-static int hf_dis_ens_class = -1;
-static int hf_dis_ens_type = -1;
-static int hf_dis_ens_type_audio = -1;
-static int hf_dis_tdl_type = -1;
-static int hf_dis_sample_rate = -1;
-static int hf_dis_data_length = -1;
-static int hf_dis_num_of_samples = -1;
-static int hf_dis_signal_data = -1;
-static int hf_dis_radio_category = -1;
-static int hf_dis_nomenclature_version = -1;
-static int hf_dis_nomenclature = -1;
-static int hf_dis_radio_transmit_state = -1;
-static int hf_dis_radio_receive_state = -1;
-static int hf_dis_radio_input_source = -1;
-static int hf_dis_antenna_location_x = -1;
-static int hf_dis_antenna_location_y = -1;
-static int hf_dis_antenna_location_z = -1;
-static int hf_dis_rel_antenna_location_x = -1;
-static int hf_dis_rel_antenna_location_y = -1;
-static int hf_dis_rel_antenna_location_z = -1;
-static int hf_dis_antenna_pattern_type = -1;
-static int hf_dis_antenna_pattern_length = -1;
-static int hf_dis_transmit_frequency = -1;
-static int hf_dis_transmit_freq_bandwidth = -1;
-static int hf_dis_transmit_power = -1;
-static int hf_dis_receive_power = -1;
-static int hf_dis_spread_spectrum_usage = -1;
-static int hf_dis_frequency_hopping = -1;
-static int hf_dis_pseudo_noise_modulation = -1;
-static int hf_dis_time_hopping = -1;
-static int hf_dis_modulation_major = -1;
-static int hf_dis_modulation_amplitude = -1;
-static int hf_dis_modulation_amplitude_angle = -1;
-static int hf_dis_modulation_angle = -1;
-static int hf_dis_modulation_combination = -1;
-static int hf_dis_modulation_pulse = -1;
-static int hf_dis_modulation_unmodulated = -1;
-static int hf_dis_modulation_detail = -1;
-static int hf_dis_modulation_system = -1;
-static int hf_dis_crypto_system = -1;
-static int hf_dis_crypto_key = -1;
-static int hf_dis_encryption_mode = -1;
-static int hf_dis_key_identifier = -1;
-static int hf_dis_modulation_parameter_length = -1;
-static int hf_dis_mod_param_fh_net_id = -1;
-static int hf_dis_mod_param_fh_set_id = -1;
-static int hf_dis_mod_param_fh_lo_set_id = -1;
-static int hf_dis_mod_param_fh_msg_start = -1;
-static int hf_dis_mod_param_fh_reserved = -1;
-static int hf_dis_mod_param_fh_sync_time_offset = -1;
-static int hf_dis_mod_param_fh_security_key = -1;
-static int hf_dis_mod_param_fh_clear_channel = -1;
-static int hf_dis_mod_param_dump = -1;
-static int hf_dis_mod_param_ts_allocation_mode = -1;
-static int hf_dis_mod_param_transmitter_prim_mode = -1;
-static int hf_dis_mod_param_transmitter_second_mode = -1;
-static int hf_dis_mod_param_sync_state = -1;
-static int hf_dis_mod_param_network_sync_id = -1;
-static int hf_dis_force_id = -1;
+static int proto_dis;
+static int hf_dis_proto_ver;
+static int hf_dis_exercise_id;
+static int hf_dis_pdu_type;
+static int hf_dis_proto_fam;
+static int hf_dis_header_rel_ts;
+static int hf_dis_pdu_length;
+static int hf_dis_padding;
+static int hf_dis_pdu_status;
+static int hf_pdu_status_tei;
+static int hf_pdu_status_lvc;
+static int hf_pdu_status_cei;
+static int hf_pdu_status_fti;
+static int hf_pdu_status_dti;
+static int hf_pdu_status_rai;
+static int hf_pdu_status_iai;
+static int hf_pdu_status_ism;
+static int hf_pdu_status_aii;
+static int hf_pdu_status_field;
+static int hf_dis_event_type;
+static int hf_dis_model_type;
+static int hf_dis_po_ver;
+static int hf_dis_po_pdu_type;
+static int hf_dis_po_database_id;
+static int hf_dis_po_length;
+static int hf_dis_po_pdu_count;
+static int hf_dis_entity_id_site;
+static int hf_dis_entity_id_application;
+static int hf_dis_entity_id_entity;
+static int hf_dis_emitter_id;
+static int hf_dis_beam_id;
+static int hf_dis_num_art_params;
+static int hf_dis_clocktime;
+static int hf_dis_entityKind;
+static int hf_dis_entityDomain;
+static int hf_dis_category_land;
+static int hf_dis_category_air;
+static int hf_dis_category_surface;
+static int hf_dis_category_subsurface;
+static int hf_dis_category_space;
+static int hf_dis_category;
+static int hf_dis_country;
+static int hf_dis_subcategory;
+static int hf_dis_specific;
+static int hf_dis_extra;
+static int hf_dis_site;
+static int hf_dis_request_id;
+static int hf_dis_reason;
+static int hf_dis_frozen_behavior;
+static int hf_dis_acknowledge_flag;
+static int hf_dis_response_flag;
+static int hf_dis_application;
+static int hf_dis_action_id;
+static int hf_dis_request_status;
+static int hf_dis_num_fixed_data;
+static int hf_dis_num_variable_data;
+static int hf_dis_datum_id;
+static int hf_dis_fixed_datum_value;
+static int hf_dis_datum_length;
+static int hf_dis_variable_datum_value;
+static int hf_dis_variable_datum_value_as_text;
+static int hf_dis_time_interval8;
+static int hf_dis_time_interval32;
+static int hf_dis_num_fixed_datum_id;
+static int hf_dis_num_variable_datum_id;
+static int hf_dis_reliability;
+static int hf_dis_control_id;
+static int hf_dis_orig_app_type;
+static int hf_dis_recv_app_type;
+static int hf_dis_num_parts;
+static int hf_dis_current_part;
+static int hf_dis_num_variable_records;
+static int hf_dis_variable_record_type;
+static int hf_dis_variable_record_len;
+static int hf_dis_event_number;
+static int hf_dis_num_electromagnetic_emission_systems;
+static int hf_dis_emitter_name;
+static int hf_dis_emission_function;
+static int hf_dis_em_data_length;
+static int hf_dis_em_num_beams;
+static int hf_dis_emitter_id_number;
+static int hf_dis_em_location_x;
+static int hf_dis_em_location_y;
+static int hf_dis_em_location_z;
+static int hf_dis_beam_function;
+static int hf_dis_radio_id;
+static int hf_dis_transmitter_radio_id;
+static int hf_dis_ens;
+static int hf_dis_ens_class;
+static int hf_dis_ens_type;
+static int hf_dis_ens_type_audio;
+static int hf_dis_tdl_type;
+static int hf_dis_sample_rate;
+static int hf_dis_data_length;
+static int hf_dis_num_of_samples;
+static int hf_dis_signal_data;
+static int hf_dis_radio_category;
+static int hf_dis_nomenclature_version;
+static int hf_dis_nomenclature;
+static int hf_dis_radio_transmit_state;
+static int hf_dis_radio_receive_state;
+static int hf_dis_radio_input_source;
+static int hf_dis_antenna_location_x;
+static int hf_dis_antenna_location_y;
+static int hf_dis_antenna_location_z;
+static int hf_dis_rel_antenna_location_x;
+static int hf_dis_rel_antenna_location_y;
+static int hf_dis_rel_antenna_location_z;
+static int hf_dis_antenna_pattern_type;
+static int hf_dis_antenna_pattern_length;
+static int hf_dis_transmit_frequency;
+static int hf_dis_transmit_freq_bandwidth;
+static int hf_dis_transmit_power;
+static int hf_dis_receive_power;
+static int hf_dis_spread_spectrum_usage;
+static int hf_dis_frequency_hopping;
+static int hf_dis_pseudo_noise_modulation;
+static int hf_dis_time_hopping;
+static int hf_dis_modulation_major;
+static int hf_dis_modulation_amplitude;
+static int hf_dis_modulation_amplitude_angle;
+static int hf_dis_modulation_angle;
+static int hf_dis_modulation_combination;
+static int hf_dis_modulation_pulse;
+static int hf_dis_modulation_unmodulated;
+static int hf_dis_modulation_detail;
+static int hf_dis_modulation_system;
+static int hf_dis_crypto_system;
+static int hf_dis_crypto_key;
+static int hf_dis_encryption_mode;
+static int hf_dis_key_identifier;
+static int hf_dis_modulation_parameter_length;
+static int hf_dis_mod_param_fh_net_id;
+static int hf_dis_mod_param_fh_set_id;
+static int hf_dis_mod_param_fh_lo_set_id;
+static int hf_dis_mod_param_fh_msg_start;
+static int hf_dis_mod_param_fh_reserved;
+static int hf_dis_mod_param_fh_sync_time_offset;
+static int hf_dis_mod_param_fh_security_key;
+static int hf_dis_mod_param_fh_clear_channel;
+static int hf_dis_mod_param_dump;
+static int hf_dis_mod_param_ts_allocation_mode;
+static int hf_dis_mod_param_transmitter_prim_mode;
+static int hf_dis_mod_param_transmitter_second_mode;
+static int hf_dis_mod_param_sync_state;
+static int hf_dis_mod_param_network_sync_id;
+static int hf_dis_force_id;
 
 /* DIS aggregate */
-static int hf_dis_aggregate_marking = -1;
-static int hf_dis_aggregate_number_of_aggregates = -1;
-static int hf_dis_aggregate_number_of_entities = -1;
-static int hf_dis_aggregate_number_of_silent_aggregates_types = -1;
-static int hf_dis_aggregate_number_of_silent_entity_types = -1;
-static int hf_dis_aggregate_number_of_variable_datum_records = -1;
-static int hf_dis_aggregate_state = -1;
-static int hf_dis_aggregate_formation = -1;
-static int hf_dis_aggregate_kind = -1;
-static int hf_dis_aggregate_domain = -1;
-static int hf_dis_aggregate_country = -1;
-static int hf_dis_aggregate_category = -1;
-static int hf_dis_aggregate_subcategory = -1;
-static int hf_dis_aggregate_specific = -1;
-static int hf_dis_aggregate_extra = -1;
-static int hf_dis_aggregate_dimensions_x = -1;
-static int hf_dis_aggregate_dimensions_y = -1;
-static int hf_dis_aggregate_dimensions_z = -1;
-static int hf_dis_aggregate_orientation_psi = -1;
-static int hf_dis_aggregate_orientation_theta = -1;
-static int hf_dis_aggregate_orientation_phi = -1;
-static int hf_dis_aggregate_center_of_mass_x = -1;
-static int hf_dis_aggregate_center_of_mass_y = -1;
-static int hf_dis_aggregate_center_of_mass_z = -1;
-static int hf_dis_aggregate_velocity_x = -1;
-static int hf_dis_aggregate_velocity_y = -1;
-static int hf_dis_aggregate_velocity_z = -1;
-static int hf_dis_aggregate_id_site = -1;
-static int hf_dis_aggregate_id_application = -1;
-static int hf_dis_aggregate_id_aggregate = -1;
+static int hf_dis_aggregate_marking;
+static int hf_dis_aggregate_number_of_aggregates;
+static int hf_dis_aggregate_number_of_entities;
+static int hf_dis_aggregate_number_of_silent_aggregates_types;
+static int hf_dis_aggregate_number_of_silent_entity_types;
+static int hf_dis_aggregate_number_of_variable_datum_records;
+static int hf_dis_aggregate_state;
+static int hf_dis_aggregate_formation;
+static int hf_dis_aggregate_kind;
+static int hf_dis_aggregate_domain;
+static int hf_dis_aggregate_country;
+static int hf_dis_aggregate_category;
+static int hf_dis_aggregate_subcategory;
+static int hf_dis_aggregate_specific;
+static int hf_dis_aggregate_extra;
+static int hf_dis_aggregate_dimensions_x;
+static int hf_dis_aggregate_dimensions_y;
+static int hf_dis_aggregate_dimensions_z;
+static int hf_dis_aggregate_orientation_psi;
+static int hf_dis_aggregate_orientation_theta;
+static int hf_dis_aggregate_orientation_phi;
+static int hf_dis_aggregate_center_of_mass_x;
+static int hf_dis_aggregate_center_of_mass_y;
+static int hf_dis_aggregate_center_of_mass_z;
+static int hf_dis_aggregate_velocity_x;
+static int hf_dis_aggregate_velocity_y;
+static int hf_dis_aggregate_velocity_z;
+static int hf_dis_aggregate_id_site;
+static int hf_dis_aggregate_id_application;
+static int hf_dis_aggregate_id_aggregate;
 
 /* DIS environment */
-static int hf_dis_environmental_number_of_environment_records = -1;
-static int hf_dis_environmental_sequence_number = -1;
-static int hf_dis_environment_status_last = -1;
-static int hf_dis_environment_status_on = -1;
-static int hf_dis_environment_kind = -1;
-static int hf_dis_environment_domain = -1;
-static int hf_dis_environment_class = -1;
-static int hf_dis_environment_category = -1;
-static int hf_dis_environment_subcategory = -1;
-static int hf_dis_environment_specific = -1;
-static int hf_dis_environment_extra = -1;
+static int hf_dis_environmental_number_of_environment_records;
+static int hf_dis_environmental_sequence_number;
+static int hf_dis_environment_status_last;
+static int hf_dis_environment_status_on;
+static int hf_dis_environment_kind;
+static int hf_dis_environment_domain;
+static int hf_dis_environment_class;
+static int hf_dis_environment_category;
+static int hf_dis_environment_subcategory;
+static int hf_dis_environment_specific;
+static int hf_dis_environment_extra;
 
 /* DIS datums */
-static int hf_dis_fixed_datum_value_as_uint = -1;
-static int hf_dis_fixed_datum_value_as_float = -1;
-static int hf_dis_fixed_datum_value_as_int = -1;
+static int hf_dis_fixed_datum_value_as_uint;
+static int hf_dis_fixed_datum_value_as_float;
+static int hf_dis_fixed_datum_value_as_int;
 
 /* Appearance */
-static int hf_appearance_frozen_status = -1;
-static int hf_appearance_state = -1;
-static int hf_appearance_weapon_1 = -1;
-static int hf_appearance_weapon_2 = -1;
-static int hf_appearance_camouflage_type = -1;
-static int hf_appearance_concealed_stationary = -1;
-static int hf_appearance_concealed_movement = -1;
-static int hf_appearance_landform_paint_scheme = -1;
-static int hf_appearance_landform_mobility = -1;
-static int hf_appearance_landform_fire_power = -1;
-static int hf_appearance_landform_damage = -1;
-static int hf_appearance_landform_smoke_entity = -1;
-static int hf_appearance_landform_trailing_effects_entity = -1;
-static int hf_appearance_landform_hatch = -1;
-static int hf_appearance_landform_head_lights = -1;
-static int hf_appearance_landform_tail_lights = -1;
-static int hf_appearance_landform_brake_lights = -1;
-static int hf_appearance_landform_flaming = -1;
-static int hf_appearance_landform_launcher = -1;
-static int hf_appearance_landform_camouflage_type = -1;
-static int hf_appearance_landform_concealed = -1;
-static int hf_appearance_landform_frozen_status = -1;
-static int hf_appearance_landform_power_plant_status = -1;
-static int hf_appearance_landform_state = -1;
-static int hf_appearance_landform_tent = -1;
-static int hf_appearance_landform_ramp = -1;
-static int hf_appearance_landform_blackout_lights = -1;
-static int hf_appearance_landform_blackout_brake_lights = -1;
-static int hf_appearance_landform_spot_lights = -1;
-static int hf_appearance_landform_interior_lights = -1;
-static int hf_appearance_landform_surrender_state = -1;
-static int hf_appearance_landform_masked_cloaked = -1;
-static int hf_appearance_lifeform_paint_scheme = -1;
-static int hf_appearance_lifeform_health = -1;
-static int hf_appearance_lifeform_compliance = -1;
-static int hf_appearance_lifeform_flash_lights = -1;
-static int hf_appearance_lifeform_state = -1;
+static int hf_appearance_frozen_status;
+static int hf_appearance_state;
+static int hf_appearance_weapon_1;
+static int hf_appearance_weapon_2;
+static int hf_appearance_camouflage_type;
+static int hf_appearance_concealed_stationary;
+static int hf_appearance_concealed_movement;
+static int hf_appearance_landform_paint_scheme;
+static int hf_appearance_landform_mobility;
+static int hf_appearance_landform_fire_power;
+static int hf_appearance_landform_damage;
+static int hf_appearance_landform_smoke_entity;
+static int hf_appearance_landform_trailing_effects_entity;
+static int hf_appearance_landform_hatch;
+static int hf_appearance_landform_head_lights;
+static int hf_appearance_landform_tail_lights;
+static int hf_appearance_landform_brake_lights;
+static int hf_appearance_landform_flaming;
+static int hf_appearance_landform_launcher;
+static int hf_appearance_landform_camouflage_type;
+static int hf_appearance_landform_concealed;
+static int hf_appearance_landform_frozen_status;
+static int hf_appearance_landform_power_plant_status;
+static int hf_appearance_landform_state;
+static int hf_appearance_landform_tent;
+static int hf_appearance_landform_ramp;
+static int hf_appearance_landform_blackout_lights;
+static int hf_appearance_landform_blackout_brake_lights;
+static int hf_appearance_landform_spot_lights;
+static int hf_appearance_landform_interior_lights;
+static int hf_appearance_landform_surrender_state;
+static int hf_appearance_landform_masked_cloaked;
+static int hf_appearance_lifeform_paint_scheme;
+static int hf_appearance_lifeform_health;
+static int hf_appearance_lifeform_compliance;
+static int hf_appearance_lifeform_flash_lights;
+static int hf_appearance_lifeform_state;
 
 /* Entity */
-static int hf_dis_entity_marking_character_set = -1;
-static int hf_dis_aggregate_marking_character_set = -1;
-static int hf_dis_entity_dead_reckoning_algorithm = -1;
-static int hf_dis_dead_reckoning_other_parameters = -1;
-static int hf_dis_entity_location_x_double = -1;
-static int hf_dis_entity_location_x_float = -1;
-static int hf_dis_entity_location_y_double = -1;
-static int hf_dis_entity_location_y_float = -1;
-static int hf_dis_entity_location_z_double = -1;
-static int hf_dis_entity_location_z_float = -1;
-static int hf_dis_entity_orientation_psi = -1;
-static int hf_dis_entity_orientation_theta = -1;
-static int hf_dis_entity_orientation_phi = -1;
-static int hf_dis_entity_linear_velocity_x = -1;
-static int hf_dis_entity_linear_velocity_y = -1;
-static int hf_dis_entity_linear_velocity_z = -1;
-static int hf_dis_entity_linear_acceleration_x = -1;
-static int hf_dis_entity_linear_acceleration_y = -1;
-static int hf_dis_entity_linear_acceleration_z = -1;
-static int hf_dis_entity_entity_angular_velocity_x = -1;
-static int hf_dis_entity_entity_angular_velocity_y = -1;
-static int hf_dis_entity_entity_angular_velocity_z = -1;
+static int hf_dis_entity_marking_character_set;
+static int hf_dis_aggregate_marking_character_set;
+static int hf_dis_entity_dead_reckoning_algorithm;
+static int hf_dis_dead_reckoning_other_parameters;
+static int hf_dis_entity_location_x_double;
+static int hf_dis_entity_location_x_float;
+static int hf_dis_entity_location_y_double;
+static int hf_dis_entity_location_y_float;
+static int hf_dis_entity_location_z_double;
+static int hf_dis_entity_location_z_float;
+static int hf_dis_entity_orientation_psi;
+static int hf_dis_entity_orientation_theta;
+static int hf_dis_entity_orientation_phi;
+static int hf_dis_entity_linear_velocity_x;
+static int hf_dis_entity_linear_velocity_y;
+static int hf_dis_entity_linear_velocity_z;
+static int hf_dis_entity_linear_acceleration_x;
+static int hf_dis_entity_linear_acceleration_y;
+static int hf_dis_entity_linear_acceleration_z;
+static int hf_dis_entity_entity_angular_velocity_x;
+static int hf_dis_entity_entity_angular_velocity_y;
+static int hf_dis_entity_entity_angular_velocity_z;
 
 /* Intercom */
-static int hf_intercom_control_control_type = -1;
-static int hf_intercom_control_communications_channel_type = -1;
-static int hf_intercom_control_source_communications_device_id = -1;
-static int hf_intercom_control_source_line_id = -1;
-static int hf_intercom_control_transmit_priority = -1;
-static int hf_intercom_control_transmit_line_state = -1;
-static int hf_intercom_control_command = -1;
-static int hf_intercom_control_master_communications_device_id = -1;
-static int hf_intercom_control_master_channel_id = -1;
+static int hf_intercom_control_control_type;
+static int hf_intercom_control_communications_channel_type;
+static int hf_intercom_control_source_communications_device_id;
+static int hf_intercom_control_source_line_id;
+static int hf_intercom_control_transmit_priority;
+static int hf_intercom_control_transmit_line_state;
+static int hf_intercom_control_command;
+static int hf_intercom_control_master_communications_device_id;
+static int hf_intercom_control_master_channel_id;
 
 /* TODO: put them in the best matched group */
-static int hf_entity_appearance = -1;
-static int hf_dis_entity_marking = -1;
+static int hf_entity_appearance;
+static int hf_dis_entity_marking;
 
 /* Dis designator */
-static int hf_dis_designator_code_name = -1;
-static int hf_dis_designator_designator_code = -1;
-static int hf_dis_designator_power = -1;
-static int hf_dis_designator_wavelength = -1;
-static int hf_dis_designator_spot_with_respect_to_designated_entity_x = -1;
-static int hf_dis_designator_spot_with_respect_to_designated_entity_y = -1;
-static int hf_dis_designator_spot_with_respect_to_designated_entity_z = -1;
-static int hf_dis_designator_spot_location_x = -1;
-static int hf_dis_designator_spot_location_y = -1;
-static int hf_dis_designator_spot_location_z = -1;
+static int hf_dis_designator_code_name;
+static int hf_dis_designator_designator_code;
+static int hf_dis_designator_power;
+static int hf_dis_designator_wavelength;
+static int hf_dis_designator_spot_with_respect_to_designated_entity_x;
+static int hf_dis_designator_spot_with_respect_to_designated_entity_y;
+static int hf_dis_designator_spot_with_respect_to_designated_entity_z;
+static int hf_dis_designator_spot_location_x;
+static int hf_dis_designator_spot_location_y;
+static int hf_dis_designator_spot_location_z;
 
 /* Collision */
-static int hf_dis_collision_type = -1;
-static int hf_dis_collision_mass = -1;
-static int hf_dis_collision_location_x = -1;
-static int hf_dis_collision_location_y = -1;
-static int hf_dis_collision_location_z = -1;
+static int hf_dis_collision_type;
+static int hf_dis_collision_mass;
+static int hf_dis_collision_location_x;
+static int hf_dis_collision_location_y;
+static int hf_dis_collision_location_z;
 
 /* More DIS global */
-static int hf_dis_capabilities = -1;
-static int hf_dis_variable_parameter_type = -1;
-static int hf_dis_num_shafts = -1;
-static int hf_dis_num_apas = -1;
-static int hf_dis_state_update_indicator = -1;
-static int hf_dis_passive_parameter_index = -1;
-static int hf_dis_propulsion_plant_config = -1;
-static int hf_dis_shaft_rpm_current = -1;
-static int hf_dis_shaft_rpm_ordered = -1;
-static int hf_dis_shaft_rpm_change_rate = -1;
-static int hf_dis_num_ua_emitter_systems = -1;
-static int hf_dis_apas_parameter_index = -1;
-static int hf_dis_apas_value = -1;
-static int hf_dis_ua_emission_name = -1;
-static int hf_dis_ua_emission_function = -1;
-static int hf_dis_ua_emission_id_number = -1;
-static int hf_dis_ua_emitter_data_length = -1;
-static int hf_dis_ua_num_beams = -1;
-static int hf_dis_ua_location_x = -1;
-static int hf_dis_ua_location_y = -1;
-static int hf_dis_ua_location_z = -1;
-static int hf_dis_ua_beam_data_length = -1;
-static int hf_dis_ua_beam_id_number = -1;
-static int hf_dis_ua_beam_active_emission_parameter_index = -1;
-static int hf_dis_ua_beam_scan_pattern = -1;
-static int hf_dis_ua_beam_center_azimuth = -1;
-static int hf_dis_ua_beam_azimuthal_beamwidth = -1;
-static int hf_dis_ua_beam_center_de = -1;
-static int hf_dis_ua_beam_de_beamwidth = -1;
-static int hf_dis_em_beam_data_length = -1;
-static int hf_dis_em_beam_id_number = -1;
-static int hf_dis_em_beam_parameter_index = -1;
-static int hf_dis_em_fund_frequency = -1;
-static int hf_dis_em_fund_frequency_range = -1;
-static int hf_dis_em_fund_effective_radiated_power = -1;
-static int hf_dis_em_fund_pulse_repetition_freq = -1;
-static int hf_dis_em_fund_pulse_width = -1;
-static int hf_dis_em_fund_beam_azimuth_center = -1;
-static int hf_dis_em_fund_beam_azimuth_sweep = -1;
-static int hf_dis_em_fund_beam_elevation_center = -1;
-static int hf_dis_em_fund_beam_elevation_sweep = -1;
-static int hf_dis_em_fund_beem_sweep_sync = -1;
-static int hf_dis_track_jam_num_targ = -1;
-static int hf_dis_track_jam_high_density = -1;
-static int hf_dis_jamming_mode_seq = -1;
-static int hf_dis_warhead = -1;
-static int hf_dis_fuse = -1;
-static int hf_dis_quality = -1;
-static int hf_dis_rate = -1;
-static int hf_dis_fire_mission_index = -1;
-static int hf_dis_fire_location_x = -1;
-static int hf_dis_fire_location_y = -1;
-static int hf_dis_fire_location_z = -1;
-static int hf_dis_linear_velocity_x = -1;
-static int hf_dis_linear_velocity_y = -1;
-static int hf_dis_linear_velocity_z = -1;
-static int hf_dis_range = -1;
-static int hf_dis_detonation_location_x = -1;
-static int hf_dis_detonation_location_y = -1;
-static int hf_dis_detonation_location_z = -1;
-static int hf_dis_detonation_result = -1;
-static int hf_dis_simulator_type = -1;
-static int hf_dis_database_seq_num = -1;
-static int hf_dis_simulator_load = -1;
-static int hf_dis_simulation_load = -1;
-static int hf_dis_time = -1;
-static int hf_dis_packets_sent = -1;
-static int hf_dis_unit_database_version = -1;
-static int hf_dis_relative_battle_scheme = -1;
-static int hf_dis_terrain_name = -1;
-static int hf_dis_terrain_version = -1;
-static int hf_dis_host_name = -1;
-static int hf_dis_sequence_number = -1;
-static int hf_dis_persist_obj_class = -1;
-static int hf_dis_missing_from_world_state = -1;
-static int hf_dis_obj_count = -1;
-static int hf_dis_clock_rate = -1;
-static int hf_dis_sec_since_1970 = -1;
-static int hf_dis_str_data = -1;
-static int hf_dis_record_data = -1;
-static int hf_dis_alignment_padding = -1;
-static int hf_dis_vp_change_indicator = -1;
-static int hf_dis_vp_association_status = -1;
-static int hf_dis_vp_association_type = -1;
-static int hf_dis_vp_own_station_location = -1;
-static int hf_dis_vp_phys_conn_type = -1;
-static int hf_dis_vp_group_member_type = -1;
-static int hf_dis_vp_group_number = -1;
-static int hf_dis_vp_offset_type = -1;
-static int hf_dis_vp_offset_x = -1;
-static int hf_dis_vp_offset_y = -1;
-static int hf_dis_vp_offset_z = -1;
-static int hf_dis_vp_attached_indicator = -1;
-static int hf_dis_vp_part_attached_to_id = -1;
-static int hf_dis_vp_artic_param_type = -1;
-static int hf_dis_vp_change = -1;
-static int hf_dis_vp_parameter_value = -1;
-static int hf_dis_vp_padding = -1;
-static int hf_dis_vr_exercise_id = -1;
-static int hf_dis_vr_exercise_file_path = -1;
-static int hf_dis_vr_exercise_file_name = -1;
-static int hf_dis_vr_application_role = -1;
-static int hf_dis_vr_num_records = -1;
-static int hf_dis_vr_status_type = -1;
-static int hf_dis_vr_general_status = -1;
-static int hf_dis_vr_specific_status = -1;
-static int hf_dis_vr_status_value_int = -1;
-static int hf_dis_vr_status_value_float = -1;
-static int hf_dis_signal_link16_npg = -1;
-static int hf_dis_signal_link16_tsec_cvll = -1;
-static int hf_dis_signal_link16_msec_cvll = -1;
-static int hf_dis_signal_link16_message_type = -1;
-static int hf_dis_signal_link16_ptt = -1;
-static int hf_dis_signal_link16_time_slot_type = - 1;
-static int hf_dis_signal_link16_rti = -1;
-static int hf_dis_signal_link16_stn = -1;
-static int hf_dis_signal_link16_sdusn = -1;
-static int hf_dis_signal_link16_network_number = -1;
-static int hf_dis_signal_link16_time_slot_id = -1;
-static int hf_dis_iff_system_type = -1;
-static int hf_dis_iff_system_name = -1;
-static int hf_dis_iff_system_mode = -1;
-static int hf_dis_iff_change_options = -1;
-static int hf_dis_iff_change_indicator = -1;
-static int hf_dis_iff_alternate_mode_4 = -1;
-static int hf_dis_iff_alternate_mode_c = -1;
-static int hf_dis_iff_heartbeat_indicator = -1;
-static int hf_dis_iff_transponder_interrogator_indicator = -1;
-static int hf_dis_iff_simulation_mode = -1;
-static int hf_dis_iff_interactive_capable = -1;
-static int hf_dis_iff_test_mode = -1;
-static int hf_dis_iff_system_designator = -1;
-static int hf_dis_iff_system_specific_data = -1;
-static int hf_dis_iff_system_status = -1;
-static int hf_dis_iff_system_status_system_onoff = -1;
-static int hf_dis_iff_system_status_parameter_1 = -1;
-static int hf_dis_iff_system_status_parameter_2 = -1;
-static int hf_dis_iff_system_status_parameter_3 = -1;
-static int hf_dis_iff_system_status_parameter_4 = -1;
-static int hf_dis_iff_system_status_parameter_5 = -1;
-static int hf_dis_iff_system_status_parameter_6 = -1;
-static int hf_dis_iff_system_status_operational = -1;
-static int hf_dis_iff_alternate_parameter_4 = -1;
-static int hf_dis_iff_information_layers = -1;
-static int hf_dis_iff_information_layers_layer_1 = -1;
-static int hf_dis_iff_information_layers_layer_2 = -1;
-static int hf_dis_iff_information_layers_layer_3 = -1;
-static int hf_dis_iff_information_layers_layer_4 = -1;
-static int hf_dis_iff_information_layers_layer_5 = -1;
-static int hf_dis_iff_information_layers_layer_6 = -1;
-static int hf_dis_iff_information_layers_layer_7 = -1;
-static int hf_dis_iff_modifier = -1;
-static int hf_dis_iff_modifier_emergency = -1;
-static int hf_dis_iff_modifier_ident = -1;
-static int hf_dis_iff_modifier_sti = -1;
-static int hf_dis_iff_modifier_unmanned_aircraft = -1;
-static int hf_dis_iff_parameter_1 = -1;
-static int hf_dis_iff_parameter_2 = -1;
-static int hf_dis_iff_parameter_3 = -1;
-static int hf_dis_iff_parameter_4 = -1;
-static int hf_dis_iff_parameter_5 = -1;
-static int hf_dis_iff_parameter_6 = -1;
-static int hf_dis_iff_mode_code_element_1 = -1;
-static int hf_dis_iff_mode_code_element_2 = -1;
-static int hf_dis_iff_mode_code_element_3 = -1;
-static int hf_dis_iff_mode_code_element_4 = -1;
-static int hf_dis_iff_rrb = -1;
-static int hf_dis_iff_rrb_rrb_code = -1;
-static int hf_dis_iff_rrb_power_reduction_indicator = -1;
-static int hf_dis_iff_rrb_radar_enhancement_indicator = -1;
-static int hf_dis_iff_mode_4 = -1;
-static int hf_dis_iff_mode_s_interrogator_identifier = -1;
+static int hf_dis_capabilities;
+static int hf_dis_variable_parameter_type;
+static int hf_dis_num_shafts;
+static int hf_dis_num_apas;
+static int hf_dis_state_update_indicator;
+static int hf_dis_passive_parameter_index;
+static int hf_dis_propulsion_plant_config;
+static int hf_dis_shaft_rpm_current;
+static int hf_dis_shaft_rpm_ordered;
+static int hf_dis_shaft_rpm_change_rate;
+static int hf_dis_num_ua_emitter_systems;
+static int hf_dis_apas_parameter_index;
+static int hf_dis_apas_value;
+static int hf_dis_ua_emission_name;
+static int hf_dis_ua_emission_function;
+static int hf_dis_ua_emission_id_number;
+static int hf_dis_ua_emitter_data_length;
+static int hf_dis_ua_num_beams;
+static int hf_dis_ua_location_x;
+static int hf_dis_ua_location_y;
+static int hf_dis_ua_location_z;
+static int hf_dis_ua_beam_data_length;
+static int hf_dis_ua_beam_id_number;
+static int hf_dis_ua_beam_active_emission_parameter_index;
+static int hf_dis_ua_beam_scan_pattern;
+static int hf_dis_ua_beam_center_azimuth;
+static int hf_dis_ua_beam_azimuthal_beamwidth;
+static int hf_dis_ua_beam_center_de;
+static int hf_dis_ua_beam_de_beamwidth;
+static int hf_dis_em_beam_data_length;
+static int hf_dis_em_beam_id_number;
+static int hf_dis_em_beam_parameter_index;
+static int hf_dis_em_fund_frequency;
+static int hf_dis_em_fund_frequency_range;
+static int hf_dis_em_fund_effective_radiated_power;
+static int hf_dis_em_fund_pulse_repetition_freq;
+static int hf_dis_em_fund_pulse_width;
+static int hf_dis_em_fund_beam_azimuth_center;
+static int hf_dis_em_fund_beam_azimuth_sweep;
+static int hf_dis_em_fund_beam_elevation_center;
+static int hf_dis_em_fund_beam_elevation_sweep;
+static int hf_dis_em_fund_beem_sweep_sync;
+static int hf_dis_track_jam_num_targ;
+static int hf_dis_track_jam_high_density;
+static int hf_dis_jamming_mode_seq;
+static int hf_dis_warhead;
+static int hf_dis_fuse;
+static int hf_dis_quality;
+static int hf_dis_rate;
+static int hf_dis_fire_mission_index;
+static int hf_dis_fire_location_x;
+static int hf_dis_fire_location_y;
+static int hf_dis_fire_location_z;
+static int hf_dis_linear_velocity_x;
+static int hf_dis_linear_velocity_y;
+static int hf_dis_linear_velocity_z;
+static int hf_dis_range;
+static int hf_dis_detonation_location_x;
+static int hf_dis_detonation_location_y;
+static int hf_dis_detonation_location_z;
+static int hf_dis_detonation_result;
+static int hf_dis_simulator_type;
+static int hf_dis_database_seq_num;
+static int hf_dis_simulator_load;
+static int hf_dis_simulation_load;
+static int hf_dis_time;
+static int hf_dis_packets_sent;
+static int hf_dis_unit_database_version;
+static int hf_dis_relative_battle_scheme;
+static int hf_dis_terrain_name;
+static int hf_dis_terrain_version;
+static int hf_dis_host_name;
+static int hf_dis_sequence_number;
+static int hf_dis_persist_obj_class;
+static int hf_dis_missing_from_world_state;
+static int hf_dis_obj_count;
+static int hf_dis_clock_rate;
+static int hf_dis_sec_since_1970;
+static int hf_dis_str_data;
+static int hf_dis_record_data;
+static int hf_dis_alignment_padding;
+static int hf_dis_vp_change_indicator;
+static int hf_dis_vp_association_status;
+static int hf_dis_vp_association_type;
+static int hf_dis_vp_own_station_location;
+static int hf_dis_vp_phys_conn_type;
+static int hf_dis_vp_group_member_type;
+static int hf_dis_vp_group_number;
+static int hf_dis_vp_offset_type;
+static int hf_dis_vp_offset_x;
+static int hf_dis_vp_offset_y;
+static int hf_dis_vp_offset_z;
+static int hf_dis_vp_attached_indicator;
+static int hf_dis_vp_part_attached_to_id;
+static int hf_dis_vp_artic_param_type;
+static int hf_dis_vp_change;
+static int hf_dis_vp_parameter_value;
+static int hf_dis_vp_padding;
+static int hf_dis_vr_exercise_id;
+static int hf_dis_vr_exercise_file_path;
+static int hf_dis_vr_exercise_file_name;
+static int hf_dis_vr_application_role;
+static int hf_dis_vr_num_records;
+static int hf_dis_vr_status_type;
+static int hf_dis_vr_general_status;
+static int hf_dis_vr_specific_status;
+static int hf_dis_vr_status_value_int;
+static int hf_dis_vr_status_value_float;
+static int hf_dis_signal_link16_npg;
+static int hf_dis_signal_link16_tsec_cvll;
+static int hf_dis_signal_link16_msec_cvll;
+static int hf_dis_signal_link16_message_type;
+static int hf_dis_signal_link16_ptt;
+static int hf_dis_signal_link16_time_slot_type;
+static int hf_dis_signal_link16_rti;
+static int hf_dis_signal_link16_stn;
+static int hf_dis_signal_link16_sdusn;
+static int hf_dis_signal_link16_network_number;
+static int hf_dis_signal_link16_time_slot_id;
+static int hf_dis_iff_system_type;
+static int hf_dis_iff_system_name;
+static int hf_dis_iff_system_mode;
+static int hf_dis_iff_change_options;
+static int hf_dis_iff_change_indicator;
+static int hf_dis_iff_alternate_mode_4;
+static int hf_dis_iff_alternate_mode_c;
+static int hf_dis_iff_heartbeat_indicator;
+static int hf_dis_iff_transponder_interrogator_indicator;
+static int hf_dis_iff_simulation_mode;
+static int hf_dis_iff_interactive_capable;
+static int hf_dis_iff_test_mode;
+static int hf_dis_iff_system_designator;
+static int hf_dis_iff_system_specific_data;
+static int hf_dis_iff_system_status;
+static int hf_dis_iff_system_status_system_onoff;
+static int hf_dis_iff_system_status_parameter_1;
+static int hf_dis_iff_system_status_parameter_2;
+static int hf_dis_iff_system_status_parameter_3;
+static int hf_dis_iff_system_status_parameter_4;
+static int hf_dis_iff_system_status_parameter_5;
+static int hf_dis_iff_system_status_parameter_6;
+static int hf_dis_iff_system_status_operational;
+static int hf_dis_iff_alternate_parameter_4;
+static int hf_dis_iff_information_layers;
+static int hf_dis_iff_information_layers_layer_1;
+static int hf_dis_iff_information_layers_layer_2;
+static int hf_dis_iff_information_layers_layer_3;
+static int hf_dis_iff_information_layers_layer_4;
+static int hf_dis_iff_information_layers_layer_5;
+static int hf_dis_iff_information_layers_layer_6;
+static int hf_dis_iff_information_layers_layer_7;
+static int hf_dis_iff_modifier;
+static int hf_dis_iff_modifier_emergency;
+static int hf_dis_iff_modifier_ident;
+static int hf_dis_iff_modifier_sti;
+static int hf_dis_iff_modifier_unmanned_aircraft;
+static int hf_dis_iff_parameter_1;
+static int hf_dis_iff_parameter_2;
+static int hf_dis_iff_parameter_3;
+static int hf_dis_iff_parameter_4;
+static int hf_dis_iff_parameter_5;
+static int hf_dis_iff_parameter_6;
+static int hf_dis_iff_mode_code_element_1;
+static int hf_dis_iff_mode_code_element_2;
+static int hf_dis_iff_mode_code_element_3;
+static int hf_dis_iff_mode_code_element_4;
+static int hf_dis_iff_rrb;
+static int hf_dis_iff_rrb_rrb_code;
+static int hf_dis_iff_rrb_power_reduction_indicator;
+static int hf_dis_iff_rrb_radar_enhancement_indicator;
+static int hf_dis_iff_mode_4;
+static int hf_dis_iff_mode_s_interrogator_identifier;
 static int hf_dis_iff_mode_s_interrogator_identifier_primary_ic_type;
 static int hf_dis_iff_mode_s_interrogator_identifier_primary_ic_code;
 static int hf_dis_iff_mode_s_interrogator_identifier_secondary_ic_type;
 static int hf_dis_iff_mode_s_interrogator_identifier_secondary_ic_code;
-static int hf_dis_iff_mode_c_altitude_indicator = -1;
-static int hf_dis_iff_mode_c_altitude = -1;
-static int hf_dis_iff_tcas_acas = -1;
-static int hf_dis_iff_tcas_acas_basic_advanced_indicator = -1;
-static int hf_dis_iff_tcas_acas_tcas_acas_indicator = -1;
-static int hf_dis_iff_tcas_acas_software_version = -1;
-static int hf_dis_iff_tcas_acas_tcas_acas_type = -1;
-static int hf_dis_iff_tcas_acas_tcas_type = -1;
-static int hf_dis_iff_mode_status = -1;
-static int hf_dis_iff_mode_damage = -1;
-static int hf_dis_iff_mode_malfunction = -1;
+static int hf_dis_iff_mode_c_altitude_indicator;
+static int hf_dis_iff_mode_c_altitude;
+static int hf_dis_iff_tcas_acas;
+static int hf_dis_iff_tcas_acas_basic_advanced_indicator;
+static int hf_dis_iff_tcas_acas_tcas_acas_indicator;
+static int hf_dis_iff_tcas_acas_software_version;
+static int hf_dis_iff_tcas_acas_tcas_acas_type;
+static int hf_dis_iff_tcas_acas_tcas_type;
+static int hf_dis_iff_mode_status;
+static int hf_dis_iff_mode_damage;
+static int hf_dis_iff_mode_malfunction;
 
-static gint ett_dis = -1;
-static gint ett_dis_header = -1;
-static gint ett_pdu_status = -1;
-static gint ett_dis_po_header = -1;
-static gint ett_dis_payload = -1;
-static gint ett_entity = -1;
-static gint ett_trackjam = -1;
-static gint ett_dis_ens = -1;
-static gint ett_radio_entity_type = -1;
-static gint ett_entity_type = -1;
-static gint ett_dis_crypto_key = -1;
-static gint ett_antenna_location = -1;
-static gint ett_rel_antenna_location = -1;
-static gint ett_aggregate_dimensions = -1;
-static gint ett_aggregate_orientation = -1;
-static gint ett_aggregate_velocity = -1;
-static gint ett_aggregate_id_list = -1;
-static gint ett_entity_id_list = -1;
-static gint ett_variable_datum = -1;
-
-
-
-
-
-static gint ett_modulation_type = -1;
-static gint ett_modulation_parameters = -1;
-static gint ett_entity_linear_velocity = -1;
-static gint ett_entity_location = -1;
-static gint ett_entity_orientation = -1;
-static gint ett_entity_marking_text = -1;
-static gint ett_aggregate_marking_text = -1;
-static gint ett_entity_dead_reckoning_parameters = -1;
-static gint ett_entity_linear_acceleration = -1;
-static gint ett_entity_angular_velocity = -1;
-static gint ett_environmental_environment_status = -1;
-static gint ett_environmental_environment_type = -1;
-static gint ett_aggregate_type = -1;
-static gint ett_aggregate_center_of_mass = -1;
-static gint ett_designator_spot_location = -1;
-static gint ett_designator_spot_with_respect_to_designated_entity = -1;
-static gint ett_designator_entity_linear_acceleration = -1;
+static int ett_dis;
+static int ett_dis_header;
+static int ett_pdu_status;
+static int ett_dis_po_header;
+static int ett_dis_payload;
+static int ett_entity;
+static int ett_trackjam;
+static int ett_dis_ens;
+static int ett_radio_entity_type;
+static int ett_entity_type;
+static int ett_dis_crypto_key;
+static int ett_antenna_location;
+static int ett_rel_antenna_location;
+static int ett_aggregate_dimensions;
+static int ett_aggregate_orientation;
+static int ett_aggregate_velocity;
+static int ett_aggregate_id_list;
+static int ett_entity_id_list;
+static int ett_variable_datum;
 
 
 
 
 
-static gint ett_entity_appearance = -1;
-static gint ett_variable_parameter = -1;
-static gint ett_event_id = -1;
-static gint ett_shafts = -1;
-static gint ett_apas = -1;
-static gint ett_underwater_acoustic_emission = -1;
-static gint ett_acoustic_emitter_system = -1;
-static gint ett_ua_location = -1;
-static gint ett_ua_beams = -1;
-static gint ett_ua_beam_data = -1;
-static gint ett_emission_system = -1;
-static gint ett_emitter_system = -1;
-static gint ett_em_beam = -1;
-static gint ett_emitter_location = -1;
-static gint ett_em_fundamental_parameter_data = -1;
-static gint ett_burst_descriptor = -1;
-static gint ett_fire_location = -1;
-static gint ett_linear_velocity = -1;
-static gint ett_detonation_location = -1;
-static gint ett_clock_time = -1;
-static gint ett_fixed_datum = -1;
-static gint ett_record = -1;
-static gint ett_simulation_address = -1;
-static gint ett_offset_vector = -1;
-static gint ett_dis_signal_link16_network_header = -1;
-static gint ett_dis_signal_link16_message_data = -1;
-static gint ett_dis_signal_link16_jtids_header = -1;
-static gint ett_iff_location = -1;
-static gint ett_iff_system_id = -1;
-static gint ett_iff_change_options = -1;
-static gint ett_iff_fundamental_operational_data = -1;
-static gint ett_iff_system_status = -1;
-static gint ett_iff_information_layers = -1;
-static gint ett_iff_modifier = -1;
-static gint ett_iff_parameter_1 = -1;
-static gint ett_iff_rrb = -1;
-static gint ett_iff_parameter_2 = -1;
-static gint ett_iff_parameter_3 = -1;
-static gint ett_iff_parameter_4 = -1;
-static gint ett_iff_mode_s_interrogator_identifier = -1;
-static gint ett_iff_parameter_5 = -1;
-static gint ett_iff_parameter_6 = -1;
+static int ett_modulation_type;
+static int ett_modulation_parameters;
+static int ett_entity_linear_velocity;
+static int ett_entity_location;
+static int ett_entity_orientation;
+static int ett_entity_marking_text;
+static int ett_aggregate_marking_text;
+static int ett_entity_dead_reckoning_parameters;
+static int ett_entity_linear_acceleration;
+static int ett_entity_angular_velocity;
+static int ett_environmental_environment_status;
+static int ett_environmental_environment_type;
+static int ett_aggregate_type;
+static int ett_aggregate_center_of_mass;
+static int ett_designator_spot_location;
+static int ett_designator_spot_with_respect_to_designated_entity;
+static int ett_designator_entity_linear_acceleration;
+
+
+
+
+
+static int ett_entity_appearance;
+static int ett_variable_parameter;
+static int ett_event_id;
+static int ett_shafts;
+static int ett_apas;
+static int ett_underwater_acoustic_emission;
+static int ett_acoustic_emitter_system;
+static int ett_ua_location;
+static int ett_ua_beams;
+static int ett_ua_beam_data;
+static int ett_emission_system;
+static int ett_emitter_system;
+static int ett_em_beam;
+static int ett_emitter_location;
+static int ett_em_fundamental_parameter_data;
+static int ett_burst_descriptor;
+static int ett_fire_location;
+static int ett_linear_velocity;
+static int ett_detonation_location;
+static int ett_clock_time;
+static int ett_fixed_datum;
+static int ett_record;
+static int ett_simulation_address;
+static int ett_offset_vector;
+static int ett_dis_signal_link16_network_header;
+static int ett_dis_signal_link16_message_data;
+static int ett_dis_signal_link16_jtids_header;
+static int ett_iff_location;
+static int ett_iff_system_id;
+static int ett_iff_change_options;
+static int ett_iff_fundamental_operational_data;
+static int ett_iff_system_status;
+static int ett_iff_information_layers;
+static int ett_iff_modifier;
+static int ett_iff_parameter_1;
+static int ett_iff_rrb;
+static int ett_iff_parameter_2;
+static int ett_iff_parameter_3;
+static int ett_iff_parameter_4;
+static int ett_iff_mode_s_interrogator_identifier;
+static int ett_iff_parameter_5;
+static int ett_iff_parameter_6;
 
 static dissector_handle_t link16_handle;
 
 typedef struct dis_header
 {
-    guint8 version;
-    guint8 pduType;
-    guint8 family;
+    uint8_t version;
+    uint8_t pduType;
+    uint8_t family;
 }
 dis_header_t;
 
 /* Forward declarations */
-static gint parseField_Entity(tvbuff_t *tvb, proto_tree *tree, gint offset, const char* entity_name);
-static gint parseField_Aggregate(tvbuff_t *tvb, proto_tree *tree, gint offset, const char* entity_name);
+static int parseField_Entity(tvbuff_t *tvb, proto_tree *tree, int offset, const char* entity_name);
+static int parseField_Aggregate(tvbuff_t *tvb, proto_tree *tree, int offset, const char* entity_name);
 static int dissect_DIS_FIELDS_ENTITY_TYPE(tvbuff_t *tvb, proto_tree *tree, int offset, const char* entity_name);
-static gint parseField_VariableParameter(tvbuff_t *tvb, proto_tree *tree, gint offset, guint8 paramType);
-static gint parseField_VariableRecord(tvbuff_t *tvb, proto_tree *tree, gint offset, guint32 variableRecordType, guint16 record_length);
+static int parseField_VariableParameter(tvbuff_t *tvb, proto_tree *tree, int offset, uint8_t paramType);
+static int parseField_VariableRecord(tvbuff_t *tvb, proto_tree *tree, int offset, uint32_t variableRecordType, uint16_t record_length);
 
 
 /* globals to pass data between functions */
-static guint32 entityKind;
-static guint32 entityDomain;
+static uint32_t entityKind;
+static uint32_t entityDomain;
 
 /* Composite types
  */
@@ -4984,11 +4964,11 @@ static int dissect_DIS_FIELDS_CLOCK_TIME(tvbuff_t *tvb, proto_tree *tree, int of
     proto_item  *ti;
     proto_tree  *sub_tree;
     /* some consts */
-    static guint MSEC_PER_HOUR = 60 * 60 * 1000;
-    static guint FSV = 0x7fffffff;
-    guint32 hour, uintVal;
-    guint64 ms;
-    guint isAbsolute = 0;
+    static unsigned MSEC_PER_HOUR = 60 * 60 * 1000;
+    static unsigned FSV = 0x7fffffff;
+    uint32_t hour, uintVal;
+    uint64_t ms;
+    unsigned isAbsolute = 0;
     nstime_t tv;
 
     sub_tree = proto_tree_add_subtree(tree, tvb, offset, 8, ett_clock_time, NULL, clock_name);
@@ -5000,7 +4980,7 @@ static int dissect_DIS_FIELDS_CLOCK_TIME(tvbuff_t *tvb, proto_tree *tree, int of
     isAbsolute = uintVal & 1;
 
     /* convert TS to MS */
-    ms = (guint64)(uintVal >> 1) * MSEC_PER_HOUR / FSV;
+    ms = (uint64_t)(uintVal >> 1) * MSEC_PER_HOUR / FSV;
 
     tv.secs = (time_t)ms/1000;
     tv.nsecs = (int)(ms%1000)*1000000;
@@ -5021,24 +5001,24 @@ static int dissect_DIS_FIELDS_CLOCK_TIME(tvbuff_t *tvb, proto_tree *tree, int of
    return (offset+8);
 }
 
-static int dissect_DIS_FIELDS_ENTITY_TYPE_RECORD(tvbuff_t *tvb, proto_tree *tree, int offset, const char* name, gint ett, int hfkind, int hfdomain, int hfcountry, int hfcategory, int hfsubcategory, int hfspecific, int hfextra)
+static int dissect_DIS_FIELDS_ENTITY_TYPE_RECORD(tvbuff_t *tvb, proto_tree *tree, int offset, const char* name, int ett, int hfkind, int hfdomain, int hfcountry, int hfcategory, int hfsubcategory, int hfspecific, int hfextra)
 {
-    guint16 entityCountry;
-    guint8 entityCategory;
-    guint8 entitySubcategory;
-    guint8 entitySpecific;
-    guint8 entityExtra;
+    uint16_t entityCountry;
+    uint8_t entityCategory;
+    uint8_t entitySubcategory;
+    uint8_t entitySpecific;
+    uint8_t entityExtra;
 
     proto_tree  *sub_tree;
     int hf_cat = hfcategory;
 
-    entityKind = tvb_get_guint8(tvb, offset);
-    entityDomain = tvb_get_guint8(tvb, offset+1);
+    entityKind = tvb_get_uint8(tvb, offset);
+    entityDomain = tvb_get_uint8(tvb, offset+1);
     entityCountry = tvb_get_ntohs(tvb, offset+2);
-    entityCategory = tvb_get_guint8(tvb, offset+4);
-    entitySubcategory = tvb_get_guint8(tvb, offset+5);
-    entitySpecific = tvb_get_guint8(tvb, offset+6);
-    entityExtra = tvb_get_guint8(tvb, offset+7);
+    entityCategory = tvb_get_uint8(tvb, offset+4);
+    entitySubcategory = tvb_get_uint8(tvb, offset+5);
+    entitySpecific = tvb_get_uint8(tvb, offset+6);
+    entityExtra = tvb_get_uint8(tvb, offset+7);
 
     sub_tree = proto_tree_add_subtree_format(tree, tvb, offset, 8, ett, NULL, "%s, (%u:%u:%u:%u:%u:%u:%u) ", name, entityKind, entityDomain, entityCountry, entityCategory, entitySubcategory, entitySpecific, entityExtra);
 
@@ -5100,11 +5080,11 @@ static int dissect_DIS_FIELDS_RADIO_ENTITY_TYPE(tvbuff_t *tvb, proto_tree *tree,
     sub_tree = proto_tree_add_subtree(tree, tvb, offset, 8, ett_radio_entity_type, NULL, entity_name);
 
     proto_tree_add_item(sub_tree, hf_dis_entityKind, tvb, offset, 1, ENC_BIG_ENDIAN);
-    entityKind = tvb_get_guint8(tvb, offset);
+    entityKind = tvb_get_uint8(tvb, offset);
     offset++;
 
     proto_tree_add_item(sub_tree, hf_dis_entityDomain, tvb, offset, 1, ENC_BIG_ENDIAN);
-    entityDomain = tvb_get_guint8(tvb, offset);
+    entityDomain = tvb_get_uint8(tvb, offset);
     offset++;
 
     proto_tree_add_item(sub_tree, hf_dis_country, tvb, offset, 2, ENC_BIG_ENDIAN);
@@ -5133,10 +5113,10 @@ static int dissect_DIS_FIELDS_ENVIRONMENT_TYPE(tvbuff_t *tvb, proto_tree *tree, 
 }
 
 
-static int dissect_DIS_FIELDS_MODULATION_TYPE(tvbuff_t *tvb, proto_tree *tree, int offset, guint16* systemModulation)
+static int dissect_DIS_FIELDS_MODULATION_TYPE(tvbuff_t *tvb, proto_tree *tree, int offset, uint16_t* systemModulation)
 {
     proto_tree  *sub_tree;
-    guint32 majorModulation;
+    uint32_t majorModulation;
     int hf_mod_detail;
 
     sub_tree = proto_tree_add_subtree(tree, tvb, offset, 8, ett_modulation_type, NULL, "Modulation Type");
@@ -5281,8 +5261,8 @@ static int dissect_DIS_FIELDS_MOD_PARAMS_JTIDS_MIDS(tvbuff_t *tvb, proto_tree *t
     return offset;
 }
 
-static gint parse_DIS_FIELDS_SIGNAL_LINK16_NETWORK_HEADER(tvbuff_t *tvb, proto_tree *tree,
-                                                          gint offset, guint8* messageType)
+static int parse_DIS_FIELDS_SIGNAL_LINK16_NETWORK_HEADER(tvbuff_t *tvb, proto_tree *tree,
+                                                          int offset, uint8_t* messageType)
 {
     proto_tree  *sub_tree;
     nstime_t tv;
@@ -5303,7 +5283,7 @@ static gint parse_DIS_FIELDS_SIGNAL_LINK16_NETWORK_HEADER(tvbuff_t *tvb, proto_t
 
     proto_tree_add_item(sub_tree, hf_dis_signal_link16_message_type, tvb, offset, 1, ENC_BIG_ENDIAN);
     if (messageType)
-        *messageType = tvb_get_guint8(tvb, offset);
+        *messageType = tvb_get_uint8(tvb, offset);
     offset++;
 
     proto_tree_add_item(sub_tree, hf_dis_padding, tvb, offset, 2, ENC_NA);
@@ -5329,10 +5309,10 @@ static gint parse_DIS_FIELDS_SIGNAL_LINK16_NETWORK_HEADER(tvbuff_t *tvb, proto_t
 
 /* Parse Link 16 Message Data record (SISO-STD-002, Tables 5.2.5 through 5.2.12)
  */
-static gint parse_Link16_Message_Data(proto_tree *tree, tvbuff_t *tvb, gint offset, packet_info *pinfo,
-                                      guint32 encodingScheme, guint8 messageType)
+static int parse_Link16_Message_Data(proto_tree *tree, tvbuff_t *tvb, int offset, packet_info *pinfo,
+                                      uint32_t encodingScheme, uint8_t messageType)
 {
-    guint32 cache, value, i;
+    uint32_t cache, value, i;
     Link16State state;
     tvbuff_t *newtvb;
 
@@ -5361,7 +5341,7 @@ static gint parse_Link16_Message_Data(proto_tree *tree, tvbuff_t *tvb, gint offs
         memset(&state, 0, sizeof(state));
 
         for (i = 0; i < (encodingScheme & 0x3FFF); i++) {
-            gint8 *word = (gint8 *)wmem_alloc(pinfo->pool, 10);
+            int8_t *word = (int8_t *)wmem_alloc(pinfo->pool, 10);
             if (!(i & 1)) {
                 word[0] = (cache >> 16) & 0xFF;
                 word[1] = (cache >> 24) & 0xFF;
@@ -5407,10 +5387,10 @@ static gint parse_Link16_Message_Data(proto_tree *tree, tvbuff_t *tvb, gint offs
 
 /* Array records
  */
-static gint parseField_DIS_FIELDS_FIXED_DATUM(tvbuff_t *tvb, proto_tree *tree, gint offset, const char* field_name, guint32 num_items)
+static int parseField_DIS_FIELDS_FIXED_DATUM(tvbuff_t *tvb, proto_tree *tree, int offset, const char* field_name, uint32_t num_items)
 {
     proto_tree  *sub_tree;
-    guint32 i;
+    uint32_t i;
 
 
     for (i = 0; i < num_items; i++)
@@ -5431,11 +5411,11 @@ static gint parseField_DIS_FIELDS_FIXED_DATUM(tvbuff_t *tvb, proto_tree *tree, g
     return offset;
 }
 
-static gint parseField_DIS_FIELDS_VARIABLE_DATUM(tvbuff_t *tvb, proto_tree *tree, gint offset, const char* field_name, guint32 num_items)
+static int parseField_DIS_FIELDS_VARIABLE_DATUM(tvbuff_t *tvb, proto_tree *tree, int offset, const char* field_name, uint32_t num_items)
 {
     proto_item  *ti;
     proto_tree  *sub_tree;
-    guint32 i, data_length, lengthInBytes;
+    uint32_t i, data_length, lengthInBytes;
     unsigned char padding;
 
     for (i = 0; i < num_items; i++)
@@ -5470,10 +5450,10 @@ static gint parseField_DIS_FIELDS_VARIABLE_DATUM(tvbuff_t *tvb, proto_tree *tree
     return offset;
 }
 
-static gint parseField_DIS_FIELDS_FIXED_DATUM_IDS(tvbuff_t *tvb, proto_tree *tree, gint offset, const char* field_name, guint32 num_items)
+static int parseField_DIS_FIELDS_FIXED_DATUM_IDS(tvbuff_t *tvb, proto_tree *tree, int offset, const char* field_name, uint32_t num_items)
 {
     proto_tree  *sub_tree;
-    guint32 i;
+    uint32_t i;
 
     sub_tree = proto_tree_add_subtree(tree, tvb, offset, num_items*4, ett_fixed_datum, NULL, field_name);
 
@@ -5486,12 +5466,12 @@ static gint parseField_DIS_FIELDS_FIXED_DATUM_IDS(tvbuff_t *tvb, proto_tree *tre
     return offset;
 }
 
-static gint parseField_DIS_FIELDS_VARIABLE_DATUM_IDS(tvbuff_t *tvb, proto_tree *tree, gint offset, const char* field_name, guint32 num_items)
+static int parseField_DIS_FIELDS_VARIABLE_DATUM_IDS(tvbuff_t *tvb, proto_tree *tree, int offset, const char* field_name, uint32_t num_items)
 {
     return parseField_DIS_FIELDS_FIXED_DATUM_IDS(tvb, tree, offset, field_name, num_items);
 }
 
-static gint parseField_TRACK_JAM(tvbuff_t *tvb, proto_tree *tree, gint offset, const char* entity_name)
+static int parseField_TRACK_JAM(tvbuff_t *tvb, proto_tree *tree, int offset, const char* entity_name)
 {
     proto_tree  *sub_tree;
 
@@ -5517,7 +5497,7 @@ static gint parseField_TRACK_JAM(tvbuff_t *tvb, proto_tree *tree, gint offset, c
 
 /* Array record contents - variable parameter records
  */
-static gint dissect_DIS_FIELDS_VP_ARTICULATED_PART(tvbuff_t *tvb, proto_tree *tree, gint offset)
+static int dissect_DIS_FIELDS_VP_ARTICULATED_PART(tvbuff_t *tvb, proto_tree *tree, int offset)
 {
     proto_tree_add_item(tree, hf_dis_vp_change, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
@@ -5537,7 +5517,7 @@ static gint dissect_DIS_FIELDS_VP_ARTICULATED_PART(tvbuff_t *tvb, proto_tree *tr
     return offset;
 }
 
-static gint dissect_DIS_FIELDS_VP_ATTACHED_PART(tvbuff_t *tvb, proto_tree *tree, gint offset)
+static int dissect_DIS_FIELDS_VP_ATTACHED_PART(tvbuff_t *tvb, proto_tree *tree, int offset)
 {
     proto_tree_add_item(tree, hf_dis_vp_attached_indicator, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
@@ -5553,7 +5533,7 @@ static gint dissect_DIS_FIELDS_VP_ATTACHED_PART(tvbuff_t *tvb, proto_tree *tree,
     return offset;
 }
 
-static gint dissect_DIS_FIELDS_VP_ENTITY_OFFSET(tvbuff_t *tvb, proto_tree *tree, gint offset)
+static int dissect_DIS_FIELDS_VP_ENTITY_OFFSET(tvbuff_t *tvb, proto_tree *tree, int offset)
 {
     proto_tree  *sub_tree;
 
@@ -5577,7 +5557,7 @@ static gint dissect_DIS_FIELDS_VP_ENTITY_OFFSET(tvbuff_t *tvb, proto_tree *tree,
     return offset;
 }
 
-static gint dissect_DIS_FIELDS_VP_ENTITY_ASSOCIATION(tvbuff_t *tvb, proto_tree *tree, gint offset)
+static int dissect_DIS_FIELDS_VP_ENTITY_ASSOCIATION(tvbuff_t *tvb, proto_tree *tree, int offset)
 {
     proto_tree_add_item(tree, hf_dis_vp_change_indicator, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
@@ -5652,7 +5632,7 @@ static int dissect_DIS_FIELDS_VR_APPLICATION_INITIALIZATION(tvbuff_t *tvb, proto
 
 static int dissect_DIS_FIELDS_VR_DATA_QUERY(tvbuff_t *tvb, proto_tree *tree, int offset)
 {
-    guint32 numFixed;
+    uint32_t numFixed;
 
     numFixed = tvb_get_ntohs(tvb, offset);
     proto_tree_add_item(tree, hf_dis_vr_num_records, tvb, offset, 2, ENC_BIG_ENDIAN);
@@ -5853,13 +5833,6 @@ static const value_string appearance_tent_vals[] =
 {
     { 0, "Not extended" },
     { 1, "Extended" },
-    { 0, NULL }
-};
-
-static const value_string appearance_ramp_vals[] =
-{
-    { 0, "Up" },
-    { 1, "Down" },
     { 0, NULL }
 };
 
@@ -6099,15 +6072,15 @@ static const value_string dis_pdu_status_aii_vals[] = {
 
 static int dissect_DIS_PARSER_ENTITY_STATE_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, int offset)
 {
-    static guint32 entitySite;
-    static guint32 entityApplication;
-    static guint32 entityEntity;
+    static uint32_t entitySite;
+    static uint32_t entityApplication;
+    static uint32_t entityEntity;
     proto_item *ti;
     proto_tree *sub_tree;
     proto_tree *sub_tree2;
-    guint8 variableParameterType, numVariable, entity_marking_character_set;
-    guint32 i;
-    const guint8 *entity_marking_text;
+    uint8_t variableParameterType, numVariable, entity_marking_character_set;
+    uint32_t i;
+    const uint8_t *entity_marking_text;
 
     entitySite = tvb_get_ntohs(tvb, offset);
     entityApplication = tvb_get_ntohs(tvb, offset+2);
@@ -6118,7 +6091,7 @@ static int dissect_DIS_PARSER_ENTITY_STATE_PDU(tvbuff_t *tvb, packet_info *pinfo
     proto_tree_add_item(tree, hf_dis_force_id, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
-    numVariable = tvb_get_guint8(tvb, offset);
+    numVariable = tvb_get_uint8(tvb, offset);
     proto_tree_add_item(tree, hf_dis_num_art_params, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
@@ -6243,7 +6216,7 @@ static int dissect_DIS_PARSER_ENTITY_STATE_PDU(tvbuff_t *tvb, packet_info *pinfo
 
     sub_tree = proto_tree_add_subtree(tree, tvb, offset, 12, ett_entity_marking_text, NULL, "Entity Marking");
 
-    entity_marking_character_set = tvb_get_guint8(tvb, offset);
+    entity_marking_character_set = tvb_get_uint8(tvb, offset);
     proto_tree_add_uint(sub_tree, hf_dis_entity_marking_character_set, tvb, offset, 1, entity_marking_character_set);
     offset += 1;
     switch (entity_marking_character_set)
@@ -6270,7 +6243,7 @@ static int dissect_DIS_PARSER_ENTITY_STATE_PDU(tvbuff_t *tvb, packet_info *pinfo
         sub_tree = proto_tree_add_subtree(tree, tvb, offset, 1, ett_variable_parameter, &ti, "Variable Parameter");
 
         proto_tree_add_item(sub_tree, hf_dis_variable_parameter_type, tvb, offset, 1, ENC_BIG_ENDIAN);
-        variableParameterType = tvb_get_guint8(tvb, offset);
+        variableParameterType = tvb_get_uint8(tvb, offset);
         offset++;
 
         offset = parseField_VariableParameter(tvb, sub_tree, offset, variableParameterType);
@@ -6282,13 +6255,13 @@ static int dissect_DIS_PARSER_ENTITY_STATE_PDU(tvbuff_t *tvb, packet_info *pinfo
 
 static int dissect_DIS_PARSER_ENTITY_STATE_UPDATE_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, int offset)
 {
-    static guint32 entitySite;
-    static guint32 entityApplication;
-    static guint32 entityEntity;
+    static uint32_t entitySite;
+    static uint32_t entityApplication;
+    static uint32_t entityEntity;
     proto_item *ti;
     proto_tree *sub_tree;
-    guint8 variableParameterType, numVariable;
-    guint32 i;
+    uint8_t variableParameterType, numVariable;
+    uint32_t i;
 
     entitySite = tvb_get_ntohs(tvb, offset);
     entityApplication = tvb_get_ntohs(tvb, offset+2);
@@ -6299,7 +6272,7 @@ static int dissect_DIS_PARSER_ENTITY_STATE_UPDATE_PDU(tvbuff_t *tvb, packet_info
     proto_tree_add_item(tree, hf_dis_padding, tvb, offset, 1, ENC_NA);
     offset++;
 
-    numVariable = tvb_get_guint8(tvb, offset);
+    numVariable = tvb_get_uint8(tvb, offset);
 
     proto_tree_add_item(tree, hf_dis_num_variable_records, tvb, offset, 1, ENC_BIG_ENDIAN); //number of variable parameter records
     offset++;
@@ -6399,7 +6372,7 @@ static int dissect_DIS_PARSER_ENTITY_STATE_UPDATE_PDU(tvbuff_t *tvb, packet_info
         sub_tree = proto_tree_add_subtree(tree, tvb, offset, 1, ett_variable_parameter, &ti, "Variable Parameter");
 
         proto_tree_add_item(sub_tree, hf_dis_variable_parameter_type, tvb, offset, 1, ENC_BIG_ENDIAN);
-        variableParameterType = tvb_get_guint8(tvb, offset);
+        variableParameterType = tvb_get_uint8(tvb, offset);
         offset++;
 
         offset = parseField_VariableParameter(tvb, sub_tree, offset, variableParameterType);
@@ -6459,7 +6432,7 @@ static int dissect_DIS_PARSER_ELECTROMAGNETIC_EMISSION_PDU(tvbuff_t *tvb, packet
 {
     proto_item *emission_ti, *beam_ti;
     proto_tree *sub_tree, *sub_tree2, *fundamental_tree;
-    guint8 i, j, k, numVariable, numBeams, numTrackJamTargets;
+    uint8_t i, j, k, numVariable, numBeams, numTrackJamTargets;
 
     offset = parseField_Entity(tvb, tree, offset, "Emitting Entity ID");
     offset = dissect_DIS_FIELDS_EVENT_ID(tvb, tree, offset, "Event ID");
@@ -6467,7 +6440,7 @@ static int dissect_DIS_PARSER_ELECTROMAGNETIC_EMISSION_PDU(tvbuff_t *tvb, packet
     proto_tree_add_item(tree, hf_dis_state_update_indicator, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
-    numVariable = tvb_get_guint8(tvb, offset);
+    numVariable = tvb_get_uint8(tvb, offset);
     proto_tree_add_item(tree, hf_dis_num_electromagnetic_emission_systems, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
@@ -6481,7 +6454,7 @@ static int dissect_DIS_PARSER_ELECTROMAGNETIC_EMISSION_PDU(tvbuff_t *tvb, packet
         proto_tree_add_item(sub_tree, hf_dis_em_data_length, tvb, offset, 1, ENC_BIG_ENDIAN);
         offset++;
 
-        numBeams = tvb_get_guint8(tvb, offset);
+        numBeams = tvb_get_uint8(tvb, offset);
         proto_tree_add_item(sub_tree, hf_dis_em_num_beams, tvb, offset, 1, ENC_BIG_ENDIAN);
         offset++;
 
@@ -6545,7 +6518,7 @@ static int dissect_DIS_PARSER_ELECTROMAGNETIC_EMISSION_PDU(tvbuff_t *tvb, packet
             proto_tree_add_item(sub_tree2, hf_dis_beam_function, tvb, offset, 1, ENC_BIG_ENDIAN);
             offset++;
 
-            numTrackJamTargets = tvb_get_guint8(tvb, offset);
+            numTrackJamTargets = tvb_get_uint8(tvb, offset);
             proto_tree_add_item(sub_tree2, hf_dis_track_jam_num_targ, tvb, offset, 1, ENC_BIG_ENDIAN);
             offset++;
 
@@ -6577,7 +6550,7 @@ static int dissect_DIS_PARSER_ELECTROMAGNETIC_EMISSION_PDU(tvbuff_t *tvb, packet
 static int dissect_DIS_PARSER_UNDERWATER_ACOUSTIC_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, int offset)
 {
     proto_tree *sub_tree, *sub_tree2;
-    guint8 i, numShafts, numApas, numUAEmitter, numUABeams = 0;
+    uint8_t i, numShafts, numApas, numUAEmitter, numUABeams = 0;
 
     offset = parseField_Entity(tvb, tree, offset, "Emitting Entity ID");
     offset = dissect_DIS_FIELDS_EVENT_ID(tvb, tree, offset, "Event ID");
@@ -6594,15 +6567,15 @@ static int dissect_DIS_PARSER_UNDERWATER_ACOUSTIC_PDU(tvbuff_t *tvb, packet_info
     proto_tree_add_item(tree, hf_dis_propulsion_plant_config, tvb, offset, 1, ENC_BIG_ENDIAN); /* !! enum !! */
     offset++;
 
-    numShafts = tvb_get_guint8(tvb, offset);
+    numShafts = tvb_get_uint8(tvb, offset);
     proto_tree_add_item(tree, hf_dis_num_shafts, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
-    numApas = tvb_get_guint8(tvb, offset);
+    numApas = tvb_get_uint8(tvb, offset);
     proto_tree_add_item(tree, hf_dis_num_apas, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
-    numUAEmitter = tvb_get_guint8(tvb, offset);
+    numUAEmitter = tvb_get_uint8(tvb, offset);
     proto_tree_add_item(tree, hf_dis_num_ua_emitter_systems, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
@@ -6642,7 +6615,7 @@ static int dissect_DIS_PARSER_UNDERWATER_ACOUSTIC_PDU(tvbuff_t *tvb, packet_info
         proto_tree_add_item(sub_tree, hf_dis_ua_emitter_data_length, tvb, offset, 1, ENC_BIG_ENDIAN);
         offset++;
 
-        numUABeams += tvb_get_guint8(tvb, offset);
+        numUABeams += tvb_get_uint8(tvb, offset);
         proto_tree_add_item(sub_tree, hf_dis_ua_num_beams, tvb, offset, 1, ENC_BIG_ENDIAN);
         offset++;
 
@@ -6711,17 +6684,17 @@ static int dissect_DIS_PARSER_IFF_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_t
 {
     proto_item *ti = NULL;
     proto_tree *sub_tree = NULL,*field_tree = NULL;
-    guint16 site = 0, application = 0, entity = 0;
-    guint16 systemType = 0;
-    guint16 mode1 = 0, mode1_element1 = 0, mode1_element2 = 0;
-    guint16 rrb = 0, rrb_code = 0;
-    guint16 mode2 = 0, mode2_element1 = 0, mode2_element2 = 0, mode2_element3 = 0, mode2_element4 = 0;
-    guint16 mode3 = 0, mode3_element1 = 0, mode3_element2 = 0, mode3_element3 = 0, mode3_element4 = 0;
-    guint16 mode4 = 0;
-    guint16 modeS = 0, modeS_primary_type = 0, modeS_primary_code = 0, modeS_secondary_type = 0, modeS_secondary_code = 0;
-    guint16 parameter_5 = 0;
-    gint16 altitude = 0;
-    guint16 parameter_6 = 0, tcas_acas_indicator = 0, tcas_acas_type = 0, tcas_I_II_type = 0;
+    uint16_t site = 0, application = 0, entity = 0;
+    uint16_t systemType = 0;
+    uint16_t mode1 = 0, mode1_element1 = 0, mode1_element2 = 0;
+    uint16_t rrb = 0, rrb_code = 0;
+    uint16_t mode2 = 0, mode2_element1 = 0, mode2_element2 = 0, mode2_element3 = 0, mode2_element4 = 0;
+    uint16_t mode3 = 0, mode3_element1 = 0, mode3_element2 = 0, mode3_element3 = 0, mode3_element4 = 0;
+    uint16_t mode4 = 0;
+    uint16_t modeS = 0, modeS_primary_type = 0, modeS_primary_code = 0, modeS_secondary_type = 0, modeS_secondary_code = 0;
+    uint16_t parameter_5 = 0;
+    int16_t altitude = 0;
+    uint16_t parameter_6 = 0, tcas_acas_indicator = 0, tcas_acas_type = 0, tcas_I_II_type = 0;
 
     site = tvb_get_ntohs(tvb, offset);
     application = tvb_get_ntohs(tvb, offset+2);
@@ -6967,7 +6940,7 @@ static int dissect_DIS_PARSER_IFF_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_t
     }
 
     if (altitude || (parameter_5 & 0x2000)) col_append_fstr(pinfo->cinfo, COL_INFO, ", C=FL%d", altitude);
-   
+
     if (parameter_6)
     {
         if (tcas_acas_indicator == 0)
@@ -6981,7 +6954,7 @@ static int dissect_DIS_PARSER_IFF_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_t
                 col_append_str(pinfo->cinfo, COL_INFO, ", TCAS II");
             }
         }
-        else 
+        else
         {
             if (tcas_acas_type == 1)
             {
@@ -7003,8 +6976,8 @@ static int dissect_DIS_PARSER_TRANSMITTER_PDU(tvbuff_t *tvb, packet_info *pinfo,
 {
     proto_item* ti;
     proto_tree* sub_tree;
-    guint32 radioID, disRadioTransmitState, modulationParamLength;
-    guint16 systemModulation;
+    uint32_t radioID, disRadioTransmitState, modulationParamLength;
+    uint16_t systemModulation;
 
     offset = parseField_Entity(tvb, tree, offset, "Entity ID");
 
@@ -7015,7 +6988,7 @@ static int dissect_DIS_PARSER_TRANSMITTER_PDU(tvbuff_t *tvb, packet_info *pinfo,
 
     offset = dissect_DIS_FIELDS_RADIO_ENTITY_TYPE(tvb, tree, offset, "Radio Entity Type");
 
-    disRadioTransmitState = tvb_get_guint8(tvb, offset);
+    disRadioTransmitState = tvb_get_uint8(tvb, offset);
     proto_tree_add_item(tree, hf_dis_radio_transmit_state, tvb, offset, 1, ENC_BIG_ENDIAN);
     col_append_fstr( pinfo->cinfo, COL_INFO, ", Transmit State=%s", val_to_str_const(disRadioTransmitState, DIS_PDU_RadioTransmitState_Strings, "Unknown Transmit State"));
     offset++;
@@ -7070,7 +7043,7 @@ static int dissect_DIS_PARSER_TRANSMITTER_PDU(tvbuff_t *tvb, packet_info *pinfo,
     proto_tree_add_item(sub_tree, hf_dis_key_identifier, tvb, offset, 2, ENC_BIG_ENDIAN);
     offset += 2;
 
-    modulationParamLength = tvb_get_guint8(tvb, offset);
+    modulationParamLength = tvb_get_uint8(tvb, offset);
     proto_tree_add_item(tree, hf_dis_modulation_parameter_length, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
@@ -7102,7 +7075,7 @@ static int dissect_DIS_PARSER_TRANSMITTER_PDU(tvbuff_t *tvb, packet_info *pinfo,
 static int dissect_DIS_PARSER_DESIGNATOR_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, int offset)
 {
     proto_tree* sub_tree;
-    guint16 code_name;
+    uint16_t code_name;
 
     offset = parseField_Entity(tvb, tree, offset, "Designating Entity ID");
 
@@ -7159,7 +7132,7 @@ static int dissect_DIS_PARSER_DESIGNATOR_PDU(tvbuff_t *tvb, packet_info *pinfo, 
 
 static int dissect_DIS_PARSER_INTERCOM_CONTROL_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, int offset)
 {
-    gint8 source_line_id;
+    int8_t source_line_id;
     proto_tree_add_item(tree, hf_intercom_control_control_type, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset += 1;
 
@@ -7173,7 +7146,7 @@ static int dissect_DIS_PARSER_INTERCOM_CONTROL_PDU(tvbuff_t *tvb, packet_info *p
     offset += 2;
 
     proto_tree_add_item(tree, hf_intercom_control_source_line_id, tvb, offset, 1, ENC_BIG_ENDIAN);
-    source_line_id = tvb_get_guint8(tvb, offset);
+    source_line_id = tvb_get_uint8(tvb, offset);
     col_append_fstr( pinfo->cinfo, COL_INFO, ", SourceLineID=%u", source_line_id);
     offset += 1;
 
@@ -7201,9 +7174,9 @@ static int dissect_DIS_PARSER_SIGNAL_PDU(tvbuff_t *tvb, packet_info *pinfo, prot
 {
     proto_item* ti;
     proto_tree* sub_tree;
-    guint32 radioID, encodingScheme, numSamples;
-    guint16 tdlType;
-    guint8 messageType;
+    uint32_t radioID, encodingScheme, numSamples;
+    uint16_t tdlType;
+    uint8_t messageType;
 
     offset = parseField_Entity(tvb, tree, offset, "Entity ID");
 
@@ -7261,7 +7234,7 @@ static int dissect_DIS_PARSER_SIGNAL_PDU(tvbuff_t *tvb, packet_info *pinfo, prot
 
 static int dissect_DIS_PARSER_RECEIVER_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, int offset)
 {
-    guint32 radioID, disRadioReceiveState;
+    uint32_t radioID, disRadioReceiveState;
 
     offset = parseField_Entity(tvb, tree, offset, "Entity ID");
 
@@ -7270,7 +7243,7 @@ static int dissect_DIS_PARSER_RECEIVER_PDU(tvbuff_t *tvb, packet_info *pinfo, pr
     col_append_fstr( pinfo->cinfo, COL_INFO, ", RadioID=%u", radioID);
     offset += 2;
 
-    disRadioReceiveState = tvb_get_guint8(tvb, offset);
+    disRadioReceiveState = tvb_get_ntohs(tvb, offset);
     proto_tree_add_item(tree, hf_dis_radio_receive_state, tvb, offset, 2, ENC_BIG_ENDIAN);
     col_append_fstr( pinfo->cinfo, COL_INFO, ", Receive State=%s", val_to_str_const(disRadioReceiveState, DIS_PDU_RadioReceiveState_Strings, "Unknown Receive State"));
     offset += 2;
@@ -7333,8 +7306,8 @@ static int dissect_DIS_PARSER_DETONATION_PDU(tvbuff_t *tvb, packet_info *pinfo _
 {
     proto_item *ti;
     proto_tree *sub_tree;
-    guint8 variableParameterType, numVariable;
-    guint32 i;
+    uint8_t variableParameterType, numVariable;
+    uint32_t i;
 
     offset = parseField_Entity(tvb, tree, offset, "Firing Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Target Entity ID");
@@ -7373,7 +7346,7 @@ static int dissect_DIS_PARSER_DETONATION_PDU(tvbuff_t *tvb, packet_info *pinfo _
     proto_tree_add_item(tree, hf_dis_detonation_result, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
-    numVariable = tvb_get_guint8(tvb, offset);
+    numVariable = tvb_get_uint8(tvb, offset);
     proto_tree_add_item(tree, hf_dis_num_art_params, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
@@ -7385,7 +7358,7 @@ static int dissect_DIS_PARSER_DETONATION_PDU(tvbuff_t *tvb, packet_info *pinfo _
         sub_tree = proto_tree_add_subtree(tree, tvb, offset, 1, ett_variable_parameter, &ti, "Variable Parameter");
 
         proto_tree_add_item(sub_tree, hf_dis_variable_parameter_type, tvb, offset, 1, ENC_BIG_ENDIAN);
-        variableParameterType = tvb_get_guint8(tvb, offset);
+        variableParameterType = tvb_get_uint8(tvb, offset);
         offset++;
 
         offset = parseField_VariableParameter(tvb, sub_tree, offset, variableParameterType);
@@ -7450,7 +7423,7 @@ static int dissect_DIS_PARSER_ACKNOWLEDGE_PDU(tvbuff_t *tvb, packet_info *pinfo 
 
 static int dissect_DIS_PARSER_ACTION_REQUEST_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, proto_tree *tree, int offset)
 {
-    guint32 numFixed, numVariable;
+    uint32_t numFixed, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -7477,7 +7450,7 @@ static int dissect_DIS_PARSER_ACTION_REQUEST_PDU(tvbuff_t *tvb, packet_info *pin
 
 static int dissect_DIS_PARSER_ACTION_RESPONSE_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, proto_tree *tree, int offset)
 {
-    guint32 numFixed, numVariable;
+    uint32_t numFixed, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -7504,7 +7477,7 @@ static int dissect_DIS_PARSER_ACTION_RESPONSE_PDU(tvbuff_t *tvb, packet_info *pi
 
 static int dissect_DIS_PARSER_EVENT_REPORT_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, proto_tree *tree, int offset)
 {
-    guint32 numFixed, numVariable;
+    uint32_t numFixed, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -7531,7 +7504,7 @@ static int dissect_DIS_PARSER_EVENT_REPORT_PDU(tvbuff_t *tvb, packet_info *pinfo
 
 static int dissect_DIS_PARSER_DATA_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, proto_tree *tree, int offset)
 {
-    guint32 numFixed, numVariable;
+    uint32_t numFixed, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -7558,7 +7531,7 @@ static int dissect_DIS_PARSER_DATA_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, pr
 
 static int dissect_DIS_PARSER_DATA_QUERY_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, proto_tree *tree, int offset)
 {
-    guint32 numFixed, numVariable;
+    uint32_t numFixed, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -7585,11 +7558,11 @@ static int dissect_DIS_PARSER_DATA_QUERY_PDU(tvbuff_t *tvb, packet_info *pinfo _
 
 static int dissect_DIS_PARSER_AGGREGATE_STATE_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, int offset)
 {
-    guint32 number_of_variable_datum_records;
+    uint32_t number_of_variable_datum_records;
     proto_tree *sub_tree;
-    const guint8 *marking_text;
-    static guint32 entitySite, entityApplication, entityEntity;
-    guint16 number_of_aggregates, number_of_entities, number_of_silent_aggregates_types, padding;
+    const uint8_t *marking_text;
+    static uint32_t entitySite, entityApplication, entityEntity;
+    uint16_t number_of_aggregates, number_of_entities, number_of_silent_aggregates_types, padding;
     int i;
 
     entitySite = tvb_get_ntohs(tvb, offset);
@@ -7722,7 +7695,7 @@ static int dissect_DIS_PARSER_ENVIRONMENTAL_PROCESS_PDU(tvbuff_t *tvb, packet_in
 
 static int dissect_DIS_PARSER_COMMENT_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, proto_tree *tree, int offset)
 {
-    guint32 numFixed, numVariable;
+    uint32_t numFixed, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -7799,7 +7772,7 @@ static int dissect_DIS_PARSER_STOP_FREEZE_R_PDU(tvbuff_t *tvb, packet_info *pinf
 
 static int dissect_DIS_PARSER_ACTION_REQUEST_R_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, proto_tree *tree, int offset)
 {
-    guint32 numFixed, numVariable;
+    uint32_t numFixed, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -7832,7 +7805,7 @@ static int dissect_DIS_PARSER_ACTION_REQUEST_R_PDU(tvbuff_t *tvb, packet_info *p
 
 static int dissect_DIS_PARSER_DATA_R_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, proto_tree *tree, int offset)
 {
-    guint32 numFixed, numVariable;
+    uint32_t numFixed, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -7862,7 +7835,7 @@ static int dissect_DIS_PARSER_DATA_R_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, 
 
 static int dissect_DIS_PARSER_DATA_QUERY_R_PDU(tvbuff_t *tvb, packet_info *pinfo _U_, proto_tree *tree, int offset)
 {
-    guint32 numFixed, numVariable;
+    uint32_t numFixed, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -7916,8 +7889,8 @@ static int dissect_DIS_PARSER_APPLICATION_CONTROL_PDU(tvbuff_t *tvb, packet_info
 {
     proto_item* ti;
     proto_tree* sub_tree;
-    guint32 i, variableRecordType;
-    guint16 variableRecordLength, numVariable;
+    uint32_t i, variableRecordType;
+    uint16_t variableRecordLength, numVariable;
 
     offset = parseField_Entity(tvb, tree, offset, "Originating Entity ID");
     offset = parseField_Entity(tvb, tree, offset, "Receiving Entity ID");
@@ -8099,9 +8072,9 @@ static int dissect_DIS_PARSER_NOMINATION_PO_PDU(tvbuff_t *tvb, packet_info *pinf
 
 /* Adjust an offset variable for proper alignment for a specified field length.
  */
-static gint alignOffset(gint offset, guint fieldLength)
+static int alignOffset(int offset, unsigned fieldLength)
 {
-    gint remainder = offset % fieldLength;
+    int remainder = offset % fieldLength;
     if (remainder != 0)
     {
         offset += fieldLength - remainder;
@@ -8110,22 +8083,22 @@ static gint alignOffset(gint offset, guint fieldLength)
 }
 
 /* Parse the Timestamp -- defined in spec in microseconds: DIS 1278.1-2012: sec 5.2.5, detailed in sec 6.2.88 */
-static gint parseField_Timestamp(tvbuff_t *tvb, proto_tree *tree, gint offset, int hf_relative)
+static int parseField_Timestamp(tvbuff_t *tvb, proto_tree *tree, int offset, int hf_relative)
 {
    /* some consts */
-   static guint USEC_PER_HOUR = (guint)3600 * (guint)1000000;
-   static guint FSV = 0x7fffffff; /* 2^31-1 */
+   static unsigned USEC_PER_HOUR = (unsigned)3600 * (unsigned)1000000;
+   static unsigned FSV = 0x7fffffff; /* 2^31-1 */
    /* variables */
-   guint isAbsolute = 0;
-   guint32 uintVal;
-   guint64 usec;
+   unsigned isAbsolute = 0;
+   uint32_t uintVal;
+   uint64_t usec;
    nstime_t tv;
    proto_item* ti;
 
    /* used in timestamp formatting for display */
-   guint minutes;
-   guint seconds;
-   guint micros;
+   unsigned minutes;
+   unsigned seconds;
+   unsigned micros;
 
 
    offset = alignOffset(offset, 4);
@@ -8136,7 +8109,7 @@ static gint parseField_Timestamp(tvbuff_t *tvb, proto_tree *tree, gint offset, i
    isAbsolute = uintVal & 1;
 
    /* convert TS to uSec */
-   usec = (guint64)((uintVal >> 1) * (double)(USEC_PER_HOUR) / FSV);
+   usec = (uint64_t)((uintVal >> 1) * (double)(USEC_PER_HOUR) / FSV);
 
    tv.secs = (time_t)usec / 1000000;
    tv.nsecs = (int)(usec % 1000000) * 1000;
@@ -8146,9 +8119,9 @@ static gint parseField_Timestamp(tvbuff_t *tvb, proto_tree *tree, gint offset, i
     *  needed to pass along -- these below values are strictly
     *  for display.
     */
-   minutes = (guint)((usec / 1000000) / 60);
-   seconds = (guint)((usec - (minutes * 60 * 1000000)) / 1000000);
-   micros  = (guint)(usec - (minutes * 60 * 1000000) - (seconds * 1000000));
+   minutes = (unsigned)((usec / 1000000) / 60);
+   seconds = (unsigned)((usec - (minutes * 60 * 1000000)) / 1000000);
+   micros  = (unsigned)(usec - (minutes * 60 * 1000000) - (seconds * 1000000));
 
    ti = proto_tree_add_time_format_value(tree, hf_relative, tvb, offset, 4, &tv, "%02u:%02u.%06u", minutes, seconds, micros);
 
@@ -8165,7 +8138,7 @@ static gint parseField_Timestamp(tvbuff_t *tvb, proto_tree *tree, gint offset, i
 }
 
 /* Parse an Entity */
-static gint parseField_Entity(tvbuff_t *tvb, proto_tree *tree, gint offset, const char* entity_name)
+static int parseField_Entity(tvbuff_t *tvb, proto_tree *tree, int offset, const char* entity_name)
 {
     proto_tree  *sub_tree;
 
@@ -8183,7 +8156,7 @@ static gint parseField_Entity(tvbuff_t *tvb, proto_tree *tree, gint offset, cons
     return offset;
 }
 
-static gint parseField_Aggregate(tvbuff_t *tvb, proto_tree *tree, gint offset, const char* entity_name)
+static int parseField_Aggregate(tvbuff_t *tvb, proto_tree *tree, int offset, const char* entity_name)
 {
     proto_tree  *sub_tree;
 
@@ -8203,7 +8176,7 @@ static gint parseField_Aggregate(tvbuff_t *tvb, proto_tree *tree, gint offset, c
 
 /* Parse a variable parameter field.
  */
-static gint parseField_VariableParameter(tvbuff_t *tvb, proto_tree *tree, gint offset, guint8 paramType)
+static int parseField_VariableParameter(tvbuff_t *tvb, proto_tree *tree, int offset, uint8_t paramType)
 {
     /* Determine the parser to use based on the type */
     switch (paramType) {
@@ -8230,7 +8203,7 @@ static gint parseField_VariableParameter(tvbuff_t *tvb, proto_tree *tree, gint o
 
 /* Parse a variable record field.
  */
-static gint parseField_VariableRecord(tvbuff_t *tvb, proto_tree *tree, gint offset, guint32 variableRecordType, guint16 record_length)
+static int parseField_VariableRecord(tvbuff_t *tvb, proto_tree *tree, int offset, uint32_t variableRecordType, uint16_t record_length)
 {
     /* Determine the parser to use based on the type */
     switch (variableRecordType) {
@@ -8260,7 +8233,7 @@ static gint parseField_VariableRecord(tvbuff_t *tvb, proto_tree *tree, gint offs
     /* Should alignment padding be added */
     if (record_length % 8)
     {
-        guint32 alignmentPadding = (8 - (record_length % 8));
+        uint32_t alignmentPadding = (8 - (record_length % 8));
 
         proto_tree_add_item(tree, hf_dis_alignment_padding, tvb, offset, alignmentPadding, ENC_NA);
         offset += alignmentPadding;
@@ -8270,6 +8243,8 @@ static gint parseField_VariableRecord(tvbuff_t *tvb, proto_tree *tree, gint offs
 }
 
 void proto_register_dis(void);
+
+static dissector_handle_t dis_dissector_handle;
 
 static const true_false_string dis_modulation_spread_spectrum = {
     "Spread Spectrum modulation in use",
@@ -8370,18 +8345,18 @@ static int parseDISHeader(tvbuff_t *tvb, proto_tree *tree, int offset, dis_heade
     proto_tree *pdu_status_tree;
 
     proto_tree_add_item(tree, hf_dis_proto_ver, tvb, offset, 1, ENC_BIG_ENDIAN);
-    header->version = tvb_get_guint8(tvb, offset);
+    header->version = tvb_get_uint8(tvb, offset);
     offset++;
 
     proto_tree_add_item(tree, hf_dis_exercise_id, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
     proto_tree_add_item(tree, hf_dis_pdu_type, tvb, offset, 1, ENC_BIG_ENDIAN);
-    header->pduType = tvb_get_guint8(tvb, offset);
+    header->pduType = tvb_get_uint8(tvb, offset);
     offset++;
 
     proto_tree_add_item(tree, hf_dis_proto_fam, tvb, offset, 1, ENC_BIG_ENDIAN);
-    header->family = tvb_get_guint8(tvb, offset);
+    header->family = tvb_get_uint8(tvb, offset);
     offset++;
 
     offset = parseField_Timestamp(tvb, tree, offset, hf_dis_header_rel_ts);
@@ -8413,13 +8388,13 @@ static int parseDISHeader(tvbuff_t *tvb, proto_tree *tree, int offset, dis_heade
     return offset;
 }
 
-static int parsePOHeader(tvbuff_t *tvb, proto_tree *tree, int offset, guint8* pduType)
+static int parsePOHeader(tvbuff_t *tvb, proto_tree *tree, int offset, uint8_t* pduType)
 {
     proto_tree_add_item(tree, hf_dis_po_ver, tvb, offset, 1, ENC_BIG_ENDIAN);
     offset++;
 
     proto_tree_add_item(tree, hf_dis_po_pdu_type, tvb, offset, 1, ENC_BIG_ENDIAN);
-    *pduType = tvb_get_guint8(tvb, offset);
+    *pduType = tvb_get_uint8(tvb, offset);
     offset++;
 
     proto_tree_add_item(tree, hf_dis_exercise_id, tvb, offset, 1, ENC_BIG_ENDIAN);
@@ -8438,7 +8413,7 @@ static int parsePOHeader(tvbuff_t *tvb, proto_tree *tree, int offset, guint8* pd
 }
 
 
-static gint parse_persistent_pdu_payload(tvbuff_t* tvb, packet_info* pinfo, proto_tree* tree, gint offset, guint8 persistentObjectPduType)
+static int parse_persistent_pdu_payload(tvbuff_t* tvb, packet_info* pinfo, proto_tree* tree, int offset, uint8_t persistentObjectPduType)
 {
     switch (persistentObjectPduType)
     {
@@ -8461,7 +8436,7 @@ static gint parse_persistent_pdu_payload(tvbuff_t* tvb, packet_info* pinfo, prot
     }
 }
 
-static gint parse_pdu_payload(tvbuff_t* tvb, packet_info* pinfo, proto_tree* tree, gint offset, guint8 pduType)
+static int parse_pdu_payload(tvbuff_t* tvb, packet_info* pinfo, proto_tree* tree, int offset, uint8_t pduType)
 {
     switch (pduType)
     {
@@ -8475,8 +8450,8 @@ static gint parse_pdu_payload(tvbuff_t* tvb, packet_info* pinfo, proto_tree* tre
         return dissect_DIS_PARSER_ELECTROMAGNETIC_EMISSION_PDU(tvb, pinfo, tree, offset);
     case DIS_PDUTYPE_UNDERWATER_ACOUSTIC:
         return dissect_DIS_PARSER_UNDERWATER_ACOUSTIC_PDU(tvb, pinfo, tree, offset);
-    
-    /* IFF PDU needs the header information to be parsed, so it is handled separately. 
+
+    /* IFF PDU needs the header information to be parsed, so it is handled separately.
      *    case DIS_PDUTYPE_IFF:
      */
 
@@ -8561,20 +8536,20 @@ static gint parse_pdu_payload(tvbuff_t* tvb, packet_info* pinfo, proto_tree* tre
 
 /* Main dissector routine to be invoked for a DIS PDU.
  */
-static gint dissect_dis(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
+static int dissect_dis(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
 {
     proto_tree *dis_tree, *dis_header_tree;
     proto_item *dis_node;
     proto_tree *dis_payload_tree = NULL;
     proto_item *dis_payload_node = NULL;
 
-    gint offset = 0;
-    gint offsetBeforePayloadParse = 0;
+    int offset = 0;
+    int offsetBeforePayloadParse = 0;
 
-    const gchar *pduString = 0;
+    const char *pduString = 0;
 
     dis_header_t header;
-    guint8 persistentObjectPduType;
+    uint8_t persistentObjectPduType;
 
     /* DIS packets must be at least 12 bytes long.  DIS uses port 3000, by
      * default, but the Cisco Redundant Link Management protocol can also use
@@ -8605,7 +8580,7 @@ static gint dissect_dis(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, voi
      * or default to "Unknown".
       */
     pduString = val_to_str_ext_const(header.pduType, &DIS_PDU_Type_Strings_Ext, "Unknown");
-    
+
     /* set the basic info column (pdu type) */
     col_add_fstr(pinfo->cinfo, COL_INFO, "PDUType: %d \t ", header.pduType);
 
@@ -8620,7 +8595,7 @@ static gint dissect_dis(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, voi
         /* Locate the string name for the PO PDU type enumeration,
          * or default to "Unknown".
          */
-        pduString = val_to_str(persistentObjectPduType, DIS_PDU_PersistentObjectType_Strings, "Unknown");
+        pduString = val_to_str_const(persistentObjectPduType, DIS_PDU_PersistentObjectType_Strings, "Unknown");
 
         /* Append name of persistent PDU to the basic info column */
         col_append_str(pinfo->cinfo, COL_INFO, pduString);
@@ -8759,7 +8734,7 @@ void proto_register_dis(void)
             },
             { &hf_pdu_status_field,
               { "not implemented for this PDU type",       "dis.pdu_status.field",
-                FT_UINT8, BASE_HEX, NULL, 0xff,
+                FT_UINT8, BASE_HEX, NULL, 0x0,
                 NULL, HFILL }
             },
             { &hf_dis_padding,
@@ -9184,7 +9159,7 @@ void proto_register_dis(void)
             },
             { &hf_dis_radio_receive_state,
               { "Radio Receive State", "dis.radio.receive_state",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_RadioReceiveState_Strings), 0x0,
+                FT_UINT16, BASE_DEC, VALS(DIS_PDU_RadioReceiveState_Strings), 0x0,
                 NULL, HFILL }
             },
             { &hf_dis_radio_input_source,
@@ -9514,17 +9489,17 @@ void proto_register_dis(void)
             },
             { &hf_appearance_landform_head_lights,
               { "Head Lights", "dis.appearance.landform.head_lights",
-                FT_UINT32, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x00001000,
+                FT_BOOLEAN, 32, TFS(&tfs_on_off), 0x00001000,
                 NULL, HFILL}
             },
             { &hf_appearance_landform_tail_lights,
               { "Tail Lights", "dis.appearance.landform.tail_lights",
-                FT_UINT32, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x00002000,
+                FT_BOOLEAN, 32, TFS(&tfs_on_off), 0x00002000,
                 NULL, HFILL}
             },
             { &hf_appearance_landform_brake_lights,
               { "Brake Lights", "dis.appearance.landform.brake_lights",
-                FT_UINT32, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x00004000,
+                FT_BOOLEAN, 32, TFS(&tfs_on_off), 0x00004000,
                 NULL, HFILL}
             },
             { &hf_appearance_landform_flaming,
@@ -9569,27 +9544,27 @@ void proto_register_dis(void)
             },
             { &hf_appearance_landform_ramp,
               { "Ramp", "dis.appearance.landform.ramp",
-                FT_UINT32, BASE_DEC, VALS(appearance_ramp_vals), 0x02000000,
+                FT_BOOLEAN, 32, TFS(&tfs_down_up), 0x02000000,
                 NULL, HFILL}
             },
             { &hf_appearance_landform_blackout_lights,
               { "Blackout Lights", "dis.appearance.landform.blackout_lights",
-                FT_UINT32, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x04000000,
+                FT_BOOLEAN, 32, TFS(&tfs_on_off), 0x04000000,
                 NULL, HFILL}
             },
             { &hf_appearance_landform_blackout_brake_lights,
               { "Blackout Brake Lights", "dis.appearance.landform.blackout_brake_lights",
-                FT_UINT32, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x08000000,
+                FT_BOOLEAN, 32, TFS(&tfs_on_off), 0x08000000,
                 NULL, HFILL}
             },
             { &hf_appearance_landform_spot_lights,
               { "Spot_lights", "dis.appearance.landform.spot_lights",
-                FT_UINT32, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x10000000,
+                FT_BOOLEAN, 32, TFS(&tfs_on_off), 0x10000000,
                 NULL, HFILL}
             },
             { &hf_appearance_landform_interior_lights,
               { "Interior_lights", "dis.appearance.landform.interior_lights",
-                FT_UINT32, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x20000000,
+                FT_BOOLEAN, 32, TFS(&tfs_on_off), 0x20000000,
                 NULL, HFILL}
             },
             { &hf_appearance_landform_surrender_state,
@@ -9824,7 +9799,7 @@ void proto_register_dis(void)
             },
             { &hf_appearance_lifeform_flash_lights,
               {"Flash Lights", "dis.appearance.lifeform.flash_lights",
-               FT_UINT32, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x00001000,
+               FT_BOOLEAN, 32, TFS(&tfs_on_off), 0x00001000,
                NULL, HFILL}
             },
             { &hf_appearance_lifeform_state,
@@ -10071,7 +10046,7 @@ void proto_register_dis(void)
                 NULL, HFILL},
             },
             { &hf_dis_signal_link16_stn,
-              { "Source Track Number", "dis.signal.link16.stn", FT_UINT32, BASE_OCT, NULL, 0x7FFF0,
+              { "Source Track Number", "dis.signal.link16.stn", FT_UINT32, BASE_OCT, NULL, 0x0007FFF0,
                 NULL, HFILL },
             },
             { &hf_dis_signal_link16_sdusn,
@@ -10640,17 +10615,17 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_change_indicator,
               { "Change Indicator",  "dis.iff.change_indicator",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffChangeIndicator_Strings), 0x1,
+                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffChangeIndicator_Strings), 0x01,
                 NULL, HFILL }
             },
             { &hf_dis_iff_alternate_mode_4,
               { "Alternate Mode 4",  "dis.iff.alternate_mode_4",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffNoYes_Strings), 0x2,
+                FT_BOOLEAN, 8, TFS(&tfs_yes_no), 0x02,
                 NULL, HFILL }
             },
             { &hf_dis_iff_alternate_mode_c,
               { "Alternate Mode C",  "dis.iff.alternate_mode_c",
-               FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffNoYes_Strings), 0x4,
+               FT_BOOLEAN, 8, TFS(&tfs_yes_no), 0x04,
                NULL, HFILL }
             },
             { &hf_dis_iff_heartbeat_indicator,
@@ -10675,7 +10650,7 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_test_mode,
               { "Test Mode",  "dis.iff.test_mode",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x80,
+                FT_BOOLEAN, 8, TFS(&tfs_on_off), 0x80,
                 NULL, HFILL }
             },
             { &hf_dis_iff_system_designator,
@@ -10695,7 +10670,7 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_system_status_system_onoff,
               { "System On/Off",  "dis.iff.system_status.system_onoff",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x1,
+                FT_BOOLEAN, 8, TFS(&tfs_on_off), 0x01,
                 NULL, HFILL }
             },
             { &hf_dis_iff_system_status_parameter_1,
@@ -10745,37 +10720,37 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_information_layers_layer_1,
               { "Layer 1",  "dis.iff.information_layers.layer_1",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffPresent_Strings), 0x2,
+                FT_BOOLEAN, 8, TFS(&tfs_present_not_present), 0x2,
                 NULL, HFILL }
             },
             { &hf_dis_iff_information_layers_layer_2,
               { "Layer 2",  "dis.iff.information_layers.layer_2",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffPresent_Strings), 0x4,
+                FT_BOOLEAN, 8, TFS(&tfs_present_not_present), 0x4,
                 NULL, HFILL }
             },
             { &hf_dis_iff_information_layers_layer_3,
               { "Layer 3",  "dis.iff.information_layers.layer_3",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffPresent_Strings), 0x8,
+                FT_BOOLEAN, 8, TFS(&tfs_present_not_present), 0x8,
                 NULL, HFILL }
             },
             { &hf_dis_iff_information_layers_layer_4,
               { "Layer 4",  "dis.iff.information_layers.layer_4",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffPresent_Strings), 0x10,
+                FT_BOOLEAN, 8, TFS(&tfs_present_not_present), 0x10,
                 NULL, HFILL }
             },
             { &hf_dis_iff_information_layers_layer_5,
               { "Layer 5",  "dis.iff.information_layers.layer_5",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffPresent_Strings), 0x20,
+                FT_BOOLEAN, 8, TFS(&tfs_present_not_present), 0x20,
                 NULL, HFILL }
             },
             { &hf_dis_iff_information_layers_layer_6,
               { "Layer 6",  "dis.iff.information_layers.layer_6",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffPresent_Strings), 0x40,
+                FT_BOOLEAN, 8, TFS(&tfs_present_not_present), 0x40,
                 NULL, HFILL }
             },
             { &hf_dis_iff_information_layers_layer_7,
               { "Layer 7",  "dis.iff.information_layers.layer_7",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffPresent_Strings), 0x80,
+                FT_BOOLEAN, 8, TFS(&tfs_present_not_present), 0x80,
                 NULL, HFILL }
             },
             { &hf_dis_iff_modifier,
@@ -10785,22 +10760,22 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_modifier_emergency,
               { "Military Emergency",  "dis.iff.modifier.emergency",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x2,
+                FT_BOOLEAN, 8, TFS(&tfs_on_off), 0x02,
                 NULL, HFILL }
             },
             { &hf_dis_iff_modifier_ident,
               { "Ident/Squawk Flash",  "dis.iff.modifier_ident",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x4,
+                FT_BOOLEAN, 8, TFS(&tfs_on_off), 0x04,
                 NULL, HFILL }
             },
             { &hf_dis_iff_modifier_sti,
               { "STI",  "dis.iff.modifier_sti",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x8,
+                FT_BOOLEAN, 8, TFS(&tfs_on_off), 0x08,
                 NULL, HFILL }
             },
             { &hf_dis_iff_modifier_unmanned_aircraft,
               { "Unmanned Aircraft",  "dis.iff.modifier_unmanned_aircraft",
-                FT_UINT8, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x10,
+                FT_BOOLEAN, 8, TFS(&tfs_on_off), 0x10,
                 NULL, HFILL }
             },
             { &hf_dis_iff_parameter_1,
@@ -10835,22 +10810,22 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_mode_code_element_1,
               { "Code Element 1",  "dis.iff.mode_code.element_1",
-                FT_UINT16, BASE_OCT, NULL, 0x7,
+                FT_UINT16, BASE_OCT, NULL, 0x0007,
                 NULL, HFILL }
             },
             { &hf_dis_iff_mode_code_element_2,
               { "Code Element 2",  "dis.iff.mode_code.element_2",
-                FT_UINT16, BASE_OCT, NULL, 0x38,
+                FT_UINT16, BASE_OCT, NULL, 0x0038,
                 NULL, HFILL }
             },
             { &hf_dis_iff_mode_code_element_3,
               { "Code Element 3",  "dis.iff.mode_code.element_3",
-                FT_UINT16, BASE_OCT, NULL, 0x1C0,
+                FT_UINT16, BASE_OCT, NULL, 0x01C0,
                 NULL, HFILL }
             },
             { &hf_dis_iff_mode_code_element_4,
               { "Code Element 4",  "dis.iff.mode_code.element_4",
-                FT_UINT16, BASE_OCT, NULL, 0xE00,
+                FT_UINT16, BASE_OCT, NULL, 0x0E00,
                 NULL, HFILL }
             },
             { &hf_dis_iff_rrb,
@@ -10860,17 +10835,17 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_rrb_rrb_code,
               { "RRB Code",  "dis.iff.rrb.rrb_code",
-                FT_UINT16, BASE_DEC, NULL, 0x1F,
+                FT_UINT16, BASE_DEC, NULL, 0x001F,
                 NULL, HFILL }
             },
             { &hf_dis_iff_rrb_power_reduction_indicator,
               { "Power Reduction Indicator",  "dis.iff.rrb.power_reduction_indicator",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x800,
+                FT_BOOLEAN, 16, TFS(&tfs_on_off), 0x0800,
                 NULL, HFILL }
             },
             { &hf_dis_iff_rrb_radar_enhancement_indicator,
               { "Radar Enhancement Indicator",  "dis.iff.rrb.radar_enhancement_indicator",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x1000,
+                FT_BOOLEAN, 16, TFS(&tfs_on_off), 0x1000,
                 NULL, HFILL }
             },
             { &hf_dis_iff_mode_s_interrogator_identifier,
@@ -10880,17 +10855,17 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_mode_s_interrogator_identifier_primary_ic_type,
               { "Primary IC Type",  "dis.iff.mode_s_interrogator_identifier.primary_ic_type",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffModeSInterrogatorIdentifierICType_Strings), 0x1,
+                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffModeSInterrogatorIdentifierICType_Strings), 0x0001,
                 NULL, HFILL }
             },
             { &hf_dis_iff_mode_s_interrogator_identifier_primary_ic_code,
               { "Primary IC Code",  "dis.iff.mode_s_interrogator_identifier.primary_ic_code",
-                 FT_UINT16, BASE_DEC, NULL, 0xFE,
+                 FT_UINT16, BASE_DEC, NULL, 0x00FE,
                  NULL, HFILL }
             },
             { &hf_dis_iff_mode_s_interrogator_identifier_secondary_ic_type,
               { "Secondary IC Type",  "dis.iff.mode_s_interrogator_identifier.secondary_ic_type",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffModeSInterrogatorIdentifierICType_Strings), 0x100,
+                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffModeSInterrogatorIdentifierICType_Strings), 0x0100,
                 NULL, HFILL }
             },
             { &hf_dis_iff_mode_s_interrogator_identifier_secondary_ic_code,
@@ -10900,17 +10875,17 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_mode_4,
               { "Mode 4 Code",  "dis.iff.mode_4",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffMode4_Strings), 0xFFF,
+                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffMode4_Strings), 0x0FFF,
                 NULL, HFILL }
             },
             { &hf_dis_iff_mode_c_altitude_indicator,
               { "Altitude Indicator",  "dis.iff.mode_c.altitude_indicator",
-               FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffModeCAltitudeIndicator_Strings), 0x1,
+               FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffModeCAltitudeIndicator_Strings), 0x0001,
                NULL, HFILL }
             },
             { &hf_dis_iff_mode_c_altitude,
               { "Mode C Altitude",  "dis.iff.mode_c.altitude",
-               FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffModeC_Strings), 0xFFE,
+               FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffModeC_Strings), 0x0FFE,
                NULL, HFILL }
             },
             { &hf_dis_iff_tcas_acas,
@@ -10920,22 +10895,22 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_tcas_acas_basic_advanced_indicator,
               { "Basic/Advanced",  "dis.iff.tcas_acas.basic_advanced_indicator",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffTCASACASBasicAdvanced_Strings), 0x1,
+                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffTCASACASBasicAdvanced_Strings), 0x0001,
                 NULL, HFILL }
             },
             { &hf_dis_iff_tcas_acas_tcas_acas_indicator,
               { "TCAS/ACAS",  "dis.iff.tcas_acas.tcas_acas_indicator",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffTCASACASIndicator_Strings), 0x2,
+                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffTCASACASIndicator_Strings), 0x0002,
                 NULL, HFILL }
             },
             { &hf_dis_iff_tcas_acas_software_version,
               { "Software Version",  "dis.iff.tcas_acas.software_version",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffTCASACASSoftwareVersion_Strings), 0x1C,
+                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffTCASACASSoftwareVersion_Strings), 0x001C,
                 NULL, HFILL }
             },
             { &hf_dis_iff_tcas_acas_tcas_acas_type,
               { "TCAS/ACAS Type",  "dis.iff.tcas_acas.tcas_acas_type",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffTCASACASType_Strings), 0xE00,
+                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffTCASACASType_Strings), 0x0E00,
                 NULL, HFILL }
             },
             { &hf_dis_iff_tcas_acas_tcas_type,
@@ -10945,7 +10920,7 @@ void proto_register_dis(void)
             },
             { &hf_dis_iff_mode_status,
               { "Status",  "dis.iff.mode_status",
-                FT_UINT16, BASE_DEC, VALS(DIS_PDU_IffOffOn_Strings), 0x2000,
+                FT_BOOLEAN, 16, TFS(&tfs_on_off), 0x2000,
                 NULL, HFILL }
             },
             { &hf_dis_iff_mode_damage,
@@ -10986,7 +10961,7 @@ void proto_register_dis(void)
         };
 
     /* Setup protocol subtree array */
-    static gint *ett[] =
+    static int *ett[] =
     {
         &ett_dis,
         &ett_dis_header,
@@ -11071,6 +11046,8 @@ void proto_register_dis(void)
     proto_dis = proto_register_protocol("Distributed Interactive Simulation", "DIS", "dis");
     proto_register_field_array(proto_dis, hf, array_length(hf));
     proto_register_subtree_array(ett, array_length(ett));
+
+    dis_dissector_handle = register_dissector("dis", dissect_dis, proto_dis);
 }
 
 /* Register handoff routine for DIS dissector.  This will be invoked initially
@@ -11079,9 +11056,6 @@ void proto_register_dis(void)
  */
 void proto_reg_handoff_dis(void)
 {
-    dissector_handle_t dis_dissector_handle;
-
-    dis_dissector_handle = create_dissector_handle(dissect_dis, proto_dis);
     dissector_add_uint_with_preference("udp.port", DEFAULT_DIS_UDP_PORT, dis_dissector_handle);
 
     link16_handle = find_dissector_add_dependency("link16", proto_dis);

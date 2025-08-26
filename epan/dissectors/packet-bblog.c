@@ -13,109 +13,115 @@
 
 #include "config.h"
 
+#include <wiretap/wtap.h>
 #include <epan/packet.h>
+#include <epan/tfs.h>
 #include "packet-bblog.h"
+
+#define PEN_NFLX 10949
 
 void proto_register_bblog(void);
 void proto_reg_handoff_bblog(void);
 
-static int proto_bblog                      = -1;
+static dissector_handle_t bblog_handle;
 
-static int hf_ticks                         = -1;
-static int hf_serial_nr                     = -1;
-static int hf_stack_id                      = -1;
-static int hf_event_id                      = -1;
-static int hf_event_flags                   = -1;
-static int hf_event_flags_rxbuf             = -1;
-static int hf_event_flags_txbuf             = -1;
-static int hf_event_flags_hdr               = -1;
-static int hf_event_flags_verbose           = -1;
-static int hf_event_flags_stack             = -1;
-static int hf_errno                         = -1;
-static int hf_rxb_acc                       = -1;
-static int hf_rxb_ccc                       = -1;
-static int hf_rxb_spare                     = -1;
-static int hf_txb_acc                       = -1;
-static int hf_txb_ccc                       = -1;
-static int hf_txb_spare                     = -1;
-static int hf_state                         = -1;
-static int hf_starttime                     = -1;
-static int hf_iss                           = -1;
-static int hf_t_flags                       = -1;
-static int hf_t_flags_ack_now               = -1;
-static int hf_t_flags_delayed_ack           = -1;
-static int hf_t_flags_no_delay              = -1;
-static int hf_t_flags_no_opt                = -1;
-static int hf_t_flags_sent_fin              = -1;
-static int hf_t_flags_request_window_scale  = -1;
-static int hf_t_flags_received_window_scale = -1;
-static int hf_t_flags_request_timestamp     = -1;
-static int hf_t_flags_received_timestamp    = -1;
-static int hf_t_flags_sack_permitted        = -1;
-static int hf_t_flags_need_syn              = -1;
-static int hf_t_flags_need_fin              = -1;
-static int hf_t_flags_no_push               = -1;
-static int hf_t_flags_prev_valid            = -1;
-static int hf_t_flags_wake_socket_receive   = -1;
-static int hf_t_flags_goodput_in_progress   = -1;
-static int hf_t_flags_more_to_come          = -1;
-static int hf_t_flags_listen_queue_overflow = -1;
-static int hf_t_flags_last_idle             = -1;
-static int hf_t_flags_zero_recv_window_sent = -1;
-static int hf_t_flags_be_in_fast_recovery   = -1;
-static int hf_t_flags_was_in_fast_recovery  = -1;
-static int hf_t_flags_signature             = -1;
-static int hf_t_flags_force_data            = -1;
-static int hf_t_flags_tso                   = -1;
-static int hf_t_flags_toe                   = -1;
-static int hf_t_flags_unused_0              = -1;
-static int hf_t_flags_unused_1              = -1;
-static int hf_t_flags_lost_rtx_detection    = -1;
-static int hf_t_flags_be_in_cong_recovery   = -1;
-static int hf_t_flags_was_in_cong_recovery  = -1;
-static int hf_t_flags_fast_open             = -1;
-static int hf_snd_una                       = -1;
-static int hf_snd_max                       = -1;
-static int hf_snd_cwnd                      = -1;
-static int hf_snd_nxt                       = -1;
-static int hf_snd_recover                   = -1;
-static int hf_snd_wnd                       = -1;
-static int hf_snd_ssthresh                  = -1;
-static int hf_srtt                          = -1;
-static int hf_rttvar                        = -1;
-static int hf_rcv_up                        = -1;
-static int hf_rcv_adv                       = -1;
-static int hf_t_flags2                      = -1;
-static int hf_t_flags2_plpmtu_blackhole     = -1;
-static int hf_t_flags2_plpmtu_pmtud         = -1;
-static int hf_t_flags2_plpmtu_maxsegsnt     = -1;
-static int hf_t_flags2_log_auto             = -1;
-static int hf_t_flags2_drop_after_data      = -1;
-static int hf_t_flags2_ecn_permit           = -1;
-static int hf_t_flags2_ecn_snd_cwr          = -1;
-static int hf_t_flags2_ecn_snd_ece          = -1;
-static int hf_t_flags2_ace_permit           = -1;
-static int hf_t_flags2_first_bytes_complete = -1;
-static int hf_rcv_nxt                       = -1;
-static int hf_rcv_wnd                       = -1;
-static int hf_dupacks                       = -1;
-static int hf_seg_qlen                      = -1;
-static int hf_snd_num_holes                 = -1;
-static int hf_flex_1                        = -1;
-static int hf_flex_2                        = -1;
-static int hf_first_byte_in                 = -1;
-static int hf_first_byte_out                = -1;
-static int hf_snd_scale                     = -1;
-static int hf_rcv_scale                     = -1;
-static int hf_pad_1                         = -1;
-static int hf_pad_2                         = -1;
-static int hf_pad_3                         = -1;
-static int hf_payload_len                   = -1;
+static int proto_bblog;
 
-static gint ett_bblog                       = -1;
-static gint ett_bblog_flags                 = -1;
-static gint ett_bblog_t_flags               = -1;
-static gint ett_bblog_t_flags2              = -1;
+static int hf_ticks;
+static int hf_serial_nr;
+static int hf_stack_id;
+static int hf_event_id;
+static int hf_event_flags;
+static int hf_event_flags_rxbuf;
+static int hf_event_flags_txbuf;
+static int hf_event_flags_hdr;
+static int hf_event_flags_verbose;
+static int hf_event_flags_stack;
+static int hf_errno;
+static int hf_rxb_acc;
+static int hf_rxb_ccc;
+static int hf_rxb_spare;
+static int hf_txb_acc;
+static int hf_txb_ccc;
+static int hf_txb_spare;
+static int hf_state;
+static int hf_starttime;
+static int hf_iss;
+static int hf_t_flags;
+static int hf_t_flags_ack_now;
+static int hf_t_flags_delayed_ack;
+static int hf_t_flags_no_delay;
+static int hf_t_flags_no_opt;
+static int hf_t_flags_sent_fin;
+static int hf_t_flags_request_window_scale;
+static int hf_t_flags_received_window_scale;
+static int hf_t_flags_request_timestamp;
+static int hf_t_flags_received_timestamp;
+static int hf_t_flags_sack_permitted;
+static int hf_t_flags_need_syn;
+static int hf_t_flags_need_fin;
+static int hf_t_flags_no_push;
+static int hf_t_flags_prev_valid;
+static int hf_t_flags_wake_socket_receive;
+static int hf_t_flags_goodput_in_progress;
+static int hf_t_flags_more_to_come;
+static int hf_t_flags_listen_queue_overflow;
+static int hf_t_flags_last_idle;
+static int hf_t_flags_zero_recv_window_sent;
+static int hf_t_flags_be_in_fast_recovery;
+static int hf_t_flags_was_in_fast_recovery;
+static int hf_t_flags_signature;
+static int hf_t_flags_force_data;
+static int hf_t_flags_tso;
+static int hf_t_flags_toe;
+static int hf_t_flags_unused_1;
+static int hf_t_flags_unused_2;
+static int hf_t_flags_lost_rtx_detection;
+static int hf_t_flags_be_in_cong_recovery;
+static int hf_t_flags_was_in_cong_recovery;
+static int hf_t_flags_fast_open;
+static int hf_snd_una;
+static int hf_snd_max;
+static int hf_snd_cwnd;
+static int hf_snd_nxt;
+static int hf_snd_recover;
+static int hf_snd_wnd;
+static int hf_snd_ssthresh;
+static int hf_srtt;
+static int hf_rttvar;
+static int hf_rcv_up;
+static int hf_rcv_adv;
+static int hf_t_flags2;
+static int hf_t_flags2_plpmtu_blackhole;
+static int hf_t_flags2_plpmtu_pmtud;
+static int hf_t_flags2_plpmtu_maxsegsnt;
+static int hf_t_flags2_log_auto;
+static int hf_t_flags2_drop_after_data;
+static int hf_t_flags2_ecn_permit;
+static int hf_t_flags2_ecn_snd_cwr;
+static int hf_t_flags2_ecn_snd_ece;
+static int hf_t_flags2_ace_permit;
+static int hf_t_flags2_first_bytes_complete;
+static int hf_rcv_nxt;
+static int hf_rcv_wnd;
+static int hf_dupacks;
+static int hf_seg_qlen;
+static int hf_snd_num_holes;
+static int hf_flex_1;
+static int hf_flex_2;
+static int hf_first_byte_in;
+static int hf_first_byte_out;
+static int hf_snd_scale;
+static int hf_rcv_scale;
+static int hf_pad_1;
+static int hf_pad_2;
+static int hf_pad_3;
+static int hf_payload_len;
+
+static int ett_bblog;
+static int ett_bblog_flags;
+static int ett_bblog_t_flags;
+static int ett_bblog_t_flags2;
 
 static int * const bblog_event_flags[] = {
   &hf_event_flags_rxbuf,
@@ -153,8 +159,8 @@ static int * const bblog_t_flags[] = {
   &hf_t_flags_force_data,
   &hf_t_flags_tso,
   &hf_t_flags_toe,
-  &hf_t_flags_unused_0,
   &hf_t_flags_unused_1,
+  &hf_t_flags_unused_2,
   &hf_t_flags_lost_rtx_detection,
   &hf_t_flags_be_in_cong_recovery,
   &hf_t_flags_was_in_cong_recovery,
@@ -177,19 +183,145 @@ static int * const bblog_t_flags2[] = {
 };
 
 /*
+ * The PRU constants are taken from
+ * https://cgit.freebsd.org/src/tree/sys/netinet/in_kdrace.h
+ */
+
+#define BBLOG_TCP_PRU_ATTACH      0
+#define BBLOG_TCP_PRU_DETACH      1
+#define BBLOG_TCP_PRU_BIND        2
+#define BBLOG_TCP_PRU_LISTEN      3
+#define BBLOG_TCP_PRU_CONNECT     4
+#define BBLOG_TCP_PRU_ACCEPT      5
+#define BBLOG_TCP_PRU_DISCONNECT  6
+#define BBLOG_TCP_PRU_SHUTDOWN    7
+#define BBLOG_TCP_PRU_RCVD        8
+#define BBLOG_TCP_PRU_SEND        9
+#define BBLOG_TCP_PRU_ABORT      10
+#define BBLOG_TCP_PRU_CONTROL    11
+#define BBLOG_TCP_PRU_SENSE      12
+#define BBLOG_TCP_PRU_RCVOOB     13
+#define BBLOG_TCP_PRU_SENDOOB    14
+#define BBLOG_TCP_PRU_SOCKADDR   15
+#define BBLOG_TCP_PRU_PEERADDR   16
+#define BBLOG_TCP_PRU_CONNECT2   17
+#define BBLOG_TCP_PRU_FASTTIMO   18
+#define BBLOG_TCP_PRU_SLOWTIMO   19
+#define BBLOG_TCP_PRU_PROTORCV   20
+#define BBLOG_TCP_PRU_PROTOSEND  21
+#define BBLOG_TCP_PRU_SEND_EOF   22
+#define BBLOG_TCP_PRU_SOSETLABEL 23
+#define BBLOG_TCP_PRU_CLOSE      24
+#define BBLOG_TCP_PRU_FLUSH      25
+
+static const value_string tcp_pru_values[] = {
+  { BBLOG_TCP_PRU_ATTACH,     "ATTACH" },
+  { BBLOG_TCP_PRU_DETACH,     "DETACH" },
+  { BBLOG_TCP_PRU_BIND,       "BIND" },
+  { BBLOG_TCP_PRU_LISTEN,     "LISTEN" },
+  { BBLOG_TCP_PRU_CONNECT,    "CONNECT" },
+  { BBLOG_TCP_PRU_ACCEPT,     "ACCEPT" },
+  { BBLOG_TCP_PRU_DISCONNECT, "DISCONNECT" },
+  { BBLOG_TCP_PRU_SHUTDOWN,   "SHUTDOWN" },
+  { BBLOG_TCP_PRU_RCVD,       "RCVD" },
+  { BBLOG_TCP_PRU_SEND,       "SEND" },
+  { BBLOG_TCP_PRU_ABORT,      "ABORT" },
+  { BBLOG_TCP_PRU_CONTROL,    "CONTROL" },
+  { BBLOG_TCP_PRU_SENSE,      "SENSE" },
+  { BBLOG_TCP_PRU_RCVOOB,     "RCVOOB" },
+  { BBLOG_TCP_PRU_SENDOOB,    "SENDOOB" },
+  { BBLOG_TCP_PRU_SOCKADDR,   "SOCKADDR" },
+  { BBLOG_TCP_PRU_PEERADDR,   "PEERADDR" },
+  { BBLOG_TCP_PRU_CONNECT2,   "CONNECT2" },
+  { BBLOG_TCP_PRU_FASTTIMO,   "FASTTIMO" },
+  { BBLOG_TCP_PRU_SLOWTIMO,   "SLOWTIMO" },
+  { BBLOG_TCP_PRU_PROTORCV,   "PROTORCV" },
+  { BBLOG_TCP_PRU_PROTOSEND,  "PROTOSEND" },
+  { BBLOG_TCP_PRU_SEND_EOF,   "SEND_EOF" },
+  { BBLOG_TCP_PRU_SOSETLABEL, "SOSETLABEL" },
+  { BBLOG_TCP_PRU_CLOSE,      "CLOSE" },
+  { BBLOG_TCP_PRU_FLUSH,      "FLUSH" },
+  { 0, NULL } };
+
+#define BBLOG_TCP_PRU_MASK   0x000000ff
+#define BBLOG_TCP_PRU_SHIFT  0
+
+#define BBLOG_TCP_TIMER_TYPE_RETRANSMIT 0
+#define BBLOG_TCP_TIMER_TYPE_PERSIST    1
+#define BBLOG_TCP_TIMER_TYPE_KEEPALIVE  2
+#define BBLOG_TCP_TIMER_TYPE_2MSL       3
+#define BBLOG_TCP_TIMER_TYPE_DELACK     4
+
+static const value_string tcp_timer_type_values[] = {
+  { BBLOG_TCP_TIMER_TYPE_RETRANSMIT, "Retransmission" },
+  { BBLOG_TCP_TIMER_TYPE_PERSIST,    "Persist" },
+  { BBLOG_TCP_TIMER_TYPE_KEEPALIVE,  "Keepalive" },
+  { BBLOG_TCP_TIMER_TYPE_2MSL,       "2 MSL" },
+  { BBLOG_TCP_TIMER_TYPE_DELACK,     "Delayed ACK" },
+  { 0, NULL } };
+
+#define BBLOG_TCP_TIMER_EVENT_PROCESSING 0
+#define BBLOG_TCP_TIMER_EVENT_PROCESSED  1
+#define BBLOG_TCP_TIMER_EVENT_STARTING   2
+#define BBLOG_TCP_TIMER_EVENT_STOPPING   3
+
+static const value_string tcp_timer_event_values[] = {
+  { BBLOG_TCP_TIMER_EVENT_PROCESSING, "Processing" },
+  { BBLOG_TCP_TIMER_EVENT_PROCESSED,  "Processed" },
+  { BBLOG_TCP_TIMER_EVENT_STARTING,   "Starting" },
+  { BBLOG_TCP_TIMER_EVENT_STOPPING,   "Stopping" },
+  { 0, NULL } };
+
+#define BBLOG_TCP_TIMER_TYPE_MASK   0x000000ff
+#define BBLOG_TCP_TIMER_TYPE_SHIFT  0
+#define BBLOG_TCP_TIMER_EVENT_MASK  0x0000ff00
+#define BBLOG_TCP_TIMER_EVENT_SHIFT 8
+
+/*
  * The structures used here are defined in
  * https://cgit.freebsd.org/src/tree/sys/netinet/tcp_log_buf.h
  */
 
 static int
-dissect_bblog(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
+dissect_bblog_event(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
 {
     proto_item *bblog_item;
     proto_tree *bblog_tree;
-    guint16 event_flags;
+    const char *event_name;
+    uint32_t flex1, flex2;
+    uint16_t event_flags;
+    uint8_t event_identifier;
+    uint8_t pru;
+    uint8_t timer_type, timer_event;
 
-    col_set_str(pinfo->cinfo, COL_PROTOCOL, "BBLog");
-    col_append_fstr(pinfo->cinfo, COL_INFO, "%s", val_to_str_const(tvb_get_guint8(tvb, 25), event_identifier_values, "Unknown"));
+    event_identifier = tvb_get_uint8(tvb, 25);
+    flex1 = tvb_get_letohl(tvb, 140);
+    flex2 = tvb_get_letohl(tvb, 144);
+    switch (event_identifier) {
+    case TCP_LOG_PRU:
+        pru = (flex1 & BBLOG_TCP_PRU_MASK) >> BBLOG_TCP_PRU_SHIFT;
+        col_append_fstr(pinfo->cinfo, COL_INFO, "PRU: %s",
+                        val_to_str(pru, tcp_pru_values, "UNKNOWN (0x%02x)"));
+        break;
+    case BBLOG_TCP_LOG_TIMER:
+        timer_type = (flex1 & BBLOG_TCP_TIMER_TYPE_MASK) >> BBLOG_TCP_TIMER_TYPE_SHIFT;
+        timer_event = (flex1 & BBLOG_TCP_TIMER_EVENT_MASK) >> BBLOG_TCP_TIMER_EVENT_SHIFT;
+        col_append_fstr(pinfo->cinfo, COL_INFO, "%s %s timer",
+                        val_to_str(timer_event, tcp_timer_event_values, "Unknown operation (0x%02x) for"),
+                        val_to_str(timer_type, tcp_timer_type_values, "Unknown (0x%02x)"));
+        if (timer_event == BBLOG_TCP_TIMER_EVENT_STARTING) {
+            col_append_fstr(pinfo->cinfo, COL_INFO, ": %u ms", flex2);
+        }
+        break;
+    default:
+        event_name = try_val_to_str(event_identifier, event_identifier_values);
+        if (event_name != NULL) {
+            col_append_str(pinfo->cinfo, COL_INFO, event_name);
+        } else {
+            col_append_fstr(pinfo->cinfo, COL_INFO, "Unknown (flex1 0x%08x, flex2 0x%08x0)", flex1, flex2);
+        }
+        break;
+    }
 
     bblog_item = proto_tree_add_item(tree, proto_bblog, tvb, 0, -1, ENC_NA);
     bblog_tree = proto_item_add_subtree(bblog_item, ett_bblog);
@@ -249,6 +381,26 @@ dissect_bblog(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U
     return tvb_captured_length(tvb);
 }
 
+static int
+dissect_bblog(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
+{
+    col_set_str(pinfo->cinfo, COL_PROTOCOL, "BBLog");
+    switch (pinfo->rec->rec_header.custom_block_header.custom_data_header.nflx_custom_data_header.type) {
+    case BBLOG_TYPE_SKIPPED_BLOCK:
+        col_add_fstr(pinfo->cinfo, COL_INFO, "Number of skipped events: %u",
+                     pinfo->rec->rec_header.custom_block_header.custom_data_header.nflx_custom_data_header.skipped);
+        break;
+    case BBLOG_TYPE_EVENT_BLOCK:
+        dissect_bblog_event(tvb, pinfo, tree, data);
+        break;
+    default:
+        col_add_fstr(pinfo->cinfo, COL_INFO, "Unknown type: %u",
+                     pinfo->rec->rec_header.custom_block_header.custom_data_header.nflx_custom_data_header.type);
+        break;
+    }
+    return tvb_captured_length(tvb);
+}
+
 void
 proto_register_bblog(void)
 {
@@ -263,7 +415,7 @@ proto_register_bblog(void)
         { &hf_event_flags_hdr,                { "TCP header",                                           "bblog.event_flags_hdr",               FT_BOOLEAN, 16,        TFS(&tfs_available_not_available), BBLOG_EVENT_FLAG_HDR,                NULL, HFILL} },
         { &hf_event_flags_verbose,            { "Additional information",                               "bblog.event_flags_verbose",           FT_BOOLEAN, 16,        TFS(&tfs_available_not_available), BBLOG_EVENT_FLAG_VERBOSE,            NULL, HFILL} },
         { &hf_event_flags_stack,              { "Stack specific information",                           "bblog.event_flags_stack",             FT_BOOLEAN, 16,        TFS(&tfs_available_not_available), BBLOG_EVENT_FLAG_STACKINFO,          NULL, HFILL} },
-        { &hf_errno,                          { "Error Number",                                         "bblog.errno",                         FT_INT32,   BASE_DEC,  NULL,                              0x0,                                 NULL, HFILL} },
+        { &hf_errno,                          { "Error Number",                                         "bblog.errno",                         FT_INT32,   BASE_DEC,  VALS(errno_values),                0x0,                                 NULL, HFILL} },
         { &hf_rxb_acc,                        { "Receive Buffer ACC",                                   "bblog.rxb_acc",                       FT_UINT32,  BASE_DEC,  NULL,                              0x0,                                 NULL, HFILL} },
         { &hf_rxb_ccc,                        { "Receive Buffer CCC",                                   "bblog.rxb_ccc",                       FT_UINT32,  BASE_DEC,  NULL,                              0x0,                                 NULL, HFILL} },
         { &hf_rxb_spare,                      { "Receive Buffer Spare",                                 "bblog.rxb_spare",                     FT_UINT32,  BASE_DEC,  NULL,                              0x0,                                 NULL, HFILL} },
@@ -289,7 +441,7 @@ proto_register_bblog(void)
         { &hf_t_flags_no_push,                { "No push",                                              "bblog.t_flags_no_push",               FT_BOOLEAN, 32,        TFS(&tfs_enabled_disabled),        BBLOG_T_FLAGS_NOPUSH,                NULL, HFILL} },
         { &hf_t_flags_prev_valid,             { "Saved values for bad retransmission valid",            "bblog.t_flags_prev_valid",            FT_BOOLEAN, 32,        TFS(&tfs_yes_no),                  BBLOG_T_FLAGS_PREVVALID,             NULL, HFILL} },
         { &hf_t_flags_wake_socket_receive,    { "Wakeup receive socket",                                "bblog.t_flags_wake_socket_receive",   FT_BOOLEAN, 32,        TFS(&tfs_yes_no),                  BBLOG_T_FLAGS_WAKESOR,               NULL, HFILL} },
-        { &hf_t_flags_goodput_in_progress,    { "Goodput measurement in progress",                      "bblog.t_flags_goodput_in_progress",   FT_BOOLEAN, 32,        TFS(&tfs_true_false),              BBLOG_T_FLAGS_GPUTINPROG,            NULL, HFILL} },
+        { &hf_t_flags_goodput_in_progress,    { "Goodput measurement in progress",                      "bblog.t_flags_goodput_in_progress",   FT_BOOLEAN, 32,        NULL,              BBLOG_T_FLAGS_GPUTINPROG,            NULL, HFILL} },
         { &hf_t_flags_more_to_come,           { "More to come",                                         "bblog.t_flags_more_to_come",          FT_BOOLEAN, 32,        TFS(&tfs_yes_no),                  BBLOG_T_FLAGS_MORETOCOME,            NULL, HFILL} },
         { &hf_t_flags_listen_queue_overflow,  { "Listen queue overflow",                                "bblog.t_flags_listen_queue_overflow", FT_BOOLEAN, 32,        TFS(&tfs_yes_no),                  BBLOG_T_FLAGS_LQ_OVERFLOW,           NULL, HFILL} },
         { &hf_t_flags_last_idle,              { "Connection was previously idle",                       "bblog.t_flags_last_idle",             FT_BOOLEAN, 32,        TFS(&tfs_yes_no),                  BBLOG_T_FLAGS_LASTIDLE,              NULL, HFILL} },
@@ -300,8 +452,8 @@ proto_register_bblog(void)
         { &hf_t_flags_force_data,             { "Force data",                                           "bblog.t_flags_force_data",            FT_BOOLEAN, 32,        TFS(&tfs_yes_no),                  BBLOG_T_FLAGS_FORCEDATA,             NULL, HFILL} },
         { &hf_t_flags_tso,                    { "TSO",                                                  "bblog.t_flags_tso",                   FT_BOOLEAN, 32,        TFS(&tfs_enabled_disabled),        BBLOG_T_FLAGS_TSO,                   NULL, HFILL} },
         { &hf_t_flags_toe,                    { "TOE",                                                  "bblog.t_flags_toe",                   FT_BOOLEAN, 32,        TFS(&tfs_enabled_disabled),        BBLOG_T_FLAGS_TOE,                   NULL, HFILL} },
-        { &hf_t_flags_unused_0,               { "Unused 1",                                             "bblog.t_flags_unused_0",              FT_BOOLEAN, 32,        TFS(&tfs_true_false),              BBLOG_T_FLAGS_UNUSED0,               NULL, HFILL} },
-        { &hf_t_flags_unused_1,               { "Unused 2",                                             "bblog.t_flags_unused_1",              FT_BOOLEAN, 32,        TFS(&tfs_true_false),              BBLOG_T_FLAGS_UNUSED1,               NULL, HFILL} },
+        { &hf_t_flags_unused_1,               { "Unused 1",                                             "bblog.t_flags_unused_1",              FT_BOOLEAN, 32,        NULL,              BBLOG_T_FLAGS_UNUSED0,               NULL, HFILL} },
+        { &hf_t_flags_unused_2,               { "Unused 2",                                             "bblog.t_flags_unused_2",              FT_BOOLEAN, 32,        NULL,              BBLOG_T_FLAGS_UNUSED1,               NULL, HFILL} },
         { &hf_t_flags_lost_rtx_detection,     { "Lost retransmission detection",                        "bblog.t_flags_lost_rtx_detection",    FT_BOOLEAN, 32,        TFS(&tfs_enabled_disabled),        BBLOG_T_FLAGS_LRD,                   NULL, HFILL} },
         { &hf_t_flags_be_in_cong_recovery,    { "Currently in congestion avoidance",                    "bblog.t_flags_be_in_cong_recovery",   FT_BOOLEAN, 32,        TFS(&tfs_yes_no),                  BBLOG_T_FLAGS_CONGRECOVERY,          NULL, HFILL} },
         { &hf_t_flags_was_in_cong_recovery,   { "Was in congestion avoidance",                          "bblog.t_flags_was_in_cong_recovery",  FT_BOOLEAN, 32,        TFS(&tfs_yes_no),                  BBLOG_T_FLAGS_WASCRECOVERY,          NULL, HFILL} },
@@ -346,7 +498,7 @@ proto_register_bblog(void)
     };
 
     /* Setup protocol subtree array */
-    static gint *ett[] = {
+    static int *ett[] = {
         &ett_bblog,
         &ett_bblog_flags,
         &ett_bblog_t_flags,
@@ -360,12 +512,13 @@ proto_register_bblog(void)
     proto_register_field_array(proto_bblog, hf, array_length(hf));
     proto_register_subtree_array(ett, array_length(ett));
 
-    register_dissector("bblog", dissect_bblog, proto_bblog);
+    bblog_handle = register_dissector("bblog", dissect_bblog, proto_bblog);
 }
 
 void
 proto_reg_handoff_bblog(void)
 {
+    dissector_add_uint("pcapng_custom_block", PEN_NFLX, bblog_handle);
 }
 
 /*

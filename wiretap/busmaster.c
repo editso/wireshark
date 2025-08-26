@@ -10,11 +10,12 @@
  */
 
 #include "config.h"
+#include "busmaster.h"
+
 #include <wtap-int.h>
 #include <file_wrappers.h>
 #include <epan/dissectors/packet-socketcan.h>
 #include <wsutil/exported_pdu_tlvs.h>
-#include "busmaster.h"
 #include "busmaster_priv.h"
 #include <inttypes.h>
 #include <string.h>
@@ -23,15 +24,15 @@
 static void
 busmaster_close(wtap *wth);
 
-static gboolean
+static bool
 busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf,
-               int    *err, gchar **err_info,
-               gint64 *data_offset);
+               int    *err, char **err_info,
+               int64_t *data_offset);
 
-static gboolean
-busmaster_seek_read(wtap     *wth, gint64 seek_off,
+static bool
+busmaster_seek_read(wtap     *wth, int64_t seek_off,
                     wtap_rec *rec, Buffer *buf,
-                    int      *err, gchar **err_info);
+                    int      *err, char **err_info);
 
 static int busmaster_file_type_subtype = -1;
 
@@ -40,96 +41,71 @@ void register_busmaster(void);
 /*
  * See
  *
- *    http://rbei-etas.github.io/busmaster/
+ *    https://rbei-etas.github.io/busmaster/
  *
  * for the BUSMASTER software.
  */
 
-static gboolean
+static bool
 busmaster_gen_packet(wtap_rec               *rec, Buffer *buf,
                      const busmaster_priv_t *priv_entry, const msg_t *msg,
-                     int                    *err, gchar **err_info)
+                     int                    *err, char **err_info)
 {
     time_t secs     = 0;
-    guint32  nsecs  = 0;
-    gboolean has_ts = FALSE;
-    gboolean is_fd  = (msg->type == MSG_TYPE_STD_FD)
+    uint32_t nsecs  = 0;
+    bool has_ts = false;
+    bool is_fd  = (msg->type == MSG_TYPE_STD_FD)
         || (msg->type == MSG_TYPE_EXT_FD);
-    gboolean is_eff = (msg->type == MSG_TYPE_EXT)
+    bool is_eff = (msg->type == MSG_TYPE_EXT)
         || (msg->type == MSG_TYPE_EXT_RTR)
         || (msg->type == MSG_TYPE_EXT_FD);
-    gboolean is_rtr = (msg->type == MSG_TYPE_STD_RTR)
+    bool is_rtr = (msg->type == MSG_TYPE_STD_RTR)
         || (msg->type == MSG_TYPE_EXT_RTR);
-    gboolean is_err = (msg->type == MSG_TYPE_ERR);
-
-    static const char *const can_proto_name   = "can-hostendian";
-    static const char *const canfd_proto_name = "canfd";
-
-    const char        *proto_name  = is_fd ? canfd_proto_name : can_proto_name;
-    guint              proto_name_length = (guint)strlen(proto_name) + 1;
-    guint              header_length;
-    guint              packet_length;
-    guint              frame_length;
-    guint8            *buf_data;
-
-    /* Adjust proto name length to be aligned on 4 byte boundary */
-    proto_name_length += (proto_name_length % 4) ? (4 - (proto_name_length % 4)) : 0;
-
-    header_length = 4 + proto_name_length + 4;
-    frame_length  = is_fd ? sizeof(canfd_frame_t) : sizeof(can_frame_t);
-    packet_length = header_length + frame_length;
-
-    ws_buffer_clean(buf);
-    ws_buffer_assure_space(buf, packet_length);
-    buf_data = ws_buffer_start_ptr(buf);
-
-    memset(buf_data, 0, packet_length);
-
-    phton16(buf_data + 0, EXP_PDU_TAG_DISSECTOR_NAME);
-    phton16(buf_data + 2, proto_name_length);
-    memcpy(buf_data + 4, proto_name, strlen(proto_name));
+    bool is_err = (msg->type == MSG_TYPE_ERR);
 
     if (!priv_entry)
     {
         *err      = WTAP_ERR_BAD_FILE;
         *err_info = g_strdup("Header is missing");
-        return FALSE;
+        return false;
     }
+
+    ws_buffer_clean(buf);
 
     if (is_fd)
     {
         canfd_frame_t canfd_frame = {0};
 
-        canfd_frame.can_id = (msg->id & (is_eff ? CAN_EFF_MASK : CAN_SFF_MASK)) |
+        canfd_frame.can_id = g_htonl((msg->id & (is_eff ? CAN_EFF_MASK : CAN_SFF_MASK)) |
             (is_eff ? CAN_EFF_FLAG : 0) |
-            (is_err ? CAN_ERR_FLAG : 0);
-        canfd_frame.flags  = 0;
+            (is_err ? CAN_ERR_FLAG : 0));
+        canfd_frame.flags  = CANFD_FDF;
         canfd_frame.len    = msg->data.length;
 
         memcpy(canfd_frame.data,
                msg->data.data,
                MIN(msg->data.length, sizeof(canfd_frame.data)));
 
-        memcpy(buf_data + header_length,
-               (guint8 *)&canfd_frame,
+        ws_buffer_append(buf,
+               (uint8_t *)&canfd_frame,
                sizeof(canfd_frame));
     }
     else
     {
         can_frame_t can_frame = {0};
 
-        can_frame.can_id  = (msg->id & (is_eff ? CAN_EFF_MASK : CAN_SFF_MASK)) |
+        can_frame.can_id  = g_htonl((msg->id & (is_eff ? CAN_EFF_MASK : CAN_SFF_MASK)) |
             (is_rtr ? CAN_RTR_FLAG : 0) |
             (is_eff ? CAN_EFF_FLAG : 0) |
-            (is_err ? CAN_ERR_FLAG : 0);
+            (is_err ? CAN_ERR_FLAG : 0));
         can_frame.can_dlc = msg->data.length;
 
         memcpy(can_frame.data,
                msg->data.data,
                MIN(msg->data.length, sizeof(can_frame.data)));
 
-        memcpy(buf_data + header_length,
-               (guint8 *)&can_frame,
+        ws_buffer_append(buf,
+               (uint8_t *)&can_frame,
                sizeof(can_frame));
     }
 
@@ -147,12 +123,12 @@ busmaster_gen_packet(wtap_rec               *rec, Buffer *buf,
 
         secs   = mktime(&tm);
         nsecs  = msg->timestamp.micros * 1000u;
-        has_ts = TRUE;
+        has_ts = true;
     }
     else if (priv_entry->time_mode == TIME_MODE_ABSOLUTE)
     {
         struct tm tm;
-        guint32   micros;
+        uint32_t  micros;
 
         tm.tm_year  = priv_entry->start_date.year - 1900;
         tm.tm_mon   = priv_entry->start_date.month - 1;
@@ -176,7 +152,7 @@ busmaster_gen_packet(wtap_rec               *rec, Buffer *buf,
         }
 
         nsecs  = micros * 1000u;
-        has_ts = TRUE;
+        has_ts = true;
     }
 
     rec->rec_type       = REC_TYPE_PACKET;
@@ -185,17 +161,17 @@ busmaster_gen_packet(wtap_rec               *rec, Buffer *buf,
     rec->ts.secs        = secs;
     rec->ts.nsecs       = nsecs;
 
-    rec->rec_header.packet_header.caplen = packet_length;
-    rec->rec_header.packet_header.len    = packet_length;
+    rec->rec_header.packet_header.caplen = (uint32_t)ws_buffer_length(buf);
+    rec->rec_header.packet_header.len    = (uint32_t)ws_buffer_length(buf);
 
-    return TRUE;
+    return true;
 }
 
 static log_entry_type_t
 busmaster_parse(FILE_T fh, busmaster_state_t *state, int *err, char **err_info)
 {
-    gboolean ok;
-    gint64   seek_off;
+    bool ok;
+    int64_t  seek_off;
 
     busmaster_debug_printf("%s: Running busmaster file decoder\n", G_STRFUNC);
 
@@ -266,7 +242,7 @@ busmaster_open(wtap *wth, int *err, char **err_info)
     wth->subtype_read      = busmaster_read;
     wth->subtype_seek_read = busmaster_seek_read;
     wth->file_type_subtype = busmaster_file_type_subtype;
-    wth->file_encap        = WTAP_ENCAP_WIRESHARK_UPPER_PDU;
+    wth->file_encap        = WTAP_ENCAP_SOCKETCAN;
     wth->file_tsprec       = WTAP_TSPREC_USEC;
 
     return WTAP_OPEN_MINE;
@@ -282,7 +258,7 @@ busmaster_close(wtap *wth)
 }
 
 static busmaster_priv_t *
-busmaster_find_priv_entry(void *priv, gint64 offset)
+busmaster_find_priv_entry(void *priv, int64_t offset)
 {
     GSList *list;
 
@@ -302,15 +278,15 @@ busmaster_find_priv_entry(void *priv, gint64 offset)
     return NULL;
 }
 
-static gboolean
-busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_info,
-               gint64 *data_offset)
+static bool
+busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf, int *err, char **err_info,
+               int64_t *data_offset)
 {
     log_entry_type_t   entry;
     busmaster_state_t  state;
     busmaster_priv_t  *priv_entry;
-    gboolean           is_msg = FALSE;
-    gboolean          is_ok = TRUE;
+    bool               is_msg = false;
+    bool               is_ok = true;
 
     while (!is_msg && is_ok)
     {
@@ -323,7 +299,7 @@ busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_in
                                    G_STRFUNC);
             *err      = 0;
             *err_info = NULL;
-            return FALSE;
+            return false;
         }
 
         *data_offset = file_tell(wth->fh);
@@ -346,7 +322,7 @@ busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_in
             {
                 *err      = WTAP_ERR_BAD_FILE;
                 *err_info = g_strdup("Header is missing");
-                return FALSE;
+                return false;
             }
             priv_entry->file_end_offset  = *data_offset;
             if (entry == LOG_ENTRY_FOOTER)
@@ -358,7 +334,7 @@ busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_in
             {
                 *err      = WTAP_ERR_UNSUPPORTED;
                 *err_info = g_strdup("Unsupported protocol type");
-                return FALSE;
+                return false;
             }
 
             if (wth->priv)
@@ -370,7 +346,7 @@ busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_in
                 {
                     *err      = WTAP_ERR_BAD_FILE;
                     *err_info = g_strdup("Footer is missing");
-                    return FALSE;
+                    return false;
                 }
             }
 
@@ -384,7 +360,7 @@ busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_in
             wth->priv = g_slist_append((GSList *)wth->priv, priv_entry);
             break;
         case LOG_ENTRY_MSG:
-            is_msg     = TRUE;
+            is_msg     = true;
             priv_entry = busmaster_find_priv_entry(wth->priv, *data_offset);
             is_ok      = busmaster_gen_packet(rec, buf, priv_entry, &state.msg, err, err_info);
             break;
@@ -392,7 +368,7 @@ busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_in
         case LOG_ENTRY_ERROR:
         case LOG_ENTRY_NONE:
         default:
-            is_ok = FALSE;
+            is_ok = false;
             break;
         }
     }
@@ -403,9 +379,9 @@ busmaster_read(wtap   *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_in
     return is_ok;
 }
 
-static gboolean
-busmaster_seek_read(wtap   *wth, gint64 seek_off, wtap_rec *rec,
-                    Buffer *buf, int *err, gchar **err_info)
+static bool
+busmaster_seek_read(wtap   *wth, int64_t seek_off, wtap_rec *rec,
+                    Buffer *buf, int *err, char **err_info)
 {
     busmaster_priv_t  *priv_entry;
     busmaster_state_t  state = {0};
@@ -419,11 +395,11 @@ busmaster_seek_read(wtap   *wth, gint64 seek_off, wtap_rec *rec,
         busmaster_debug_printf("%s: analyzing output\n", G_STRFUNC);
         *err = WTAP_ERR_BAD_FILE;
         *err_info = g_strdup("Malformed header");
-        return FALSE;
+        return false;
     }
 
     if (file_seek(wth->random_fh, seek_off, SEEK_SET, err) == -1)
-        return FALSE;
+        return false;
 
     state.header = *priv_entry;
     entry = busmaster_parse(wth->random_fh, &state, err, err_info);
@@ -431,13 +407,13 @@ busmaster_seek_read(wtap   *wth, gint64 seek_off, wtap_rec *rec,
     busmaster_debug_printf("%s: analyzing output\n", G_STRFUNC);
 
     if (entry == LOG_ENTRY_ERROR || entry == LOG_ENTRY_NONE)
-        return FALSE;
+        return false;
 
     if (entry != LOG_ENTRY_MSG)
     {
         *err = WTAP_ERR_BAD_FILE;
         *err_info = g_strdup("Failed to read a frame");
-        return FALSE;
+        return false;
     }
 
     return busmaster_gen_packet(rec, buf, priv_entry, &state.msg, err, err_info);
@@ -452,7 +428,7 @@ static const struct supported_block_type busmaster_blocks_supported[] = {
 
 static const struct file_type_subtype_info busmaster_info = {
     "BUSMASTER log file", "busmaster", "log", NULL,
-    FALSE, BLOCKS_SUPPORTED(busmaster_blocks_supported),
+    false, BLOCKS_SUPPORTED(busmaster_blocks_supported),
     NULL, NULL, NULL
 };
 

@@ -10,21 +10,22 @@
  */
 
 #include <config.h>
+#include "candump.h"
+
 #include <wtap-int.h>
 #include <file_wrappers.h>
 #include <wsutil/exported_pdu_tlvs.h>
 #include <string.h>
 #include <inttypes.h>
 #include <errno.h>
-#include "candump.h"
 #include "candump_priv.h"
 
-static gboolean candump_read(wtap *wth, wtap_rec *rec, Buffer *buf,
-                             int *err, gchar **err_info,
-                             gint64 *data_offset);
-static gboolean candump_seek_read(wtap *wth, gint64 seek_off,
+static bool candump_read(wtap *wth, wtap_rec *rec, Buffer *buf,
+                             int *err, char **err_info,
+                             int64_t *data_offset);
+static bool candump_seek_read(wtap *wth, int64_t seek_off,
                                   wtap_rec *rec, Buffer *buf,
-                                  int *err, gchar **err_info);
+                                  int *err, char **err_info);
 
 static int candump_file_type_subtype = -1;
 
@@ -34,55 +35,57 @@ void register_candump(void);
  * This is written by the candump utility on Linux.
  */
 
-static void
-candump_write_packet(wtap_rec *rec, Buffer *buf, const msg_t *msg)
+static bool
+candump_gen_packet(wtap_rec *rec, Buffer *buf, const msg_t *msg, int *err,
+                     char **err_info)
 {
-    static const char *can_proto_name    = "can-hostendian";
-    static const char *canfd_proto_name  = "canfd";
-    const char        *proto_name        = msg->is_fd ? canfd_proto_name : can_proto_name;
-    guint              proto_name_length = (guint)strlen(proto_name) + 1;
-    guint              header_length;
-    guint              packet_length;
-    guint              frame_length;
-    guint8            *buf_data;
-
-    /* Adjust proto name length to be aligned on 4 byte boundary */
-    proto_name_length += (proto_name_length % 4) ? (4 - (proto_name_length % 4)) : 0;
-
-    header_length = 4 + proto_name_length + 4;
-    frame_length  = msg->is_fd ? sizeof(canfd_frame_t) : sizeof(can_frame_t);
-    packet_length = header_length + frame_length;
-
+    /* Generate Exported PDU tags for the packet info */
     ws_buffer_clean(buf);
-    ws_buffer_assure_space(buf, packet_length);
-    buf_data = ws_buffer_start_ptr(buf);
-
-    memset(buf_data, 0, packet_length);
-
-    phton16(buf_data + 0, EXP_PDU_TAG_DISSECTOR_NAME);
-    phton16(buf_data + 2, proto_name_length);
-    memcpy(buf_data + 4, proto_name, strlen(proto_name));
 
     if (msg->is_fd)
     {
         canfd_frame_t canfd_frame = {0};
 
-        canfd_frame.can_id = msg->id;
-        canfd_frame.flags  = msg->flags;
+        /*
+         * There's a maximum of CANFD_MAX_DLEN bytes in a CAN-FD frame.
+         */
+        if (msg->data.length > CANFD_MAX_DLEN) {
+            *err = WTAP_ERR_BAD_FILE;
+            if (err_info != NULL) {
+	        *err_info = ws_strdup_printf("candump: File has %u-byte CAN FD packet, bigger than maximum of %u",
+                                             msg->data.length, CANFD_MAX_DLEN);
+            }
+            return false;
+        }
+
+        canfd_frame.can_id = g_htonl(msg->id);
+        canfd_frame.flags  = msg->flags | CANFD_FDF;
         canfd_frame.len    = msg->data.length;
         memcpy(canfd_frame.data, msg->data.data, msg->data.length);
 
-        memcpy(buf_data + header_length, (guint8 *)&canfd_frame, sizeof(canfd_frame));
+        ws_buffer_append(buf, (uint8_t *)&canfd_frame, sizeof(canfd_frame));
     }
     else
     {
         can_frame_t can_frame = {0};
 
-        can_frame.can_id  = msg->id;
+        /*
+         * There's a maximum of CAN_MAX_DLEN bytes in a CAN frame.
+         */
+        if (msg->data.length > CAN_MAX_DLEN) {
+            *err = WTAP_ERR_BAD_FILE;
+            if (err_info != NULL) {
+	        *err_info = ws_strdup_printf("candump: File has %u-byte CAN packet, bigger than maximum of %u",
+                                             msg->data.length, CAN_MAX_DLEN);
+            }
+            return false;
+        }
+
+        can_frame.can_id  = g_htonl(msg->id);
         can_frame.can_dlc = msg->data.length;
         memcpy(can_frame.data, msg->data.data, msg->data.length);
 
-        memcpy(buf_data + header_length, (guint8 *)&can_frame, sizeof(can_frame));
+        ws_buffer_append(buf, (uint8_t *)&can_frame, sizeof(can_frame));
     }
 
     rec->rec_type       = REC_TYPE_PACKET;
@@ -91,16 +94,18 @@ candump_write_packet(wtap_rec *rec, Buffer *buf, const msg_t *msg)
     rec->ts             = msg->ts;
     rec->tsprec         = WTAP_TSPREC_USEC;
 
-    rec->rec_header.packet_header.caplen = packet_length;
-    rec->rec_header.packet_header.len    = packet_length;
+    rec->rec_header.packet_header.caplen = (uint32_t)ws_buffer_length(buf);
+    rec->rec_header.packet_header.len    = (uint32_t)ws_buffer_length(buf);
+
+    return true;
 }
 
-static gboolean
-candump_parse(FILE_T fh, msg_t *msg, gint64 *offset, int *err, char **err_info)
+static bool
+candump_parse(FILE_T fh, msg_t *msg, int64_t *offset, int *err, char **err_info)
 {
     candump_state_t state = {0};
-    gboolean        ok;
-    gint64          seek_off;
+    bool            ok;
+    int64_t         seek_off;
 
 #ifdef CANDUMP_DEBUG
     candump_debug_printf("%s: Trying candump file decoder\n", G_STRFUNC);
@@ -111,7 +116,7 @@ candump_parse(FILE_T fh, msg_t *msg, gint64 *offset, int *err, char **err_info)
     do
     {
         if (file_eof(fh))
-            return FALSE;
+            return false;
 
         seek_off = file_tell(fh);
 #ifdef CANDUMP_DEBUG
@@ -126,13 +131,13 @@ candump_parse(FILE_T fh, msg_t *msg, gint64 *offset, int *err, char **err_info)
             g_free(*err_info);
             *err      = errno;
             *err_info = g_strdup(g_strerror(errno));
-            return FALSE;
+            return false;
         }
     }
     while (ok && !state.is_msg_valid);
 
     if (!ok)
-        return FALSE;
+        return false;
 
 #ifdef CANDUMP_DEBUG
     candump_debug_printf("%s: Success\n", G_STRFUNC);
@@ -144,7 +149,7 @@ candump_parse(FILE_T fh, msg_t *msg, gint64 *offset, int *err, char **err_info)
     if (msg)
         *msg = state.msg;
 
-    return TRUE;
+    return true;
 }
 
 wtap_open_return_val
@@ -174,7 +179,7 @@ candump_open(wtap *wth, int *err, char **err_info)
 
     wth->priv              = NULL;
     wth->file_type_subtype = candump_file_type_subtype;
-    wth->file_encap        = WTAP_ENCAP_WIRESHARK_UPPER_PDU;
+    wth->file_encap        = WTAP_ENCAP_SOCKETCAN;
     wth->file_tsprec       = WTAP_TSPREC_USEC;
     wth->subtype_read      = candump_read;
     wth->subtype_seek_read = candump_seek_read;
@@ -182,9 +187,9 @@ candump_open(wtap *wth, int *err, char **err_info)
     return WTAP_OPEN_MINE;
 }
 
-static gboolean
-candump_read(wtap *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_info,
-             gint64 *data_offset)
+static bool
+candump_read(wtap *wth, wtap_rec *rec, Buffer *buf, int *err, char **err_info,
+             int64_t *data_offset)
 {
     msg_t msg;
 
@@ -193,20 +198,18 @@ candump_read(wtap *wth, wtap_rec *rec, Buffer *buf, int *err, gchar **err_info,
 #endif
 
     if (!candump_parse(wth->fh, &msg, data_offset, err, err_info))
-        return FALSE;
+        return false;
 
 #ifdef CANDUMP_DEBUG
     candump_debug_printf("%s: Stopped at offset %" PRIi64 "\n", G_STRFUNC, file_tell(wth->fh));
 #endif
 
-    candump_write_packet(rec, buf, &msg);
-
-    return TRUE;
+    return candump_gen_packet(rec, buf, &msg, err, err_info);
 }
 
-static gboolean
-candump_seek_read(wtap *wth , gint64 seek_off, wtap_rec *rec,
-                  Buffer *buf, int *err, gchar **err_info)
+static bool
+candump_seek_read(wtap *wth , int64_t seek_off, wtap_rec *rec,
+                  Buffer *buf, int *err, char **err_info)
 {
     msg_t msg;
 
@@ -219,15 +222,13 @@ candump_seek_read(wtap *wth , gint64 seek_off, wtap_rec *rec,
         *err      = errno;
         *err_info = g_strdup(g_strerror(errno));
 
-        return FALSE;
+        return false;
     }
 
     if (!candump_parse(wth->random_fh, &msg, NULL, err, err_info))
-        return FALSE;
+        return false;
 
-    candump_write_packet(rec, buf, &msg);
-
-    return TRUE;
+    return candump_gen_packet(rec, buf, &msg, err, err_info);
 }
 
 static const struct supported_block_type candump_blocks_supported[] = {
@@ -239,7 +240,7 @@ static const struct supported_block_type candump_blocks_supported[] = {
 
 static const struct file_type_subtype_info candump_info = {
     "Linux candump file", "candump", NULL, NULL,
-    FALSE, BLOCKS_SUPPORTED(candump_blocks_supported),
+    false, BLOCKS_SUPPORTED(candump_blocks_supported),
     NULL, NULL, NULL
 };
 

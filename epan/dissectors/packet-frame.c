@@ -20,120 +20,205 @@
 #include <epan/epan.h>
 #include <epan/exceptions.h>
 #include <epan/show_exception.h>
-#include <epan/timestamp.h>
 #include <epan/prefs.h>
 #include <epan/to_str.h>
 #include <epan/sequence_analysis.h>
-#include <wiretap/wtap.h>
 #include <epan/tap.h>
 #include <epan/expert.h>
+#include <epan/tfs.h>
 #include <wsutil/wsgcrypt.h>
 #include <wsutil/str_util.h>
 #include <wsutil/wslog.h>
 #include <wsutil/ws_assert.h>
-#include <epan/proto_data.h>
 #include <epan/addr_resolv.h>
 #include <epan/wmem_scopes.h>
+#include <epan/column-info.h>
 
 #include "packet-frame.h"
-#include "packet-icmp.h"
+#include "packet-bblog.h"
 
 #include <epan/color_filters.h>
 
 void proto_register_frame(void);
 void proto_reg_handoff_frame(void);
 
-static int proto_frame = -1;
-static int proto_pkt_comment = -1;
-static int proto_syscall = -1;
-static int proto_bblog = -1;
+static int proto_frame;
+static int proto_pkt_comment;
+static int proto_syscall;
+static int proto_bblog;
 
-static int hf_frame_arrival_time = -1;
-static int hf_frame_shift_offset = -1;
-static int hf_frame_arrival_time_epoch = -1;
-static int hf_frame_time_delta = -1;
-static int hf_frame_time_delta_displayed = -1;
-static int hf_frame_time_relative = -1;
-static int hf_frame_time_reference = -1;
-static int hf_frame_number = -1;
-static int hf_frame_len = -1;
-static int hf_frame_capture_len = -1;
-static int hf_frame_p2p_dir = -1;
-static int hf_frame_file_off = -1;
-static int hf_frame_md5_hash = -1;
-static int hf_frame_marked = -1;
-static int hf_frame_ignored = -1;
-static int hf_link_number = -1;
-static int hf_frame_packet_id = -1;
-static int hf_frame_hash = -1;
-static int hf_frame_hash_bytes = -1;
-static int hf_frame_verdict = -1;
-static int hf_frame_verdict_hardware = -1;
-static int hf_frame_verdict_tc = -1;
-static int hf_frame_verdict_xdp = -1;
-static int hf_frame_verdict_unknown = -1;
-static int hf_frame_drop_count = -1;
-static int hf_frame_protocols = -1;
-static int hf_frame_color_filter_name = -1;
-static int hf_frame_color_filter_text = -1;
-static int hf_frame_section_number = -1;
-static int hf_frame_interface_id = -1;
-static int hf_frame_interface_name = -1;
-static int hf_frame_interface_description = -1;
-static int hf_frame_interface_queue = -1;
-static int hf_frame_pack_flags = -1;
-static int hf_frame_pack_direction = -1;
-static int hf_frame_pack_reception_type = -1;
-static int hf_frame_pack_fcs_length = -1;
-static int hf_frame_pack_reserved = -1;
-static int hf_frame_pack_crc_error = -1;
-static int hf_frame_pack_wrong_packet_too_long_error = -1;
-static int hf_frame_pack_wrong_packet_too_short_error = -1;
-static int hf_frame_pack_wrong_inter_frame_gap_error = -1;
-static int hf_frame_pack_unaligned_frame_error = -1;
-static int hf_frame_pack_start_frame_delimiter_error = -1;
-static int hf_frame_pack_preamble_error = -1;
-static int hf_frame_pack_symbol_error = -1;
-static int hf_frame_wtap_encap = -1;
-static int hf_frame_cb_pen = -1;
-static int hf_frame_cb_copy_allowed = -1;
-static int hf_frame_bblog = -1;
-static int hf_frame_bblog_ticks = -1;
-static int hf_frame_bblog_serial_nr = -1;
-static int hf_frame_pcaplog_type = -1;
-static int hf_frame_pcaplog_length = -1;
-static int hf_frame_pcaplog_data = -1;
-static int hf_comments_text = -1;
+static int hf_frame_arrival_time_local;
+static int hf_frame_arrival_time_utc;
+static int hf_frame_arrival_time_epoch;
+static int hf_frame_shift_offset;
+static int hf_frame_time_delta;
+static int hf_frame_time_delta_displayed;
+static int hf_frame_time_relative;
+static int hf_frame_time_relative_cap;
+static int hf_frame_time_reference;
+static int hf_frame_number;
+static int hf_frame_len;
+static int hf_frame_capture_len;
+static int hf_frame_p2p_dir;
+static int hf_frame_file_off;
+static int hf_frame_md5_hash;
+static int hf_frame_marked;
+static int hf_frame_ignored;
+static int hf_link_number;
+static int hf_frame_packet_id;
+static int hf_frame_hash;
+static int hf_frame_hash_bytes;
+static int hf_frame_verdict;
+static int hf_frame_verdict_hardware;
+static int hf_frame_verdict_tc;
+static int hf_frame_verdict_xdp;
+static int hf_frame_verdict_unknown;
+static int hf_frame_drop_count;
+static int hf_frame_protocols;
+static int hf_frame_color_filter_name;
+static int hf_frame_color_filter_text;
+static int hf_frame_section_number;
+static int hf_frame_interface_id;
+static int hf_frame_interface_name;
+static int hf_frame_interface_description;
+static int hf_frame_interface_queue;
+static int hf_frame_pack_flags;
+static int hf_frame_pack_direction;
+static int hf_frame_pack_reception_type;
+static int hf_frame_pack_fcs_length;
+static int hf_frame_pack_reserved;
+static int hf_frame_pack_crc_error;
+static int hf_frame_pack_wrong_packet_too_long_error;
+static int hf_frame_pack_wrong_packet_too_short_error;
+static int hf_frame_pack_wrong_inter_frame_gap_error;
+static int hf_frame_pack_unaligned_frame_error;
+static int hf_frame_pack_start_frame_delimiter_error;
+static int hf_frame_pack_preamble_error;
+static int hf_frame_pack_symbol_error;
+static int hf_frame_wtap_encap;
+static int hf_frame_cb_pen;
+static int hf_frame_cb_copy_allowed;
+static int hf_frame_bblog;
+static int hf_frame_bblog_ticks;
+static int hf_frame_bblog_serial_nr;
+static int hf_frame_bblog_event_id;
+static int hf_frame_bblog_event_flags;
+static int hf_frame_bblog_event_flags_rxbuf;
+static int hf_frame_bblog_event_flags_txbuf;
+static int hf_frame_bblog_event_flags_hdr;
+static int hf_frame_bblog_event_flags_verbose;
+static int hf_frame_bblog_event_flags_stack;
+static int hf_frame_bblog_errno;
+static int hf_frame_bblog_rxb_acc;
+static int hf_frame_bblog_rxb_ccc;
+static int hf_frame_bblog_rxb_spare;
+static int hf_frame_bblog_txb_acc;
+static int hf_frame_bblog_txb_ccc;
+static int hf_frame_bblog_txb_spare;
+static int hf_frame_bblog_state;
+static int hf_frame_bblog_starttime;
+static int hf_frame_bblog_iss;
+static int hf_frame_bblog_t_flags;
+static int hf_frame_bblog_t_flags_ack_now;
+static int hf_frame_bblog_t_flags_delayed_ack;
+static int hf_frame_bblog_t_flags_no_delay;
+static int hf_frame_bblog_t_flags_no_opt;
+static int hf_frame_bblog_t_flags_sent_fin;
+static int hf_frame_bblog_t_flags_request_window_scale;
+static int hf_frame_bblog_t_flags_received_window_scale;
+static int hf_frame_bblog_t_flags_request_timestamp;
+static int hf_frame_bblog_t_flags_received_timestamp;
+static int hf_frame_bblog_t_flags_sack_permitted;
+static int hf_frame_bblog_t_flags_need_syn;
+static int hf_frame_bblog_t_flags_need_fin;
+static int hf_frame_bblog_t_flags_no_push;
+static int hf_frame_bblog_t_flags_prev_valid;
+static int hf_frame_bblog_t_flags_wake_socket_receive;
+static int hf_frame_bblog_t_flags_goodput_in_progress;
+static int hf_frame_bblog_t_flags_more_to_come;
+static int hf_frame_bblog_t_flags_listen_queue_overflow;
+static int hf_frame_bblog_t_flags_last_idle;
+static int hf_frame_bblog_t_flags_zero_recv_window_sent;
+static int hf_frame_bblog_t_flags_be_in_fast_recovery;
+static int hf_frame_bblog_t_flags_was_in_fast_recovery;
+static int hf_frame_bblog_t_flags_signature;
+static int hf_frame_bblog_t_flags_force_data;
+static int hf_frame_bblog_t_flags_tso;
+static int hf_frame_bblog_t_flags_toe;
+static int hf_frame_bblog_t_flags_unused_0;
+static int hf_frame_bblog_t_flags_unused_1;
+static int hf_frame_bblog_t_flags_lost_rtx_detection;
+static int hf_frame_bblog_t_flags_be_in_cong_recovery;
+static int hf_frame_bblog_t_flags_was_in_cong_recovery;
+static int hf_frame_bblog_t_flags_fast_open;
+static int hf_frame_bblog_snd_una;
+static int hf_frame_bblog_snd_max;
+static int hf_frame_bblog_snd_cwnd;
+static int hf_frame_bblog_snd_nxt;
+static int hf_frame_bblog_snd_recover;
+static int hf_frame_bblog_snd_wnd;
+static int hf_frame_bblog_snd_ssthresh;
+static int hf_frame_bblog_srtt;
+static int hf_frame_bblog_rttvar;
+static int hf_frame_bblog_rcv_up;
+static int hf_frame_bblog_rcv_adv;
+static int hf_frame_bblog_t_flags2;
+static int hf_frame_bblog_t_flags2_plpmtu_blackhole;
+static int hf_frame_bblog_t_flags2_plpmtu_pmtud;
+static int hf_frame_bblog_t_flags2_plpmtu_maxsegsnt;
+static int hf_frame_bblog_t_flags2_log_auto;
+static int hf_frame_bblog_t_flags2_drop_after_data;
+static int hf_frame_bblog_t_flags2_ecn_permit;
+static int hf_frame_bblog_t_flags2_ecn_snd_cwr;
+static int hf_frame_bblog_t_flags2_ecn_snd_ece;
+static int hf_frame_bblog_t_flags2_ace_permit;
+static int hf_frame_bblog_t_flags2_first_bytes_complete;
+static int hf_frame_bblog_rcv_nxt;
+static int hf_frame_bblog_rcv_wnd;
+static int hf_frame_bblog_dupacks;
+static int hf_frame_bblog_seg_qlen;
+static int hf_frame_bblog_snd_num_holes;
+static int hf_frame_bblog_flex_1;
+static int hf_frame_bblog_flex_2;
+static int hf_frame_bblog_first_byte_in;
+static int hf_frame_bblog_first_byte_out;
+static int hf_frame_bblog_snd_scale;
+static int hf_frame_bblog_rcv_scale;
+static int hf_frame_bblog_pad_1;
+static int hf_frame_bblog_pad_2;
+static int hf_frame_bblog_pad_3;
+static int hf_frame_bblog_payload_len;
+static int hf_comments_text;
 
-static gint ett_frame = -1;
-static gint ett_ifname = -1;
-static gint ett_flags = -1;
-static gint ett_comments = -1;
-static gint ett_hash = -1;
-static gint ett_verdict = -1;
-static gint ett_bblog = -1;
-static gint ett_pcaplog_data = -1;
+static int ett_frame;
+static int ett_ifname;
+static int ett_flags;
+static int ett_comments;
+static int ett_hash;
+static int ett_verdict;
+static int ett_bblog;
+static int ett_bblog_event_flags;
+static int ett_bblog_t_flags;
+static int ett_bblog_t_flags2;
 
-static expert_field ei_comments_text = EI_INIT;
-static expert_field ei_arrive_time_out_of_range = EI_INIT;
-static expert_field ei_incomplete = EI_INIT;
-static expert_field ei_len_lt_caplen = EI_INIT;
+static expert_field ei_comments_text;
+static expert_field ei_arrive_time_out_of_range;
+static expert_field ei_incomplete;
+static expert_field ei_len_lt_caplen;
 
-static int frame_tap = -1;
+static int frame_tap;
 
 static dissector_handle_t docsis_handle;
 static dissector_handle_t sysdig_handle;
 static dissector_handle_t systemd_journal_handle;
-static dissector_handle_t bblog_handle;
-static dissector_handle_t xml_handle;
 
 /* Preferences */
-static gboolean show_file_off       = FALSE;
-static gboolean force_docsis_encap  = FALSE;
-static gboolean generate_md5_hash   = FALSE;
-static gboolean generate_epoch_time = TRUE;
-static gboolean generate_bits_field = TRUE;
-static gboolean disable_packet_size_limited_in_summary = FALSE;
+static bool show_file_off;
+static bool force_docsis_encap;
+static bool generate_md5_hash;
+static bool generate_bits_field = true;
+static bool disable_packet_size_limited_in_summary;
+static unsigned max_comment_lines   = 30;
 
 static const value_string p2p_dirs[] = {
 	{ P2P_DIR_UNKNOWN, "Unknown" },
@@ -183,6 +268,7 @@ static const val64_string verdict_ebpf_xdp_types[] = {
 
 static dissector_table_t wtap_encap_dissector_table;
 static dissector_table_t wtap_fts_rec_dissector_table;
+static dissector_table_t block_pen_dissector_table;
 
 /* The number of tree items required to add an exception to the tree */
 #define EXCEPTION_TREE_ITEMS 10
@@ -206,11 +292,11 @@ typedef struct fr_foreach_s {
 	proto_tree *tree;
 	tvbuff_t *tvb;
 	packet_info *pinfo;
-	guint n_changes;
+	unsigned n_changes;
 } fr_foreach_t;
 
 static const char *
-get_verdict_type_string(guint8 type)
+get_verdict_type_string(uint8_t type)
 {
 	switch(type) {
 	case OPT_VERDICT_TYPE_HW:
@@ -224,7 +310,7 @@ get_verdict_type_string(guint8 type)
 }
 
 static const char *
-get_hash_type_string(guint8 type)
+get_hash_type_string(uint8_t type)
 {
 	switch(type) {
 	case OPT_HASH_2COMP:
@@ -245,7 +331,7 @@ get_hash_type_string(guint8 type)
 }
 
 static void
-ensure_tree_item(proto_tree *tree, guint count)
+ensure_tree_item(proto_tree *tree, unsigned count)
 {
 	/*
 	 * Ensure that no exception is thrown in proto.c when adding the
@@ -279,7 +365,7 @@ frame_seq_analysis_packet( void *ptr, packet_info *pinfo, epan_dissect_t *edt _U
 
 	sai->line_style = 1;
 	sai->conv_num = 0;
-	sai->display = TRUE;
+	sai->display = true;
 
 	g_queue_push_tail(sainfo->items, sai);
 
@@ -294,45 +380,123 @@ frame_seq_analysis_packet( void *ptr, packet_info *pinfo, epan_dissect_t *edt _U
 void
 register_frame_end_routine(packet_info *pinfo, void (*func)(void))
 {
-	pinfo->frame_end_routines = g_slist_append(pinfo->frame_end_routines, (gpointer)func);
+	pinfo->frame_end_routines = g_slist_append(pinfo->frame_end_routines, (void *)func);
 }
 
 typedef void (*void_func_t)(void);
 
 static void
-call_frame_end_routine(gpointer routine)
+call_frame_end_routine(void *routine)
 {
 	void_func_t func = (void_func_t)routine;
 	(*func)();
 }
 
-static gboolean
-frame_add_comment(wtap_block_t block _U_, guint option_id, wtap_opttype_e option_type _U_, wtap_optval_t *option, void *user_data)
+static bool
+frame_add_comment(wtap_block_t block _U_, unsigned option_id, wtap_opttype_e option_type _U_, wtap_optval_t *option, void *user_data)
 {
 	fr_foreach_t *fr_user_data = (fr_foreach_t *)user_data;
 	proto_item *comment_item;
+	proto_item *hidden_item;
+	proto_tree *comments_tree;
+	char *newline;             /* location of next newline in comment */
+	char *ch;                  /* utility pointer */
+	unsigned i;                    /* track number of lines */
 
 	if (option_id == OPT_COMMENT) {
-		comment_item = proto_tree_add_string_format(fr_user_data->tree, hf_comments_text,
-							    fr_user_data->tvb, 0, 0,
-							    option->stringval,
-							    "%s", option->stringval);
-		expert_add_info_format(fr_user_data->pinfo, comment_item, &ei_comments_text,
+		ch = option->stringval;
+		newline = strchr(ch, '\n');
+		if (newline == NULL) {
+			/* Single-line comment, no special treatment needed */
+			comment_item = proto_tree_add_string_format(fr_user_data->tree,
+					hf_comments_text,
+					fr_user_data->tvb, 0, 0,
+					ch,
+					"%s", ch);
+		}
+		else {
+			/* Multi-line comment. Temporarily change the first
+			 * newline to a null so we only show the first line
+			 */
+			*newline = '\0';
+			comment_item = proto_tree_add_string_format(fr_user_data->tree,
+					hf_comments_text,
+					fr_user_data->tvb, 0, 0,
+					ch,
+					"%s [...]", ch);
+			comments_tree = proto_item_add_subtree(comment_item, ett_comments);
+			for (i = 0; i < max_comment_lines; i++) {
+				/* Add each line as a separate item under
+				 * the comment tree
+				 */
+				proto_tree_add_string_format(comments_tree, hf_comments_text,
+					fr_user_data->tvb, 0, 0,
+					ch,
+					"%s", ch);
+				if (newline == NULL) {
+					/* This was set in the previous loop
+					 * iteration; it means we've added the
+					 * final line
+					 */
+					break;
+				}
+				else {
+					/* Put back the newline we removed */
+					*newline = '\n';
+					ch = newline + 1;
+					if (*ch == '\0') {
+						break;
+					}
+					/* Find next newline to repeat the process
+					 * in the next iteration
+					 */
+					newline = strchr(ch, '\n');
+					if (newline != NULL) {
+						*newline = '\0';
+					}
+				}
+			}
+			if (i == max_comment_lines) {
+				/* Put back a newline if we still have one dangling */
+				if (newline != NULL) {
+					*newline = '\n';
+				}
+				/* Add truncation notice */
+				proto_tree_add_string_format(comments_tree, hf_comments_text,
+					fr_user_data->tvb, 0, 0,
+					"",
+					"[comment truncated at %d line%s]",
+					max_comment_lines,
+					plurality(max_comment_lines, "", "s"));
+			}
+			/* Add the original comment unchanged as a hidden
+			 * item, so searches still work like before
+			 */
+			hidden_item = proto_tree_add_string(comments_tree,
+					hf_comments_text,
+					fr_user_data->tvb, 0, 0,
+					option->stringval);
+			proto_item_set_hidden(hidden_item);
+
+			comment_item = comments_tree;
+		}
+		hidden_item = expert_add_info_format(fr_user_data->pinfo, comment_item, &ei_comments_text,
 				"%s",  option->stringval);
+		proto_item_set_hidden(hidden_item);
 	}
 	fr_user_data->n_changes++;
-	return TRUE;
+	return true;
 }
 
-static gboolean
-frame_add_hash(wtap_block_t block _U_, guint option_id, wtap_opttype_e option_type _U_, wtap_optval_t *option, void *user_data)
+static bool
+frame_add_hash(wtap_block_t block _U_, unsigned option_id, wtap_opttype_e option_type _U_, wtap_optval_t *option, void *user_data)
 {
 	fr_foreach_t *fr_user_data = (fr_foreach_t *)user_data;
 
 	if (option_id == OPT_PKT_HASH) {
 		packet_hash_opt_t *hash = &option->packet_hash;
 		const char *format
-			= fr_user_data->n_changes ? "%s (%u)" : ", %s (%u)";
+			= fr_user_data->n_changes ? ", %s (%u)" : "%s (%u)";
 
 		proto_item_append_text(fr_user_data->item, format,
 				       get_hash_type_string(hash->type),
@@ -345,11 +509,11 @@ frame_add_hash(wtap_block_t block _U_, guint option_id, wtap_opttype_e option_ty
 						 hash->hash_bytes->len);
 	}
 	fr_user_data->n_changes++;
-	return TRUE;
+	return true;
 }
 
-static gboolean
-frame_add_verdict(wtap_block_t block _U_, guint option_id, wtap_opttype_e option_type _U_, wtap_optval_t *option, void *user_data)
+static bool
+frame_add_verdict(wtap_block_t block _U_, unsigned option_id, wtap_opttype_e option_type _U_, wtap_optval_t *option, void *user_data)
 {
 	fr_foreach_t *fr_user_data = (fr_foreach_t *)user_data;
 
@@ -391,29 +555,30 @@ frame_add_verdict(wtap_block_t block _U_, guint option_id, wtap_opttype_e option
 		}
 	}
 	fr_user_data->n_changes++;
-	return TRUE;
+	return true;
 }
 
 static int
 dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* data)
 {
 	proto_item  *volatile ti = NULL;
-	guint	     cap_len = 0, frame_len = 0;
-	guint32      pack_flags;
-	guint32      interface_queue;
-	guint64      drop_count;
-	guint64      packetid;
+	unsigned     cap_len = 0, frame_len = 0;
+	nstime_t     rel_ts;
+	uint32_t     pack_flags;
+	uint32_t     interface_queue;
+	uint64_t     drop_count;
+	uint64_t     packetid;
 	proto_tree  *volatile tree;
 	proto_tree  *comments_tree;
 	proto_tree  *volatile fh_tree = NULL;
 	proto_item  *item;
-	const gchar *cap_plurality, *frame_plurality;
+	const char *cap_plurality, *frame_plurality;
 	frame_data_t *fr_data = (frame_data_t*)data;
 	const color_filter_t *color_filter;
 	dissector_handle_t dissector_handle;
 	fr_foreach_t fr_user_data;
 	struct nflx_tcpinfo tcpinfo;
-	gboolean tcpinfo_filled = false;
+	bool tcpinfo_filled = false;
 
 	tree=parent_tree;
 
@@ -630,7 +795,8 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 			}
 			if (pinfo->rec->presence_flags & WTAP_HAS_INTERFACE_ID) {
 				const char *interface_name = epan_get_interface_name(pinfo->epan,
-				    pinfo->rec->rec_header.packet_header.interface_id);
+				    pinfo->rec->rec_header.packet_header.interface_id,
+				    pinfo->rec->presence_flags & WTAP_HAS_SECTION_NUMBER ? pinfo->rec->section_number : 0);
 				if (interface_name != NULL) {
 					proto_item_append_text(ti, " on interface %s, id %u",
 					    interface_name, pinfo->rec->rec_header.packet_header.interface_id);
@@ -693,7 +859,7 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 			 * be preferred?
 			 */
 			ti = proto_tree_add_protocol_format(tree, proto_syscall, tvb, 0, tvb_captured_length(tvb),
-			    "Sysdig Event %u: %u byte%s",
+			    "System Event %u: %u byte%s",
 			    pinfo->num, frame_len, frame_plurality);
 			break;
 
@@ -746,8 +912,9 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 
 		if (pinfo->rec->presence_flags & WTAP_HAS_INTERFACE_ID &&
 		   (proto_field_is_referenced(tree, hf_frame_interface_id) || proto_field_is_referenced(tree, hf_frame_interface_name) || proto_field_is_referenced(tree, hf_frame_interface_description))) {
-			const char *interface_name = epan_get_interface_name(pinfo->epan, pinfo->rec->rec_header.packet_header.interface_id);
-			const char *interface_description = epan_get_interface_description(pinfo->epan, pinfo->rec->rec_header.packet_header.interface_id);
+			unsigned section_number = pinfo->rec->presence_flags & WTAP_HAS_SECTION_NUMBER ? pinfo->rec->section_number : 0;
+			const char *interface_name = epan_get_interface_name(pinfo->epan, pinfo->rec->rec_header.packet_header.interface_id, section_number);
+			const char *interface_description = epan_get_interface_description(pinfo->epan, pinfo->rec->rec_header.packet_header.interface_id, section_number);
 			proto_tree *if_tree;
 			proto_item *if_item;
 
@@ -831,8 +998,9 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 			proto_tree_add_int(fh_tree, hf_frame_wtap_encap, tvb, 0, 0, pinfo->rec->rec_header.packet_header.pkt_encap);
 
 		if (pinfo->presence_flags & PINFO_HAS_TS) {
-			proto_tree_add_time(fh_tree, hf_frame_arrival_time, tvb,
-					    0, 0, &(pinfo->abs_ts));
+			proto_tree_add_time(fh_tree, hf_frame_arrival_time_local, tvb, 0, 0, &pinfo->abs_ts);
+			proto_tree_add_time(fh_tree, hf_frame_arrival_time_utc, tvb, 0, 0, &pinfo->abs_ts);
+			proto_tree_add_time(fh_tree, hf_frame_arrival_time_epoch, tvb, 0, 0, &pinfo->abs_ts);
 			if (pinfo->abs_ts.nsecs < 0 || pinfo->abs_ts.nsecs >= 1000000000) {
 				expert_add_info_format(pinfo, ti, &ei_arrive_time_out_of_range,
 								  "Arrival Time: Fractional second %09ld is invalid,"
@@ -843,14 +1011,14 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 					    0, 0, &(pinfo->fd->shift_offset));
 			proto_item_set_generated(item);
 
-			if (generate_epoch_time) {
-				proto_tree_add_time(fh_tree, hf_frame_arrival_time_epoch, tvb,
-						    0, 0, &(pinfo->abs_ts));
-			}
-
 			if (proto_field_is_referenced(tree, hf_frame_time_delta)) {
 				nstime_t     del_cap_ts;
 
+				/* XXX: pinfo->num - 1 might not *have* a
+			         * timestamp, even if this frame does. Would
+			         * the user prefer to see "delta from previous
+			         * captured frame that has a timestamp"?
+			         */
 				frame_delta_abs_time(pinfo->epan, pinfo->fd, pinfo->num - 1, &del_cap_ts);
 
 				item = proto_tree_add_time(fh_tree, hf_frame_time_delta, tvb,
@@ -868,13 +1036,21 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 				proto_item_set_generated(item);
 			}
 
+			frame_delta_abs_time(pinfo->epan, pinfo->fd, pinfo->fd->frame_ref_num, &rel_ts);
+
 			item = proto_tree_add_time(fh_tree, hf_frame_time_relative, tvb,
-						   0, 0, &(pinfo->rel_ts));
+						   0, 0, &(rel_ts));
 			proto_item_set_generated(item);
 
 			if (pinfo->fd->ref_time) {
 				ti = proto_tree_add_item(fh_tree, hf_frame_time_reference, tvb, 0, 0, ENC_NA);
 				proto_item_set_generated(ti);
+			}
+
+			if (pinfo->rel_cap_ts_present) {
+				item = proto_tree_add_time(fh_tree, hf_frame_time_relative_cap, tvb,
+							   0, 0, &(pinfo->rel_cap_ts));
+				proto_item_set_generated(item);
 			}
 		}
 
@@ -902,9 +1078,9 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 		}
 
 		if (generate_md5_hash) {
-			const guint8 *cp;
-			guint8        digest[HASH_MD5_LENGTH];
-			const gchar  *digest_string;
+			const uint8_t *cp;
+			uint8_t       digest[HASH_MD5_LENGTH];
+			const char   *digest_string;
 
 			cp = tvb_get_ptr(tvb, 0, cap_len);
 
@@ -936,11 +1112,111 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 			if (tcpinfo_filled) {
 				proto_tree *bblog_tree;
 				proto_item *bblog_item;
+				static int * const bblog_event_flags[] = {
+					&hf_frame_bblog_event_flags_rxbuf,
+					&hf_frame_bblog_event_flags_txbuf,
+					&hf_frame_bblog_event_flags_hdr,
+					&hf_frame_bblog_event_flags_verbose,
+					&hf_frame_bblog_event_flags_stack,
+					NULL
+				};
+				static int * const bblog_t_flags[] = {
+					&hf_frame_bblog_t_flags_ack_now,
+					&hf_frame_bblog_t_flags_delayed_ack,
+					&hf_frame_bblog_t_flags_no_delay,
+					&hf_frame_bblog_t_flags_no_opt,
+					&hf_frame_bblog_t_flags_sent_fin,
+					&hf_frame_bblog_t_flags_request_window_scale,
+					&hf_frame_bblog_t_flags_received_window_scale,
+					&hf_frame_bblog_t_flags_request_timestamp,
+					&hf_frame_bblog_t_flags_received_timestamp,
+					&hf_frame_bblog_t_flags_sack_permitted,
+					&hf_frame_bblog_t_flags_need_syn,
+					&hf_frame_bblog_t_flags_need_fin,
+					&hf_frame_bblog_t_flags_no_push,
+					&hf_frame_bblog_t_flags_prev_valid,
+					&hf_frame_bblog_t_flags_wake_socket_receive,
+					&hf_frame_bblog_t_flags_goodput_in_progress,
+					&hf_frame_bblog_t_flags_more_to_come,
+					&hf_frame_bblog_t_flags_listen_queue_overflow,
+					&hf_frame_bblog_t_flags_last_idle,
+					&hf_frame_bblog_t_flags_zero_recv_window_sent,
+					&hf_frame_bblog_t_flags_be_in_fast_recovery,
+					&hf_frame_bblog_t_flags_was_in_fast_recovery,
+					&hf_frame_bblog_t_flags_signature,
+					&hf_frame_bblog_t_flags_force_data,
+					&hf_frame_bblog_t_flags_tso,
+					&hf_frame_bblog_t_flags_toe,
+					&hf_frame_bblog_t_flags_unused_0,
+					&hf_frame_bblog_t_flags_unused_1,
+					&hf_frame_bblog_t_flags_lost_rtx_detection,
+					&hf_frame_bblog_t_flags_be_in_cong_recovery,
+					&hf_frame_bblog_t_flags_was_in_cong_recovery,
+					&hf_frame_bblog_t_flags_fast_open,
+					NULL
+				};
+				static int * const bblog_t_flags2[] = {
+					&hf_frame_bblog_t_flags2_plpmtu_blackhole,
+					&hf_frame_bblog_t_flags2_plpmtu_pmtud,
+					&hf_frame_bblog_t_flags2_plpmtu_maxsegsnt,
+					&hf_frame_bblog_t_flags2_log_auto,
+					&hf_frame_bblog_t_flags2_drop_after_data,
+					&hf_frame_bblog_t_flags2_ecn_permit,
+					&hf_frame_bblog_t_flags2_ecn_snd_cwr,
+					&hf_frame_bblog_t_flags2_ecn_snd_ece,
+					&hf_frame_bblog_t_flags2_ace_permit,
+					&hf_frame_bblog_t_flags2_first_bytes_complete,
+					NULL
+				};
 
 				bblog_item = proto_tree_add_string(fh_tree, hf_frame_bblog, tvb, 0, 0, "");
 				bblog_tree = proto_item_add_subtree(bblog_item, ett_bblog);
-				proto_tree_add_uint(bblog_tree, hf_frame_bblog_ticks,     tvb, 0, 0, tcpinfo.tlb_ticks);
-				proto_tree_add_uint(bblog_tree, hf_frame_bblog_serial_nr, tvb, 0, 0, tcpinfo.tlb_sn);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_ticks,          NULL, 0, 0, tcpinfo.tlb_ticks);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_serial_nr,      NULL, 0, 0, tcpinfo.tlb_sn);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_event_id,       NULL, 0, 0, tcpinfo.tlb_eventid);
+				proto_tree_add_bitmask_value(bblog_tree, NULL, 0, hf_frame_bblog_event_flags, ett_bblog_event_flags, bblog_event_flags, tcpinfo.tlb_eventflags);
+				proto_tree_add_int(bblog_tree,  hf_frame_bblog_errno,          NULL, 0, 0, tcpinfo.tlb_errno);
+				if (tcpinfo.tlb_eventflags & BBLOG_EVENT_FLAG_RXBUF) {
+					proto_tree_add_uint(bblog_tree, hf_frame_bblog_rxb_acc,   NULL, 0, 0, tcpinfo.tlb_rxbuf_tls_sb_acc);
+					proto_tree_add_uint(bblog_tree, hf_frame_bblog_rxb_ccc,   NULL, 0, 0, tcpinfo.tlb_rxbuf_tls_sb_ccc);
+					proto_tree_add_uint(bblog_tree, hf_frame_bblog_rxb_spare, NULL, 0, 0, tcpinfo.tlb_rxbuf_tls_sb_spare);
+				}
+				if (tcpinfo.tlb_eventflags & BBLOG_EVENT_FLAG_TXBUF) {
+					proto_tree_add_uint(bblog_tree, hf_frame_bblog_txb_acc,   NULL, 0, 0, tcpinfo.tlb_txbuf_tls_sb_acc);
+					proto_tree_add_uint(bblog_tree, hf_frame_bblog_txb_ccc,   NULL, 0, 0, tcpinfo.tlb_txbuf_tls_sb_ccc);
+					proto_tree_add_uint(bblog_tree, hf_frame_bblog_txb_spare, NULL, 0, 0, tcpinfo.tlb_txbuf_tls_sb_spare);
+				}
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_state,          NULL, 0, 0, tcpinfo.tlb_state);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_starttime,      NULL, 0, 0, tcpinfo.tlb_starttime);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_iss,            NULL, 0, 0, tcpinfo.tlb_iss);
+				proto_tree_add_bitmask_value(bblog_tree, NULL, 0, hf_frame_bblog_t_flags, ett_bblog_t_flags, bblog_t_flags, tcpinfo.tlb_flags);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_snd_una,        NULL, 0, 0, tcpinfo.tlb_snd_una);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_snd_max,        NULL, 0, 0, tcpinfo.tlb_snd_max);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_snd_cwnd,       NULL, 0, 0, tcpinfo.tlb_snd_cwnd);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_snd_nxt,        NULL, 0, 0, tcpinfo.tlb_snd_nxt);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_snd_recover,    NULL, 0, 0, tcpinfo.tlb_snd_recover);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_snd_wnd,        NULL, 0, 0, tcpinfo.tlb_snd_wnd);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_snd_ssthresh,   NULL, 0, 0, tcpinfo.tlb_snd_ssthresh);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_srtt,           NULL, 0, 0, tcpinfo.tlb_srtt);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_rttvar,         NULL, 0, 0, tcpinfo.tlb_rttvar);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_rcv_up,         NULL, 0, 0, tcpinfo.tlb_rcv_up);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_rcv_adv,        NULL, 0, 0, tcpinfo.tlb_rcv_adv);
+				proto_tree_add_bitmask_value(bblog_tree, NULL, 0, hf_frame_bblog_t_flags2, ett_bblog_t_flags2, bblog_t_flags2, tcpinfo.tlb_flags2);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_rcv_nxt,        NULL, 0, 0, tcpinfo.tlb_rcv_nxt);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_rcv_wnd,        NULL, 0, 0, tcpinfo.tlb_rcv_wnd);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_dupacks,        NULL, 0, 0, tcpinfo.tlb_dupacks);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_seg_qlen,       NULL, 0, 0, tcpinfo.tlb_segqlen);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_snd_num_holes,  NULL, 0, 0, tcpinfo.tlb_snd_numholes);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_flex_1,         NULL, 0, 0, tcpinfo.tlb_flex1);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_flex_2,         NULL, 0, 0, tcpinfo.tlb_flex2);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_first_byte_in,  NULL, 0, 0, tcpinfo.tlb_fbyte_in);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_first_byte_out, NULL, 0, 0, tcpinfo.tlb_fbyte_out);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_snd_scale,      NULL, 0, 0, tcpinfo.tlb_snd_scale);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_rcv_scale,      NULL, 0, 0, tcpinfo.tlb_rcv_scale);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_pad_1,          NULL, 0, 0, tcpinfo._pad[0]);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_pad_2,          NULL, 0, 0, tcpinfo._pad[1]);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_pad_3,          NULL, 0, 0, tcpinfo._pad[2]);
+				proto_tree_add_uint(bblog_tree, hf_frame_bblog_payload_len,    NULL, 0, 0, tcpinfo.tlb_len);
 			}
 		}
 
@@ -955,7 +1231,7 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 	if (pinfo->fd->ignored) {
 		/* Ignored package, stop handling here */
 		col_set_str(pinfo->cinfo, COL_INFO, "<Ignored>");
-		proto_tree_add_boolean_format(tree, hf_frame_ignored, tvb, 0, 0, TRUE, "This frame is marked as ignored");
+		proto_tree_add_boolean_format(tree, hf_frame_ignored, tvb, 0, 0, true, "This frame is marked as ignored");
 		return tvb_captured_length(tvb);
 	}
 
@@ -977,7 +1253,7 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 		/* Note: A Windows "exceptional exception" may leave the kazlib's (Portable Exception Handling)
 		   stack in an inconsistent state thus causing a crash at some point in the
 		   handling of the exception.
-		   See: https://www.wireshark.org/lists/wireshark-dev/200704/msg00243.html
+		   See: https://lists.wireshark.org/archives/wireshark-dev/200704/msg00243.html
 		*/
 		__try {
 #endif
@@ -1011,7 +1287,7 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 					        pinfo->rec->rec_header.packet_header.pkt_encap);
 				}
 				if (dissector_handle != NULL) {
-					guint32 save_match_uint = pinfo->match_uint;
+					uint32_t save_match_uint = pinfo->match_uint;
 
 					pinfo->match_uint =
 					    pinfo->rec->rec_header.packet_header.pkt_encap;
@@ -1062,53 +1338,9 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 				break;
 
 			case REC_TYPE_CUSTOM_BLOCK:
-				switch (pinfo->rec->rec_header.custom_block_header.pen) {
-				case PEN_NFLX:
-					switch (pinfo->rec->rec_header.custom_block_header.custom_data_header.nflx_custom_data_header.type) {
-					case BBLOG_TYPE_SKIPPED_BLOCK:
-						col_set_str(pinfo->cinfo, COL_PROTOCOL, "BBLog");
-						col_add_fstr(pinfo->cinfo, COL_INFO, "Number of skipped events: %u",
-						             pinfo->rec->rec_header.custom_block_header.custom_data_header.nflx_custom_data_header.skipped);
-						break;
-					case BBLOG_TYPE_EVENT_BLOCK:
-						call_dissector_with_data(bblog_handle,
-						                         tvb, pinfo, parent_tree,
-						                         (void *)pinfo->pseudo_header);
-						break;
-					default:
-						col_set_str(pinfo->cinfo, COL_PROTOCOL, "BBLog");
-						col_add_fstr(pinfo->cinfo, COL_INFO, "Unknown type: %u",
-						             pinfo->rec->rec_header.custom_block_header.custom_data_header.nflx_custom_data_header.type);
-						break;
-					}
-					break;
-				case PEN_VCTR:
-				{
-					guint32 data_type;
-					guint32 data_length;
-					proto_item *pi_tmp;
-					proto_tree *pt_pcaplog_data;
-
-					proto_tree_add_item_ret_uint(fh_tree, hf_frame_pcaplog_type, tvb, 0, 4, ENC_LITTLE_ENDIAN, &data_type);
-					proto_tree_add_item_ret_uint(fh_tree, hf_frame_pcaplog_length, tvb, 4, 4, ENC_LITTLE_ENDIAN, &data_length);
-					pi_tmp = proto_tree_add_item(fh_tree, hf_frame_pcaplog_data, tvb, 8, data_length, ENC_NA);
-					pt_pcaplog_data = proto_item_add_subtree(pi_tmp, ett_pcaplog_data);
-
-					col_set_str(pinfo->cinfo, COL_PROTOCOL, "pcaplog");
-					col_add_fstr(pinfo->cinfo, COL_INFO, "Custom Block: PEN = %s (%d), will%s be copied",
-						enterprises_lookup(pinfo->rec->rec_header.custom_block_header.pen, "Unknown"),
-						pinfo->rec->rec_header.custom_block_header.pen,
-						pinfo->rec->rec_header.custom_block_header.copy_allowed ? "" : " not");
-
-					/* at least data_types 1-3 seem XML-based */
-					if (data_type > 0 && data_type <= 3) {
-						call_dissector(xml_handle, tvb_new_subset_remaining(tvb, 8), pinfo, pt_pcaplog_data);
-					} else {
-						call_data_dissector(tvb_new_subset_remaining(tvb, 8), pinfo, pt_pcaplog_data);
-					}
-				}
-					break;
-				default:
+				if (!dissector_try_uint(block_pen_dissector_table,
+				    pinfo->rec->rec_header.custom_block_header.pen,
+				    tvb, pinfo, parent_tree)) {
 					col_set_str(pinfo->cinfo, COL_PROTOCOL, "PCAPNG");
 					proto_tree_add_uint_format_value(fh_tree, hf_frame_cb_pen, tvb, 0, 0,
 					                                 pinfo->rec->rec_header.custom_block_header.pen,
@@ -1121,10 +1353,8 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 					             pinfo->rec->rec_header.custom_block_header.pen,
 					             pinfo->rec->rec_header.custom_block_header.copy_allowed ? "" : " not");
 					call_data_dissector(tvb, pinfo, parent_tree);
-					break;
 				}
 				break;
-
 			}
 #ifdef _MSC_VER
 		} __except(EXCEPTION_EXECUTE_HANDLER /* handle all exceptions */) {
@@ -1159,7 +1389,7 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 	ENDTRY;
 
 	if (proto_field_is_referenced(tree, hf_frame_protocols)) {
-		wmem_strbuf_t *val = wmem_strbuf_sized_new(pinfo->pool, 128, 0);
+		wmem_strbuf_t *val = wmem_strbuf_new_sized(pinfo->pool, 128);
 		wmem_list_frame_t *frame;
 		/* skip the first entry, it's always the "frame" protocol */
 		frame = wmem_list_frame_next(wmem_list_head(pinfo->layers));
@@ -1177,6 +1407,18 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 		proto_item_set_generated(ti);
 	}
 
+	/* Add the columns as fields. We have to do this here, so that
+	 * they're available for postdissectors that want all the fields.
+	 *
+	 * Note the coloring rule names are set after this, which means
+	 * that you can set a coloring rule based on the value of a column,
+	 * like _ws.col.protocol or _ws.col.info.
+	 * OTOH, if we created _ws.col.custom, and a custom column used
+	 * frame.coloring_rule.name, filtering with it wouldn't work -
+	 * but you can filter on that field directly, so that doesn't matter.
+	 */
+	col_dissect(tvb, pinfo, parent_tree);
+
 	/*  Call postdissectors if we have any (while trying to avoid another
 	 *  TRY/CATCH)
 	 */
@@ -1189,7 +1431,7 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 			/* Note: A Windows "exceptional exception" may leave the kazlib's (Portable Exception Handling)
 			   stack in an inconsistent state thus causing a crash at some point in the
 			   handling of the exception.
-			   See: https://www.wireshark.org/lists/wireshark-dev/200704/msg00243.html
+			   See: https://lists.wireshark.org/archives/wireshark-dev/200704/msg00243.html
 			*/
 			__try {
 #endif
@@ -1255,11 +1497,11 @@ dissect_frame(tvbuff_t *tvb, packet_info *pinfo, proto_tree *parent_tree, void* 
 	}
 
 	if (prefs.enable_incomplete_dissectors_check && tree && tree->tree_data->visible) {
-		gchar* decoded;
-		guint length;
-		guint i;
-		guint byte;
-		guint bit;
+		char* decoded;
+		unsigned length;
+		unsigned i;
+		unsigned byte;
+		unsigned bit;
 
 		length = tvb_captured_length(tvb);
 		decoded = proto_find_undecoded_data(tree, length);
@@ -1290,20 +1532,25 @@ void
 proto_register_frame(void)
 {
 	static hf_register_info hf[] = {
-		{ &hf_frame_arrival_time,
+		{ &hf_frame_arrival_time_local,
 		  { "Arrival Time", "frame.time",
 		    FT_ABSOLUTE_TIME, ABSOLUTE_TIME_LOCAL, NULL, 0x0,
-		    "Absolute time when this frame was captured", HFILL }},
+		    "Absolute time when this frame was captured, in local time", HFILL }},
+
+		{ &hf_frame_arrival_time_utc,
+		  { "UTC Arrival Time", "frame.time_utc",
+		    FT_ABSOLUTE_TIME, ABSOLUTE_TIME_UTC, NULL, 0x0,
+		    "Absolute time when this frame was captured, in Coordinated Universal Time (UTC)", HFILL }},
+
+		{ &hf_frame_arrival_time_epoch,
+		  { "Epoch Arrival Time", "frame.time_epoch",
+		    FT_ABSOLUTE_TIME, ABSOLUTE_TIME_UNIX, NULL, 0x0,
+		    "Absolute time when this frame was captured, in Epoch time (also known as Unix time)", HFILL }},
 
 		{ &hf_frame_shift_offset,
 		  { "Time shift for this packet", "frame.offset_shift",
 		    FT_RELATIVE_TIME, BASE_NONE, NULL, 0x0,
 		    "Time shift applied to this packet", HFILL }},
-
-		{ &hf_frame_arrival_time_epoch,
-		  { "Epoch Time", "frame.time_epoch",
-		    FT_RELATIVE_TIME, BASE_NONE, NULL, 0x0,
-		    "Epoch time when this frame was captured", HFILL }},
 
 		{ &hf_frame_time_delta,
 		  { "Time delta from previous captured frame", "frame.time_delta",
@@ -1319,6 +1566,11 @@ proto_register_frame(void)
 		  { "Time since reference or first frame", "frame.time_relative",
 		    FT_RELATIVE_TIME, BASE_NONE, NULL, 0x0,
 		    "Time relative to time reference or first frame", HFILL }},
+
+		{ &hf_frame_time_relative_cap,
+		  { "Time since start of capturing", "frame.time_relative_capture_start",
+		    FT_RELATIVE_TIME, BASE_NONE, NULL, 0x0,
+		    "Time relative to the capture start", HFILL }},
 
 		{ &hf_frame_time_reference,
 		  { "This is a Time Reference frame", "frame.ref_time",
@@ -1534,7 +1786,7 @@ proto_register_frame(void)
 
 		{ &hf_frame_cb_copy_allowed,
 		  { "Copying", "frame.cb_copy",
-		    FT_BOOLEAN, BASE_DEC, TFS(&tfs_allowed_not_allowed), 0x0,
+		    FT_BOOLEAN, BASE_NONE, TFS(&tfs_allowed_not_allowed), 0x0,
 		    "Whether the custom block will be written or not", HFILL }},
 
 		{ &hf_frame_bblog,
@@ -1552,20 +1804,441 @@ proto_register_frame(void)
 		    FT_UINT32, BASE_DEC, NULL, 0x0,
 		    NULL, HFILL}},
 
-		{ &hf_frame_pcaplog_type,
-		{ "Date Type", "frame.pcaplog.data_type",
-		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		{ &hf_frame_bblog_event_id,
+		  { "Event Identifier", "frame.bblog.event_id",
+		    FT_UINT8, BASE_DEC, VALS(event_identifier_values), 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_event_flags,
+		  { "Event Flags", "frame.bblog.event_flags",
+		    FT_UINT16, BASE_HEX, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_event_flags_rxbuf,
+		  { "Receive buffer information", "frame.bblog.event_flags_rxbuf",
+		    FT_BOOLEAN, 16, TFS(&tfs_available_not_available), BBLOG_EVENT_FLAG_RXBUF,
 		    NULL, HFILL} },
 
-		{ &hf_frame_pcaplog_length,
-		{ "Data Length", "frame.pcaplog.data_length",
-		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		{ &hf_frame_bblog_event_flags_txbuf,
+		  { "Send buffer information", "frame.bblog.event_flags_txbuf",
+		    FT_BOOLEAN, 16, TFS(&tfs_available_not_available), BBLOG_EVENT_FLAG_TXBUF,
 		    NULL, HFILL} },
 
-		{ &hf_frame_pcaplog_data,
-		{ "Data", "frame.pcaplog.data",
-		    FT_BYTES, BASE_NONE, NULL, 0x0,
+		{ &hf_frame_bblog_event_flags_hdr,
+		  { "TCP header", "frame.bblog.event_flags_hdr",
+		    FT_BOOLEAN, 16, TFS(&tfs_available_not_available), BBLOG_EVENT_FLAG_HDR,
 		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_event_flags_verbose,
+		  { "Additional information", "frame.bblog.event_flags_verbose",
+		    FT_BOOLEAN, 16, TFS(&tfs_available_not_available), BBLOG_EVENT_FLAG_VERBOSE,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_event_flags_stack,
+		  { "Stack specific information", "frame.bblog.event_flags_stack",
+		    FT_BOOLEAN, 16, TFS(&tfs_available_not_available), BBLOG_EVENT_FLAG_STACKINFO,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_errno,
+		  { "Error Number", "frame.bblog.errno",
+		    FT_INT32, BASE_DEC, VALS(errno_values), 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_rxb_acc,
+		  { "Receive Buffer ACC", "frame.bblog.rxb_acc",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_rxb_ccc,
+		  { "Receive Buffer CCC", "frame.bblog.rxb_ccc",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_rxb_spare,
+		  { "Receive Buffer Spare", "frame.bblog.rxb_spare",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_txb_acc,
+		  { "Send Buffer ACC", "frame.bblog.txb_acc",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_txb_ccc,
+		  { "Send Buffer CCC", "frame.bblog.txb_ccc",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_txb_spare,
+		  { "Send Buffer Spare", "frame.bblog.txb_spare",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_state,
+		  { "TCP State", "frame.bblog.state",
+		    FT_UINT32, BASE_DEC, VALS(tcp_state_values), 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_starttime,
+		  { "Starttime", "frame.bblog.starttime",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_iss,
+		  { "Initial Sending Sequence Number (ISS)", "frame.bblog.iss",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_t_flags,
+		  { "TCB Flags", "frame.bblog.t_flags",
+		    FT_UINT32, BASE_HEX, NULL, 0x0,
+		  NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_ack_now,
+		  { "Ack now", "frame.bblog.t_flags_ack_now",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_ACKNOW,
+		  NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_delayed_ack,
+		  { "Delayed ack", "frame.bblog.t_flags_delayed_ack",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_DELACK,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_no_delay,
+		  { "No delay", "frame.bblog.t_flags_no_delay",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_NODELAY,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_no_opt,
+		  { "No options", "frame.bblog.t_flags_no_opt",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_NOOPT,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_sent_fin,
+		  { "Sent FIN", "frame.bblog.t_flags_sent_fin",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_SENTFIN,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_request_window_scale,
+		  { "Have or will request Window Scaling", "frame.bblog.t_flags_request_window_scale",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_REQ_SCALE,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_received_window_scale,
+		  { "Peer has requested Window Scaling", "frame.bblog.t_flags_received_window_scale",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_RCVD_SCALE,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_request_timestamp,
+		  { "Have or will request Timestamps", "frame.bblog.t_flags_request_timestamp",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_REQ_TSTMP,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_received_timestamp,
+		  { "Peer has requested Timestamp", "frame.bblog.t_flags_received_timestamp",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_RCVD_TSTMP,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_sack_permitted,
+		  { "SACK permitted", "frame.bblog.t_flags_sack_permitted",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_SACK_PERMIT,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_need_syn,
+		  { "Need SYN", "frame.bblog.t_flags_need_syn",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_NEEDSYN,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_need_fin,
+		  { "Need FIN", "frame.bblog.t_flags_need_fin",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_NEEDFIN,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_no_push,
+		  { "No push", "frame.bblog.t_flags_no_push",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_NOPUSH,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_prev_valid,
+		  { "Saved values for bad retransmission valid", "frame.bblog.t_flags_prev_valid",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_PREVVALID,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_wake_socket_receive,
+		  { "Wakeup receive socket", "frame.bblog.t_flags_wake_socket_receive",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_WAKESOR,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_goodput_in_progress,
+		  { "Goodput measurement in progress", "frame.bblog.t_flags_goodput_in_progress",
+		    FT_BOOLEAN, 32, NULL, BBLOG_T_FLAGS_GPUTINPROG,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_more_to_come,
+		  { "More to come", "frame.bblog.t_flags_more_to_come",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_MORETOCOME,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_listen_queue_overflow,
+		  { "Listen queue overflow", "frame.bblog.t_flags_listen_queue_overflow",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_LQ_OVERFLOW,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_last_idle,
+		  { "Connection was previously idle", "frame.bblog.t_flags_last_idle",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_LASTIDLE,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_zero_recv_window_sent,
+		  { "Sent a RCV.WND = 0 in response", "frame.bblog.t_flags_zero_recv_window_sent",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_RXWIN0SENT,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_be_in_fast_recovery,
+		  { "Currently in fast recovery", "frame.bblog.t_flags_be_in_fast_recovery",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_FASTRECOVERY,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_was_in_fast_recovery,
+		  { "Was in fast recovery", "frame.bblog.t_flags_was_in_fast_recovery",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_WASFRECOVERY,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_signature,
+		  { "MD5 signature required", "frame.bblog.t_flags_signature",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_SIGNATURE,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_force_data,
+		  { "Force data", "frame.bblog.t_flags_force_data",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_FORCEDATA,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_tso,
+		  { "TSO", "frame.bblog.t_flags_tso",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_TSO,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_toe,
+		  { "TOE", "frame.bblog.t_flags_toe",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_TOE,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_unused_0,
+		  { "Unused 1", "frame.bblog.t_flags_unused_0",
+		    FT_BOOLEAN, 32, NULL, BBLOG_T_FLAGS_UNUSED0,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_unused_1,
+		  { "Unused 2", "frame.bblog.t_flags_unused_1",
+		    FT_BOOLEAN, 32, NULL, BBLOG_T_FLAGS_UNUSED1,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_lost_rtx_detection,
+		  { "Lost retransmission detection", "frame.bblog.t_flags_lost_rtx_detection",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_LRD,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_be_in_cong_recovery,
+		  { "Currently in congestion avoidance", "frame.bblog.t_flags_be_in_cong_recovery",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_CONGRECOVERY,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_was_in_cong_recovery,
+		  { "Was in congestion avoidance", "frame.bblog.t_flags_was_in_cong_recovery",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS_WASCRECOVERY,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags_fast_open,
+		  { "TFO", "frame.bblog.t_flags_tfo",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS_FASTOPEN,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_snd_una,
+		  { "Oldest Unacknowledged Sequence Number (SND.UNA)", "frame.bblog.snd_una",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_snd_max,
+		  { "Newest Sequence Number Sent (SND.MAX)", "frame.bblog.snd_max",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_snd_cwnd,
+		  { "Congestion Window", "frame.bblog.snd_cwnd",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_snd_nxt,
+		  { "Next Sequence Number (SND.NXT)", "frame.bblog.snd_nxt",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_snd_recover,
+		  { "Recovery Sequence Number (SND.RECOVER)", "frame.bblog.snd_recover",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_snd_wnd,
+		  { "Send Window (SND.WND)", "frame.bblog.snd_wnd",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_snd_ssthresh,
+		  { "Slowstart Threshold (SSTHREASH)", "frame.bblog.snd_ssthresh",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_srtt,
+		  { "Smoothed Round Trip Time (SRTT)", "frame.bblog.srtt",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_rttvar,
+		  { "Round Trip Timer Variance (RTTVAR)", "frame.bblog.rttvar",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_rcv_up,
+		  { "Receive Urgent Pointer (RCV.UP)", "frame.bblog.rcv_up",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_rcv_adv,
+		  { "Receive Advanced (RCV.ADV)", "frame.bblog.rcv_adv",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_t_flags2,
+		  { "TCB Flags2", "frame.bblog.t_flags2",
+		    FT_UINT32, BASE_HEX, NULL, 0x0,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_plpmtu_blackhole,
+		  { "PMTU blackhole detection", "frame.bblog.t_flags2_plpmtu_blackhole",
+		    FT_BOOLEAN, 32, TFS(&tfs_active_inactive), BBLOG_T_FLAGS2_PLPMTU_BLACKHOLE,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_plpmtu_pmtud,
+		  { "Path MTU discovery", "frame.bblog.t_flags2_plpmtu_pmtud",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS2_PLPMTU_PMTUD,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_plpmtu_maxsegsnt,
+		  { "Last segment sent was a full segment", "frame.bblog.t_flags2_plpmtu_maxsegsnt",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS2_PLPMTU_MAXSEGSNT,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_log_auto,
+		  { "Connection auto-logging", "frame.bblog.t_flags2_log_auto",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS2_LOG_AUTO,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_drop_after_data,
+		  { "Drop connection after all data has been acknowledged", "frame.bblog.t_flags2_drop_after_data",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS2_DROP_AFTER_DATA,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_ecn_permit,
+		  { "ECN", "frame.bblog.t_flags2_ecn_permit",
+		    FT_BOOLEAN, 32, TFS(&tfs_supported_not_supported), BBLOG_T_FLAGS2_ECN_PERMIT,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_ecn_snd_cwr,
+		  { "ECN CWR queued", "frame.bblog.t_flags2_ecn_snd_cwr",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS2_ECN_SND_CWR,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_ecn_snd_ece,
+		  { "ECN ECE queued", "frame.bblog.t_flags2_ecn_snd_ece",
+		    FT_BOOLEAN, 32, TFS(&tfs_yes_no), BBLOG_T_FLAGS2_ECN_SND_ECE,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_ace_permit,
+		  { "Accurate ECN mode", "frame.bblog.t_flags2_ace_permit",
+		    FT_BOOLEAN, 32, TFS(&tfs_enabled_disabled), BBLOG_T_FLAGS2_ACE_PERMIT,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_t_flags2_first_bytes_complete,
+		  { "First bytes in/out", "frame.bblog.t_flags2_first_bytes_complete",
+		    FT_BOOLEAN, 32, TFS(&tfs_available_not_available), BBLOG_T_FLAGS2_FIRST_BYTES_COMPLETE,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_rcv_nxt,
+		  { "Receive Next (RCV.NXT)", "frame.bblog.rcv_nxt",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_rcv_wnd,
+		  { "Receive Window (RCV.WND)", "frame.bblog.rcv_wnd",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_dupacks,
+		  { "Duplicate Acknowledgements", "frame.bblog.dupacks",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_seg_qlen,
+		  { "Segment Queue Length", "frame.bblog.seg_qlen",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_snd_num_holes,
+		  { "Number of Holes", "frame.bblog.snd_num_holes",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_flex_1,
+		  { "Flex 1", "frame.bblog.flex_1",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_flex_2,
+		  { "Flex 2", "frame.bblog.flex_2",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_first_byte_in,
+		  { "Time of First Byte In", "frame.bblog.first_byte_in",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_first_byte_out,
+		  { "Time of First Byte Out", "frame.bblog.first_byte_out",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
+		{ &hf_frame_bblog_snd_scale,
+		  { "Snd.Wind.Shift", "frame.bblog.snd_shift",
+		    FT_UINT8, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_rcv_scale,
+		  { "Rcv.Wind.Shift", "frame.bblog.rcv_shift",
+		    FT_UINT8, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_pad_1,
+		  { "Padding", "frame.bblog.pad_1",
+		    FT_UINT8, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_pad_2,
+		  { "Padding", "frame.bblog.pad_2",
+		    FT_UINT8, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_pad_3,
+		  { "Padding", "frame.bblog.pad_3",
+		    FT_UINT8, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL} },
+
+		{ &hf_frame_bblog_payload_len,
+		  { "TCP Payload Length", "frame.bblog.payload_length",
+		    FT_UINT32, BASE_DEC, NULL, 0x0,
+		    NULL, HFILL}},
+
 	};
 
 	static hf_register_info hf_encap =
@@ -1574,7 +2247,7 @@ proto_register_frame(void)
 		    FT_INT16, BASE_DEC, NULL, 0x0,
 		    NULL, HFILL }};
 
- 	static gint *ett[] = {
+	static int *ett[] = {
 		&ett_frame,
 		&ett_ifname,
 		&ett_flags,
@@ -1582,7 +2255,9 @@ proto_register_frame(void)
 		&ett_hash,
 		&ett_verdict,
 		&ett_bblog,
-		&ett_pcaplog_data
+		&ett_bblog_event_flags,
+		&ett_bblog_t_flags,
+		&ett_bblog_t_flags2,
 	};
 
 	static ei_register_info ei[] = {
@@ -1626,6 +2301,8 @@ proto_register_frame(void)
 	    "Wiretap encapsulation type", proto_frame, FT_UINT32, BASE_DEC);
 	wtap_fts_rec_dissector_table = register_dissector_table("wtap_fts_rec",
 	    "Wiretap file type for file-type-specific records", proto_frame, FT_UINT32, BASE_DEC);
+	block_pen_dissector_table = register_dissector_table("pcapng_custom_block",
+	    "PcapNG custom block PEN", proto_frame, FT_UINT32, BASE_DEC);
 	register_capture_dissector_table("wtap_encap", "Wiretap encapsulation type");
 
 	/* You can't disable dissection of "Frame", as that would be
@@ -1644,10 +2321,7 @@ proto_register_frame(void)
 	    "Generate an MD5 hash of each frame",
 	    "Whether or not MD5 hashes should be generated for each frame, useful for finding duplicate frames.",
 	    &generate_md5_hash);
-	prefs_register_bool_preference(frame_module, "generate_epoch_time",
-	    "Generate an epoch time entry for each frame",
-	    "Whether or not an Epoch time entry should be generated for each frame.",
-	    &generate_epoch_time);
+	prefs_register_obsolete_preference(frame_module, "generate_epoch_time");
 	prefs_register_bool_preference(frame_module, "generate_bits_field",
 	    "Show the number of bits in the frame",
 	    "Whether or not the number of bits in the frame should be shown.",
@@ -1656,6 +2330,11 @@ proto_register_frame(void)
 	    "Disable 'packet size limited during capture' message in summary",
 	    "Whether or not 'packet size limited during capture' message in shown in Info column.",
 	    &disable_packet_size_limited_in_summary);
+	prefs_register_uint_preference(frame_module, "max_comment_lines",
+	    "Maximum number of lines to display for one packet comment",
+	    "Show at most this many lines of a multi-line packet comment"
+	    " (applied separately to each comment)",
+	    10, &max_comment_lines);
 
 	frame_tap=register_tap("frame");
 }
@@ -1666,8 +2345,6 @@ proto_reg_handoff_frame(void)
 	docsis_handle = find_dissector_add_dependency("docsis", proto_frame);
 	sysdig_handle = find_dissector_add_dependency("sysdig", proto_frame);
 	systemd_journal_handle = find_dissector_add_dependency("systemd_journal", proto_frame);
-	bblog_handle = find_dissector_add_dependency("bblog", proto_frame);
-	xml_handle = find_dissector_add_dependency("xml", proto_frame);
 }
 
 /*

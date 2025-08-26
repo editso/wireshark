@@ -70,6 +70,7 @@ protected:
 
 private slots:
     void on_capturePromModeCheckBox_toggled(bool checked);
+    void on_captureMonitorModeCheckBox_toggled(bool checked);
     void on_gbStopCaptureAuto_toggled(bool checked);
     void on_cbUpdatePacketsRT_toggled(bool checked);
     void on_cbAutoScroll_toggled(bool checked);
@@ -91,9 +92,11 @@ private slots:
     void browseButtonClicked();
     void interfaceItemChanged(QTreeWidgetItem *item, int column);
     void itemClicked(QTreeWidgetItem *item, int column);
-    void itemDoubleClicked(QTreeWidgetItem *item);
+    void itemDoubleClicked(QTreeWidgetItem *item, int column);
     void changeEvent(QEvent* event);
     void tempDirBrowseButtonClicked();
+    void MBComboBoxIndexChanged(int index);
+    void stopMBComboBoxIndexChanged(int index);
 
 signals:
     void startCapture();

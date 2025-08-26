@@ -49,10 +49,14 @@ TrafficTableDialog::TrafficTableDialog(QWidget &parent, CaptureFile &cf, const Q
     copy_bt_ = buttonBox()->addButton(tr("Copy"), QDialogButtonBox::ActionRole);
     copy_bt_->setMenu(ui->trafficTab->createCopyMenu(copy_bt_));
 
-    ui->displayFilterCheckBox->setChecked(cf.displayFilter().length() > 0);
+    if (cf.displayFilter().length() > 0) {
+        ui->displayFilterCheckBox->setChecked(true);
+        ui->trafficTab->setFilter(cf.displayFilter());
+    }
 
     ui->trafficTab->setFocus();
     ui->trafficTab->useNanosecondTimestamps(cf.timestampPrecision() == WTAP_TSPREC_NSEC);
+    connect(ui->displayFilterCheckBox, &QCheckBox::toggled, this, &TrafficTableDialog::displayFilterCheckBoxToggled);
     connect(ui->trafficList, &TrafficTypesList::protocolsChanged, ui->trafficTab, &TrafficTab::setOpenTabs);
     connect(ui->trafficTab, &TrafficTab::tabsChanged, ui->trafficList, &TrafficTypesList::selectProtocols);
 
@@ -65,6 +69,8 @@ TrafficTableDialog::TrafficTableDialog(QWidget &parent, CaptureFile &cf, const Q
 
     connect(ui->trafficListSearch, &QLineEdit::textChanged, ui->trafficList, &TrafficTypesList::filterList);
     connect(ui->trafficList, &TrafficTypesList::clearFilterList, ui->trafficListSearch, &QLineEdit::clear);
+
+    connect(mainApp->mainWindow(), SIGNAL(displayFilterSuccess(bool)), this, SLOT(displayFilterSuccess(bool)));
 
     QPushButton *close_bt = ui->buttonBox->button(QDialogButtonBox::Close);
     if (close_bt)
@@ -125,18 +131,30 @@ void TrafficTableDialog::on_nameResolutionCheckBox_toggled(bool checked)
     ui->trafficTab->setNameResolution(checked);
 }
 
-void TrafficTableDialog::on_displayFilterCheckBox_toggled(bool checked)
+void TrafficTableDialog::displayFilterCheckBoxToggled(bool checked)
+{
+    displayFilterUpdate(checked);
+}
+
+void TrafficTableDialog::displayFilterUpdate(bool set_filter)
 {
     if (!cap_file_.isValid()) {
         return;
     }
 
-    if (checked)
+    if (set_filter)
         trafficTab()->setFilter(cap_file_.displayFilter());
     else
         trafficTab()->setFilter(QString());
 
     cap_file_.retapPackets();
+}
+
+void TrafficTableDialog::displayFilterSuccess(bool success)
+{
+    if (success && ui->displayFilterCheckBox->isEnabled() && ui->displayFilterCheckBox->isChecked()) {
+       displayFilterUpdate(true);
+    }
 }
 
 void TrafficTableDialog::captureEvent(CaptureEvent e)

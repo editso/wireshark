@@ -40,8 +40,6 @@
 
 #include <config.h>
 
-#include <glib.h>
-
 #include "file.h"
 
 #include "ui/ws_ui_util.h"
@@ -67,11 +65,9 @@
 
 #include "capture_file.h"
 #include "capture_file_dialog.h"
-#include "print_dialog.h"
 #include "capture_file_properties_dialog.h"
 #include <ui/qt/utils/field_information.h>
 #include <ui/qt/widgets/display_filter_combo.h>
-#include "follow_stream_dialog.h"
 #include "main_window.h"
 
 class AccordionFrame;
@@ -83,7 +79,6 @@ class FilterDialog;
 class FunnelStatistics;
 class WelcomePage;
 class PacketCommentDialog;
-class PacketDiagram;
 class PacketList;
 class ProtoTree;
 class FilterExpressionToolBar;
@@ -119,12 +114,10 @@ public:
     void removeAdditionalToolbar(QString toolbarName);
 
     void addInterfaceToolbar(const iface_toolbar *toolbar_entry);
-    void removeInterfaceToolbar(const gchar *menu_title);
+    void removeInterfaceToolbar(const char *menu_title);
 
     QString getMwFileName();
     void setMwFileName(QString fileName);
-
-    frame_data * frameDataForRow(int row) const;
 
 protected:
     virtual bool eventFilter(QObject *obj, QEvent *event);
@@ -150,7 +143,8 @@ private:
         Default,
         Quit,
         Restart,
-        Reload
+        Reload,
+        Update
     };
 
     Ui::LograyMainWindow *main_ui_;
@@ -175,13 +169,12 @@ private:
 
     bool capture_stopping_;
     bool capture_filter_valid_;
+    bool use_capturing_title_;
 #ifdef HAVE_LIBPCAP
     capture_session cap_session_;
     CaptureOptionsDialog *capture_options_dialog_;
     info_data_t info_data_;
 #endif
-    FilterDialog *display_filter_dlg_;
-    FilterDialog *capture_filter_dlg_;
 
 #if defined(Q_OS_MAC)
     QMenu *dock_menu_;
@@ -225,11 +218,12 @@ private:
     void setMenusForFileSet(bool enable_list_files);
     void setWindowIcon(const QIcon &icon);
     QString replaceWindowTitleVariables(QString title);
+    void updateStyleSheet();
 
-    void externalMenuHelper(ext_menu_t * menu, QMenu  * subMenu, gint depth);
+    void externalMenuHelper(ext_menu_t * menu, QMenu  * subMenu, int depth);
 
     void setForCaptureInProgress(bool capture_in_progress = false, bool handle_toolbars = false, GArray *ifaces = NULL);
-    QMenu* findOrAddMenu(QMenu *parent_menu, QString& menu_text);
+    QMenu* findOrAddMenu(QMenu *parent_menu, const QStringList& menu_parts);
 
     void captureFileReadStarted(const QString &action);
 
@@ -240,7 +234,6 @@ private:
 
 signals:
     void setDissectedCaptureFile(capture_file *cf);
-    void displayFilterSuccess(bool success);
     void closePacketDialogs();
     void reloadFields();
     void packetInfoChanged(struct _packet_info *pinfo);
@@ -261,11 +254,11 @@ public slots:
      * @param cf_path Path to the file.
      * @param display_filter Display filter to apply. May be empty.
      * @param type File type.
-     * @param is_tempfile TRUE/FALSE.
+     * @param is_tempfile true/false.
      * @return True on success, false on failure.
      */
     // XXX We might want to return a cf_read_status_t or a CaptureFile.
-    bool openCaptureFile(QString cf_path, QString display_filter, unsigned int type, gboolean is_tempfile = FALSE);
+    bool openCaptureFile(QString cf_path, QString display_filter, unsigned int type, bool is_tempfile = false);
     bool openCaptureFile(QString cf_path = QString(), QString display_filter = QString()) { return openCaptureFile(cf_path, display_filter, WTAP_TYPE_AUTO); }
     void filterPackets(QString new_filter = QString(), bool force = false);
     void updateForUnsavedChanges();
@@ -299,8 +292,8 @@ private slots:
 
     void initViewColorizeMenu();
     void initConversationMenus();
-    static gboolean addExportObjectsMenuItem(const void *key, void *value, void *userdata);
-    void initExportObjectsMenus();
+    static bool addFollowStreamMenuItem(const void *key, void *value, void *userdata);
+    void initFollowStreamMenus();
 
     // in main_window_slots.cpp
     /**
@@ -310,6 +303,7 @@ private slots:
      */
     void startCapture(QStringList);
     void startCapture();
+    void pushLiveCaptureInProgress();
     void popLiveCaptureInProgress();
     void stopCapture();
 
@@ -341,13 +335,13 @@ private slots:
     void addPluginIFStructures();
     QMenu * searchSubMenu(QString objectName);
     void activatePluginIFToolbar(bool);
+    void updateTitlebar();
 
     void startInterfaceCapture(bool valid, const QString capture_filter);
 
     void applyGlobalCommandLineOptions();
     void setFeaturesEnabled(bool enabled = true);
 
-    void on_actionDisplayFilterExpression_triggered();
     void on_actionNewDisplayFilterExpression_triggered();
     void onFilterSelected(QString, bool);
     void onFilterPreferences();
@@ -389,8 +383,6 @@ private slots:
     // gtk/main_menubar.c
 
     void connectFileMenuActions();
-    void exportPacketBytes();
-    void exportPDU();
     void printFile();
 
     void connectEditMenuActions();
@@ -400,7 +392,7 @@ private slots:
     void editConfigurationProfiles();
     void editTimeShiftFinished(int);
     void addPacketCommentFinished(PacketCommentDialog* pc_dialog, int result);
-    void editPacketCommentFinished(PacketCommentDialog* pc_dialog, int result, guint nComment);
+    void editPacketCommentFinished(PacketCommentDialog* pc_dialog, int result, unsigned nComment);
     void deleteAllPacketComments();
     void deleteAllPacketCommentsFinished(int result);
     void showPreferencesDialog(QString module_name);
@@ -422,72 +414,49 @@ private slots:
 
     void connectGoMenuActions();
 
+    void setPreviousFocus();
     void resetPreviousFocus();
 
     void connectCaptureMenuActions();
     void startCaptureTriggered();
 
-    void on_actionAnalyzeDisplayFilters_triggered();
-    void on_actionAnalyzeDisplayFilterMacros_triggered();
+    void connectAnalyzeMenuActions();
+
     void matchFieldFilter(FilterAction::Action action, FilterAction::ActionType filter_type);
-    void on_actionAnalyzeCreateAColumn_triggered();
+    void applyFieldAsColumn();
 
     void filterMenuAboutToShow();
 
     void applyConversationFilter();
-    void applyExportObject();
 
-    void on_actionAnalyzeEnabledProtocols_triggered();
-    void on_actionAnalyzeDecodeAs_triggered();
-    void on_actionAnalyzeReloadLuaPlugins_triggered();
-
-    void openFollowStreamDialog(follow_type_t type, guint stream_num, guint sub_stream_num, bool use_stream_index = true);
-    void openFollowStreamDialogForType(follow_type_t type);
+    void openFollowStreamDialog(int proto_id, unsigned stream_num, unsigned sub_stream_num, bool use_stream_index = true);
+    void openFollowStreamDialog(int proto_id);
 
     void statCommandExpertInfo(const char *, void *);
-    void on_actionAnalyzeExpertInfo_triggered();
 
-    void on_actionHelpContents_triggered();
-    void on_actionHelpMPWireshark_triggered();
-    void on_actionHelpMPWireshark_Filter_triggered();
-    void on_actionHelpMPCapinfos_triggered();
-    void on_actionHelpMPDumpcap_triggered();
-    void on_actionHelpMPEditcap_triggered();
-    void on_actionHelpMPMergecap_triggered();
-    void on_actionHelpMPRawshark_triggered();
-    void on_actionHelpMPReordercap_triggered();
-    void on_actionHelpMPText2pcap_triggered();
-    void on_actionHelpMPTShark_triggered();
-    void on_actionHelpWebsite_triggered();
-    void on_actionHelpFAQ_triggered();
-    void on_actionHelpAsk_triggered();
-    void on_actionHelpDownloads_triggered();
-    void on_actionHelpWiki_triggered();
-    void on_actionHelpSampleCaptures_triggered();
-    void on_actionHelpAbout_triggered();
+    void connectToolsMenuActions();
+
+    void connectHelpMenuActions();
 
 #ifdef HAVE_SOFTWARE_UPDATE
     void checkForUpdates();
 #endif
 
-    void on_goToCancel_clicked();
-    void on_goToGo_clicked();
-    void on_goToLineEdit_returnPressed();
+    void goToCancelClicked();
+    void goToGoClicked();
+    void goToLineEditReturnPressed();
 
-    void on_actionStatisticsCaptureFileProperties_triggered();
-    void on_actionStatisticsResolvedAddresses_triggered();
-    void on_actionStatisticsProtocolHierarchy_triggered();
-    void on_actionStatisticsFlowGraph_triggered();
+    void connectStatisticsMenuActions();
 
-    void openStatisticsTreeDialog(const gchar *abbr);
-    void on_actionStatisticsConversations_triggered();
-    void on_actionStatisticsEndpoints_triggered();
-    void on_actionStatisticsPacketLengths_triggered();
-    void on_actionStatisticsIOGraph_triggered();
+    void showResolvedAddressesDialog();
+    void showConversationsDialog();
+    void showEndpointsDialog();
 
-    void externalMenuItem_triggered();
+    void openStatisticsTreeDialog(const char *abbr);
+    void statCommandIOGraph(const char *, void *);
+    void showIOGraphDialog(io_graph_item_unit_t, QString);
 
-    void on_actionAnalyzeShowPacketBytes_triggered();
+    void externalMenuItemTriggered();
 
     void on_actionContextWikiProtocolPage_triggered();
     void on_actionContextFilterFieldReference_triggered();

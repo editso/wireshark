@@ -73,7 +73,7 @@ void RelatedPacketDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     option_vi.decorationSize.setWidth(em_w);
     QStyledItemDelegate::paint(painter, option_vi, index);
 
-    guint32 setup_frame = 0, last_frame = 0;
+    uint32_t setup_frame = 0, last_frame = 0;
     if (conv_) {
         setup_frame = (int) conv_->setup_frame;
         last_frame = (int) conv_->last_frame;
@@ -172,6 +172,16 @@ void RelatedPacketDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
             other_pen.setStyle(Qt::DashLine);
             painter->setPen(other_pen);
         }
+
+            // analysis overriding mark (three horizontal lines)
+            if(fd->tcp_snd_manual_analysis) {
+                int wbound = (en_w - 1) / 2;
+
+                painter->drawLine(-wbound, 1, wbound, 1);
+                painter->drawLine(-wbound, height / 2, wbound, height / 2);
+                painter->drawLine(-wbound, height - 2, wbound, height - 2);
+            }
+
         painter->drawLine(0, 0, 0, height);
         painter->restore();
         break;
@@ -184,6 +194,18 @@ void RelatedPacketDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
             QPoint(0, 0)
         };
         painter->drawPolyline(end_line, 3);
+            /* analysis overriding on the last packet of the conversation,
+             * we mark it with an additional horizontal line only. 
+             * See issue 10725 for example.
+             */
+            // analysis overriding mark (three horizontal lines)
+            if(fd->tcp_snd_manual_analysis) {
+                int wbound = (en_w - 1) / 2;
+
+                painter->drawLine(-wbound, 1, wbound, 1);
+                painter->drawLine(-wbound, height / 2, wbound, height / 2);
+            }
+
         break;
     }
     default:
@@ -317,7 +339,7 @@ void RelatedPacketDelegate::clear()
     conv_ = NULL;
 }
 
-void RelatedPacketDelegate::setCurrentFrame(guint32 current_frame)
+void RelatedPacketDelegate::setCurrentFrame(uint32_t current_frame)
  {
     current_frame_ = current_frame;
     foreach (ft_framenum_type_t framenum_type, related_frames_) {

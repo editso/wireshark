@@ -21,7 +21,7 @@
 #include <epan/tap.h>
 #include <epan/stat_tap_ui.h>
 
-#include <ui/cmdarg_err.h>
+#include <wsutil/cmdarg_err.h>
 
 void register_tap_listener_protocolinfo(void);
 
@@ -36,7 +36,7 @@ protocolinfo_packet(void *prs, packet_info *pinfo, epan_dissect_t *edt, const vo
 {
 	pci_t *rs = (pci_t *)prs;
 	GPtrArray *gp;
-	guint i;
+	unsigned i;
 	char *str;
 
 	/*

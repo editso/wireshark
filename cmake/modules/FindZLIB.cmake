@@ -39,8 +39,13 @@ include( FindWSWinLibs )
 # Zlib is included with GLib2
 FindWSWinLibs( "vcpkg-export-*" "ZLIB_HINTS" )
 
+if(MSVC)
+    # else we'll find Strawberry Perl's version
+    set (_zlib_sys_env_option NO_SYSTEM_ENVIRONMENT_PATH)
+endif()
+
 if (NOT ZLIB_INCLUDE_DIR OR NOT ZLIB_LIBRARY)
-    if (NOT WIN32) # else we'll find Strawberry Perl's pkgconfig
+    if (NOT USE_REPOSITORY) # else we'll find Strawberry Perl's pkgconfig
         find_package(PkgConfig)
         pkg_search_module(ZLIB zlib)
     endif()
@@ -54,6 +59,7 @@ if (NOT ZLIB_INCLUDE_DIR OR NOT ZLIB_LIBRARY)
             ${ZLIB_HINTS}
         PATHS
             "[HKEY_LOCAL_MACHINE\\SOFTWARE\\GnuWin32\\Zlib;InstallPath]/include"
+	${_zlib_sys_env_option}
     )
 
     SET(ZLIB_NAMES z zlib zdll zlib1 zlibd zlibd1)
@@ -66,8 +72,10 @@ if (NOT ZLIB_INCLUDE_DIR OR NOT ZLIB_LIBRARY)
             ${ZLIB_HINTS}
         PATHS
             "[HKEY_LOCAL_MACHINE\\SOFTWARE\\GnuWin32\\Zlib;InstallPath]/lib"
+	${_zlib_sys_env_option}
     )
 endif()
+unset(_zlib_sys_env_option)
 MARK_AS_ADVANCED(ZLIB_LIBRARY ZLIB_INCLUDE_DIR)
 
 # handle the QUIETLY and REQUIRED arguments and set ZLIB_FOUND to TRUE if
@@ -130,7 +138,23 @@ if(ZLIB_FOUND)
         CMAKE_POP_CHECK_STATE()
     ENDIF()
 
-    AddWSWinDLL(ZLIB ZLIB_HINTS "zlib*")
+    #AddWSWinDLL(ZLIB ZLIB_HINTS "zlib*")
+    # With zlib-ng the hints does not work
+    set ( ZLIB_DLL_DIR "${ZLIB_HINTS}/bin"
+      CACHE PATH "Path to ZLIB DLL"
+    )
+    file( GLOB _ZLIB_dll RELATIVE "${ZLIB_DLL_DIR}"
+      "${ZLIB_DLL_DIR}/zlib1.dll"
+    )
+    set ( ZLIB_DLL ${_ZLIB_dll}
+      CACHE FILEPATH "ZLIB DLL file name"
+    )
+    file( GLOB _ZLIB_pdb RELATIVE "${ZLIB_DLL_DIR}"
+      "${ZLIB_DLL_DIR}/zlib.pdb"
+    )
+    set ( ZLIB_PDB ${_ZLIB_pdb}
+      CACHE FILEPATH "ZLIB PDB file name"
+    )
     SET(ZLIB_INCLUDE_DIRS ${ZLIB_INCLUDE_DIR})
     SET(ZLIB_LIBRARIES ${ZLIB_LIBRARY})
 ELSE()

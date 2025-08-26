@@ -22,14 +22,12 @@
 static sttype_t* type_list[STTYPE_NUM_TYPES];
 
 
-#define STNODE_MAGIC	0xe9b00b9e
-
-
 void
 sttype_init(void)
 {
 	sttype_register_field();
 	sttype_register_function();
+	sttype_register_number();
 	sttype_register_pointer();
 	sttype_register_set();
 	sttype_register_slice();
@@ -76,10 +74,113 @@ sttype_lookup(sttype_id_t type_id)
 	return result;
 }
 
+const char *
+sttype_name(sttype_id_t type)
+{
+	switch (type) {
+		case STTYPE_UNINITIALIZED: return "UNINITIALIZED";
+		case STTYPE_TEST:	return "TEST";
+		case STTYPE_LITERAL:	return "LITERAL";
+		case STTYPE_UNPARSED:	return "UNPARSED";
+		case STTYPE_REFERENCE:	return "REFERENCE";
+		case STTYPE_STRING:	return "STRING";
+		case STTYPE_CHARCONST:	return "CHARCONST";
+		case STTYPE_NUMBER:	return "NUMBER";
+		case STTYPE_FIELD:	return "FIELD";
+		case STTYPE_FVALUE:	return "FVALUE";
+		case STTYPE_SLICE:	return "SLICE";
+		case STTYPE_FUNCTION:	return "FUNCTION";
+		case STTYPE_SET:	return "SET";
+		case STTYPE_PCRE:	return "PCRE";
+		case STTYPE_ARITHMETIC:	return "ARITHMETIC";
+		case STTYPE_NUM_TYPES:	return "NUM_TYPES";
+	}
+	return "(unknown sttype)";
+}
+
+const char *
+stnode_op_name(stnode_op_t op)
+{
+	const char *s = "(null)";
+
+	switch(op) {
+		case STNODE_OP_NOT:
+			s = "TEST_NOT";
+			break;
+		case STNODE_OP_AND:
+			s = "TEST_AND";
+			break;
+		case STNODE_OP_OR:
+			s = "TEST_OR";
+			break;
+		case STNODE_OP_ALL_EQ:
+			s = "TEST_ALL_EQ";
+			break;
+		case STNODE_OP_ANY_EQ:
+			s = "TEST_ANY_EQ";
+			break;
+		case STNODE_OP_ALL_NE:
+			s = "TEST_ALL_NE";
+			break;
+		case STNODE_OP_ANY_NE:
+			s = "TEST_ANY_NE";
+			break;
+		case STNODE_OP_GT:
+			s = "TEST_GT";
+			break;
+		case STNODE_OP_GE:
+			s = "TEST_GE";
+			break;
+		case STNODE_OP_LT:
+			s = "TEST_LT";
+			break;
+		case STNODE_OP_LE:
+			s = "TEST_LE";
+			break;
+		case STNODE_OP_BITWISE_AND:
+			s = "OP_BITWISE_AND";
+			break;
+		case STNODE_OP_UNARY_MINUS:
+			s = "OP_UNARY_MINUS";
+			break;
+		case STNODE_OP_ADD:
+			s = "OP_ADD";
+			break;
+		case STNODE_OP_SUBTRACT:
+			s = "OP_SUBTRACT";
+			break;
+		case STNODE_OP_MULTIPLY:
+			s = "OP_MULTIPLY";
+			break;
+		case STNODE_OP_DIVIDE:
+			s = "OP_DIVIDE";
+			break;
+		case STNODE_OP_MODULO:
+			s = "OP_MODULO";
+			break;
+		case STNODE_OP_CONTAINS:
+			s = "TEST_CONTAINS";
+			break;
+		case STNODE_OP_MATCHES:
+			s = "TEST_MATCHES";
+			break;
+		case STNODE_OP_IN:
+			s = "TEST_IN";
+			break;
+		case STNODE_OP_NOT_IN:
+			s = "TEST_NOT_IN";
+			break;
+		case STNODE_OP_UNINITIALIZED:
+			s = "(uninitialized)";
+			break;
+	}
+
+	return s;
+}
+
 void
 stnode_clear(stnode_t *node)
 {
-	ws_assert_magic(node, STNODE_MAGIC);
 	if (node->type) {
 		if (node->type->func_free && node->data) {
 			node->type->func_free(node->data);
@@ -99,26 +200,21 @@ stnode_clear(stnode_t *node)
 	node->repr_token = NULL;
 	node->location.col_start = -1;
 	node->location.col_len = 0;
+	node->flags = 0;
 }
 
 void
-stnode_init(stnode_t *node, sttype_id_t type_id, gpointer data, char *token, const stloc_t *loc)
+stnode_init(stnode_t *node, sttype_id_t type_id, void *data, char *token, df_loc_t loc)
 {
 	sttype_t	*type;
 
-	ws_assert_magic(node, STNODE_MAGIC);
 	ws_assert(!node->type);
 	ws_assert(!node->data);
 	node->repr_display = NULL;
 	node->repr_debug = NULL;
 	node->repr_token = token;
-	if (loc) {
-		node->location = *loc;
-	}
-	else {
-		node->location.col_start = -1;
-		node->location.col_len = 0;
-	}
+	node->location = loc;
+	node->flags = 0;
 
 	if (type_id == STTYPE_UNINITIALIZED) {
 		node->type = NULL;
@@ -140,25 +236,37 @@ stnode_init(stnode_t *node, sttype_id_t type_id, gpointer data, char *token, con
 }
 
 void
-stnode_replace(stnode_t *node, sttype_id_t type_id, gpointer data)
+stnode_replace(stnode_t *node, sttype_id_t type_id, void *data)
 {
 	char *token = g_strdup(node->repr_token);
-	stloc_t loc = node->location;
+	df_loc_t loc = node->location;
+	uint16_t flags = node->flags;
 	stnode_clear(node);
-	stnode_init(node, type_id, data, token, &loc);
+	stnode_init(node, type_id, data, token, loc);
+	node->flags = flags;
+}
+
+void
+stnode_mutate(stnode_t *node, sttype_id_t type_id)
+{
+	//FIXME: Assert there all the same sttype
+	node->type = sttype_lookup(type_id);
+	ws_assert(node->type);
 }
 
 stnode_t*
-stnode_new(sttype_id_t type_id, gpointer data, char *token, const stloc_t *loc)
+stnode_new(sttype_id_t type_id, void *data, char *token, df_loc_t loc)
 {
-	stnode_t	*node;
-
-	node = g_new0(stnode_t, 1);
-	node->magic = STNODE_MAGIC;
-
+	stnode_t *node = g_new0(stnode_t, 1);
 	stnode_init(node, type_id, data, token, loc);
-
 	return node;
+}
+
+stnode_t*
+stnode_new_empty(sttype_id_t type_id)
+{
+	df_loc_t loc = {-1, 0};
+	return stnode_new(type_id, NULL, NULL, loc);
 }
 
 stnode_t*
@@ -166,13 +274,12 @@ stnode_dup(const stnode_t *node)
 {
 	stnode_t *new;
 
-	ws_assert_magic(node, STNODE_MAGIC);
 	new = g_new(stnode_t, 1);
-	new->magic = STNODE_MAGIC;
 	new->repr_display = NULL;
 	new->repr_debug = NULL;
 	new->repr_token = g_strdup(node->repr_token);
 	new->location = node->location;
+	new->flags = node->flags;
 
 	new->type = node->type;
 	if (node->type == NULL)
@@ -188,7 +295,6 @@ stnode_dup(const stnode_t *node)
 void
 stnode_free(stnode_t *node)
 {
-	ws_assert_magic(node, STNODE_MAGIC);
 	stnode_clear(node);
 	g_free(node);
 }
@@ -196,27 +302,21 @@ stnode_free(stnode_t *node)
 const char*
 stnode_type_name(stnode_t *node)
 {
-	ws_assert_magic(node, STNODE_MAGIC);
-	if (node->type)
-		return node->type->name;
-	else
-		return "UNINITIALIZED";
+	return sttype_name(node->type->id);
 }
 
 sttype_id_t
 stnode_type_id(stnode_t *node)
 {
-	ws_assert_magic(node, STNODE_MAGIC);
 	if (node->type)
 		return node->type->id;
 	else
 		return STTYPE_UNINITIALIZED;
 }
 
-gpointer
+void *
 stnode_data(stnode_t *node)
 {
-	ws_assert_magic(node, STNODE_MAGIC);
 	return node->data;
 }
 
@@ -227,11 +327,10 @@ stnode_string(stnode_t *node)
 	return stnode_data(node);
 }
 
-gpointer
+void *
 stnode_steal_data(stnode_t *node)
 {
-	ws_assert_magic(node, STNODE_MAGIC);
-	gpointer data = node->data;
+	void *data = node->data;
 	ws_assert(data);
 	node->data = NULL;
 	return data;
@@ -243,14 +342,53 @@ stnode_token(stnode_t *node)
 	return node->repr_token;
 }
 
-stloc_t *
+df_loc_t
 stnode_location(stnode_t *node)
 {
-	return &node->location;
+	return node->location;
 }
 
+void
+stnode_set_location(stnode_t *node, df_loc_t loc)
+{
+	node->location = loc;
+}
+
+bool
+stnode_get_flags(stnode_t *node, uint16_t flags)
+{
+	return node->flags & flags;
+}
+
+void
+stnode_set_flags(stnode_t *node, uint16_t flags)
+{
+	node->flags |= flags;
+}
+
+/* Finds the first and last location from a set and creates
+ * a new location from start of first (col_start) to end of
+ * last (col_start + col_len). Sets the result to dst. */
+void
+stnode_merge_location(stnode_t *dst, stnode_t *n1, stnode_t *n2)
+{
+	df_loc_t first, last;
+	df_loc_t loc2;
+
+	first = last = stnode_location(n1);
+	loc2 = stnode_location(n2);
+	if (loc2.col_start >= 0 && loc2.col_start > first.col_start)
+		last = loc2;
+	dst->location.col_start = first.col_start;
+	dst->location.col_len = last.col_start - first.col_start + last.col_len;
+}
+
+#define IS_OPERATOR(node) \
+	(stnode_type_id(node) == STTYPE_TEST || \
+		stnode_type_id(node) == STTYPE_ARITHMETIC)
+
 static char *
-_node_tostr(stnode_t *node, gboolean pretty)
+_node_tostr(stnode_t *node, bool pretty)
 {
 	char *s, *repr;
 
@@ -262,8 +400,7 @@ _node_tostr(stnode_t *node, gboolean pretty)
 	if (pretty)
 		return s;
 
-	if (stnode_type_id(node) == STTYPE_TEST ||
-		stnode_type_id(node) == STTYPE_ARITHMETIC) {
+	if (IS_OPERATOR(node)) {
 		repr = s;
 	}
 	else {
@@ -275,11 +412,11 @@ _node_tostr(stnode_t *node, gboolean pretty)
 }
 
 const char *
-stnode_tostr(stnode_t *node, gboolean pretty)
+stnode_tostr(stnode_t *node, bool pretty)
 {
-	ws_assert_magic(node, STNODE_MAGIC);
-
-	if (pretty && node->repr_token != NULL) {
+	if (pretty && IS_OPERATOR(node) && node->repr_token != NULL) {
+		/* Some operators can have synonyms, like "or" and "||".
+		 * Show the user the same representation as he typed. */
 		g_free(node->repr_display);
 		node->repr_display = g_strdup(node->repr_token);
 		return node->repr_display;
@@ -304,12 +441,12 @@ sprint_node(stnode_t *node)
 {
 	wmem_strbuf_t *buf = wmem_strbuf_new(NULL, NULL);
 
-	wmem_strbuf_append_printf(buf, "stnode{ ");
-	wmem_strbuf_append_printf(buf, "magic=0x%"PRIx32", ", node->magic);
-	wmem_strbuf_append_printf(buf, "type=%s, ", stnode_type_name(node));
-	wmem_strbuf_append_printf(buf, "data=<%s>, ", stnode_todebug(node));
-	wmem_strbuf_append_printf(buf, "location=%ld:%zu",
+	wmem_strbuf_append_printf(buf, "{ ");
+	wmem_strbuf_append_printf(buf, "type = %s, ", stnode_type_name(node));
+	wmem_strbuf_append_printf(buf, "data = %s, ", stnode_todebug(node));
+	wmem_strbuf_append_printf(buf, "location = %ld:%zu",
 			node->location.col_start, node->location.col_len);
+	wmem_strbuf_append_printf(buf, " }");
 	return wmem_strbuf_finalize(buf);
 }
 
@@ -361,7 +498,7 @@ log_test_full(enum ws_log_level level,
 		rhs = sprint_node(st_rhs);
 
 	ws_log_write_always_full(WS_LOG_DOMAIN, level, file, line, func,
-				"%s: LHS = %s; RHS = %s",
+				"%s:\n LHS = %s\n RHS = %s",
 				stnode_todebug(node),
 				lhs ? lhs : "NULL",
 				rhs ? rhs : "NULL");
@@ -412,14 +549,14 @@ visit_tree(wmem_strbuf_t *buf, stnode_t *node, int level)
 		while (nodelist) {
 			indent(buf, level + 1);
 			lower = nodelist->data;
-			wmem_strbuf_append(buf, stnode_tostr(lower, FALSE));
+			wmem_strbuf_append(buf, stnode_tostr(lower, false));
 			/* Set elements are always in pairs; upper may be null. */
 			nodelist = g_slist_next(nodelist);
 			ws_assert(nodelist);
 			upper = nodelist->data;
 			if (upper != NULL) {
 				wmem_strbuf_append(buf, " .. ");
-				wmem_strbuf_append(buf, stnode_tostr(upper, FALSE));
+				wmem_strbuf_append(buf, stnode_tostr(upper, false));
 			}
 			nodelist = g_slist_next(nodelist);
 			if (nodelist != NULL) {

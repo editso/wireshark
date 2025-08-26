@@ -8,28 +8,33 @@
 
 #include <config.h>
 
+#define WS_LOG_DOMAIN LOG_DOMAIN_WIRETAP
+
+#include "wtap.h"
+#include "wtap-int.h"
+
 #include <string.h>
-#include <errno.h>
 
 #include <sys/types.h>
 
-#include "wtap-int.h"
 #include "wtap_opttypes.h"
 
 #include "file_wrappers.h"
 #include <wsutil/file_util.h>
 #include <wsutil/buffer.h>
 #include <wsutil/ws_assert.h>
-#include <wsutil/wslog.h>
+#include <wsutil/exported_pdu_tlvs.h>
 #ifdef HAVE_PLUGINS
 #include <wsutil/plugins.h>
 #endif
 
 #ifdef HAVE_PLUGINS
-static plugins_t *libwiretap_plugins = NULL;
+static plugins_t *libwiretap_plugins;
 #endif
 
-static GSList *wtap_plugins = NULL;
+#define PADDING4(x) ((((x + 3) >> 2) << 2) - x)
+
+static GSList *wtap_plugins;
 
 #ifdef HAVE_PLUGINS
 void
@@ -49,14 +54,14 @@ int
 wtap_plugins_supported(void)
 {
 #ifdef HAVE_PLUGINS
-	return g_module_supported() ? 0 : 1;
+	return plugins_supported() ? 0 : 1;
 #else
 	return -1;
 #endif
 }
 
 static void
-call_plugin_register_wtap_module(gpointer data, gpointer user_data _U_)
+call_plugin_register_wtap_module(void *data, void *user_data _U_)
 {
 	wtap_plugin *plug = (wtap_plugin *)data;
 
@@ -67,9 +72,9 @@ call_plugin_register_wtap_module(gpointer data, gpointer user_data _U_)
 
 /*
  * Return the size of the file, as reported by the OS.
- * (gint64, in case that's 64 bits.)
+ * (int64_t, in case that's 64 bits.)
  */
-gint64
+int64_t
 wtap_file_size(wtap *wth, int *err)
 {
 	ws_statb64 statb;
@@ -98,7 +103,7 @@ wtap_file_type_subtype(wtap *wth)
 	return wth->file_type_subtype;
 }
 
-guint
+unsigned
 wtap_snapshot_length(wtap *wth)
 {
 	return wth->snapshot_length;
@@ -116,14 +121,14 @@ wtap_file_tsprec(wtap *wth)
 	return wth->file_tsprec;
 }
 
-guint
+unsigned
 wtap_file_get_num_shbs(wtap *wth)
 {
 	return wth->shb_hdrs->len;
 }
 
 wtap_block_t
-wtap_file_get_shb(wtap *wth, guint shb_num)
+wtap_file_get_shb(wtap *wth, unsigned shb_num)
 {
 	if ((wth == NULL) || (wth->shb_hdrs == NULL) || (shb_num >= wth->shb_hdrs->len))
 		return NULL;
@@ -131,17 +136,28 @@ wtap_file_get_shb(wtap *wth, guint shb_num)
 	return g_array_index(wth->shb_hdrs, wtap_block_t, shb_num);
 }
 
+unsigned
+wtap_file_get_shb_global_interface_id(wtap *wth, unsigned shb_num, uint32_t interface_id)
+{
+	if ((wth == NULL) || (wth->shb_hdrs == NULL) || (shb_num >= wth->shb_hdrs->len)) {
+		ws_warning("unexpected SHB %u and interface id %u", shb_num, interface_id);
+		return interface_id;
+	}
+
+	return interface_id + g_array_index(wth->shb_iface_to_global, unsigned, shb_num);
+}
+
 GArray*
 wtap_file_get_shb_for_new_file(wtap *wth)
 {
-	guint shb_count;
+	unsigned shb_count;
 	wtap_block_t shb_hdr_src, shb_hdr_dest;
 	GArray* shb_hdrs;
 
 	if ((wth == NULL) || (wth->shb_hdrs == NULL) || (wth->shb_hdrs->len == 0))
 		return NULL;
 
-	shb_hdrs = g_array_new(FALSE, FALSE, sizeof(wtap_block_t));
+	shb_hdrs = g_array_new(false, false, sizeof(wtap_block_t));
 
 	for (shb_count = 0; shb_count < wth->shb_hdrs->len; shb_count++) {
 		shb_hdr_src = g_array_index(wth->shb_hdrs, wtap_block_t, shb_count);
@@ -156,10 +172,10 @@ wtap_file_get_shb_for_new_file(wtap *wth)
  * XXX - replace with APIs that let us handle multiple comments.
  */
 void
-wtap_write_shb_comment(wtap *wth, gchar *comment)
+wtap_write_shb_comment(wtap *wth, char *comment)
 {
 	if ((wth != NULL) && (wth->shb_hdrs != NULL) && (wth->shb_hdrs->len > 0)) {
-		wtap_block_set_nth_string_option_value(g_array_index(wth->shb_hdrs, wtap_block_t, 0), OPT_COMMENT, 0, comment, (gsize)(comment ? strlen(comment) : 0));
+		wtap_block_set_nth_string_option_value(g_array_index(wth->shb_hdrs, wtap_block_t, 0), OPT_COMMENT, 0, comment, (size_t)(comment ? strlen(comment) : 0));
 	}
 }
 
@@ -198,71 +214,111 @@ wtap_get_next_interface_description(wtap *wth)
 	return NULL;
 }
 
+unsigned
+wtap_file_get_num_dsbs(wtap *wth)
+{
+	if (!wth->dsbs) {
+		return 0;
+	}
+	return wth->dsbs->len;
+}
+
+wtap_block_t
+wtap_file_get_dsb(wtap *wth, unsigned dsb_num)
+{
+	if ((wth == NULL) || (wth->dsbs == NULL) || (dsb_num >= wth->dsbs->len))
+		return NULL;
+
+	return g_array_index(wth->dsbs, wtap_block_t, dsb_num);
+}
+
+void
+wtap_file_add_decryption_secrets(wtap *wth, const wtap_block_t dsb)
+{
+	if (!wth->dsbs) {
+		wth->dsbs = g_array_new(false, false, sizeof(wtap_block_t));
+	}
+	g_array_append_val(wth->dsbs, dsb);
+}
+
+bool
+wtap_file_discard_decryption_secrets(wtap *wth)
+{
+	if (!wth->dsbs || wth->dsbs->len == 0)
+		return false;
+
+	wtap_block_array_free(wth->dsbs);
+	wth->dsbs = NULL;
+	return true;
+}
+
+void
+wtap_file_add_meta_event(wtap *wth, const wtap_block_t mev)
+{
+	if (!wth->meta_events) {
+		wth->meta_events = g_array_new(false, false, sizeof(wtap_block_t));
+	}
+	g_array_append_val(wth->meta_events, mev);
+}
+
+bool
+wtap_file_discard_meta_events(wtap *wth)
+{
+	if (!wth->meta_events || wth->meta_events->len == 0)
+		return false;
+
+	wtap_block_array_free(wth->meta_events);
+	wth->meta_events = NULL;
+	return true;
+}
+
 void
 wtap_add_idb(wtap *wth, wtap_block_t idb)
 {
 	g_array_append_val(wth->interface_data, idb);
 }
 
-void
-wtap_add_generated_idb(wtap *wth)
+static wtap_block_t
+wtap_generate_idb(int encap, int tsprec, int snaplen)
 {
 	wtap_block_t idb;
 	wtapng_if_descr_mandatory_t *if_descr_mand;
-	int snaplen;
 
-	ws_assert(wth->file_encap != WTAP_ENCAP_UNKNOWN &&
-	    wth->file_encap != WTAP_ENCAP_PER_PACKET);
-	ws_assert(wth->file_tsprec != WTAP_TSPREC_UNKNOWN &&
-	    wth->file_tsprec != WTAP_TSPREC_PER_PACKET);
+	ws_assert(encap != WTAP_ENCAP_UNKNOWN &&
+	    encap != WTAP_ENCAP_PER_PACKET &&
+	    encap != WTAP_ENCAP_NONE);
 
 	idb = wtap_block_create(WTAP_BLOCK_IF_ID_AND_INFO);
 
 	if_descr_mand = (wtapng_if_descr_mandatory_t*)wtap_block_get_mandatory_data(idb);
-	if_descr_mand->wtap_encap = wth->file_encap;
-	if_descr_mand->tsprecision = wth->file_tsprec;
-	switch (wth->file_tsprec) {
-
-	case WTAP_TSPREC_SEC:
-		if_descr_mand->time_units_per_second = 1;
-		wtap_block_add_uint8_option(idb, OPT_IDB_TSRESOL, 0);
-		break;
-
-	case WTAP_TSPREC_DSEC:
-		if_descr_mand->time_units_per_second = 10;
-		wtap_block_add_uint8_option(idb, OPT_IDB_TSRESOL, 1);
-		break;
-
-	case WTAP_TSPREC_CSEC:
-		if_descr_mand->time_units_per_second = 100;
-		wtap_block_add_uint8_option(idb, OPT_IDB_TSRESOL, 2);
-		break;
-
-	case WTAP_TSPREC_MSEC:
-		if_descr_mand->time_units_per_second = 1000;
-		wtap_block_add_uint8_option(idb, OPT_IDB_TSRESOL, 3);
-		break;
-
-	case WTAP_TSPREC_USEC:
-		if_descr_mand->time_units_per_second = 1000000;
-		/* This is the default, so no need to add an option */
-		break;
-
-	case WTAP_TSPREC_NSEC:
-		if_descr_mand->time_units_per_second = 1000000000;
-		wtap_block_add_uint8_option(idb, OPT_IDB_TSRESOL, 9);
-		break;
-
-	case WTAP_TSPREC_PER_PACKET:
-	case WTAP_TSPREC_UNKNOWN:
-	default:
+	if_descr_mand->wtap_encap = encap;
+	if_descr_mand->tsprecision = tsprec;
+	if (tsprec < 0 || tsprec > WS_TSPREC_MAX) {
 		/*
-		 * Don't do this.
+		 * Either WTAP_TSPREC_PER_PACKET, WTAP_TSPREC_UNKNOWN,
+		 * or not a valid WTAP_TSPREC_ value.
+		 *
+		 * Unknown timestamp precision; use the default of
+		 * microsecond resolution.
 		 */
-		ws_assert_not_reached();
-		break;
+		tsprec = 6;	/* microsecond resolution */
 	}
-	snaplen = wth->snapshot_length;
+
+	/*
+	 * Compute 10^{params->tsprec}.
+	 */
+	if_descr_mand->time_units_per_second = 1;
+	for (int i = 0; i < tsprec; i++)
+		if_descr_mand->time_units_per_second *= 10;
+
+	if (tsprec != WTAP_TSPREC_USEC) {
+		/*
+		 * Microsecond precision is the default, so we only
+		 * add an option if the precision isn't microsecond
+		 * precision.
+		 */
+		wtap_block_add_uint8_option(idb, OPT_IDB_TSRESOL, tsprec);
+	}
 	if (snaplen == 0) {
 		/*
 		 * No snapshot length was specified.  Pick an
@@ -278,9 +334,9 @@ wtap_add_generated_idb(wtap *wth)
 		 * to allocate an unnecessarily huge chunk of
 		 * memory for a packet buffer.
 		 */
-		if (wth->file_encap == WTAP_ENCAP_DBUS)
+		if (encap == WTAP_ENCAP_DBUS)
 			snaplen = 128*1024*1024;
-		else if (wth->file_encap == WTAP_ENCAP_EBHSCR)
+		else if (encap == WTAP_ENCAP_EBHSCR)
 			snaplen = 8*1024*1024;
 		else
 			snaplen = WTAP_MAX_PACKET_SIZE_STANDARD;
@@ -289,6 +345,15 @@ wtap_add_generated_idb(wtap *wth)
 	if_descr_mand->num_stat_entries = 0;          /* Number of ISBs */
 	if_descr_mand->interface_statistics = NULL;
 
+	return idb;
+}
+
+void
+wtap_add_generated_idb(wtap *wth)
+{
+	wtap_block_t idb;
+
+	idb = wtap_generate_idb(wth->file_encap, wth->file_tsprec, wth->snapshot_length);
 	/*
 	 * Add this IDB.
 	 */
@@ -305,7 +370,7 @@ wtap_free_idb_info(wtapng_iface_descriptions_t *idb_info)
 	g_free(idb_info);
 }
 
-gchar *
+char *
 wtap_get_debug_if_descr(const wtap_block_t if_descr,
                         const int indent,
                         const char* line_end)
@@ -313,9 +378,9 @@ wtap_get_debug_if_descr(const wtap_block_t if_descr,
 	char* tmp_content;
 	wtapng_if_descr_mandatory_t* if_descr_mand;
 	GString *info = g_string_new("");
-	guint64 tmp64;
-	gint8 itmp8;
-	guint8 tmp8;
+	int64_t itmp64;
+	uint64_t tmp64;
+	uint8_t tmp8;
 	if_filter_opt_t if_filter;
 
 	ws_assert(if_descr);
@@ -361,10 +426,10 @@ wtap_get_debug_if_descr(const wtap_block_t if_descr,
 			if_descr_mand->snap_len,
 			line_end);
 
-	if (wtap_block_get_uint8_option_value(if_descr, OPT_IDB_FCSLEN, &itmp8) == WTAP_OPTTYPE_SUCCESS) {
+	if (wtap_block_get_uint8_option_value(if_descr, OPT_IDB_FCSLEN, &tmp8) == WTAP_OPTTYPE_SUCCESS) {
 		g_string_append_printf(info,
-				"%*cFCS length = %d%s", indent, ' ',
-				itmp8,
+				"%*cFCS length = %u%s", indent, ' ',
+				tmp8,
 				line_end);
 	}
 
@@ -383,6 +448,13 @@ wtap_get_debug_if_descr(const wtap_block_t if_descr,
 		g_string_append_printf(info,
 				"%*cTime resolution = 0x%.2x%s", indent, ' ',
 				tmp8,
+				line_end);
+	}
+
+	if (wtap_block_get_int64_option_value(if_descr, OPT_IDB_TSOFFSET, &itmp64) == WTAP_OPTTYPE_SUCCESS) {
+		g_string_append_printf(info,
+				"%*cTimestamp offset = %" PRId64 "%s", indent, ' ',
+				itmp64,
 				line_end);
 	}
 
@@ -440,31 +512,31 @@ wtap_get_debug_if_descr(const wtap_block_t if_descr,
 wtap_block_t
 wtap_file_get_nrb(wtap *wth)
 {
-	if ((wth == NULL) || (wth->nrb_hdrs == NULL) || (wth->nrb_hdrs->len == 0))
+	if ((wth == NULL) || (wth->nrbs == NULL) || (wth->nrbs->len == 0))
 		return NULL;
 
-	return g_array_index(wth->nrb_hdrs, wtap_block_t, 0);
+	return g_array_index(wth->nrbs, wtap_block_t, 0);
 }
 
 GArray*
 wtap_file_get_nrb_for_new_file(wtap *wth)
 {
-	guint nrb_count;
-	wtap_block_t nrb_hdr_src, nrb_hdr_dest;
-	GArray* nrb_hdrs;
+	unsigned nrb_count;
+	wtap_block_t nrb_src, nrb_dest;
+	GArray* nrbs;
 
-	if ((wth == NULL || wth->nrb_hdrs == NULL) || (wth->nrb_hdrs->len == 0))
+	if ((wth == NULL || wth->nrbs == NULL) || (wth->nrbs->len == 0))
 		return NULL;
 
-	nrb_hdrs = g_array_new(FALSE, FALSE, sizeof(wtap_block_t));
+	nrbs = g_array_new(false, false, sizeof(wtap_block_t));
 
-	for (nrb_count = 0; nrb_count < wth->nrb_hdrs->len; nrb_count++) {
-		nrb_hdr_src = g_array_index(wth->nrb_hdrs, wtap_block_t, nrb_count);
-		nrb_hdr_dest = wtap_block_make_copy(nrb_hdr_src);
-		g_array_append_val(nrb_hdrs, nrb_hdr_dest);
+	for (nrb_count = 0; nrb_count < wth->nrbs->len; nrb_count++) {
+		nrb_src = g_array_index(wth->nrbs, wtap_block_t, nrb_count);
+		nrb_dest = wtap_block_make_copy(nrb_src);
+		g_array_append_val(nrbs, nrb_dest);
 	}
 
-	return nrb_hdrs;
+	return nrbs;
 }
 
 void
@@ -479,12 +551,14 @@ wtap_dump_params_init(wtap_dump_params *params, wtap *wth)
 	params->tsprec = wtap_file_tsprec(wth);
 	params->shb_hdrs = wtap_file_get_shb_for_new_file(wth);
 	params->idb_inf = wtap_file_get_idb_info(wth);
-	params->nrb_hdrs = wtap_file_get_nrb_for_new_file(wth);
 	/* Assume that the input handle remains open until the dumper is closed.
 	 * Refer to the DSBs from the input file, wtap_dump will then copy DSBs
 	 * as they become available. */
+	params->shb_iface_to_global = wth->shb_iface_to_global;
+	params->nrbs_growing = wth->nrbs;
 	params->dsbs_growing = wth->dsbs;
-	params->dont_copy_idbs = FALSE;
+	params->mevs_growing = wth->meta_events;
+	params->dont_copy_idbs = false;
 }
 
 /*
@@ -503,12 +577,19 @@ wtap_dump_params_init_no_idbs(wtap_dump_params *params, wtap *wth)
 	params->tsprec = wtap_file_tsprec(wth);
 	params->shb_hdrs = wtap_file_get_shb_for_new_file(wth);
 	params->idb_inf = wtap_file_get_idb_info(wth);
-	params->nrb_hdrs = wtap_file_get_nrb_for_new_file(wth);
 	/* Assume that the input handle remains open until the dumper is closed.
 	 * Refer to the DSBs from the input file, wtap_dump will then copy DSBs
 	 * as they become available. */
+	params->shb_iface_to_global = wth->shb_iface_to_global;
+	params->nrbs_growing = wth->nrbs;
 	params->dsbs_growing = wth->dsbs;
-	params->dont_copy_idbs = TRUE;
+	params->dont_copy_idbs = true;
+}
+
+void
+wtap_dump_params_discard_name_resolution(wtap_dump_params *params)
+{
+	params->nrbs_growing = NULL;
 }
 
 void
@@ -519,13 +600,24 @@ wtap_dump_params_discard_decryption_secrets(wtap_dump_params *params)
 }
 
 void
+wtap_dump_params_discard_meta_events(wtap_dump_params *params)
+{
+	params->mevs_growing = NULL;
+}
+
+void
 wtap_dump_params_cleanup(wtap_dump_params *params)
 {
 	wtap_block_array_free(params->shb_hdrs);
 	/* params->idb_inf is currently expected to be freed by the caller. */
-	wtap_block_array_free(params->nrb_hdrs);
 
 	memset(params, 0, sizeof(*params));
+}
+
+wtap_block_t
+wtap_dump_params_generate_idb(const wtap_dump_params *params)
+{
+	return wtap_generate_idb(params->encap, params->tsprec, params->snaplen);
 }
 
 /* Table of the encapsulation types we know about. */
@@ -1194,11 +1286,29 @@ static struct encap_type_info encap_table_base[] = {
 
 	/* WTAP_ENCAP_AUERSWALD_LOG */
 	{ "auerlog", "Auerswald Log" },
+
+	/* WTAP_ENCAP_ATSC_ALP */
+	{ "alp", "ATSC Link-Layer Protocol (A/330) packets" },
+
+	/* WTAP_ENCAP_FIRA_UCI */
+	{ "fira-uci", "FiRa UWB Controller Interface (UCI) protocol." },
+
+	/* WTAP_ENCAP_SILABS_DEBUG_CHANNEL */
+	{ "silabs-dch", "Silabs Debug Channel"},
+
+	/* WTAP_ENCAP_MDB */
+	{ "mdb", "MDB (Multi-Drop Bus)"},
+
+	/* WTAP_ENCAP_EMS */
+	{ "ems", "EMS (EGNOS Message Server) file"},
+
+	/* WTAP_ENCAP_DECT_NR */
+	{ "dect_nr", "DECT-2020 New Radio (NR) MAC layer" },
 };
 
 WS_DLL_LOCAL
-gint wtap_num_encap_types = sizeof(encap_table_base) / sizeof(struct encap_type_info);
-static GArray* encap_table_arr = NULL;
+int wtap_num_encap_types = array_length(encap_table_base);
+static GArray* encap_table_arr;
 
 #define encap_table_entry(encap)	\
 	g_array_index(encap_table_arr, struct encap_type_info, encap)
@@ -1207,14 +1317,14 @@ static void wtap_init_encap_types(void) {
 
 	if (encap_table_arr) return;
 
-	encap_table_arr = g_array_new(FALSE,TRUE,sizeof(struct encap_type_info));
+	encap_table_arr = g_array_new(false,true,sizeof(struct encap_type_info));
 
 	g_array_append_vals(encap_table_arr,encap_table_base,wtap_num_encap_types);
 }
 
 static void wtap_cleanup_encap_types(void) {
 	if (encap_table_arr) {
-		g_array_free(encap_table_arr, TRUE);
+		g_array_free(encap_table_arr, true);
 		encap_table_arr = NULL;
 	}
 }
@@ -1241,8 +1351,10 @@ wtap_register_encap_type(const char *description, const char *name)
 const char *
 wtap_encap_name(int encap)
 {
-	if (encap < WTAP_ENCAP_PER_PACKET || encap >= WTAP_NUM_ENCAP_TYPES)
+	if (encap < WTAP_ENCAP_NONE || encap >= WTAP_NUM_ENCAP_TYPES)
 		return "illegal";
+	else if (encap == WTAP_ENCAP_NONE)
+		return "none";
 	else if (encap == WTAP_ENCAP_PER_PACKET)
 		return "per-packet";
 	else
@@ -1253,8 +1365,10 @@ wtap_encap_name(int encap)
 const char *
 wtap_encap_description(int encap)
 {
-	if (encap < WTAP_ENCAP_PER_PACKET || encap >= WTAP_NUM_ENCAP_TYPES)
+	if (encap < WTAP_ENCAP_NONE || encap >= WTAP_NUM_ENCAP_TYPES)
 		return "Illegal";
+	else if (encap == WTAP_ENCAP_NONE)
+		return "None";
 	else if (encap == WTAP_ENCAP_PER_PACKET)
 		return "Per packet";
 	else
@@ -1275,37 +1389,34 @@ wtap_name_to_encap(const char *name)
 	return -1;	/* no such encapsulation type */
 }
 
+/*
+ * For precision values that correspond to a specific precision.
+ */
+static const char *precnames[NUM_WS_TSPREC_VALS] = {
+	"seconds",
+	"100 milliseconds (deciseconds)",
+	"10 milliseconds (centiseconds)",
+	"milliseconds",
+	"100 microseconds",
+	"10 microseconds",
+	"microseconds",
+	"100 nanoseconds",
+	"10 nanoseconds",
+	"nanoseconds",
+};
+
 const char*
 wtap_tsprec_string(int tsprec)
 {
 	const char* s;
-	switch (tsprec) {
-		case WTAP_TSPREC_PER_PACKET:
-			s = "per-packet";
-			break;
-		case WTAP_TSPREC_SEC:
-			s = "seconds";
-			break;
-		case WTAP_TSPREC_DSEC:
-			s = "deciseconds";
-			break;
-		case WTAP_TSPREC_CSEC:
-			s = "centiseconds";
-			break;
-		case WTAP_TSPREC_MSEC:
-			s = "milliseconds";
-			break;
-		case WTAP_TSPREC_USEC:
-			s = "microseconds";
-			break;
-		case WTAP_TSPREC_NSEC:
-			s = "nanoseconds";
-			break;
-		case WTAP_TSPREC_UNKNOWN:
-		default:
-			s = "UNKNOWN";
-			break;
-	}
+	if (tsprec == WTAP_TSPREC_PER_PACKET)
+		s = "per-packet";
+	else if (tsprec >= 0 && tsprec < NUM_WS_TSPREC_VALS)
+		s = precnames[tsprec];
+	else if (tsprec == WTAP_TSPREC_UNKNOWN)
+		s = "UNKNOWN";
+	else
+		s = "INVALID";
 	return s;
 }
 
@@ -1391,7 +1502,7 @@ static const char *wtap_errlist[] = {
 	/* WTAP_ERR_TIME_STAMP_NOT_SUPPORTED */
 	"We don't support writing that record's time stamp to that file type",
 };
-#define	WTAP_ERRLIST_SIZE	(sizeof wtap_errlist / sizeof wtap_errlist[0])
+#define	WTAP_ERRLIST_SIZE	array_length(wtap_errlist)
 
 const char *
 wtap_strerror(int err)
@@ -1433,7 +1544,7 @@ wtap_sequential_close(wtap *wth)
 }
 
 static void
-g_fast_seek_item_free(gpointer data, gpointer user_data _U_)
+g_fast_seek_item_free(void *data, void *user_data _U_)
 {
 	g_free(data);
 }
@@ -1470,13 +1581,15 @@ wtap_close(wtap *wth)
 
 	if (wth->fast_seek != NULL) {
 		g_ptr_array_foreach(wth->fast_seek, g_fast_seek_item_free, NULL);
-		g_ptr_array_free(wth->fast_seek, TRUE);
+		g_ptr_array_free(wth->fast_seek, true);
 	}
 
 	wtap_block_array_free(wth->shb_hdrs);
-	wtap_block_array_free(wth->nrb_hdrs);
+	wtap_block_array_free(wth->nrbs);
+	g_array_free(wth->shb_iface_to_global, true);
 	wtap_block_array_free(wth->interface_data);
 	wtap_block_array_free(wth->dsbs);
+	wtap_block_array_free(wth->meta_events);
 
 	g_free(wth);
 }
@@ -1485,16 +1598,82 @@ void
 wtap_cleareof(wtap *wth) {
 	/* Reset EOF */
 	file_clearerr(wth->fh);
+	if (wth->random_fh) {
+		file_clearerr(wth->random_fh);
+	}
+}
+
+static inline void
+wtapng_process_nrb_ipv4(wtap *wth, wtap_block_t nrb)
+{
+	const wtapng_nrb_mandatory_t *nrb_mand = (wtapng_nrb_mandatory_t*)wtap_block_get_mandatory_data(nrb);
+
+	if (wth->add_new_ipv4) {
+		for (GList *elem = nrb_mand->ipv4_addr_list; elem != NULL; elem = elem->next) {
+			hashipv4_t *tp = elem->data;
+			wth->add_new_ipv4(tp->addr, tp->name, false);
+		}
+	}
+}
+
+static inline void
+wtapng_process_nrb_ipv6(wtap *wth, wtap_block_t nrb)
+{
+	const wtapng_nrb_mandatory_t *nrb_mand = (wtapng_nrb_mandatory_t*)wtap_block_get_mandatory_data(nrb);
+
+	if (wth->add_new_ipv6) {
+		for (GList *elem = nrb_mand->ipv6_addr_list; elem != NULL; elem = elem->next) {
+			hashipv6_t *tp = elem->data;
+			wth->add_new_ipv6(tp->addr, tp->name, false);
+		}
+	}
 }
 
 void wtap_set_cb_new_ipv4(wtap *wth, wtap_new_ipv4_callback_t add_new_ipv4) {
-	if (wth)
-		wth->add_new_ipv4 = add_new_ipv4;
+	if (!wth)
+		return;
+
+	wth->add_new_ipv4 = add_new_ipv4;
+
+	/* Are there any existing NRBs? */
+	if (!wth->nrbs)
+		return;
+	/*
+	 * Send all NRBs that were read so far to the new callback. file.c
+	 * relies on this to support redissection (during redissection, the
+	 * previous name resolutions are lost and has to be resupplied).
+	 */
+	for (unsigned i = 0; i < wth->nrbs->len; i++) {
+		wtap_block_t nrb = g_array_index(wth->nrbs, wtap_block_t, i);
+		wtapng_process_nrb_ipv4(wth, nrb);
+	}
 }
 
 void wtap_set_cb_new_ipv6(wtap *wth, wtap_new_ipv6_callback_t add_new_ipv6) {
-	if (wth)
-		wth->add_new_ipv6 = add_new_ipv6;
+	if (!wth)
+		return;
+
+	wth->add_new_ipv6 = add_new_ipv6;
+
+	/* Are there any existing NRBs? */
+	if (!wth->nrbs)
+		return;
+	/*
+	 * Send all NRBs that were read so far to the new callback. file.c
+	 * relies on this to support redissection (during redissection, the
+	 * previous name resolutions are lost and has to be resupplied).
+	 */
+	for (unsigned i = 0; i < wth->nrbs->len; i++) {
+		wtap_block_t nrb = g_array_index(wth->nrbs, wtap_block_t, i);
+		wtapng_process_nrb_ipv6(wth, nrb);
+	}
+}
+
+void
+wtapng_process_nrb(wtap *wth, wtap_block_t nrb)
+{
+	wtapng_process_nrb_ipv4(wth, nrb);
+	wtapng_process_nrb_ipv6(wth, nrb);
 }
 
 void wtap_set_cb_new_secrets(wtap *wth, wtap_new_secrets_callback_t add_new_secrets) {
@@ -1508,7 +1687,7 @@ void wtap_set_cb_new_secrets(wtap *wth, wtap_new_secrets_callback_t add_new_secr
 	 * relies on this to support redissection (during redissection, the
 	 * previous secrets are lost and has to be resupplied).
 	 */
-	for (guint i = 0; i < wth->dsbs->len; i++) {
+	for (unsigned i = 0; i < wth->dsbs->len; i++) {
 		wtap_block_t dsb = g_array_index(wth->dsbs, wtap_block_t, i);
 		wtapng_process_dsb(wth, dsb);
 	}
@@ -1540,7 +1719,7 @@ wtap_init_rec(wtap *wth, wtap_rec *rec)
 	rec->rec_header.packet_header.pkt_encap = wth->file_encap;
 	rec->tsprec = wth->file_tsprec;
 	rec->block = NULL;
-	rec->block_was_modified = FALSE;
+	rec->block_was_modified = false;
 
 	/*
 	 * Assume the file has only one section; the module for the
@@ -1550,14 +1729,15 @@ wtap_init_rec(wtap *wth, wtap_rec *rec)
 	rec->section_number = 0;
 }
 
-gboolean
+bool
 wtap_read(wtap *wth, wtap_rec *rec, Buffer *buf, int *err,
-	gchar **err_info, gint64 *offset)
+	char **err_info, int64_t *offset)
 {
 	/*
 	 * Initialize the record to default values.
 	 */
 	wtap_init_rec(wth, rec);
+	ws_buffer_clean(buf);
 
 	*err = 0;
 	*err_info = NULL;
@@ -1580,7 +1760,7 @@ wtap_read(wtap *wth, wtap_rec *rec, Buffer *buf, int *err,
 			wtap_block_unref(rec->block);
 			rec->block = NULL;
 		}
-		return FALSE;	/* failure */
+		return false;	/* failure */
 	}
 
 	/*
@@ -1594,70 +1774,71 @@ wtap_read(wtap *wth, wtap_rec *rec, Buffer *buf, int *err,
 		 * encapsulation type.
 		 */
 		ws_assert(rec->rec_header.packet_header.pkt_encap != WTAP_ENCAP_PER_PACKET);
+		ws_assert(rec->rec_header.packet_header.pkt_encap != WTAP_ENCAP_NONE);
 	}
 
-	return TRUE;	/* success */
+	return true;	/* success */
 }
 
 /*
  * Read a given number of bytes from a file into a buffer or, if
  * buf is NULL, just discard them.
  *
- * If we succeed, return TRUE.
+ * If we succeed, return true.
  *
- * If we get an EOF, return FALSE with *err set to 0, reporting this
+ * If we get an EOF, return false with *err set to 0, reporting this
  * as an EOF.
  *
- * If we get fewer bytes than the specified number, return FALSE with
+ * If we get fewer bytes than the specified number, return false with
  * *err set to WTAP_ERR_SHORT_READ, reporting this as a short read
  * error.
  *
- * If we get a read error, return FALSE with *err and *err_info set
+ * If we get a read error, return false with *err and *err_info set
  * appropriately.
  */
-gboolean
+bool
 wtap_read_bytes_or_eof(FILE_T fh, void *buf, unsigned int count, int *err,
-    gchar **err_info)
+    char **err_info)
 {
 	int	bytes_read;
 
 	bytes_read = file_read(buf, count, fh);
-	if (bytes_read < 0 || (guint)bytes_read != count) {
+	if (bytes_read < 0 || (unsigned)bytes_read != count) {
 		*err = file_error(fh, err_info);
 		if (*err == 0 && bytes_read > 0)
 			*err = WTAP_ERR_SHORT_READ;
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 /*
  * Read a given number of bytes from a file into a buffer or, if
  * buf is NULL, just discard them.
  *
- * If we succeed, return TRUE.
+ * If we succeed, return true.
  *
  * If we get fewer bytes than the specified number, including getting
- * an EOF, return FALSE with *err set to WTAP_ERR_SHORT_READ, reporting
+ * an EOF, return false with *err set to WTAP_ERR_SHORT_READ, reporting
  * this as a short read error.
  *
- * If we get a read error, return FALSE with *err and *err_info set
+ * If we get a read error, return false with *err and *err_info set
  * appropriately.
  */
-gboolean
+bool
 wtap_read_bytes(FILE_T fh, void *buf, unsigned int count, int *err,
-    gchar **err_info)
+    char **err_info)
 {
 	int	bytes_read;
 
 	bytes_read = file_read(buf, count, fh);
-	if (bytes_read < 0 || (guint)bytes_read != count) {
+	if (bytes_read < 0 || (unsigned)bytes_read != count) {
 		*err = file_error(fh, err_info);
 		if (*err == 0)
 			*err = WTAP_ERR_SHORT_READ;
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 /*
@@ -1669,20 +1850,25 @@ wtap_read_bytes(FILE_T fh, void *buf, unsigned int count, int *err,
  * header, so if we get an EOF trying to read the packet data, the file
  * has been cut short, even if the read didn't read any data at all.)
  */
-gboolean
-wtap_read_packet_bytes(FILE_T fh, Buffer *buf, guint length, int *err,
-    gchar **err_info)
+bool
+wtap_read_packet_bytes(FILE_T fh, Buffer *buf, unsigned length, int *err,
+    char **err_info)
 {
+	bool rv;
 	ws_buffer_assure_space(buf, length);
-	return wtap_read_bytes(fh, ws_buffer_start_ptr(buf), length, err,
+	rv = wtap_read_bytes(fh, ws_buffer_end_ptr(buf), length, err,
 	    err_info);
+	if (rv) {
+		ws_buffer_increase_length(buf, length);
+	}
+	return rv;
 }
 
 /*
  * Return an approximation of the amount of data we've read sequentially
- * from the file so far.  (gint64, in case that's 64 bits.)
+ * from the file so far.  (int64_t, in case that's 64 bits.)
  */
-gint64
+int64_t
 wtap_read_so_far(wtap *wth)
 {
 	return file_tell_raw(wth->fh);
@@ -1706,7 +1892,7 @@ wtap_rec_reset(wtap_rec *rec)
 {
 	wtap_block_unref(rec->block);
 	rec->block = NULL;
-	rec->block_was_modified = FALSE;
+	rec->block_was_modified = false;
 }
 
 /* clean up record metadata */
@@ -1717,14 +1903,29 @@ wtap_rec_cleanup(wtap_rec *rec)
 	ws_buffer_free(&rec->options_buf);
 }
 
-gboolean
-wtap_seek_read(wtap *wth, gint64 seek_off, wtap_rec *rec, Buffer *buf,
-    int *err, gchar **err_info)
+wtap_block_t
+wtap_rec_generate_idb(const wtap_rec *rec)
+{
+	int tsprec;
+	ws_assert(rec->rec_type == REC_TYPE_PACKET);
+	if (rec->presence_flags & WTAP_HAS_TS) {
+		tsprec = rec->tsprec;
+	} else {
+		tsprec = WTAP_TSPREC_USEC;
+		/* The default */
+	}
+	return wtap_generate_idb(rec->rec_header.packet_header.pkt_encap, tsprec, 0);
+}
+
+bool
+wtap_seek_read(wtap *wth, int64_t seek_off, wtap_rec *rec, Buffer *buf,
+    int *err, char **err_info)
 {
 	/*
 	 * Initialize the record to default values.
 	 */
 	wtap_init_rec(wth, rec);
+	ws_buffer_clean(buf);
 
 	*err = 0;
 	*err_info = NULL;
@@ -1736,7 +1937,7 @@ wtap_seek_read(wtap *wth, gint64 seek_off, wtap_rec *rec, Buffer *buf,
 			wtap_block_unref(rec->block);
 			rec->block = NULL;
 		}
-		return FALSE;
+		return false;
 	}
 
 	/*
@@ -1750,29 +1951,30 @@ wtap_seek_read(wtap *wth, gint64 seek_off, wtap_rec *rec, Buffer *buf,
 		 * encapsulation type.
 		 */
 		ws_assert(rec->rec_header.packet_header.pkt_encap != WTAP_ENCAP_PER_PACKET);
+		ws_assert(rec->rec_header.packet_header.pkt_encap != WTAP_ENCAP_NONE);
 	}
 
-	return TRUE;
+	return true;
 }
 
-static gboolean
-wtap_full_file_read_file(wtap *wth, FILE_T fh, wtap_rec *rec, Buffer *buf, int *err, gchar **err_info)
+static bool
+wtap_full_file_read_file(wtap *wth, FILE_T fh, wtap_rec *rec, Buffer *buf, int *err, char **err_info)
 {
-	gint64 file_size;
+	int64_t file_size;
 	int packet_size = 0;
 	const int block_size = 1024 * 1024;
 
 	if ((file_size = wtap_file_size(wth, err)) == -1)
-		return FALSE;
+		return false;
 
-	if (file_size > G_MAXINT) {
+	if (file_size > INT_MAX) {
 		/*
 		 * Avoid allocating space for an immensely-large file.
 		 */
 		*err = WTAP_ERR_BAD_FILE;
 		*err_info = ws_strdup_printf("%s: File has %" PRId64 "-byte packet, bigger than maximum of %u",
-				wtap_encap_name(wth->file_encap), file_size, G_MAXINT);
-		return FALSE;
+				wtap_encap_name(wth->file_encap), file_size, INT_MAX);
+		return false;
 	}
 
 	/*
@@ -1785,8 +1987,8 @@ wtap_full_file_read_file(wtap *wth, FILE_T fh, wtap_rec *rec, Buffer *buf, int *
 		if (buffer_size <= 0) {
 			*err = WTAP_ERR_BAD_FILE;
 			*err_info = ws_strdup_printf("%s: Uncompressed file is bigger than maximum of %u",
-					wtap_encap_name(wth->file_encap), G_MAXINT);
-			return FALSE;
+					wtap_encap_name(wth->file_encap), INT_MAX);
+			return false;
 		}
 		ws_buffer_assure_space(buf, buffer_size);
 		int nread = file_read(ws_buffer_start_ptr(buf) + packet_size, buffer_size - packet_size, fh);
@@ -1794,7 +1996,7 @@ wtap_full_file_read_file(wtap *wth, FILE_T fh, wtap_rec *rec, Buffer *buf, int *
 			*err = file_error(fh, err_info);
 			if (*err == 0)
 				*err = WTAP_ERR_BAD_FILE;
-			return FALSE;
+			return false;
 		}
 		packet_size += nread;
 		if (packet_size != buffer_size) {
@@ -1811,45 +2013,123 @@ wtap_full_file_read_file(wtap *wth, FILE_T fh, wtap_rec *rec, Buffer *buf, int *
 	rec->rec_header.packet_header.caplen = packet_size;
 	rec->rec_header.packet_header.len = packet_size;
 
-	return TRUE;
+	return true;
 }
 
-gboolean
+bool
 wtap_full_file_read(wtap *wth, wtap_rec *rec, Buffer *buf,
-                    int *err, gchar **err_info, gint64 *data_offset)
+                    int *err, char **err_info, int64_t *data_offset)
 {
-	gint64 offset = file_tell(wth->fh);
+	int64_t offset = file_tell(wth->fh);
 
 	/* There is only one packet with the full file contents. */
 	if (offset != 0) {
 		*err = 0;
-		return FALSE;
+		return false;
 	}
 
 	*data_offset = offset;
 	return wtap_full_file_read_file(wth, wth->fh, rec, buf, err, err_info);
 }
 
-gboolean
-wtap_full_file_seek_read(wtap *wth, gint64 seek_off, wtap_rec *rec, Buffer *buf, int *err, gchar **err_info)
+bool
+wtap_full_file_seek_read(wtap *wth, int64_t seek_off, wtap_rec *rec, Buffer *buf, int *err, char **err_info)
 {
 	/* There is only one packet with the full file contents. */
 	if (seek_off > 0) {
 		*err = 0;
-		return FALSE;
+		return false;
 	}
 
 	if (file_seek(wth->random_fh, seek_off, SEEK_SET, err) == -1)
-		return FALSE;
+		return false;
 
 	return wtap_full_file_read_file(wth, wth->random_fh, rec, buf, err, err_info);
+}
+
+void
+wtap_buffer_append_epdu_tag(Buffer *buf, uint16_t epdu_tag, const uint8_t *data, uint16_t data_len)
+{
+	uint8_t pad_len = 0;
+	unsigned space_needed = 4; /* 2 for tag field, 2 for length field */
+	uint8_t *buf_data;
+
+	if (epdu_tag != 0 && data != NULL && data_len != 0) {
+		pad_len += PADDING4(data_len);
+		space_needed += data_len + pad_len;
+	}
+	else {
+		data_len = 0;
+	}
+
+	ws_buffer_assure_space(buf, space_needed);
+	buf_data = ws_buffer_end_ptr(buf);
+	memset(buf_data, 0, space_needed);
+	phton16(buf_data + 0, epdu_tag);
+	/* It seems as though the convention for exported_pdu is to specify
+	 * the fully-padded length of the tag value, not just its useful length.
+	 * e.g. the string value 'a' would be given a length of 4.
+	 */
+	phton16(buf_data + 2, data_len + pad_len);
+	if (data_len > 0) {
+		/* Still only copy as many bytes as we actually have */
+		memcpy(buf_data + 4, data, data_len);
+	}
+	ws_buffer_increase_length(buf, space_needed);
+}
+
+void
+wtap_buffer_append_epdu_uint(Buffer *buf, uint16_t epdu_tag, uint32_t val)
+{
+	const unsigned space_needed = 8; /* 2 for tag field, 2 for length field, 4 for value */
+	uint8_t *buf_data;
+
+	ws_assert(epdu_tag != 0);
+	ws_buffer_assure_space(buf, space_needed);
+	buf_data = ws_buffer_end_ptr(buf);
+	memset(buf_data, 0, space_needed);
+	phton16(buf_data + 0, epdu_tag);
+	phton16(buf_data + 2, 4);
+	phton32(buf_data + 4, val);
+	ws_buffer_increase_length(buf, space_needed);
+}
+
+void
+wtap_buffer_append_epdu_string(Buffer *buf, uint16_t epdu_tag, const char *val)
+{
+	size_t string_len;
+
+	string_len = strlen(val);
+	/*
+	 * Cut off string length at UINT16_MAX.
+	 *
+	 * XXX - make sure we don't leave an incomplete UTF-8
+	 * sequence at the end.
+	 */
+	if (string_len > UINT16_MAX)
+		string_len = UINT16_MAX;
+	wtap_buffer_append_epdu_tag(buf, epdu_tag, val, (uint16_t) string_len);
+}
+
+int
+wtap_buffer_append_epdu_end(Buffer *buf)
+{
+	const unsigned space_needed = 4; /* 2 for tag (=0000), 2 for length field (=0) */
+	uint8_t *buf_data;
+
+	ws_buffer_assure_space(buf, space_needed);
+	buf_data = ws_buffer_end_ptr(buf);
+	memset(buf_data, 0, space_needed);
+	ws_buffer_increase_length(buf, space_needed);
+
+	return (int)ws_buffer_length(buf);
 }
 
 /*
  * Initialize the library.
  */
 void
-wtap_init(gboolean load_wiretap_plugins)
+wtap_init(bool load_wiretap_plugins)
 {
 	init_open_routines();
 	wtap_opttypes_initialize();

@@ -12,8 +12,6 @@
 
 #include "config.h"
 
-#include "glib.h"
-
 #include <epan/tap.h>
 #include <epan/conversation.h>
 #include <epan/conversation_table.h>
@@ -46,6 +44,7 @@ public:
 #endif
         TIMELINE_DATA,
         ENDPOINT_DATATYPE,
+        PROTO_ID,
         CONVERSATION_ID,
         ROW_IS_FILTERED,
         DATA_ADDRESS_TYPE,
@@ -76,12 +75,14 @@ public:
     virtual ~ATapDataModel();
 
     /**
-     * @brief Number of rows in this model
+     * @brief Number of rows under the given parent in this model, which
+     * is the total number of rows for the empty QModelIndex, and 0 for
+     * any valid parent index (as no row has children; this is a flat table.)
      *
-     * @param idx not used
-     * @return int the number of rows
+     * @param parent index of parent, QModelIndex() for the root
+     * @return int the number of rows under the parent
      */
-    int rowCount(const QModelIndex &idx = QModelIndex()) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const = 0;
     virtual QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal, int role = Qt::DisplayRole) const = 0;
@@ -261,6 +262,8 @@ public:
         ENDP_NUM_COLUMNS,
         ENDP_COLUMN_GEO_COUNTRY = ENDP_NUM_COLUMNS,
         ENDP_COLUMN_GEO_CITY,
+        ENDP_COLUMN_GEO_LATITUDE,
+        ENDP_COLUMN_GEO_LONGITUDE,
         ENDP_COLUMN_GEO_AS_NUM,
         ENDP_COLUMN_GEO_AS_ORG,
         ENDP_NUM_GEO_COLUMNS
@@ -300,6 +303,12 @@ public:
         CONV_NUM_COLUMNS,
         CONV_INDEX_COLUMN = CONV_NUM_COLUMNS
     } conversation_column_type_e;
+
+    typedef enum {
+        CONV_TCP_EXT_COLUMN_A = CONV_INDEX_COLUMN,
+        CONV_TCP_EXT_NUM_COLUMNS,
+        CONV_TCP_EXT_INDEX_COLUMN = CONV_TCP_EXT_NUM_COLUMNS
+    } conversation_tcp_ext_column_type_e;
 
     explicit ConversationDataModel(int protoId, QString filter, QObject *parent = nullptr);
 

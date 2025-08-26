@@ -9,8 +9,6 @@
 
 #include "config.h"
 
-#include <glib.h>
-
 #include <epan/prefs.h>
 #include <epan/proto.h>
 #include <epan/dfilter/dfilter.h>
@@ -86,7 +84,7 @@ void SyntaxLineEdit::setSyntaxState(SyntaxState state) {
     QColor deprecated_bg = ColorUtils::fromColorT(&prefs.gui_text_deprecated);
     QColor deprecated_fg = ColorUtils::contrastingTextColor(deprecated_bg);
 
-    // Try to matche QLineEdit's placeholder text color (which sets the
+    // Try to match QLineEdit's placeholder text color (which sets the
     // alpha channel to 50%, which doesn't work in style sheets).
     // Setting the foreground color lets us avoid yet another background
     // color preference and should hopefully make things easier to
@@ -201,14 +199,19 @@ bool SyntaxLineEdit::checkDisplayFilter(QString filter)
     }
 
     dfilter_t *dfp = NULL;
-    gchar *err_msg;
-    dfilter_loc_t loc;
-    if (dfilter_compile2(filter.toUtf8().constData(), &dfp, &err_msg, &loc)) {
+    df_error_t *df_err = NULL;
+    if (dfilter_compile(filter.toUtf8().constData(), &dfp, &df_err)) {
+        GSList *warn;
         GPtrArray *depr = NULL;
-        if (dfp) {
-            depr = dfilter_deprecated_tokens(dfp);
-        }
-        if (depr) {
+        if (dfp != NULL && (warn = dfilter_get_warnings(dfp)) != NULL) {
+            // FIXME Need to use a different state or rename ::Deprecated
+            setSyntaxState(SyntaxLineEdit::Deprecated);
+            /*
+            * We're being lazy and only printing the first warning.
+            * Would it be better to print all of them?
+            */
+            syntax_error_message_  = QString(static_cast<char *>(warn->data));
+        } else if (dfp != NULL && (depr = dfilter_deprecated_tokens(dfp)) != NULL) {
             // You keep using that word. I do not think it means what you think it means.
             // Possible alternatives: ::Troubled, or ::Problematic maybe?
             setSyntaxState(SyntaxLineEdit::Deprecated);
@@ -217,7 +220,7 @@ bool SyntaxLineEdit::checkDisplayFilter(QString filter)
              * Would it be better to print all of them?
              */
             QString token((const char *)g_ptr_array_index(depr, 0));
-            gchar *token_str = qstring_strdup(token.section('.', 0, 0));
+            char *token_str = qstring_strdup(token.section('.', 0, 0));
             header_field_info *hfi = proto_registrar_get_byalias(token_str);
             if (hfi)
                 syntax_error_message_ = tr("\"%1\" is deprecated in favour of \"%2\". "
@@ -231,9 +234,9 @@ bool SyntaxLineEdit::checkDisplayFilter(QString filter)
         }
     } else {
         setSyntaxState(SyntaxLineEdit::Invalid);
-        syntax_error_message_ = QString::fromUtf8(err_msg);
-        syntax_error_message_full_ = createSyntaxErrorMessageFull(filter, syntax_error_message_, loc.col_start, loc.col_len);
-        g_free(err_msg);
+        syntax_error_message_ = QString::fromUtf8(df_err->msg);
+        syntax_error_message_full_ = createSyntaxErrorMessageFull(filter, syntax_error_message_, df_err->loc.col_start, df_err->loc.col_len);
+        df_error_free(&df_err);
     }
     dfilter_free(dfp);
 
@@ -262,10 +265,23 @@ void SyntaxLineEdit::checkCustomColumn(QString fields)
         return;
     }
 
-    gchar **splitted_fields = g_regex_split_simple(COL_CUSTOM_PRIME_REGEX,
-                fields.toUtf8().constData(), G_REGEX_ANCHORED, G_REGEX_MATCH_ANCHORED);
+#if 0
+    // XXX - Eventually, if the operator we split on is something not supported
+    // in the filter expression syntax (so that we can distinguish multifield
+    // concatenation of column strings from a logical OR), we would split and
+    // then check each split result as a valid display filter.
+    // For now, any expression that is a valid display filter should work.
+    //
+    // We also, for the custom columns, want some of the extra completion
+    // information from DisplayFilterEdit (like the display filter functions),
+    // without all of its integration into the main app, but not every user
+    // of FieldFilterEdit wants that, so perhaps we eventually should have
+    // another class.
+    char **splitted_fields = g_regex_split_simple(COL_CUSTOM_PRIME_REGEX,
+                fields.toUtf8().constData(), (GRegexCompileFlags) G_REGEX_RAW,
+                (GRegexMatchFlags) 0);
 
-    for (guint i = 0; i < g_strv_length(splitted_fields); i++) {
+    for (unsigned i = 0; i < g_strv_length(splitted_fields); i++) {
         if (splitted_fields[i] && *splitted_fields[i]) {
             if (proto_check_field_name(splitted_fields[i]) != 0) {
                 setSyntaxState(SyntaxLineEdit::Invalid);
@@ -275,6 +291,7 @@ void SyntaxLineEdit::checkCustomColumn(QString fields)
         }
     }
     g_strfreev(splitted_fields);
+#endif
 
     checkDisplayFilter(fields);
 }
@@ -378,10 +395,9 @@ void SyntaxLineEdit::completionKeyPressEvent(QKeyEvent *event)
         return;
     }
 
-    QPoint token_coords(getTokenUnderCursor());
-
-    QString token_word = text().mid(token_coords.x(), token_coords.y());
-    buildCompletionList(token_word);
+    QStringList sentence(splitLineUnderCursor());
+    Q_ASSERT(sentence.size() == 2);     // (preamble, token)
+    buildCompletionList(sentence[1] /* token */, sentence[0] /* preamble */);
 
     if (completion_model_->stringList().length() < 1) {
         completer_->popup()->hide();
@@ -421,20 +437,26 @@ void SyntaxLineEdit::paintEvent(QPaintEvent *event)
     QRect cr = style()->subElementRect(QStyle::SE_LineEditContents, &opt, this);
     QPainter painter(this);
 
-    // In my (gcc) testing here, if I add "background: yellow;" to the DisplayFilterCombo
-    // stylesheet, when building with Qt 5.15.2 the combobox background is yellow and the
-    // text entry area (between the bookmark and apply button) is drawn in the correct
-    // base color (white for light mode and black for dark mode), and the correct syntax
-    // color otherwise. When building with Qt 6.2.4 and 6.3.1, the combobox background is
-    // yellow and the text entry area is always yellow, i.e. QLineEdit isn't painting its
-    // background for some reason.
+    // In the attempt to fix https://bugreports.qt.io/browse/QTBUG-81533
+    // the following commit was added to Qt 6.0.0 and later 5.15.3:
+    // https://code.qt.io/cgit/qt/qtbase.git/commit/src/widgets/widgets/qcombobox.cpp?h=5.15&id=6e470764a98434a120eba4fcc6035137cf9c92cf
     //
-    // It's not clear if this is a bug or just how things work under Qt6. Either way, it's
-    // easy to work around.
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    // It causes a similar problem to the one it was trying to fix, viz. if I
+    // add "background: yellow;" to the DisplayFilterCombo stylesheet, when
+    // building with Qt 5.15.2 the combobox background is yellow and the text
+    // entry area (between the bookmark and apply button) is drawn in the correct
+    // base color (white for light mode and black for dark mode), and the correct
+    // syntax color otherwise. When building with Qt 5.15.3 and 6.2.4 and 6.3.1,
+    // the combobox background is yellow and the text entry area is always yellow,
+    // i.e. QLineEdit isn't painting its background because the palette from
+    // the combobox is used instead.
+    //
+    // It's not clear if this is a bug or just how things work under Qt6.
+    // Either way, it's easy to work around.
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 3)
     // Must match CaptureFilterEdit and DisplayFilterEdit stylesheets.
     int pad = style()->pixelMetric(QStyle::PM_DefaultFrameWidth) + 1;
-    QRect full_cr = cr.adjusted(-pad, 0, 0, 0);
+    QRect full_cr = cr.adjusted(-pad, 0, -1, 0);
     QBrush bg;
 
     switch (syntax_state_) {
@@ -488,7 +510,7 @@ void SyntaxLineEdit::paintEvent(QPaintEvent *event)
     }
 
     int si_off = (cr.height() - sir.height()) / 2;
-    sir.moveTop(si_off);
+    sir.moveTop(cr.top() + si_off);
     sir.moveRight(cr.right() - si_off);
     painter.save();
     painter.setOpacity(0.25);
@@ -532,4 +554,20 @@ QPoint SyntaxLineEdit::getTokenUnderCursor()
     }
 
     return QPoint(start, len);
+}
+
+QStringList SyntaxLineEdit::splitLineUnderCursor()
+{
+    QPoint token_coords(getTokenUnderCursor());
+
+    // Split line into preamble and word under cursor.
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    QString preamble = text().first(token_coords.x()).trimmed();
+#else
+    QString preamble = text().mid(0, token_coords.x()).trimmed();
+#endif
+    // This should be trimmed already
+    QString token_word = text().mid(token_coords.x(), token_coords.y());
+
+    return QStringList{ preamble, token_word };
 }

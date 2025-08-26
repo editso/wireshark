@@ -10,18 +10,14 @@
 
 #include "config.h"
 
-/* Because ws_assert() dependes on ws_error() we do not use it
- * here and fall back on assert() instead. */
-#if defined(WS_DISABLE_ASSERT) && !defined(NDEBUG)
-#define NDEBUG
-#endif
-
 #include "wslog.h"
 
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <time.h>
+/* Because ws_assert() dependes on ws_error() we do not use it
+ * here and fall back on assert() instead. */
 #include <assert.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -40,12 +36,7 @@
 #include "console_win32.h"
 #endif
 
-
-#ifndef WS_DISABLE_ASSERT
 #define ASSERT(expr)    assert(expr)
-#else
-#define ASSERT(expr)    (void)(expr);
-#endif
 
 /* Runtime log level. */
 #define ENV_VAR_LEVEL       "WIRESHARK_LOG_LEVEL"
@@ -96,39 +87,41 @@ typedef struct {
  * will be printed regardless of log level. This is a feature, not a bug. */
 static enum ws_log_level current_log_level = LOG_LEVEL_NONE;
 
-static bool stdout_color_enabled = false;
+static bool stdout_color_enabled;
 
-static bool stderr_color_enabled = false;
+static bool stderr_color_enabled;
 
 /* Use stdout for levels "info" and below, for backward compatibility
  * with GLib. */
-static bool stdout_logging_enabled = false;
+static bool stdout_logging_enabled;
 
 static const char *registered_progname = DEFAULT_PROGNAME;
 
 /* List of domains to filter. */
-static log_filter_t *domain_filter = NULL;
+static log_filter_t *domain_filter;
 
 /* List of domains to output debug level unconditionally. */
-static log_filter_t *debug_filter = NULL;
+static log_filter_t *debug_filter;
 
 /* List of domains to output noisy level unconditionally. */
-static log_filter_t *noisy_filter = NULL;
+static log_filter_t *noisy_filter;
 
 /* List of domains that are fatal. */
-static log_filter_t *fatal_filter = NULL;
+static log_filter_t *fatal_filter;
 
-static ws_log_writer_cb *registered_log_writer = NULL;
+static ws_log_writer_cb *registered_log_writer;
 
-static void *registered_log_writer_data = NULL;
+static void *registered_log_writer_data;
 
-static ws_log_writer_free_data_cb *registered_log_writer_data_free = NULL;
+static ws_log_writer_free_data_cb *registered_log_writer_data_free;
 
-static FILE *custom_log = NULL;
+static FILE *custom_log;
 
 static enum ws_log_level fatal_log_level = LOG_LEVEL_ERROR;
 
-static bool init_complete = false;
+#ifdef WS_DEBUG
+static bool init_complete;
+#endif
 
 ws_log_console_open_pref ws_log_console_open = LOG_CONSOLE_OPEN_NEVER;
 
@@ -240,6 +233,45 @@ static inline bool level_filter_matches(log_filter_t *filter,
     }
 
     return false;
+}
+
+
+static inline void
+get_timestamp(struct timespec *ts)
+{
+    bool ok = false;
+
+#if defined(HAVE_CLOCK_GETTIME)
+    ok = (clock_gettime(CLOCK_REALTIME, ts) == 0);
+#elif defined(HAVE_TIMESPEC_GET)
+    ok = (timespec_get(ts, TIME_UTC) == TIME_UTC);
+#endif
+    if (ok)
+        return;
+
+    /* Fall back on time(). */
+    ts->tv_sec = time(NULL);
+    ts->tv_nsec = -1;
+}
+
+
+static inline void fill_manifest(ws_log_manifest_t *mft)
+{
+    struct timespec ts;
+    get_timestamp(&ts);
+    ws_localtime_r(&ts.tv_sec, &mft->tstamp_secs);
+    mft->nanosecs = ts.tv_nsec;
+    mft->pid = getpid();
+}
+
+
+static inline bool msg_is_active(const char *domain, enum ws_log_level level,
+                                    ws_log_manifest_t *mft)
+{
+    bool is_active = ws_log_msg_is_active(domain, level);
+    if (is_active)
+        fill_manifest(mft);
+    return is_active;
 }
 
 
@@ -481,8 +513,10 @@ int ws_log_parse_args(int *argc_ptr, char *argv[],
     if (argc_ptr == NULL || argv == NULL)
         return -1;
 
+#ifdef WS_DEBUG
     /* Assert ws_log_init() was called before ws_log_parse_args(). */
     ASSERT(init_complete);
+#endif
 
     /* Configure from command line. */
 
@@ -582,16 +616,24 @@ int ws_log_parse_args(int *argc_ptr, char *argv[],
         else if (option == opt_fatal_domain) {
             ws_log_set_fatal_domain_filter(value);
         }
-        else if (value && option == opt_file) {
-            FILE *fp = ws_fopen(value, "w");
-            if (fp == NULL) {
+        else if (option == opt_file) {
+            if (value == NULL) {
                 print_err(vcmdarg_err, exit_failure,
-                            "Error opening file '%s' for writing: %s.\n",
-                            value, g_strerror(errno));
+                            "Option '%s' requires an argument.\n",
+                            option);
                 ret += 1;
             }
             else {
-                ws_log_add_custom_file(fp);
+                FILE *fp = ws_fopen(value, "w");
+                if (fp == NULL) {
+                    print_err(vcmdarg_err, exit_failure,
+                                "Error opening file '%s' for writing: %s.\n",
+                                value, g_strerror(errno));
+                    ret += 1;
+                }
+                else {
+                    ws_log_add_custom_file(fp);
+                }
             }
         }
         else if (option == opt_fatal) {
@@ -643,9 +685,7 @@ static void tokenize_filter_str(log_filter_t **filter_ptr,
                                     const char *str_filter,
                                     enum ws_log_level min_level)
 {
-    char *tok, *str;
     const char *sep = ",;";
-    GPtrArray *ptr;
     bool negated = false;
     log_filter_t *filter;
 
@@ -662,22 +702,8 @@ static void tokenize_filter_str(log_filter_t **filter_ptr,
     if (*str_filter == '\0')
         return;
 
-    ptr = g_ptr_array_new_with_free_func(g_free);
-    str = g_strdup(str_filter);
-
-    for (tok = strtok(str, sep); tok != NULL; tok = strtok(NULL, sep)) {
-        g_ptr_array_add(ptr, g_strdup(tok));
-    }
-
-    g_free(str);
-    if (ptr->len == 0) {
-        g_ptr_array_free(ptr, true);
-        return;
-    }
-    g_ptr_array_add(ptr, NULL);
-
     filter = g_new(log_filter_t, 1);
-    filter->domainv = (void *)g_ptr_array_free(ptr, false);
+    filter->domainv = g_strsplit_set(str_filter, sep, -1);
     filter->positive = !negated;
     filter->min_level = min_level;
     *filter_ptr = filter;
@@ -760,7 +786,7 @@ void ws_log_set_writer_with_data(ws_log_writer_cb *writer,
 
 
 static void glib_log_handler(const char *domain, GLogLevelFlags flags,
-                        const char *message, gpointer user_data _U_)
+                        const char *message, void * user_data _U_)
 {
     enum ws_log_level level;
 
@@ -790,7 +816,7 @@ static void glib_log_handler(const char *domain, GLogLevelFlags flags,
 
 
 #ifdef _WIN32
-static void load_registry()
+static void load_registry(void)
 {
     LONG lResult;
     DWORD ptype;
@@ -822,27 +848,27 @@ void ws_log_init(const char *progname,
                             void (*vcmdarg_err)(const char *, va_list ap))
 {
     const char *env;
+    int fd;
 
     if (progname != NULL) {
         registered_progname = progname;
         g_set_prgname(progname);
     }
 
+    ws_tzset();
+
     current_log_level = DEFAULT_LOG_LEVEL;
 
-    stdout_color_enabled = g_log_writer_supports_color(fileno(stdout));
-    stderr_color_enabled = g_log_writer_supports_color(fileno(stderr));
+    if ((fd = fileno(stdout)) >= 0)
+        stdout_color_enabled = g_log_writer_supports_color(fd);
+    if ((fd = fileno(stderr)) >= 0)
+        stderr_color_enabled = g_log_writer_supports_color(fd);
 
-    /* Set the GLib log handler for the default domain. */
-    g_log_set_handler(NULL, G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL,
-                        glib_log_handler, NULL);
-
-    /* Set the GLib log handler for GLib itself. */
-    g_log_set_handler("GLib", G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL,
-                        glib_log_handler, NULL);
+    /* Set ourselves as the default log handler for all GLib domains. */
+    g_log_set_default_handler(glib_log_handler, NULL);
 
 #ifdef _WIN32
-    load_registry(vcmdarg_err);
+    load_registry();
 
     /* if the user wants a console to be always there, well, we should open one for him */
     if (ws_log_console_open == LOG_CONSOLE_OPEN_ALWAYS) {
@@ -892,7 +918,9 @@ void ws_log_init(const char *progname,
     if (env != NULL)
         ws_log_set_noisy_filter(env);
 
+#ifdef WS_DEBUG
     init_complete = true;
+#endif
 }
 
 
@@ -964,64 +992,56 @@ static inline const char *color_off(bool enable)
  * our own handler for the GLib domain).
  */
 static void log_write_do_work(FILE *fp, bool use_color,
-                                struct tm *when, long nanosecs,
-                                const char *domain,  enum ws_log_level level,
+                                struct tm *when, long nanosecs, intmax_t pid,
+                                const char *domain, enum ws_log_level level,
                                 const char *file, long line, const char *func,
                                 const char *user_format, va_list user_ap)
 {
+    fputs(" **", fp);
+
+#ifdef WS_DEBUG
     if (!init_complete)
-        fputs(" ** (noinit)", fp);
+        fputs(" no init!", fp);
+#endif
 
     /* Process */
-    fprintf(fp, " ** (%s:%ld) ", registered_progname, (long)getpid());
+    fprintf(fp, " (%s:%"PRIdMAX")", registered_progname, pid);
 
     /* Timestamp */
-    if (when != NULL && nanosecs >= 0)
-        fprintf(fp, "%02d:%02d:%02d.%06ld ",
-                            when->tm_hour, when->tm_min, when->tm_sec,
-                            nanosecs / NANOSECS_IN_MICROSEC);
-    else if (when != NULL)
-        fprintf(fp, "%02d:%02d:%02d ",
+    if (when != NULL) {
+        fprintf(fp, " %02d:%02d:%02d",
                             when->tm_hour, when->tm_min, when->tm_sec);
-    else
-        fputs("(notime) ", fp);
+        if (nanosecs >= 0) {
+            fprintf(fp, ".%06ld", nanosecs / NANOSECS_IN_MICROSEC);
+        }
+    }
 
     /* Domain/level */
-    fprintf(fp, "[%s %s%s%s] ", domain_to_string(domain),
+    fprintf(fp, " [%s %s%s%s]", domain_to_string(domain),
                                 level_color_on(use_color, level),
                                 ws_log_level_to_string(level),
                                 color_off(use_color));
 
     /* File/line */
-    if (file != NULL && line >= 0)
-        fprintf(fp, "%s:%ld ", file, line);
-    else if (file != NULL)
-        fprintf(fp, "%s ", file);
+    if (file != NULL) {
+        fprintf(fp, " %s", file);
+        if (line >= 0) {
+            fprintf(fp, ":%ld", line);
+        }
+    }
 
     /* Any formatting changes here need to be synced with ui/capture.c:capture_input_closed. */
-    fputs("-- ", fp);
+    fputs(" --", fp);
 
     /* Function name */
     if (func != NULL)
-        fprintf(fp, "%s(): ", func);
+        fprintf(fp, " %s():", func);
 
     /* User message */
+    fputc(' ', fp);
     vfprintf(fp, user_format, user_ap);
     fputc('\n', fp);
     fflush(fp);
-}
-
-
-static inline struct tm *get_localtime(time_t unix_time, struct tm **cookie)
-{
-    if (unix_time == (time_t)-1)
-        return NULL;
-    if (cookie && *cookie)
-        return *cookie;
-    struct tm *when = localtime(&unix_time);
-    if (cookie)
-        *cookie = when;
-    return when;
 }
 
 
@@ -1041,6 +1061,13 @@ static inline bool console_color_enabled(enum ws_log_level level)
 }
 
 
+static void log_write_fatal_msg(FILE *fp, intmax_t pid, const char *msg)
+{
+    /* Process */
+    fprintf(fp, " ** (%s:%"PRIdMAX") %s", registered_progname, pid, msg);
+}
+
+
 /*
  * We must not call anything that might log a message
  * in the log handler context (GLib might log a message if we register
@@ -1048,56 +1075,58 @@ static inline bool console_color_enabled(enum ws_log_level level)
  */
 static void log_write_dispatch(const char *domain, enum ws_log_level level,
                             const char *file, long line, const char *func,
+                            ws_log_manifest_t *mft,
                             const char *user_format, va_list user_ap)
 {
-    struct timespec tstamp;
-    struct tm *cookie = NULL;
     bool fatal_event = false;
+    const char *fatal_msg = NULL;
+    va_list user_ap_copy;
 
     if (level >= fatal_log_level && level != LOG_LEVEL_ECHO) {
         fatal_event = true;
+        fatal_msg = "Aborting on fatal log level exception\n";
     }
     else if (fatal_filter != NULL) {
         if (filter_contains(fatal_filter, domain) && fatal_filter->positive) {
             fatal_event = true;
+            fatal_msg = "Aborting on fatal log domain exception\n";
         }
     }
 
-    ws_clock_get_realtime(&tstamp);
-
 #ifdef _WIN32
-    if (fatal_event || ws_log_console_open != LOG_CONSOLE_OPEN_NEVER) {
-        /* the user wants a console or the application will terminate immediately */
+    if (ws_log_console_open != LOG_CONSOLE_OPEN_NEVER) {
         create_console();
     }
 #endif /* _WIN32 */
 
     if (custom_log) {
-        va_list user_ap_copy;
-
         va_copy(user_ap_copy, user_ap);
         log_write_do_work(custom_log, false,
-                            get_localtime(tstamp.tv_sec, &cookie),
-                            tstamp.tv_nsec,
+                            &mft->tstamp_secs, mft->nanosecs, mft->pid,
                             domain, level, file, line, func,
                             user_format, user_ap_copy);
         va_end(user_ap_copy);
+        if (fatal_msg) {
+            log_write_fatal_msg(custom_log, mft->pid, fatal_msg);
+        }
     }
 
     if (registered_log_writer) {
-        registered_log_writer(domain, level, tstamp, file, line, func,
+        registered_log_writer(domain, level, file, line, func, fatal_msg, mft,
                         user_format, user_ap, registered_log_writer_data);
     }
     else {
         log_write_do_work(console_file(level), console_color_enabled(level),
-                            get_localtime(tstamp.tv_sec, &cookie),
-                            tstamp.tv_nsec,
+                            &mft->tstamp_secs, mft->nanosecs, mft->pid,
                             domain, level, file, line, func,
                             user_format, user_ap);
+        if (fatal_msg) {
+            log_write_fatal_msg(console_file(level), mft->pid, fatal_msg);
+        }
     }
 
 #ifdef _WIN32
-    if (fatal_event) {
+    if (fatal_event && ws_log_console_open != LOG_CONSOLE_OPEN_NEVER) {
         /* wait for a key press before the following error handler will terminate the program
             this way the user at least can read the error message */
         printf("\n\nPress any key to exit\n");
@@ -1114,10 +1143,11 @@ static void log_write_dispatch(const char *domain, enum ws_log_level level,
 void ws_logv(const char *domain, enum ws_log_level level,
                     const char *format, va_list ap)
 {
-    if (!ws_log_msg_is_active(domain, level))
+    ws_log_manifest_t mft;
+    if (!msg_is_active(domain, level, &mft))
         return;
 
-    log_write_dispatch(domain, level, NULL, -1, NULL, format, ap);
+    log_write_dispatch(domain, level, NULL, -1, NULL, &mft, format, ap);
 }
 
 
@@ -1125,23 +1155,25 @@ void ws_logv_full(const char *domain, enum ws_log_level level,
                     const char *file, long line, const char *func,
                     const char *format, va_list ap)
 {
-    if (!ws_log_msg_is_active(domain, level))
+    ws_log_manifest_t mft;
+    if (!msg_is_active(domain, level, &mft))
         return;
 
-    log_write_dispatch(domain, level, file, line, func, format, ap);
+    log_write_dispatch(domain, level, file, line, func, &mft, format, ap);
 }
 
 
 void ws_log(const char *domain, enum ws_log_level level,
                     const char *format, ...)
 {
-    if (!ws_log_msg_is_active(domain, level))
+    ws_log_manifest_t mft;
+    if (!msg_is_active(domain, level, &mft))
         return;
 
     va_list ap;
 
     va_start(ap, format);
-    log_write_dispatch(domain, level, NULL, -1, NULL, format, ap);
+    log_write_dispatch(domain, level, NULL, -1, NULL, &mft, format, ap);
     va_end(ap);
 }
 
@@ -1150,13 +1182,14 @@ void ws_log_full(const char *domain, enum ws_log_level level,
                     const char *file, long line, const char *func,
                     const char *format, ...)
 {
-    if (!ws_log_msg_is_active(domain, level))
+    ws_log_manifest_t mft;
+    if (!msg_is_active(domain, level, &mft))
         return;
 
     va_list ap;
 
     va_start(ap, format);
-    log_write_dispatch(domain, level, file, line, func, format, ap);
+    log_write_dispatch(domain, level, file, line, func, &mft, format, ap);
     va_end(ap);
 }
 
@@ -1165,10 +1198,12 @@ void ws_log_fatal_full(const char *domain, enum ws_log_level level,
                     const char *file, long line, const char *func,
                     const char *format, ...)
 {
+    ws_log_manifest_t mft;
     va_list ap;
 
+    fill_manifest(&mft);
     va_start(ap, format);
-    log_write_dispatch(domain, level, file, line, func, format, ap);
+    log_write_dispatch(domain, level, file, line, func, &mft, format, ap);
     va_end(ap);
     abort();
 }
@@ -1178,49 +1213,78 @@ void ws_log_write_always_full(const char *domain, enum ws_log_level level,
                     const char *file, long line, const char *func,
                     const char *format, ...)
 {
+    ws_log_manifest_t mft;
     va_list ap;
 
+    fill_manifest(&mft);
     va_start(ap, format);
-    log_write_dispatch(domain, level, file, line, func, format, ap);
+    log_write_dispatch(domain, level, file, line, func, &mft, format, ap);
     va_end(ap);
+}
+
+
+static void
+append_trailer(const char *src, size_t src_length, wmem_strbuf_t *display, wmem_strbuf_t *underline)
+{
+    gunichar ch;
+    size_t hex_len;
+
+    while (src_length > 0) {
+        ch = g_utf8_get_char_validated(src, src_length);
+        if (ch == (gunichar)-1 || ch == (gunichar)-2) {
+            wmem_strbuf_append_hex(display, *src);
+            wmem_strbuf_append_c_count(underline, '^', 4);
+            src += 1;
+            src_length -= 1;
+        }
+        else {
+            if (g_unichar_isprint(ch)) {
+                wmem_strbuf_append_unichar(display, ch);
+                wmem_strbuf_append_c_count(underline, ' ', 1);
+            }
+            else {
+                hex_len = wmem_strbuf_append_hex_unichar(display, ch);
+                wmem_strbuf_append_c_count(underline, ' ', hex_len);
+            }
+            const char *tmp = g_utf8_next_char(src);
+            src_length -= tmp - src;
+            src = tmp;
+        }
+    }
 }
 
 
 static char *
 make_utf8_display(const char *src, size_t src_length, size_t good_length)
 {
-    wmem_strbuf_t *buf;
+    wmem_strbuf_t *display;
+    wmem_strbuf_t *underline;
     gunichar ch;
-    size_t offset = 0;
+    size_t hex_len;
 
-    buf = wmem_strbuf_new(NULL, NULL);
+    display = wmem_strbuf_create(NULL);
+    underline = wmem_strbuf_create(NULL);
 
     for (const char *s = src; s < src + good_length; s = g_utf8_next_char(s)) {
         ch = g_utf8_get_char(s);
 
         if (g_unichar_isprint(ch)) {
-            wmem_strbuf_append_unichar(buf, ch);
-            offset += 1;
+            wmem_strbuf_append_unichar(display, ch);
+            wmem_strbuf_append_c(underline, ' ');
         }
         else {
-            offset += wmem_strbuf_append_hex_unichar(buf, ch);
+            hex_len = wmem_strbuf_append_hex_unichar(display, ch);
+            wmem_strbuf_append_c_count(underline, ' ', hex_len);
         }
     }
 
-    for (size_t pos = good_length; pos < src_length; pos++) {
-        ch = src[pos];
-        wmem_strbuf_append_hex(buf, ch);
-    }
-    wmem_strbuf_append_c(buf, '\n');
+    append_trailer(&src[good_length], src_length - good_length, display, underline);
 
-    for (size_t pos = 0; pos < offset; pos++) {
-        wmem_strbuf_append_c(buf, ' ');
-    }
-    wmem_strbuf_append(buf, "^^^^");
-    for (size_t pos = good_length + 1; pos < src_length; pos++) {
-        wmem_strbuf_append(buf, "~~~~");
-    }
-    return wmem_strbuf_finalize(buf);
+    wmem_strbuf_append_c(display, '\n');
+    wmem_strbuf_append(display, underline->str);
+    wmem_strbuf_destroy(underline);
+
+    return wmem_strbuf_finalize(display);
 }
 
 
@@ -1282,26 +1346,24 @@ void ws_log_buffer_full(const char *domain, enum ws_log_level level,
 
 
 void ws_log_file_writer(FILE *fp, const char *domain, enum ws_log_level level,
-                            struct timespec timestamp,
                             const char *file, long line, const char *func,
+                            ws_log_manifest_t *mft,
                             const char *user_format, va_list user_ap)
 {
     log_write_do_work(fp, false,
-                        get_localtime(timestamp.tv_sec, NULL),
-                        timestamp.tv_nsec,
+                        &mft->tstamp_secs, mft->nanosecs, mft->pid,
                         domain, level, file, line, func,
                         user_format, user_ap);
 }
 
 
 void ws_log_console_writer(const char *domain, enum ws_log_level level,
-                            struct timespec timestamp,
                             const char *file, long line, const char *func,
+                            ws_log_manifest_t *mft,
                             const char *user_format, va_list user_ap)
 {
     log_write_do_work(console_file(level), console_color_enabled(level),
-                        get_localtime(timestamp.tv_sec, NULL),
-                        timestamp.tv_nsec,
+                        &mft->tstamp_secs, mft->nanosecs, mft->pid,
                         domain, level, file, line, func,
                         user_format, user_ap);
 }

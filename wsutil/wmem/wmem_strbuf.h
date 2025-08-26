@@ -42,33 +42,31 @@ extern "C" {
 struct _wmem_strbuf_t {
     /* read-only fields */
     wmem_allocator_t *allocator;
-    gchar *str;
+    char *str;
     size_t len;
 
     /* private fields */
     size_t alloc_size;
-    size_t max_size;
 };
 
 typedef struct _wmem_strbuf_t wmem_strbuf_t;
 
 WS_DLL_PUBLIC
 wmem_strbuf_t *
-wmem_strbuf_sized_new(wmem_allocator_t *allocator,
-                      size_t alloc_size, size_t max_size)
-G_GNUC_MALLOC;
-
-#define wmem_strbuf_new_label(ALLOCATOR) \
-    wmem_strbuf_sized_new((ALLOCATOR), 0, ITEM_LABEL_LENGTH)
-
-WS_DLL_PUBLIC
-wmem_strbuf_t *
-wmem_strbuf_new(wmem_allocator_t *allocator, const gchar *str)
+wmem_strbuf_new_sized(wmem_allocator_t *allocator, size_t alloc_size)
 G_GNUC_MALLOC;
 
 WS_DLL_PUBLIC
 wmem_strbuf_t *
-wmem_strbuf_new_len(wmem_allocator_t *allocator, const gchar *str, size_t len)
+wmem_strbuf_new(wmem_allocator_t *allocator, const char *str)
+G_GNUC_MALLOC;
+
+#define wmem_strbuf_create(allocator) \
+    wmem_strbuf_new(allocator, "")
+
+WS_DLL_PUBLIC
+wmem_strbuf_t *
+wmem_strbuf_new_len(wmem_allocator_t *allocator, const char *str, size_t len)
 G_GNUC_MALLOC;
 
 WS_DLL_PUBLIC
@@ -78,27 +76,31 @@ G_GNUC_MALLOC;
 
 WS_DLL_PUBLIC
 void
-wmem_strbuf_append(wmem_strbuf_t *strbuf, const gchar *str);
+wmem_strbuf_append(wmem_strbuf_t *strbuf, const char *str);
 
 /* Appends up to append_len bytes (as allowed by strbuf->max_size) from
  * str. Ensures that strbuf is null terminated afterwards but will copy
  * embedded nulls. */
 WS_DLL_PUBLIC
 void
-wmem_strbuf_append_len(wmem_strbuf_t *strbuf, const gchar *str, size_t append_len);
+wmem_strbuf_append_len(wmem_strbuf_t *strbuf, const char *str, size_t append_len);
 
 WS_DLL_PUBLIC
 void
-wmem_strbuf_append_printf(wmem_strbuf_t *strbuf, const gchar *format, ...)
+wmem_strbuf_append_printf(wmem_strbuf_t *strbuf, const char *format, ...)
 G_GNUC_PRINTF(2, 3);
 
 WS_DLL_PUBLIC
 void
-wmem_strbuf_append_vprintf(wmem_strbuf_t *strbuf, const gchar *fmt, va_list ap);
+wmem_strbuf_append_vprintf(wmem_strbuf_t *strbuf, const char *fmt, va_list ap);
 
 WS_DLL_PUBLIC
 void
-wmem_strbuf_append_c(wmem_strbuf_t *strbuf, const gchar c);
+wmem_strbuf_append_c(wmem_strbuf_t *strbuf, const char c);
+
+WS_DLL_PUBLIC
+void
+wmem_strbuf_append_c_count(wmem_strbuf_t *strbuf, const char c, size_t count);
 
 WS_DLL_PUBLIC
 void
@@ -128,7 +130,7 @@ void
 wmem_strbuf_truncate(wmem_strbuf_t *strbuf, const size_t len);
 
 WS_DLL_PUBLIC
-const gchar *
+const char *
 wmem_strbuf_get_str(const wmem_strbuf_t *strbuf);
 
 WS_DLL_PUBLIC
@@ -156,6 +158,11 @@ WS_DLL_PUBLIC
 void
 wmem_strbuf_destroy(wmem_strbuf_t *strbuf);
 
+/* Validates the string buffer as UTF-8.
+ * Unlike g_utf8_validate(), accepts embedded NUL bytes as valid UTF-8.
+ * If endpptr is non-NULL, then the end of the valid range is stored there
+ * (i.e. the first invalid character, or the end of the buffer otherwise).
+ */
 WS_DLL_PUBLIC
 bool
 wmem_strbuf_utf8_validate(wmem_strbuf_t *strbuf, const char **endptr);

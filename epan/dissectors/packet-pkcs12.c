@@ -1,11 +1,8 @@
 /* Do not modify this file. Changes will be overwritten.                      */
 /* Generated automatically by the ASN.1 to Wireshark dissector compiler       */
 /* packet-pkcs12.c                                                            */
-/* asn2wrs.py -b -p pkcs12 -c ./pkcs12.cnf -s ./packet-pkcs12-template -D . -O ../.. pkcs12.asn */
+/* asn2wrs.py -b -q -L -p pkcs12 -c ./pkcs12.cnf -s ./packet-pkcs12-template -D . -O ../.. pkcs12.asn */
 
-/* Input file: packet-pkcs12-template.c */
-
-#line 1 "./asn1/pkcs12/packet-pkcs12-template.c"
 /* packet-pkcs12.c
  * Routines for PKCS#12: Personal Information Exchange packet dissection
  * Graeme Lunt 2006
@@ -28,6 +25,7 @@
 #include <epan/oids.h>
 #include <epan/asn1.h>
 #include <epan/prefs.h>
+#include <wsutil/array.h>
 
 #include "packet-ber.h"
 #include "packet-pkcs12.h"
@@ -49,109 +47,97 @@ void proto_register_pkcs12(void);
 void proto_reg_handoff_pkcs12(void);
 
 /* Initialize the protocol and registered fields */
-static int proto_pkcs12 = -1;
+static int proto_pkcs12;
 
-static int hf_pkcs12_X509Certificate_PDU = -1;
-static int hf_pkcs12_AuthenticatedSafe_PDU = -1;  /* AuthenticatedSafe */
-static gint ett_decrypted_pbe = -1;
+static int hf_pkcs12_X509Certificate_PDU;
+static int hf_pkcs12_AuthenticatedSafe_PDU;  /* AuthenticatedSafe */
+static int ett_decrypted_pbe;
 
-static expert_field ei_pkcs12_octet_string_expected = EI_INIT;
+static expert_field ei_pkcs12_octet_string_expected;
 
 
-static const char *object_identifier_id = NULL;
-static int iteration_count = 0;
-static tvbuff_t *salt = NULL;
-static const char *password = NULL;
-static gboolean try_null_password = FALSE;
+static const char *object_identifier_id;
+static int iteration_count;
+static tvbuff_t *salt;
+static const char *password;
+static bool try_null_password;
 
 static int dissect_AuthenticatedSafe_OCTETSTRING_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void* data);
 static int dissect_SafeContents_OCTETSTRING_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void* data);
 static int dissect_PrivateKeyInfo_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data);
 
-
-/*--- Included file: packet-pkcs12-hf.c ---*/
-#line 1 "./asn1/pkcs12/packet-pkcs12-hf.c"
-static int hf_pkcs12_PFX_PDU = -1;                /* PFX */
-static int hf_pkcs12_SafeContents_PDU = -1;       /* SafeContents */
-static int hf_pkcs12_KeyBag_PDU = -1;             /* KeyBag */
-static int hf_pkcs12_PKCS8ShroudedKeyBag_PDU = -1;  /* PKCS8ShroudedKeyBag */
-static int hf_pkcs12_CertBag_PDU = -1;            /* CertBag */
-static int hf_pkcs12_CRLBag_PDU = -1;             /* CRLBag */
-static int hf_pkcs12_SecretBag_PDU = -1;          /* SecretBag */
-static int hf_pkcs12_PrivateKeyInfo_PDU = -1;     /* PrivateKeyInfo */
-static int hf_pkcs12_EncryptedPrivateKeyInfo_PDU = -1;  /* EncryptedPrivateKeyInfo */
-static int hf_pkcs12_PBEParameter_PDU = -1;       /* PBEParameter */
-static int hf_pkcs12_PBKDF2Params_PDU = -1;       /* PBKDF2Params */
-static int hf_pkcs12_PBES2Params_PDU = -1;        /* PBES2Params */
-static int hf_pkcs12_PBMAC1Params_PDU = -1;       /* PBMAC1Params */
-static int hf_pkcs12_version = -1;                /* T_version */
-static int hf_pkcs12_authSafe = -1;               /* ContentInfo */
-static int hf_pkcs12_macData = -1;                /* MacData */
-static int hf_pkcs12_mac = -1;                    /* DigestInfo */
-static int hf_pkcs12_macSalt = -1;                /* OCTET_STRING */
-static int hf_pkcs12_iterations = -1;             /* INTEGER */
-static int hf_pkcs12_AuthenticatedSafe_item = -1;  /* ContentInfo */
-static int hf_pkcs12_SafeContents_item = -1;      /* SafeBag */
-static int hf_pkcs12_bagId = -1;                  /* T_bagId */
-static int hf_pkcs12_bagValue = -1;               /* T_bagValue */
-static int hf_pkcs12_bagAttributes = -1;          /* SET_OF_PKCS12Attribute */
-static int hf_pkcs12_bagAttributes_item = -1;     /* PKCS12Attribute */
-static int hf_pkcs12_certId = -1;                 /* T_certId */
-static int hf_pkcs12_certValue = -1;              /* T_certValue */
-static int hf_pkcs12_crlId = -1;                  /* T_crlId */
-static int hf_pkcs12_crlValue = -1;               /* T_crlValue */
-static int hf_pkcs12_secretTypeId = -1;           /* T_secretTypeId */
-static int hf_pkcs12_secretValue = -1;            /* T_secretValue */
-static int hf_pkcs12_attrId = -1;                 /* T_attrId */
-static int hf_pkcs12_attrValues = -1;             /* T_attrValues */
-static int hf_pkcs12_attrValues_item = -1;        /* T_attrValues_item */
-static int hf_pkcs12_privateKeyVersion = -1;      /* Version */
-static int hf_pkcs12_privateKeyAlgorithm = -1;    /* AlgorithmIdentifier */
-static int hf_pkcs12_privateKey = -1;             /* PrivateKey */
-static int hf_pkcs12_attributes = -1;             /* Attributes */
-static int hf_pkcs12_Attributes_item = -1;        /* Attribute */
-static int hf_pkcs12_encryptionAlgorithm = -1;    /* AlgorithmIdentifier */
-static int hf_pkcs12_encryptedData = -1;          /* EncryptedData */
-static int hf_pkcs12_salt = -1;                   /* OCTET_STRING */
-static int hf_pkcs12_iterationCount = -1;         /* INTEGER */
-static int hf_pkcs12_saltChoice = -1;             /* T_saltChoice */
-static int hf_pkcs12_specified = -1;              /* OCTET_STRING */
-static int hf_pkcs12_otherSource = -1;            /* AlgorithmIdentifier */
-static int hf_pkcs12_keyLength = -1;              /* INTEGER_1_MAX */
-static int hf_pkcs12_prf = -1;                    /* AlgorithmIdentifier */
-static int hf_pkcs12_keyDerivationFunc = -1;      /* AlgorithmIdentifier */
-static int hf_pkcs12_encryptionScheme = -1;       /* AlgorithmIdentifier */
-static int hf_pkcs12_messageAuthScheme = -1;      /* AlgorithmIdentifier */
-
-/*--- End of included file: packet-pkcs12-hf.c ---*/
-#line 64 "./asn1/pkcs12/packet-pkcs12-template.c"
+static int hf_pkcs12_PFX_PDU;                     /* PFX */
+static int hf_pkcs12_SafeContents_PDU;            /* SafeContents */
+static int hf_pkcs12_KeyBag_PDU;                  /* KeyBag */
+static int hf_pkcs12_PKCS8ShroudedKeyBag_PDU;     /* PKCS8ShroudedKeyBag */
+static int hf_pkcs12_CertBag_PDU;                 /* CertBag */
+static int hf_pkcs12_CRLBag_PDU;                  /* CRLBag */
+static int hf_pkcs12_SecretBag_PDU;               /* SecretBag */
+static int hf_pkcs12_PrivateKeyInfo_PDU;          /* PrivateKeyInfo */
+static int hf_pkcs12_EncryptedPrivateKeyInfo_PDU;  /* EncryptedPrivateKeyInfo */
+static int hf_pkcs12_PBEParameter_PDU;            /* PBEParameter */
+static int hf_pkcs12_PBKDF2Params_PDU;            /* PBKDF2Params */
+static int hf_pkcs12_PBES2Params_PDU;             /* PBES2Params */
+static int hf_pkcs12_PBMAC1Params_PDU;            /* PBMAC1Params */
+static int hf_pkcs12_version;                     /* T_version */
+static int hf_pkcs12_authSafe;                    /* ContentInfo */
+static int hf_pkcs12_macData;                     /* MacData */
+static int hf_pkcs12_mac;                         /* DigestInfo */
+static int hf_pkcs12_macSalt;                     /* OCTET_STRING */
+static int hf_pkcs12_iterations;                  /* INTEGER */
+static int hf_pkcs12_AuthenticatedSafe_item;      /* ContentInfo */
+static int hf_pkcs12_SafeContents_item;           /* SafeBag */
+static int hf_pkcs12_bagId;                       /* T_bagId */
+static int hf_pkcs12_bagValue;                    /* T_bagValue */
+static int hf_pkcs12_bagAttributes;               /* SET_OF_PKCS12Attribute */
+static int hf_pkcs12_bagAttributes_item;          /* PKCS12Attribute */
+static int hf_pkcs12_certId;                      /* T_certId */
+static int hf_pkcs12_certValue;                   /* T_certValue */
+static int hf_pkcs12_crlId;                       /* T_crlId */
+static int hf_pkcs12_crlValue;                    /* T_crlValue */
+static int hf_pkcs12_secretTypeId;                /* T_secretTypeId */
+static int hf_pkcs12_secretValue;                 /* T_secretValue */
+static int hf_pkcs12_attrId;                      /* T_attrId */
+static int hf_pkcs12_attrValues;                  /* T_attrValues */
+static int hf_pkcs12_attrValues_item;             /* T_attrValues_item */
+static int hf_pkcs12_privateKeyVersion;           /* Version */
+static int hf_pkcs12_privateKeyAlgorithm;         /* AlgorithmIdentifier */
+static int hf_pkcs12_privateKey;                  /* PrivateKey */
+static int hf_pkcs12_attributes;                  /* Attributes */
+static int hf_pkcs12_Attributes_item;             /* Attribute */
+static int hf_pkcs12_encryptionAlgorithm;         /* AlgorithmIdentifier */
+static int hf_pkcs12_encryptedData;               /* EncryptedData */
+static int hf_pkcs12_salt;                        /* OCTET_STRING */
+static int hf_pkcs12_iterationCount;              /* INTEGER */
+static int hf_pkcs12_saltChoice;                  /* T_saltChoice */
+static int hf_pkcs12_specified;                   /* OCTET_STRING */
+static int hf_pkcs12_otherSource;                 /* AlgorithmIdentifier */
+static int hf_pkcs12_keyLength;                   /* INTEGER_1_MAX */
+static int hf_pkcs12_prf;                         /* AlgorithmIdentifier */
+static int hf_pkcs12_keyDerivationFunc;           /* AlgorithmIdentifier */
+static int hf_pkcs12_encryptionScheme;            /* AlgorithmIdentifier */
+static int hf_pkcs12_messageAuthScheme;           /* AlgorithmIdentifier */
 
 /* Initialize the subtree pointers */
-
-/*--- Included file: packet-pkcs12-ett.c ---*/
-#line 1 "./asn1/pkcs12/packet-pkcs12-ett.c"
-static gint ett_pkcs12_PFX = -1;
-static gint ett_pkcs12_MacData = -1;
-static gint ett_pkcs12_AuthenticatedSafe = -1;
-static gint ett_pkcs12_SafeContents = -1;
-static gint ett_pkcs12_SafeBag = -1;
-static gint ett_pkcs12_SET_OF_PKCS12Attribute = -1;
-static gint ett_pkcs12_CertBag = -1;
-static gint ett_pkcs12_CRLBag = -1;
-static gint ett_pkcs12_SecretBag = -1;
-static gint ett_pkcs12_PKCS12Attribute = -1;
-static gint ett_pkcs12_T_attrValues = -1;
-static gint ett_pkcs12_PrivateKeyInfo = -1;
-static gint ett_pkcs12_Attributes = -1;
-static gint ett_pkcs12_EncryptedPrivateKeyInfo = -1;
-static gint ett_pkcs12_PBEParameter = -1;
-static gint ett_pkcs12_PBKDF2Params = -1;
-static gint ett_pkcs12_T_saltChoice = -1;
-static gint ett_pkcs12_PBES2Params = -1;
-static gint ett_pkcs12_PBMAC1Params = -1;
-
-/*--- End of included file: packet-pkcs12-ett.c ---*/
-#line 67 "./asn1/pkcs12/packet-pkcs12-template.c"
+static int ett_pkcs12_PFX;
+static int ett_pkcs12_MacData;
+static int ett_pkcs12_AuthenticatedSafe;
+static int ett_pkcs12_SafeContents;
+static int ett_pkcs12_SafeBag;
+static int ett_pkcs12_SET_OF_PKCS12Attribute;
+static int ett_pkcs12_CertBag;
+static int ett_pkcs12_CRLBag;
+static int ett_pkcs12_SecretBag;
+static int ett_pkcs12_PKCS12Attribute;
+static int ett_pkcs12_T_attrValues;
+static int ett_pkcs12_PrivateKeyInfo;
+static int ett_pkcs12_Attributes;
+static int ett_pkcs12_EncryptedPrivateKeyInfo;
+static int ett_pkcs12_PBEParameter;
+static int ett_pkcs12_PBKDF2Params;
+static int ett_pkcs12_T_saltChoice;
+static int ett_pkcs12_PBES2Params;
+static int ett_pkcs12_PBMAC1Params;
 
 static void append_oid(wmem_allocator_t *pool, proto_tree *tree, const char *oid)
 {
@@ -189,7 +175,7 @@ generate_key_or_iv(packet_info *pinfo, unsigned int id, tvbuff_t *salt_tvb, unsi
 
   if (pwlen > 63 / 2)
     {
-      return FALSE;
+      return false;
     }
 
   /* Store salt and password in BUF_I */
@@ -213,7 +199,7 @@ generate_key_or_iv(packet_info *pinfo, unsigned int id, tvbuff_t *salt_tvb, unsi
       err = gcry_md_open(&md, GCRY_MD_SHA1, 0);
       if (gcry_err_code(err))
         {
-          return FALSE;
+          return false;
         }
       for (i = 0; i < 64; i++)
         {
@@ -237,7 +223,7 @@ generate_key_or_iv(packet_info *pinfo, unsigned int id, tvbuff_t *salt_tvb, unsi
       if (cur_keylen == req_keylen)
       {
         gcry_mpi_release (num_b1);
-        return TRUE;		/* ready */
+        return true;		/* ready */
       }
 
       /* need more bytes. */
@@ -250,7 +236,7 @@ generate_key_or_iv(packet_info *pinfo, unsigned int id, tvbuff_t *salt_tvb, unsi
 
       if (rc != 0)
         {
-          return FALSE;
+          return false;
         }
 
       gcry_mpi_add_ui (num_b1, num_b1, 1);
@@ -264,7 +250,7 @@ generate_key_or_iv(packet_info *pinfo, unsigned int id, tvbuff_t *salt_tvb, unsi
 
           if (rc != 0)
             {
-              return FALSE;
+              return false;
             }
 
           gcry_mpi_add (num_ij, num_ij, num_b1);
@@ -275,7 +261,7 @@ generate_key_or_iv(packet_info *pinfo, unsigned int id, tvbuff_t *salt_tvb, unsi
           rc = gcry_mpi_print (GCRYMPI_FMT_USG, buf_i + i, n, &n, num_ij);
           if (rc != 0)
             {
-              return FALSE;
+              return false;
             }
 
           gcry_mpi_release (num_ij);
@@ -303,15 +289,15 @@ int PBE_decrypt_data(const char *object_identifier_id_param _U_, tvbuff_t *encry
 	char		*iv = NULL;
 	char		*clear_data = NULL;
 	tvbuff_t	*clear_tvb = NULL;
-	const gchar     *oidname;
+	const char      *oidname;
 	GString		*name;
 	proto_tree	*tree;
 	char		byte;
-	gboolean	decrypt_ok = TRUE;
+	bool	decrypt_ok = true;
 
-	if(((password == NULL) || (*password == '\0')) && (try_null_password == FALSE)) {
+	if(((password == NULL) || (*password == '\0')) && (try_null_password == false)) {
 		/* we are not configured to decrypt */
-		return FALSE;
+		return false;
 	}
 
 	encryption_algorithm = x509af_get_last_algorithm_id();
@@ -336,44 +322,44 @@ int PBE_decrypt_data(const char *object_identifier_id_param _U_, tvbuff_t *encry
 		/* we don't know how to decrypt this */
 
 		proto_item_append_text(item, " [Unsupported encryption algorithm]");
-		return FALSE;
+		return false;
 	}
 
 	if((iteration_count == 0) || (salt == NULL)) {
 		proto_item_append_text(item, " [Insufficient parameters]");
-		return FALSE;
+		return false;
 	}
 
 	/* allocate buffers */
 	key = (char *)wmem_alloc(pinfo->pool, keylen);
 
 	if(!generate_key_or_iv(pinfo, 1 /*LEY */, salt, iteration_count, password, keylen, key))
-		return FALSE;
+		return false;
 
 	if(ivlen) {
 
 		iv = (char *)wmem_alloc(pinfo->pool, ivlen);
 
 		if(!generate_key_or_iv(pinfo, 2 /* IV */, salt, iteration_count, password, ivlen, iv))
-			return FALSE;
+			return false;
 	}
 
 	/* now try an internal function */
 	err = gcry_cipher_open(&cipher, algo, mode, 0);
 	if (gcry_err_code (err))
-			return FALSE;
+			return false;
 
 	err = gcry_cipher_setkey (cipher, key, keylen);
 	if (gcry_err_code (err)) {
 			gcry_cipher_close (cipher);
-			return FALSE;
+			return false;
 	}
 
 	if(ivlen) {
 		  err = gcry_cipher_setiv (cipher, iv, ivlen);
 		  if (gcry_err_code (err)) {
 			  gcry_cipher_close (cipher);
-			  return FALSE;
+			  return false;
 		  }
 	}
 
@@ -386,7 +372,7 @@ int PBE_decrypt_data(const char *object_identifier_id_param _U_, tvbuff_t *encry
 		proto_item_append_text(item, " [Failed to decrypt with password preference]");
 
 		gcry_cipher_close (cipher);
-		return FALSE;
+		return false;
 	}
 
 	gcry_cipher_close (cipher);
@@ -403,7 +389,7 @@ int PBE_decrypt_data(const char *object_identifier_id_param _U_, tvbuff_t *encry
 
 		for(i = (int)byte; i > 0 ; i--) {
 			if(clear_data[datalen - i] != byte) {
-				decrypt_ok = FALSE;
+				decrypt_ok = false;
 				break;
 			}
 		}
@@ -414,13 +400,13 @@ int PBE_decrypt_data(const char *object_identifier_id_param _U_, tvbuff_t *encry
 	/* we assume the result is ASN.1 - check it is a SET or SEQUENCE */
 	byte = clear_data[0];
 	if((byte != 0x30) && (byte != 0x31)) { /* do we need more here? OCTET STRING? */
-		decrypt_ok = FALSE;
+		decrypt_ok = false;
 	}
 
 	if(!decrypt_ok) {
 		proto_item_append_text(item, " [Failed to decrypt with supplied password]");
 
-		return FALSE;
+		return false;
 	}
 
 	proto_item_append_text(item, " [Decrypted successfully]");
@@ -429,7 +415,7 @@ int PBE_decrypt_data(const char *object_identifier_id_param _U_, tvbuff_t *encry
 
 	/* OK - so now clear_data contains the decrypted data */
 
-	clear_tvb = tvb_new_child_real_data(encrypted_tvb,(const guint8 *)clear_data, datalen, datalen);
+	clear_tvb = tvb_new_child_real_data(encrypted_tvb,(const uint8_t *)clear_data, datalen, datalen);
 
 	name = g_string_new("");
 	oidname = oid_resolved_from_string(pinfo->pool, object_identifier_id_param);
@@ -443,12 +429,9 @@ int PBE_decrypt_data(const char *object_identifier_id_param _U_, tvbuff_t *encry
 	/* now try and decode it */
 	call_ber_oid_callback(object_identifier_id_param, clear_tvb, 0, actx->pinfo, tree, NULL);
 
-	return TRUE;
+	return true;
 }
 
-
-/*--- Included file: packet-pkcs12-fn.c ---*/
-#line 1 "./asn1/pkcs12/packet-pkcs12-fn.c"
 
 static const value_string pkcs12_T_version_vals[] = {
   {   3, "v3" },
@@ -457,7 +440,7 @@ static const value_string pkcs12_T_version_vals[] = {
 
 
 static int
-dissect_pkcs12_T_version(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_T_version(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_integer(implicit_tag, actx, tree, tvb, offset, hf_index,
                                                 NULL);
 
@@ -467,7 +450,7 @@ dissect_pkcs12_T_version(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offse
 
 
 static int
-dissect_pkcs12_OCTET_STRING(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_OCTET_STRING(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_octet_string(implicit_tag, actx, tree, tvb, offset, hf_index,
                                        (hf_index == hf_pkcs12_salt ? &salt : NULL));
 
@@ -477,7 +460,7 @@ dissect_pkcs12_OCTET_STRING(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int of
 
 
 static int
-dissect_pkcs12_INTEGER(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_INTEGER(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_integer(implicit_tag, actx, tree, tvb, offset, hf_index,
                                                 (hf_index == hf_pkcs12_iterationCount ? &iteration_count : NULL));
 
@@ -493,7 +476,7 @@ static const ber_sequence_t MacData_sequence[] = {
 };
 
 static int
-dissect_pkcs12_MacData(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_MacData(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    MacData_sequence, hf_index, ett_pkcs12_MacData);
 
@@ -509,8 +492,7 @@ static const ber_sequence_t PFX_sequence[] = {
 };
 
 static int
-dissect_pkcs12_PFX(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-#line 58 "./asn1/pkcs12/pkcs12.cnf"
+dissect_pkcs12_PFX(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 	dissector_handle_t dissector_handle;
 
 	/* we change the CMS id-data dissector to dissect as AuthenticatedSafe
@@ -526,7 +508,6 @@ dissect_pkcs12_PFX(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_,
 	dissector_reset_string("ber.oid", "1.2.840.113549.1.7.1");
 
 
-
   return offset;
 }
 
@@ -536,8 +517,7 @@ static const ber_sequence_t AuthenticatedSafe_sequence_of[1] = {
 };
 
 static int
-dissect_pkcs12_AuthenticatedSafe(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-#line 71 "./asn1/pkcs12/pkcs12.cnf"
+dissect_pkcs12_AuthenticatedSafe(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 	dissector_handle_t dissector_handle;
 
 	/* we change the CMS id-data dissector to dissect as SafeContents */
@@ -552,55 +532,46 @@ dissect_pkcs12_AuthenticatedSafe(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, i
 	dissector_reset_string("ber.oid", "1.2.840.113549.1.7.1");
 
 
-
   return offset;
 }
 
 
 
 static int
-dissect_pkcs12_T_bagId(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_T_bagId(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_object_identifier_str(implicit_tag, actx, tree, tvb, offset, hf_index, &object_identifier_id);
 
-#line 84 "./asn1/pkcs12/pkcs12.cnf"
   append_oid(actx->pinfo->pool, tree, object_identifier_id);
-
   return offset;
 }
 
 
 
 static int
-dissect_pkcs12_T_bagValue(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-#line 108 "./asn1/pkcs12/pkcs12.cnf"
+dissect_pkcs12_T_bagValue(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 	if(object_identifier_id)
 		offset = call_ber_oid_callback(object_identifier_id, tvb, offset, actx->pinfo, tree, NULL);
 
 
-
   return offset;
 }
 
 
 
 static int
-dissect_pkcs12_T_attrId(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_T_attrId(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_object_identifier_str(implicit_tag, actx, tree, tvb, offset, hf_index, &object_identifier_id);
 
-#line 104 "./asn1/pkcs12/pkcs12.cnf"
   append_oid(actx->pinfo->pool, tree, object_identifier_id);
-
   return offset;
 }
 
 
 
 static int
-dissect_pkcs12_T_attrValues_item(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-#line 112 "./asn1/pkcs12/pkcs12.cnf"
+dissect_pkcs12_T_attrValues_item(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 	if(object_identifier_id)
 		offset = call_ber_oid_callback(object_identifier_id, tvb, offset, actx->pinfo, tree, NULL);
-
 
 
   return offset;
@@ -612,7 +583,7 @@ static const ber_sequence_t T_attrValues_set_of[1] = {
 };
 
 static int
-dissect_pkcs12_T_attrValues(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_T_attrValues(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_set_of(implicit_tag, actx, tree, tvb, offset,
                                  T_attrValues_set_of, hf_index, ett_pkcs12_T_attrValues);
 
@@ -627,7 +598,7 @@ static const ber_sequence_t PKCS12Attribute_sequence[] = {
 };
 
 static int
-dissect_pkcs12_PKCS12Attribute(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_PKCS12Attribute(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    PKCS12Attribute_sequence, hf_index, ett_pkcs12_PKCS12Attribute);
 
@@ -640,7 +611,7 @@ static const ber_sequence_t SET_OF_PKCS12Attribute_set_of[1] = {
 };
 
 static int
-dissect_pkcs12_SET_OF_PKCS12Attribute(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_SET_OF_PKCS12Attribute(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_set_of(implicit_tag, actx, tree, tvb, offset,
                                  SET_OF_PKCS12Attribute_set_of, hf_index, ett_pkcs12_SET_OF_PKCS12Attribute);
 
@@ -656,7 +627,7 @@ static const ber_sequence_t SafeBag_sequence[] = {
 };
 
 static int
-dissect_pkcs12_SafeBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_SafeBag(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    SafeBag_sequence, hf_index, ett_pkcs12_SafeBag);
 
@@ -669,7 +640,7 @@ static const ber_sequence_t SafeContents_sequence_of[1] = {
 };
 
 static int
-dissect_pkcs12_SafeContents(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_SafeContents(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence_of(implicit_tag, actx, tree, tvb, offset,
                                       SafeContents_sequence_of, hf_index, ett_pkcs12_SafeContents);
 
@@ -684,7 +655,7 @@ static const value_string pkcs12_Version_vals[] = {
 
 
 static int
-dissect_pkcs12_Version(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_Version(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_integer(implicit_tag, actx, tree, tvb, offset, hf_index,
                                                 NULL);
 
@@ -694,7 +665,7 @@ dissect_pkcs12_Version(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset 
 
 
 static int
-dissect_pkcs12_PrivateKey(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_PrivateKey(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_octet_string(implicit_tag, actx, tree, tvb, offset, hf_index,
                                        NULL);
 
@@ -707,7 +678,7 @@ static const ber_sequence_t Attributes_set_of[1] = {
 };
 
 static int
-dissect_pkcs12_Attributes(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_Attributes(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_set_of(implicit_tag, actx, tree, tvb, offset,
                                  Attributes_set_of, hf_index, ett_pkcs12_Attributes);
 
@@ -724,7 +695,7 @@ static const ber_sequence_t PrivateKeyInfo_sequence[] = {
 };
 
 static int
-dissect_pkcs12_PrivateKeyInfo(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_PrivateKeyInfo(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    PrivateKeyInfo_sequence, hf_index, ett_pkcs12_PrivateKeyInfo);
 
@@ -734,7 +705,7 @@ dissect_pkcs12_PrivateKeyInfo(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int 
 
 
 static int
-dissect_pkcs12_KeyBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_KeyBag(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_pkcs12_PrivateKeyInfo(implicit_tag, tvb, offset, actx, tree, hf_index);
 
   return offset;
@@ -743,16 +714,13 @@ dissect_pkcs12_KeyBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _
 
 
 static int
-dissect_pkcs12_EncryptedData(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-#line 139 "./asn1/pkcs12/pkcs12.cnf"
+dissect_pkcs12_EncryptedData(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 	tvbuff_t *encrypted_tvb;
 	dissector_handle_t dissector_handle;
-
 
   offset = dissect_ber_octet_string(implicit_tag, actx, tree, tvb, offset, hf_index,
                                        &encrypted_tvb);
 
-#line 145 "./asn1/pkcs12/pkcs12.cnf"
 
 
 
@@ -763,7 +731,6 @@ dissect_pkcs12_EncryptedData(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int o
 
 	/* restore the original dissector */
 	dissector_reset_string("ber.oid", object_identifier_id);
-
 
   return offset;
 }
@@ -776,7 +743,7 @@ static const ber_sequence_t EncryptedPrivateKeyInfo_sequence[] = {
 };
 
 static int
-dissect_pkcs12_EncryptedPrivateKeyInfo(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_EncryptedPrivateKeyInfo(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    EncryptedPrivateKeyInfo_sequence, hf_index, ett_pkcs12_EncryptedPrivateKeyInfo);
 
@@ -786,7 +753,7 @@ dissect_pkcs12_EncryptedPrivateKeyInfo(gboolean implicit_tag _U_, tvbuff_t *tvb 
 
 
 static int
-dissect_pkcs12_PKCS8ShroudedKeyBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_PKCS8ShroudedKeyBag(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_pkcs12_EncryptedPrivateKeyInfo(implicit_tag, tvb, offset, actx, tree, hf_index);
 
   return offset;
@@ -795,23 +762,19 @@ dissect_pkcs12_PKCS8ShroudedKeyBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_,
 
 
 static int
-dissect_pkcs12_T_certId(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_T_certId(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_object_identifier_str(implicit_tag, actx, tree, tvb, offset, hf_index, &object_identifier_id);
 
-#line 89 "./asn1/pkcs12/pkcs12.cnf"
   append_oid(actx->pinfo->pool, tree, object_identifier_id);
-
   return offset;
 }
 
 
 
 static int
-dissect_pkcs12_T_certValue(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-#line 116 "./asn1/pkcs12/pkcs12.cnf"
+dissect_pkcs12_T_certValue(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 	if(object_identifier_id)
 		offset = call_ber_oid_callback(object_identifier_id, tvb, offset, actx->pinfo, tree, NULL);
-
 
 
   return offset;
@@ -825,7 +788,7 @@ static const ber_sequence_t CertBag_sequence[] = {
 };
 
 static int
-dissect_pkcs12_CertBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_CertBag(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    CertBag_sequence, hf_index, ett_pkcs12_CertBag);
 
@@ -835,23 +798,19 @@ dissect_pkcs12_CertBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset 
 
 
 static int
-dissect_pkcs12_T_crlId(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_T_crlId(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_object_identifier_str(implicit_tag, actx, tree, tvb, offset, hf_index, &object_identifier_id);
 
-#line 94 "./asn1/pkcs12/pkcs12.cnf"
   append_oid(actx->pinfo->pool, tree, object_identifier_id);
-
   return offset;
 }
 
 
 
 static int
-dissect_pkcs12_T_crlValue(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-#line 120 "./asn1/pkcs12/pkcs12.cnf"
+dissect_pkcs12_T_crlValue(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 	if(object_identifier_id)
 		offset = call_ber_oid_callback(object_identifier_id, tvb, offset, actx->pinfo, tree, NULL);
-
 
 
   return offset;
@@ -865,7 +824,7 @@ static const ber_sequence_t CRLBag_sequence[] = {
 };
 
 static int
-dissect_pkcs12_CRLBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_CRLBag(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    CRLBag_sequence, hf_index, ett_pkcs12_CRLBag);
 
@@ -875,23 +834,19 @@ dissect_pkcs12_CRLBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _
 
 
 static int
-dissect_pkcs12_T_secretTypeId(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_T_secretTypeId(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_object_identifier_str(implicit_tag, actx, tree, tvb, offset, hf_index, &object_identifier_id);
 
-#line 99 "./asn1/pkcs12/pkcs12.cnf"
   append_oid(actx->pinfo->pool, tree, object_identifier_id);
-
   return offset;
 }
 
 
 
 static int
-dissect_pkcs12_T_secretValue(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-#line 124 "./asn1/pkcs12/pkcs12.cnf"
+dissect_pkcs12_T_secretValue(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 	if(object_identifier_id)
 		offset = call_ber_oid_callback(object_identifier_id, tvb, offset, actx->pinfo, tree, NULL);
-
 
 
   return offset;
@@ -905,7 +860,7 @@ static const ber_sequence_t SecretBag_sequence[] = {
 };
 
 static int
-dissect_pkcs12_SecretBag(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_SecretBag(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    SecretBag_sequence, hf_index, ett_pkcs12_SecretBag);
 
@@ -920,11 +875,9 @@ static const ber_sequence_t PBEParameter_sequence[] = {
 };
 
 static int
-dissect_pkcs12_PBEParameter(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
-#line 128 "./asn1/pkcs12/pkcs12.cnf"
+dissect_pkcs12_PBEParameter(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
 	/* initialise the encryption parameters */
 	PBE_reset_parameters();
-
 
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    PBEParameter_sequence, hf_index, ett_pkcs12_PBEParameter);
@@ -946,7 +899,7 @@ static const ber_choice_t T_saltChoice_choice[] = {
 };
 
 static int
-dissect_pkcs12_T_saltChoice(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_T_saltChoice(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_choice(actx, tree, tvb, offset,
                                  T_saltChoice_choice, hf_index, ett_pkcs12_T_saltChoice,
                                  NULL);
@@ -957,7 +910,7 @@ dissect_pkcs12_T_saltChoice(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int of
 
 
 static int
-dissect_pkcs12_INTEGER_1_MAX(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_INTEGER_1_MAX(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_integer64(implicit_tag, actx, tree, tvb, offset, hf_index,
                                                 NULL);
 
@@ -974,7 +927,7 @@ static const ber_sequence_t PBKDF2Params_sequence[] = {
 };
 
 static int
-dissect_pkcs12_PBKDF2Params(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_PBKDF2Params(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    PBKDF2Params_sequence, hf_index, ett_pkcs12_PBKDF2Params);
 
@@ -989,7 +942,7 @@ static const ber_sequence_t PBES2Params_sequence[] = {
 };
 
 static int
-dissect_pkcs12_PBES2Params(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_PBES2Params(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    PBES2Params_sequence, hf_index, ett_pkcs12_PBES2Params);
 
@@ -1004,7 +957,7 @@ static const ber_sequence_t PBMAC1Params_sequence[] = {
 };
 
 static int
-dissect_pkcs12_PBMAC1Params(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
+dissect_pkcs12_PBMAC1Params(bool implicit_tag _U_, tvbuff_t *tvb _U_, int offset _U_, asn1_ctx_t *actx _U_, proto_tree *tree _U_, int hf_index _U_) {
   offset = dissect_ber_sequence(implicit_tag, actx, tree, tvb, offset,
                                    PBMAC1Params_sequence, hf_index, ett_pkcs12_PBMAC1Params);
 
@@ -1016,105 +969,102 @@ dissect_pkcs12_PBMAC1Params(gboolean implicit_tag _U_, tvbuff_t *tvb _U_, int of
 static int dissect_PFX_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_PFX(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PFX_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_PFX(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PFX_PDU);
   return offset;
 }
 static int dissect_SafeContents_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_SafeContents(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_SafeContents_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_SafeContents(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_SafeContents_PDU);
   return offset;
 }
 static int dissect_KeyBag_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_KeyBag(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_KeyBag_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_KeyBag(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_KeyBag_PDU);
   return offset;
 }
 static int dissect_PKCS8ShroudedKeyBag_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_PKCS8ShroudedKeyBag(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PKCS8ShroudedKeyBag_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_PKCS8ShroudedKeyBag(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PKCS8ShroudedKeyBag_PDU);
   return offset;
 }
 static int dissect_CertBag_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_CertBag(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_CertBag_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_CertBag(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_CertBag_PDU);
   return offset;
 }
 static int dissect_CRLBag_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_CRLBag(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_CRLBag_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_CRLBag(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_CRLBag_PDU);
   return offset;
 }
 static int dissect_SecretBag_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_SecretBag(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_SecretBag_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_SecretBag(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_SecretBag_PDU);
   return offset;
 }
 static int dissect_PrivateKeyInfo_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_PrivateKeyInfo(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PrivateKeyInfo_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_PrivateKeyInfo(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PrivateKeyInfo_PDU);
   return offset;
 }
 static int dissect_EncryptedPrivateKeyInfo_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_EncryptedPrivateKeyInfo(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_EncryptedPrivateKeyInfo_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_EncryptedPrivateKeyInfo(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_EncryptedPrivateKeyInfo_PDU);
   return offset;
 }
 static int dissect_PBEParameter_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_PBEParameter(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PBEParameter_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_PBEParameter(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PBEParameter_PDU);
   return offset;
 }
 static int dissect_PBKDF2Params_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_PBKDF2Params(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PBKDF2Params_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_PBKDF2Params(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PBKDF2Params_PDU);
   return offset;
 }
 static int dissect_PBES2Params_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_PBES2Params(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PBES2Params_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_PBES2Params(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PBES2Params_PDU);
   return offset;
 }
 static int dissect_PBMAC1Params_PDU(tvbuff_t *tvb _U_, packet_info *pinfo _U_, proto_tree *tree _U_, void *data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
-  offset = dissect_pkcs12_PBMAC1Params(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PBMAC1Params_PDU);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
+  offset = dissect_pkcs12_PBMAC1Params(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_PBMAC1Params_PDU);
   return offset;
 }
 
 
-/*--- End of included file: packet-pkcs12-fn.c ---*/
-#line 362 "./asn1/pkcs12/packet-pkcs12-template.c"
-
 static int strip_octet_string(tvbuff_t *tvb)
 {
-  gint8 ber_class;
-  gboolean pc, ind;
-  gint32 tag;
-  guint32 len;
+  int8_t ber_class;
+  bool pc, ind;
+  int32_t tag;
+  uint32_t len;
   int offset = 0;
 
   /* PKCS#7 encodes the content as OCTET STRING, whereas CMS is just any ANY */
@@ -1134,10 +1084,10 @@ static int strip_octet_string(tvbuff_t *tvb)
 static int dissect_AuthenticatedSafe_OCTETSTRING_PDU(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void* data _U_) {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
 
   if((offset = strip_octet_string(tvb)) > 0)
-    dissect_pkcs12_AuthenticatedSafe(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_AuthenticatedSafe_PDU);
+    dissect_pkcs12_AuthenticatedSafe(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_AuthenticatedSafe_PDU);
   else
     proto_tree_add_expert(tree, pinfo, &ei_pkcs12_octet_string_expected, tvb, 0, 1);
   return tvb_captured_length(tvb);
@@ -1147,11 +1097,11 @@ static int dissect_SafeContents_OCTETSTRING_PDU(tvbuff_t *tvb, packet_info *pinf
 {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
 
   offset = strip_octet_string(tvb);
 
-  dissect_pkcs12_SafeContents(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_SafeContents_PDU);
+  dissect_pkcs12_SafeContents(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_SafeContents_PDU);
   return tvb_captured_length(tvb);
 }
 
@@ -1159,10 +1109,10 @@ static int dissect_X509Certificate_OCTETSTRING_PDU(tvbuff_t *tvb, packet_info *p
 {
   int offset = 0;
   asn1_ctx_t asn1_ctx;
-  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, TRUE, pinfo);
+  asn1_ctx_init(&asn1_ctx, ASN1_ENC_BER, true, pinfo);
 
   if((offset = strip_octet_string(tvb)) > 0)
-	dissect_x509af_Certificate(FALSE, tvb, offset, &asn1_ctx, tree, hf_pkcs12_X509Certificate_PDU);
+	dissect_x509af_Certificate(false, tvb, offset, &asn1_ctx, tree, hf_pkcs12_X509Certificate_PDU);
   else
 	proto_tree_add_expert(tree, pinfo, &ei_pkcs12_octet_string_expected, tvb, 0, 1);
 
@@ -1183,9 +1133,6 @@ void proto_register_pkcs12(void) {
         FT_UINT32, BASE_DEC, NULL, 0,
         NULL, HFILL }},
 
-
-/*--- Included file: packet-pkcs12-hfarr.c ---*/
-#line 1 "./asn1/pkcs12/packet-pkcs12-hfarr.c"
     { &hf_pkcs12_PFX_PDU,
       { "PFX", "pkcs12.PFX_element",
         FT_NONE, BASE_NONE, NULL, 0,
@@ -1390,17 +1337,11 @@ void proto_register_pkcs12(void) {
       { "messageAuthScheme", "pkcs12.messageAuthScheme_element",
         FT_NONE, BASE_NONE, NULL, 0,
         "AlgorithmIdentifier", HFILL }},
-
-/*--- End of included file: packet-pkcs12-hfarr.c ---*/
-#line 438 "./asn1/pkcs12/packet-pkcs12-template.c"
   };
 
   /* List of subtrees */
-  static gint *ett[] = {
+  static int *ett[] = {
 	  &ett_decrypted_pbe,
-
-/*--- Included file: packet-pkcs12-ettarr.c ---*/
-#line 1 "./asn1/pkcs12/packet-pkcs12-ettarr.c"
     &ett_pkcs12_PFX,
     &ett_pkcs12_MacData,
     &ett_pkcs12_AuthenticatedSafe,
@@ -1420,9 +1361,6 @@ void proto_register_pkcs12(void) {
     &ett_pkcs12_T_saltChoice,
     &ett_pkcs12_PBES2Params,
     &ett_pkcs12_PBMAC1Params,
-
-/*--- End of included file: packet-pkcs12-ettarr.c ---*/
-#line 444 "./asn1/pkcs12/packet-pkcs12-template.c"
   };
   static ei_register_info ei[] = {
       { &ei_pkcs12_octet_string_expected, { "pkcs12.octet_string_expected", PI_PROTOCOL, PI_WARN, "BER Error: OCTET STRING expected", EXPFILL }},
@@ -1461,9 +1399,6 @@ void proto_register_pkcs12(void) {
 
 /*--- proto_reg_handoff_pkcs12 -------------------------------------------*/
 void proto_reg_handoff_pkcs12(void) {
-
-/*--- Included file: packet-pkcs12-dis-tab.c ---*/
-#line 1 "./asn1/pkcs12/packet-pkcs12-dis-tab.c"
   register_ber_oid_dissector("1.2.840.113549.1.12.10.1.1", dissect_KeyBag_PDU, proto_pkcs12, "keyBag");
   register_ber_oid_dissector("1.2.840.113549.1.12.10.1.2", dissect_PKCS8ShroudedKeyBag_PDU, proto_pkcs12, "pkcs8ShroudedKeyBag");
   register_ber_oid_dissector("1.2.840.113549.1.12.10.1.3", dissect_CertBag_PDU, proto_pkcs12, "certBag");
@@ -1488,9 +1423,6 @@ void proto_reg_handoff_pkcs12(void) {
   register_ber_oid_dissector("1.2.840.113549.1.5.13", dissect_PBES2Params_PDU, proto_pkcs12, "id-PBES2");
   register_ber_oid_dissector("1.2.840.113549.1.5.14", dissect_PBMAC1Params_PDU, proto_pkcs12, "id-PBMAC1");
 
-
-/*--- End of included file: packet-pkcs12-dis-tab.c ---*/
-#line 483 "./asn1/pkcs12/packet-pkcs12-template.c"
 
 	register_ber_oid_dissector("1.2.840.113549.1.9.22.1", dissect_X509Certificate_OCTETSTRING_PDU, proto_pkcs12, "x509Certificate");
 

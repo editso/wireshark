@@ -14,14 +14,16 @@
 #include "file_wrappers.h"
 #include "wtap-int.h"
 
-static const guint8 mp4_magic[] = { 'f', 't', 'y', 'p' };
+static const uint8_t mp4_magic[] = { 'f', 't', 'y', 'p' };
+static const uint8_t mp4_magic_sidx[] = { 's', 'i', 'd', 'x' };
+static const uint8_t mp4_magic_styp[] = { 's', 't', 'y', 'p' };
 
 static int mp4_file_type_subtype = -1;
 
 void register_mp4(void);
 
 wtap_open_return_val
-mp4_open(wtap *wth, int *err, gchar **err_info)
+mp4_open(wtap *wth, int *err, char **err_info)
 {
 	char magic_buf[8];
 	int bytes_read;
@@ -36,7 +38,9 @@ mp4_open(wtap *wth, int *err, gchar **err_info)
 		return WTAP_OPEN_NOT_MINE;
 
 	if (bytes_read == sizeof (magic_buf) &&
-			memcmp(magic_buf + 4, mp4_magic, sizeof (mp4_magic)))
+			memcmp(magic_buf + 4, mp4_magic, sizeof (mp4_magic)) &&
+			memcmp(magic_buf + 4, mp4_magic_sidx, sizeof (mp4_magic_sidx)) &&
+			memcmp(magic_buf + 4, mp4_magic_styp, sizeof (mp4_magic_styp)))
 		return WTAP_OPEN_NOT_MINE;
 
 	if (file_seek(wth->fh, 0, SEEK_SET, err) == -1)
@@ -63,7 +67,7 @@ static const struct supported_block_type mp4_blocks_supported[] = {
 
 static const struct file_type_subtype_info mp4_info = {
 	"MP4 media", "mp4", "mp4", NULL,
-	FALSE, BLOCKS_SUPPORTED(mp4_blocks_supported),
+	false, BLOCKS_SUPPORTED(mp4_blocks_supported),
 	NULL, NULL, NULL
 };
 

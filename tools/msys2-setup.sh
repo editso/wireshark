@@ -16,6 +16,7 @@ function print_usage() {
 	printf "The basic usage installs the needed software\\n\\n"
 	printf "Usage: %s [--install-optional] [...other options...]\\n" "$0"
 	printf "\\t--install-optional: install optional software as well\\n"
+	printf "\\t--install-nsis-deps: install packages required to build NSIS installer\\n"
 	printf "\\t--install-test-deps: install packages required to run all tests\\n"
 	printf "\\t--install-all: install everything\\n"
 	printf "\\t[other]: other options are passed as-is to pacman\\n"
@@ -24,7 +25,6 @@ function print_usage() {
 
 ADDITIONAL=0
 TESTDEPS=0
-LUA=0
 OPTIONS=
 for arg; do
 	case $arg in
@@ -35,13 +35,16 @@ for arg; do
 		--install-optional)
 			ADDITIONAL=1
 			;;
+		--install-nsis-deps)
+			NSISDEPS=1
+			;;
 		--install-test-deps)
 			TESTDEPS=1
 			;;
 		--install-all)
 			ADDITIONAL=1
+			NSISDEPS=1
 			TESTDEPS=1
-			LUA=1
 			;;
 		*)
 			OPTIONS="$OPTIONS $arg"
@@ -49,57 +52,76 @@ for arg; do
 	esac
 done
 
+PACKAGE_PREFIX="${MINGW_PACKAGE_PREFIX:-mingw-w64-x86_64}"
+
 #
-# Lua is kind of a mess. Lua 5.2 is not available. Some packages depend
-# on LuaJIT and it conflicts with Lua 5.1. This will probably have to
-# be fixed by the MSYS2 maintainers. Take a hands off approach for now.
+# Lua packaging is kind of a mess. Lua 5.2 is not available. Some packages have
+# a hard dependency on LuaJIT and it conflicts with Lua 5.1 and vice-versa.
+# This will probably have to be fixed by the MSYS2 maintainers.
+# XXX Is this still true? We can use Lua 5.3 and 5.4 now, though we still
+# might want to package our own version to use our UTF-8 on Windows patch
+# (though we don't apply that patch yet.)
 #
 BASIC_LIST="base-devel \
 	git \
-	mingw-w64-x86_64-brotli \
-	mingw-w64-x86_64-c-ares \
-	mingw-w64-x86_64-cmake \
-	mingw-w64-x86_64-glib2 \
-	mingw-w64-x86_64-gnutls \
-	mingw-w64-x86_64-libgcrypt \
-	mingw-w64-x86_64-libilbc \
-	mingw-w64-x86_64-libmaxminddb \
-	mingw-w64-x86_64-nghttp2 \
-	mingw-w64-x86_64-libpcap \
-	mingw-w64-x86_64-libssh \
-	mingw-w64-x86_64-libxml2 \
-	mingw-w64-x86_64-lz4 \
-	mingw-w64-x86_64-minizip \
-	mingw-w64-x86_64-ninja \
-	mingw-w64-x86_64-opus \
-	mingw-w64-x86_64-pcre2 \
-	mingw-w64-x86_64-python \
-	mingw-w64-x86_64-qt6-base \
-	mingw-w64-x86_64-qt6-multimedia \
-	mingw-w64-x86_64-qt6-tools \
-	mingw-w64-x86_64-qt6-5compat \
-	mingw-w64-x86_64-snappy \
-	mingw-w64-x86_64-spandsp \
-	mingw-w64-x86_64-speexdsp \
-	mingw-w64-x86_64-toolchain \
-	mingw-w64-x86_64-winsparkle \
-	mingw-w64-x86_64-zlib \
-	mingw-w64-x86_64-zstd"
+	${PACKAGE_PREFIX}-bcg729 \
+	${PACKAGE_PREFIX}-brotli \
+	${PACKAGE_PREFIX}-c-ares \
+	${PACKAGE_PREFIX}-cmake \
+	${PACKAGE_PREFIX}-glib2 \
+	${PACKAGE_PREFIX}-gnutls \
+	${PACKAGE_PREFIX}-libgcrypt \
+	${PACKAGE_PREFIX}-libilbc \
+	${PACKAGE_PREFIX}-libmaxminddb \
+	${PACKAGE_PREFIX}-nghttp2 \
+	${PACKAGE_PREFIX}-libpcap \
+	${PACKAGE_PREFIX}-libsmi \
+	${PACKAGE_PREFIX}-libssh \
+	${PACKAGE_PREFIX}-libxml2 \
+	${PACKAGE_PREFIX}-lz4 \
+	${PACKAGE_PREFIX}-minizip \
+	${PACKAGE_PREFIX}-ninja \
+	${PACKAGE_PREFIX}-opencore-amr \
+	${PACKAGE_PREFIX}-opus \
+	${PACKAGE_PREFIX}-pcre2 \
+	${PACKAGE_PREFIX}-python \
+	${PACKAGE_PREFIX}-qt6-base \
+	${PACKAGE_PREFIX}-qt6-multimedia \
+	${PACKAGE_PREFIX}-qt6-tools \
+	${PACKAGE_PREFIX}-qt6-translations \
+	${PACKAGE_PREFIX}-qt6-5compat \
+	${PACKAGE_PREFIX}-sbc \
+	${PACKAGE_PREFIX}-snappy \
+	${PACKAGE_PREFIX}-spandsp \
+	${PACKAGE_PREFIX}-speexdsp \
+	${PACKAGE_PREFIX}-toolchain \
+	${PACKAGE_PREFIX}-winsparkle \
+	${PACKAGE_PREFIX}-zlib \
+	${PACKAGE_PREFIX}-zstd"
 
-ADDITIONAL_LIST="mingw-w64-x86_64-asciidoctor \
-	mingw-w64-x86_64-ccache \
-	mingw-w64-x86_64-doxygen \
-	mingw-w64-x86_64-perl \
-	mingw-w64-x86_64-libxslt"
+ADDITIONAL_LIST="${PACKAGE_PREFIX}-asciidoctor \
+	${PACKAGE_PREFIX}-ccache \
+	${PACKAGE_PREFIX}-docbook-xsl \
+	${PACKAGE_PREFIX}-doxygen \
+	${PACKAGE_PREFIX}-libxslt \
+	${PACKAGE_PREFIX}-perl \
+	${PACKAGE_PREFIX}-ntldd"
 
-TESTDEPS_LIST="mingw-w64-x86_64-python-pytest \
-	mingw-w64-x86_64-python-pytest-xdist"
+NSISDEPS_LIST="${PACKAGE_PREFIX}-nsis"
+
+TESTDEPS_LIST="${PACKAGE_PREFIX}-python-pytest \
+	${PACKAGE_PREFIX}-python-pytest-xdist"
 
 ACTUAL_LIST=$BASIC_LIST
 
 if [ $ADDITIONAL -ne 0 ]
 then
 	ACTUAL_LIST="$ACTUAL_LIST $ADDITIONAL_LIST"
+fi
+
+if [ $NSISDEPS -ne 0 ]
+then
+	ACTUAL_LIST="$ACTUAL_LIST $NSISDEPS_LIST"
 fi
 
 if [ $TESTDEPS -ne 0 ]
@@ -115,12 +137,12 @@ then
 	printf "\n*** Optional packages not installed. Rerun with --install-optional to have them.\n"
 fi
 
+if [ $NSISDEPS -eq 0 ]
+then
+	printf "\n*** NSIS installer deps not installed. Rerun with --install-nsis-deps to have them.\n"
+fi
+
 if [ $TESTDEPS -eq 0 ]
 then
 	printf "\n*** Test deps not installed. Rerun with --install-test-deps to have them.\n"
-fi
-
-if [ $LUA -ne 0 ]
-then
-	printf "\n*** Lua 5.1 can be installed with: pacman -S mingw-w64-x86_64-lua51\n"
 fi

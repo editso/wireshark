@@ -40,17 +40,17 @@ macro(set_extcap_executable_properties _executable)
 
 	set(PROGLIST ${PROGLIST} ${_executable})
 
-	if(MSVC)
+	if(CMAKE_CONFIGURATION_TYPES)
 		set_target_properties(${_executable} PROPERTIES
-			RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/extcap
-			RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/run/Debug/extcap
-			RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/run/Release/extcap
-			RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_BINARY_DIR}/run/MinSizeRel/extcap
-			RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_BINARY_DIR}/run/RelWithDebInfo/extcap
+			RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/extcap/wireshark
+			RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/run/Debug/extcap/wireshark
+			RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/run/Release/extcap/wireshark
+			RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_BINARY_DIR}/run/MinSizeRel/extcap/wireshark
+			RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_BINARY_DIR}/run/RelWithDebInfo/extcap/wireshark
 		)
 	else()
 		set_target_properties(${_executable} PROPERTIES
-			RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/extcap
+			RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/extcap/wireshark
 		)
 		if(ENABLE_APPLICATION_BUNDLE)
 			if(NOT CMAKE_CFG_INTDIR STREQUAL ".")
@@ -82,24 +82,48 @@ macro(set_extcap_executable_properties _executable)
 endmacro()
 
 macro(set_extlog_executable_properties _executable)
-	if(ENABLE_APPLICATION_BUNDLE)
-		if(NOT CMAKE_CFG_INTDIR STREQUAL ".")
-			# Xcode
-			set_target_properties(${_executable} PROPERTIES
-				RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/$<CONFIG>/Logray.app/Contents/MacOS/extcap
-			)
-		else()
-			set_target_properties(${_executable} PROPERTIES
-				RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/Logray.app/Contents/MacOS/extcap
-			)
-			# Create a convenience link from run/<name> to its respective
-			# target in the application bundle.
-			add_custom_target(${_executable}-symlink
-				COMMAND ln -s -f
-					Logray.app/Contents/MacOS/extcap/${_executable}
-					${CMAKE_BINARY_DIR}/run/${_executable}
-			)
-			add_dependencies(${_executable} ${_executable}-symlink)
+	set_target_properties(${_executable} PROPERTIES
+		LINK_FLAGS "${WS_LINK_FLAGS}"
+		FOLDER "Executables/Extcaps"
+		INSTALL_RPATH "${EXTCAP_INSTALL_RPATH}"
+	)
+	if(MSVC)
+		set_target_properties(${_executable} PROPERTIES LINK_FLAGS_DEBUG "${WS_MSVC_DEBUG_LINK_FLAGS}")
+	endif()
+
+	set(PROGLIST ${PROGLIST} ${_executable})
+
+	if(CMAKE_CONFIGURATION_TYPES)
+		set_target_properties(${_executable} PROPERTIES
+			RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/extcap/logray
+			RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/run/Debug/extcap/logray
+			RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/run/Release/extcap/logray
+			RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_BINARY_DIR}/run/MinSizeRel/extcap/logray
+			RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_BINARY_DIR}/run/RelWithDebInfo/extcap/logray
+		)
+	else()
+		set_target_properties(${_executable} PROPERTIES
+			RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/extcap/logray
+		)
+		if(ENABLE_APPLICATION_BUNDLE)
+			if(NOT CMAKE_CFG_INTDIR STREQUAL ".")
+				# Xcode
+				set_target_properties(${_executable} PROPERTIES
+					RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/$<CONFIG>/Logray.app/Contents/MacOS/extcap
+				)
+			else()
+				set_target_properties(${_executable} PROPERTIES
+					RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/run/Logray.app/Contents/MacOS/extcap
+				)
+				# Create a convenience link from run/<name> to its respective
+				# target in the application bundle.
+				add_custom_target(${_executable}-symlink
+					COMMAND ln -s -f
+						Logray.app/Contents/MacOS/extcap/${_executable}
+						${CMAKE_BINARY_DIR}/run/${_executable}
+				)
+				add_dependencies(${_executable} ${_executable}-symlink)
+			endif()
 		endif()
 	endif()
 endmacro()
@@ -133,7 +157,6 @@ if(BUILD_androiddump)
 			ui
 			wiretap
 			wsutil
-			${ZLIB_LIBRARIES}
 			${CMAKE_DL_LIBS}
 			${WIN_WS2_32_LIBRARY}
 		)
@@ -233,6 +256,7 @@ if(BUILD_dpauxmon AND HAVE_LIBNL3)
 	set(dpauxmon_LIBS
 		wsutil
 		writecap
+		${GLIB2_LIBRARIES}
 		${CMAKE_DL_LIBS}
 		${NL_LIBRARIES}
 	)
@@ -279,7 +303,6 @@ if(BUILD_randpktdump)
 		randpkt_core
 		wiretap
 		wsutil
-		${ZLIB_LIBRARIES}
 		${CMAKE_DL_LIBS}
 		${WIN_WS2_32_LIBRARY}
 	)
@@ -305,7 +328,6 @@ if(BUILD_etwdump AND WIN32)
 		tdh
 		wevtapi
 		rpcrt4
-		${ZLIB_LIBRARIES}
 		${CMAKE_DL_LIBS}
 		${WIN_WS2_32_LIBRARY}
 	)
@@ -328,13 +350,10 @@ endif()
 
 if(BUILD_sdjournal AND SYSTEMD_FOUND)
 	set(sdjournal_LIBS
-		wiretap
 		writecap
 		wsutil
-		${ZLIB_LIBRARIES}
 		${CMAKE_DL_LIBS}
 		${SYSTEMD_LIBRARIES}
-		${GCRYPT_LIBRARIES}
 	)
 	set(sdjournal_FILES
 		$<TARGET_OBJECTS:extcap-base>
@@ -367,11 +386,13 @@ if(BUILD_falcodump AND SINSP_FOUND)
 	set_extlog_executable_properties(falcodump)
 	target_link_libraries(falcodump ${falcodump_LIBS})
 	target_include_directories(falcodump SYSTEM PRIVATE ${SINSP_INCLUDE_DIRS})
-	install(TARGETS falcodump RUNTIME DESTINATION ${EXTCAP_INSTALL_LIBDIR})
+	if(WIN32)
+		# libsinsp/dumper.h includes libscap/scap_savefile_api.h, which includes
+		# libscap/scap_zlib.h.
+		target_include_directories(falcodump SYSTEM PRIVATE ${ZLIB_INCLUDE_DIR})
+	endif()
+	install(TARGETS falcodump RUNTIME DESTINATION ${LOG_EXTCAP_INSTALL_LIBDIR})
 	add_dependencies(extcaps falcodump)
-
-	# XXX Hack; We need to fix this in falcosecurity-libs.
-	target_compile_definitions(falcodump PRIVATE HAVE_STRLCPY=1)
 
 endif()
 

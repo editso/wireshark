@@ -9,7 +9,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
 
-"""
+r"""
 This is a generic example, which produces pcap packages every n seconds, and
 is configurable via extcap options.
 
@@ -36,7 +36,6 @@ import re
 import argparse
 import time
 import struct
-import array
 from threading import Thread
 
 ERROR_USAGE          = 0
@@ -79,7 +78,7 @@ class ArgumentParser(argparse.ArgumentParser):
     def _get_action_from_name(self, name):
         """Given a name, get the Action instance registered with this parser.
         If only it were made available in the ArgumentError object. It is
-        passed as it's first arg...
+        passed as its first arg...
         """
         container = self._actions
         if name is None:
@@ -504,7 +503,7 @@ if __name__ == '__main__':
     if len(unknown) > 1:
         print("Extcap Example %d unknown arguments given" % len(unknown))
 
-    m = re.match('example(\d+)', args.extcap_interface)
+    m = re.match(r'example(\d+)', args.extcap_interface)
     if not m:
         sys.exit(ERROR_INTERFACE)
     interface = m.group(1)

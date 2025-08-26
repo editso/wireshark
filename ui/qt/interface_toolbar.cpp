@@ -15,10 +15,16 @@
 
 #if WS_IS_AT_LEAST_GNUC_VERSION(12,1)
 DIAG_OFF(stringop-overflow)
+#if WS_IS_AT_LEAST_GNUC_VERSION(13,0)
+DIAG_OFF(restrict)
+#endif
 #endif
 #include "interface_toolbar.h"
 #if WS_IS_AT_LEAST_GNUC_VERSION(12,1)
 DIAG_ON(stringop-overflow)
+#if WS_IS_AT_LEAST_GNUC_VERSION(13,0)
+DIAG_ON(restrict)
+#endif
 #endif
 #include <ui/qt/widgets/interface_toolbar_lineedit.h>
 #include "simple_dialog.h"
@@ -73,7 +79,7 @@ InterfaceToolbar::InterfaceToolbar(QWidget *parent, const iface_toolbar *toolbar
     // Fill inn interfaces list and initialize default interface values
     for (GList *walker = toolbar->ifnames; walker; walker = walker->next)
     {
-        QString ifname((gchar *)walker->data);
+        QString ifname((char *)walker->data);
         interface_[ifname].reader_thread = NULL;
         interface_[ifname].out_fd = -1;
     }
@@ -187,14 +193,14 @@ QWidget *InterfaceToolbar::createCheckbox(iface_toolbar_control *control)
 
 QWidget *InterfaceToolbar::createButton(iface_toolbar_control *control)
 {
-    QPushButton *button = new QPushButton(QString().fromUtf8((gchar *)control->display));
+    QPushButton *button = new QPushButton(QString().fromUtf8((char *)control->display));
     button->setMaximumHeight(27);
     button->setToolTip(QString().fromUtf8(control->tooltip));
 
     switch (control->ctrl_role)
     {
         case INTERFACE_ROLE_CONTROL:
-            setDefaultValue(control->num, (gchar *)control->display);
+            setDefaultValue(control->num, (char *)control->display);
             connect(button, SIGNAL(clicked()), this, SLOT(onControlButtonClicked()));
             break;
 
@@ -236,13 +242,13 @@ QWidget *InterfaceToolbar::createSelector(iface_toolbar_control *control)
     for (GList *walker = control->values; walker; walker = walker->next)
     {
         iface_toolbar_value *val = (iface_toolbar_value *)walker->data;
-        QString value = QString().fromUtf8((gchar *)val->value);
+        QString value = QString().fromUtf8((char *)val->value);
         if (value.isEmpty())
         {
             // Invalid value
             continue;
         }
-        QString display = QString().fromUtf8((gchar *)val->display);
+        QString display = QString().fromUtf8((char *)val->display);
         QByteArray interface_value;
 
         interface_value.append(value.toUtf8());
@@ -303,6 +309,13 @@ QWidget *InterfaceToolbar::createString(iface_toolbar_control *control)
 
 void InterfaceToolbar::setWidgetValue(QWidget *widget, int command, QByteArray payload)
 {
+    // The QString(const QByteArray&) constructor will implicitly convert
+    // payload to a QString. In Qt5 this truncates at the first '\0'.
+    // (So string array payloads must be split first before converting.)
+    // In Qt6 those are converted to UTF-16 U+0000. (So convert then split is OK.)
+    // Other functions, like QComboBox::findData(), take a QVariant.
+    // In Qt5 QVariants from QStrings and QByteArrays compare equal if the
+    // QByteArray would convert to the same string; in Qt6 they don't.
     if (QComboBox *combobox = qobject_cast<QComboBox *>(widget))
     {
         combobox->blockSignals(true);
@@ -320,8 +333,8 @@ void InterfaceToolbar::setWidgetValue(QWidget *widget, int command, QByteArray p
 
             case commandControlAdd:
             {
-                QString value;
-                QString display;
+                QByteArray value;
+                QByteArray display;
                 if (payload.contains('\0'))
                 {
                     // The payload contains "value\0display"
@@ -740,7 +753,7 @@ void InterfaceToolbar::startCapture(GArray *ifaces)
     QString first_capturing_ifname;
     bool selected_found = false;
 
-    for (guint i = 0; i < ifaces->len; i++)
+    for (unsigned i = 0; i < ifaces->len; i++)
     {
         interface_options *interface_opts = &g_array_index(ifaces, interface_options, i);
         QString ifname(interface_opts->name);
@@ -768,7 +781,7 @@ void InterfaceToolbar::startCapture(GArray *ifaces)
         // The control out pipe will close when both out_fd and extcap_control_out_h are closed.
         HANDLE duplicate_out_handle = INVALID_HANDLE_VALUE;
         if (!DuplicateHandle(GetCurrentProcess(), interface_opts->extcap_control_out_h,
-                             GetCurrentProcess(), &duplicate_out_handle, 0, TRUE, DUPLICATE_SAME_ACCESS))
+                             GetCurrentProcess(), &duplicate_out_handle, 0, true, DUPLICATE_SAME_ACCESS))
         {
             simple_dialog_async(ESD_TYPE_ERROR, ESD_BTN_OK,
                                 "Failed to duplicate extcap control out handle: %s\n.",
@@ -956,7 +969,7 @@ void InterfaceToolbar::interfaceListChanged()
     ui->interfacesComboBox->blockSignals(true);
     ui->interfacesComboBox->clear();
 
-    for (guint i = 0; i < global_capture_opts.all_ifaces->len; i++)
+    for (unsigned i = 0; i < global_capture_opts.all_ifaces->len; i++)
     {
         interface_t *device = &g_array_index(global_capture_opts.all_ifaces, interface_t, i);
         if (device->hidden)

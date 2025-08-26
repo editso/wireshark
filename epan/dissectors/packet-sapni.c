@@ -22,10 +22,12 @@
 #include <epan/packet.h>
 #include <epan/prefs.h>
 #include <epan/expert.h>
-#include <epan/dissectors/packet-tcp.h>
+#include "packet-tcp.h"
 #include <epan/next_tvb.h>
 #include <epan/conversation.h>
 #include <wsutil/wmem/wmem.h>
+
+#include "packet-sapni.h"
 
 
 /*
@@ -39,24 +41,24 @@
  */
 #define SAP_PROTOCOL_HEADER_LEN 4
 
-static int proto_sap_protocol = -1;
+static int proto_sap_protocol;
 
-static int hf_sap_protocol_length = -1;
-static int hf_sap_protocol_payload = -1;
+static int hf_sap_protocol_length;
+static int hf_sap_protocol_payload;
 
-static int hf_sap_protocol_ping = -1;
-static int hf_sap_protocol_pong = -1;
+static int hf_sap_protocol_ping;
+static int hf_sap_protocol_pong;
 
-static gint ett_sap_protocol = -1;
+static int ett_sap_protocol;
 
 /* Expert info */
-static expert_field ei_sap_invalid_length = EI_INIT;
+static expert_field ei_sap_invalid_length;
 
 /* Global port preference */
 static range_t *global_sap_protocol_port_range;
 
 /* Global reassemble preference */
-static gboolean global_sap_protocol_desegment = TRUE;
+static bool global_sap_protocol_desegment = true;
 
 /* Protocol handle */
 static dissector_handle_t sap_protocol_handle;
@@ -76,10 +78,10 @@ void proto_register_sap_protocol(void);
 /*
  * Get the SAPNI pdu length
  */
-static guint
+static unsigned
 get_sap_protocol_pdu_len(packet_info *pinfo _U_, tvbuff_t *tvb, int offset _U_, void *dissector_data _U_)
 {
-	return ((guint)tvb_get_ntohl(tvb, 0) + 4);
+	return ((unsigned)tvb_get_ntohl(tvb, 0) + 4);
 }
 
 
@@ -88,9 +90,9 @@ get_sap_protocol_pdu_len(packet_info *pinfo _U_, tvbuff_t *tvb, int offset _U_, 
  * heuristics as a first try as some protocols uses the same TCP ports
  * (e.g. 3200/tcp for Enqueue Server and Diag).
  */
-static void
-dissect_sap_protocol_payload(tvbuff_t *tvb, guint32 offset, packet_info *pinfo, proto_tree *tree, guint16 sport, guint16 dport){
-	guint16 low_port = 0, high_port = 0;
+void
+dissect_sap_protocol_payload(tvbuff_t *tvb, uint32_t offset, packet_info *pinfo, proto_tree *tree, uint16_t sport, uint16_t dport){
+	uint16_t low_port = 0, high_port = 0;
 	tvbuff_t *next_tvb = NULL;
 	heur_dtbl_entry_t *hdtbl_entry = NULL;
 
@@ -133,7 +135,7 @@ dissect_sap_protocol_payload(tvbuff_t *tvb, guint32 offset, packet_info *pinfo, 
 static int
 dissect_sap_protocol_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
 {
-	guint32 length = 0;
+	uint32_t length = 0;
 	proto_item *ti = NULL, *sap_protocol_length = NULL;
 	proto_tree *sap_protocol_tree = NULL;
 	conversation_t *conversation = NULL;
@@ -236,7 +238,7 @@ proto_register_sap_protocol(void)
 	};
 
 	/* Setup protocol subtree array */
-	static gint *ett[] = {
+	static int *ett[] = {
 		&ett_sap_protocol
 	};
 
@@ -261,7 +263,7 @@ proto_register_sap_protocol(void)
 
 	/* Sub dissector code */
 	sub_dissectors_table = register_dissector_table("sapni.port", "SAP Protocol Port", proto_sap_protocol, FT_UINT16, BASE_DEC);
-	heur_subdissector_list = register_heur_dissector_list("sapni", proto_sap_protocol);
+	heur_subdissector_list = register_heur_dissector_list_with_description("sapni", "SAP NI payload", proto_sap_protocol);
 
 	/* Register the preferences */
 	sap_protocol_module = prefs_register_protocol(proto_sap_protocol, proto_reg_handoff_sap_protocol);
@@ -275,12 +277,12 @@ proto_register_sap_protocol(void)
 /**
  * Helpers for dealing with the port range
  */
-static void range_delete_callback (guint32 port, gpointer ptr _U_)
+static void range_delete_callback (uint32_t port, void *ptr _U_)
 {
 	dissector_delete_uint("tcp.port", port, sap_protocol_handle);
 }
 
-static void range_add_callback (guint32 port, gpointer ptr _U_)
+static void range_add_callback (uint32_t port, void *ptr _U_)
 {
 	dissector_add_uint("tcp.port", port, sap_protocol_handle);
 }
@@ -292,11 +294,11 @@ void
 proto_reg_handoff_sap_protocol(void)
 {
 	static range_t *sap_protocol_port_range;
-	static gboolean initialized = FALSE;
+	static bool initialized = false;
 
 	if (!initialized) {
 		sap_protocol_handle = find_dissector("sapni");
-		initialized = TRUE;
+		initialized = true;
 	} else {
 		range_foreach(sap_protocol_port_range, range_delete_callback, NULL);
 		wmem_free(wmem_epan_scope(), sap_protocol_port_range);

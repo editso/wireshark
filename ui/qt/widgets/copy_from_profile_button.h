@@ -11,7 +11,6 @@
 #define COPY_FROM_PROFILE_BUTTON_H
 
 #include <config.h>
-#include <glib.h>
 
 #include <QMenu>
 #include <QPushButton>
@@ -27,7 +26,7 @@ public:
 
     void setFilename(QString filename);
 
-Q_SIGNALS:
+signals:
     void copyProfile(QString filename);
 
 private:

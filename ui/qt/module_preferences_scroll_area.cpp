@@ -10,10 +10,12 @@
 #include "module_preferences_scroll_area.h"
 #include <ui_module_preferences_scroll_area.h>
 #include <ui/qt/widgets/syntax_line_edit.h>
+#include <ui/qt/widgets/dissector_syntax_line_edit.h>
 #include "ui/qt/widgets/wireshark_file_dialog.h"
 #include <ui/qt/utils/qt_ui_utils.h>
 #include "uat_dialog.h"
 #include "main_application.h"
+#include "ui/qt/main_window.h"
 
 #include <ui/qt/utils/variant_pointer.h>
 
@@ -28,6 +30,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QMainWindow>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QScrollBar>
@@ -54,8 +57,8 @@ extern "C" {
 // Callbacks prefs routines
 
 /* Add a single preference to the QVBoxLayout of a preference page */
-static guint
-pref_show(pref_t *pref, gpointer user_data)
+static unsigned
+pref_show(pref_t *pref, void *user_data)
 {
     prefSearchData * data = static_cast<prefSearchData *>(user_data);
 
@@ -71,7 +74,6 @@ pref_show(pref_t *pref, gpointer user_data)
 
     switch (prefs_get_type(pref)) {
     case PREF_UINT:
-    case PREF_DECODE_AS_UINT:
     {
         QHBoxLayout *hb = new QHBoxLayout();
         QLabel *label = new QLabel(prefs_get_title(pref));
@@ -169,6 +171,21 @@ pref_show(pref_t *pref, gpointer user_data)
         vb->addLayout(hb);
         break;
     }
+    case PREF_DISSECTOR:
+    {
+        QHBoxLayout *hb = new QHBoxLayout();
+        QLabel *label = new QLabel(prefs_get_title(pref));
+        label->setToolTip(tooltip);
+        hb->addWidget(label);
+        QLineEdit *string_le = new DissectorSyntaxLineEdit();
+        string_le->setToolTip(tooltip);
+        string_le->setProperty(pref_prop_, VariantPointer<pref_t>::asQVariant(pref));
+        string_le->setMinimumWidth(string_le->fontMetrics().height() * 20);
+        hb->addWidget(string_le);
+        hb->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
+        vb->addLayout(hb);
+        break;
+    }
     case PREF_DECODE_AS_RANGE:
     case PREF_RANGE:
     {
@@ -240,6 +257,50 @@ pref_show(pref_t *pref, gpointer user_data)
         // color picker similar to the Font and Colors prefs.
         break;
     }
+    case PREF_PROTO_TCP_SNDAMB_ENUM:
+    {
+        const enum_val_t *ev;
+        ev = prefs_get_enumvals(pref);
+        if (!ev || !ev->description)
+            return 0;
+
+        if (prefs_get_enum_radiobuttons(pref)) {
+            QLabel *label = new QLabel(prefs_get_title(pref));
+            label->setToolTip(tooltip);
+            vb->addWidget(label);
+            QButtonGroup *enum_bg = new QButtonGroup(vb);
+            while (ev->description) {
+                QRadioButton *enum_rb = new QRadioButton(title_to_shortcut(ev->description));
+                enum_rb->setToolTip(tooltip);
+                QStyleOption style_opt;
+                enum_rb->setProperty(pref_prop_, VariantPointer<pref_t>::asQVariant(pref));
+                enum_rb->setStyleSheet(QString(
+                                      "QRadioButton {"
+                                      "  margin-left: %1px;"
+                                      "}"
+                                      )
+                                  .arg(enum_rb->style()->subElementRect(QStyle::SE_CheckBoxContents, &style_opt).left()));
+                enum_bg->addButton(enum_rb, ev->value);
+                vb->addWidget(enum_rb);
+                ev++;
+            }
+        } else {
+            QHBoxLayout *hb = new QHBoxLayout();
+            QComboBox *enum_cb = new QComboBox();
+            enum_cb->setToolTip(tooltip);
+            enum_cb->setProperty(pref_prop_, VariantPointer<pref_t>::asQVariant(pref));
+            for (ev = prefs_get_enumvals(pref); ev && ev->description; ev++) {
+                enum_cb->addItem(ev->description, QVariant(ev->value));
+            }
+            QLabel * lbl = new QLabel(prefs_get_title(pref));
+            lbl->setToolTip(tooltip);
+            hb->addWidget(lbl);
+            hb->addWidget(enum_cb);
+            hb->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
+            vb->addLayout(hb);
+        }
+        break;
+    }
     default:
         break;
     }
@@ -259,26 +320,23 @@ ModulePreferencesScrollArea::ModulePreferencesScrollArea(module_t *module, QWidg
 
     /* Show the preference's description at the top of the page */
     QFont font;
-    font.setBold(TRUE);
+    font.setBold(true);
     QLabel *label = new QLabel(module->description);
     label->setFont(font);
     ui->verticalLayout->addWidget(label);
 
-    prefSearchData * searchData = new prefSearchData;
-    searchData->layout = ui->verticalLayout;
-    searchData->moduleName = module->name;
+    prefSearchData searchData;
+    searchData.layout = ui->verticalLayout;
+    searchData.moduleName = module->name;
 
     /* Add items for each of the preferences */
-    prefs_pref_foreach(module, pref_show, (gpointer) searchData);
+    prefs_pref_foreach(module, pref_show, &searchData);
 
     foreach (QLineEdit *le, findChildren<QLineEdit *>()) {
         pref_t *pref = VariantPointer<pref_t>::asPtr(le->property(pref_prop_));
         if (!pref) continue;
 
         switch (prefs_get_type(pref)) {
-        case PREF_DECODE_AS_UINT:
-            connect(le, &QLineEdit::textEdited, this, &ModulePreferencesScrollArea::uintLineEditTextEdited);
-            break;
         case PREF_UINT:
             connect(le, &QLineEdit::textEdited, this, &ModulePreferencesScrollArea::uintLineEditTextEdited);
             break;
@@ -287,6 +345,7 @@ ModulePreferencesScrollArea::ModulePreferencesScrollArea(module_t *module, QWidg
         case PREF_OPEN_FILENAME:
         case PREF_DIRNAME:
         case PREF_PASSWORD:
+        case PREF_DISSECTOR:
             connect(le, &QLineEdit::textEdited, this, &ModulePreferencesScrollArea::stringLineEditTextEdited);
             break;
         case PREF_RANGE:
@@ -323,6 +382,16 @@ ModulePreferencesScrollArea::ModulePreferencesScrollArea(module_t *module, QWidg
         if (prefs_get_type(pref) == PREF_ENUM && !prefs_get_enum_radiobuttons(pref)) {
             connect(combo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
                     this, &ModulePreferencesScrollArea::enumComboBoxCurrentIndexChanged);
+        }
+    }
+
+    foreach (QComboBox *combo, findChildren<QComboBox *>()) {
+        pref_t *pref = VariantPointer<pref_t>::asPtr(combo->property(pref_prop_));
+        if (!pref) continue;
+
+        if (prefs_get_type(pref) == PREF_PROTO_TCP_SNDAMB_ENUM && !prefs_get_enum_radiobuttons(pref)) {
+            connect(combo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                    this, &ModulePreferencesScrollArea::enumComboBoxCurrentIndexChanged_PROTO_TCP);
         }
     }
 
@@ -411,6 +480,31 @@ void ModulePreferencesScrollArea::updateWidgets()
                 if (prefs_get_enum_value(pref, pref_stashed) == enum_cb->itemData(i).toInt()) {
                     enum_cb->setCurrentIndex(i);
                 }
+            }
+        }
+
+        if (prefs_get_type(pref) == PREF_PROTO_TCP_SNDAMB_ENUM && !prefs_get_enum_radiobuttons(pref)) {
+            if (prefs_get_list_value(pref, pref_stashed) == NULL) {
+                /* We haven't added a list of frames that could have their
+                 * analysis changed. Set the current value to whatever the
+                 * first selected frame has for its its TCP Sequence Analysis
+                 * override.
+                 */
+                MainWindow* topWidget = qobject_cast<MainWindow*>(mainApp->mainWindow());
+                /* Ensure there is one unique or multiple selections. See issue 18642 */
+                if (topWidget->hasSelection() || topWidget->hasUniqueSelection()) {
+                    frame_data * fdata = topWidget->frameDataForRow((topWidget->selectedRows()).at(0));
+                    enum_cb->setCurrentIndex(enum_cb->findData(fdata->tcp_snd_manual_analysis));
+                    QList<int> rows = topWidget->selectedRows();
+                    foreach (int row, rows) {
+                        frame_data * fdata = topWidget->frameDataForRow(row);
+                        prefs_add_list_value(pref, fdata, pref_stashed);
+                    }
+                }
+            } else {
+                /* The initial value was already set from the selected frames,
+                 * use the current value from when the CB was changed. */
+                enum_cb->setCurrentIndex(enum_cb->findData(prefs_get_enum_value(pref, pref_current)));
             }
         }
     }
@@ -562,4 +656,21 @@ void ModulePreferencesScrollArea::dirnamePushButtonClicked()
         prefs_set_string_value(pref, QDir::toNativeSeparators(dirname).toStdString().c_str(), pref_stashed);
         updateWidgets();
     }
+}
+
+/*
+ * Dedicated event handling for TCP SEQ Analysis overriding.
+ */
+void ModulePreferencesScrollArea::enumComboBoxCurrentIndexChanged_PROTO_TCP(int index)
+{
+    QComboBox *enum_cb = qobject_cast<QComboBox*>(sender());
+    if (!enum_cb) return;
+
+    pref_t *pref = VariantPointer<pref_t>::asPtr(enum_cb->property(pref_prop_));
+    if (!pref) return;
+
+    // Store the index value in the current value, not the stashed value.
+    // We use the stashed value to store the frame data pointers.
+    prefs_set_enum_value(pref, enum_cb->itemData(index).toInt(), pref_current);
+    //prefs_set_enum_value(pref, enum_cb->itemData(index).toInt(), pref_stashed);
 }

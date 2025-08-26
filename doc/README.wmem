@@ -13,7 +13,7 @@ Correct use of these functions will make your code faster, and greatly reduce
 the chances that it will leak memory in exceptional cases.
 
 Wmem was originally conceived in this email to the wireshark-dev mailing list:
-https://www.wireshark.org/lists/wireshark-dev/201210/msg00178.html
+https://lists.wireshark.org/archives/wireshark-dev/201210/msg00178.html
 
 2. Usage for Consumers
 
@@ -321,7 +321,7 @@ pointer is stored internally with the data structure, and subsequent calls
 The primary debugging control for wmem is the WIRESHARK_DEBUG_WMEM_OVERRIDE
 environment variable. If set, this value forces all calls to
 wmem_allocator_new() to return the same type of allocator, regardless of which
-type is requested normally by the code. It currently has three valid values:
+type is requested normally by the code. It currently has four valid values:
 
  - The value "simple" forces the use of WMEM_ALLOCATOR_SIMPLE. The valgrind
    script currently sets this value, since the simple allocator is the only

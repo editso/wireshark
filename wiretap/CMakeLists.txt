@@ -43,6 +43,7 @@ set(WIRETAP_C_MODULE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/candump.c
 	${CMAKE_CURRENT_SOURCE_DIR}/capsa.c
 	${CMAKE_CURRENT_SOURCE_DIR}/catapult_dct2000.c
+	${CMAKE_CURRENT_SOURCE_DIR}/cllog.c
 	${CMAKE_CURRENT_SOURCE_DIR}/commview.c
 	${CMAKE_CURRENT_SOURCE_DIR}/cosine.c
 	${CMAKE_CURRENT_SOURCE_DIR}/csids.c
@@ -50,6 +51,7 @@ set(WIRETAP_C_MODULE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/dbs-etherwatch.c
 	${CMAKE_CURRENT_SOURCE_DIR}/dpa400.c
 	${CMAKE_CURRENT_SOURCE_DIR}/dct3trace.c
+	${CMAKE_CURRENT_SOURCE_DIR}/ems.c
 	${CMAKE_CURRENT_SOURCE_DIR}/erf.c
 	${CMAKE_CURRENT_SOURCE_DIR}/eri_enb_log.c
 	${CMAKE_CURRENT_SOURCE_DIR}/eyesdn.c
@@ -81,9 +83,10 @@ set(WIRETAP_C_MODULE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/pcap-common.c
 	${CMAKE_CURRENT_SOURCE_DIR}/peekclassic.c
 	${CMAKE_CURRENT_SOURCE_DIR}/peektagged.c
-	${CMAKE_CURRENT_SOURCE_DIR}/rfc7468.c
 	${CMAKE_CURRENT_SOURCE_DIR}/pppdump.c
 	${CMAKE_CURRENT_SOURCE_DIR}/radcom.c
+	${CMAKE_CURRENT_SOURCE_DIR}/rfc7468.c
+	${CMAKE_CURRENT_SOURCE_DIR}/rtpdump.c
 	${CMAKE_CURRENT_SOURCE_DIR}/ruby_marshal.c
 	${CMAKE_CURRENT_SOURCE_DIR}/snoop.c
 	${CMAKE_CURRENT_SOURCE_DIR}/stanag4607.c
@@ -118,6 +121,7 @@ set(WIRETAP_NONGENERATED_C_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/file_access.c
 	${CMAKE_CURRENT_SOURCE_DIR}/file_wrappers.c
 	${CMAKE_CURRENT_SOURCE_DIR}/merge.c
+	${CMAKE_CURRENT_SOURCE_DIR}/secrets-types.c
 	${CMAKE_CURRENT_SOURCE_DIR}/wtap.c
 	${CMAKE_CURRENT_SOURCE_DIR}/wtap_opttypes.c
 )
@@ -150,7 +154,7 @@ file(GENERATE
 )
 add_custom_command(
 	OUTPUT wtap_modules.c
-	COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/make-regs.py wtap_modules wtap_modules.c @wtap_modules.in.txt
+	COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/make-regs.py wtap_modules wtap_modules.c @wtap_modules.in.txt
 	DEPENDS ${CMAKE_SOURCE_DIR}/tools/make-regs.py ${WIRETAP_MODULE_FILES}
 		"${CMAKE_CURRENT_BINARY_DIR}/wtap_modules.in.txt"
 	COMMENT "Making wtap_modules.c"
@@ -160,7 +164,7 @@ add_custom_command(
 # All files are warning-clean.  (Let's keep it that way.)
 #
 set_source_files_properties(
-	${WIRETAP_FILES}
+	${WIRETAP_NONGENERATED_C_FILES}
 	PROPERTIES
 	COMPILE_FLAGS "${WERROR_COMMON_FLAGS}"
 )
@@ -174,7 +178,7 @@ set_target_properties(wiretap PROPERTIES
 	PREFIX "lib"
 	COMPILE_DEFINITIONS "WS_BUILD_DLL"
 	LINK_FLAGS "${WS_LINK_FLAGS}"
-	VERSION "0.0.0" SOVERSION 0
+	VERSION "15.0.8" SOVERSION 15
 	FOLDER "DLLs"
 	INSTALL_RPATH "${LIBRARY_INSTALL_RPATH}"
 )
@@ -185,8 +189,10 @@ endif()
 target_link_libraries(wiretap
 	PUBLIC
 		wsutil
+		${GLIB2_LIBRARIES}
 	PRIVATE
 		${ZLIB_LIBRARIES}
+		${ZLIBNG_LIBRARIES}
 		${ZSTD_LIBRARIES}
 		${LZ4_LIBRARIES}
 )
@@ -194,6 +200,7 @@ target_link_libraries(wiretap
 target_include_directories(wiretap SYSTEM
 	PRIVATE
 		${ZLIB_INCLUDE_DIRS}
+		${ZLIBNG_INCLUDE_DIRS}
 		${ZSTD_INCLUDE_DIRS}
 		${LZ4_INCLUDE_DIRS}
 )
@@ -211,6 +218,8 @@ install(TARGETS wiretap
 
 install(FILES ${WIRETAP_PUBLIC_HEADERS}
 	DESTINATION "${PROJECT_INSTALL_INCLUDEDIR}/wiretap"
+	COMPONENT "Development"
+	EXCLUDE_FROM_ALL
 )
 
 CHECKAPI(

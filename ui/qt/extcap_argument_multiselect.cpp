@@ -99,7 +99,7 @@ void ExtArgMultiSelect::checkItemsWalker(QStandardItem * item, QStringList defau
             treeView->setExpanded(index, true);
             index = index.parent();
         }
-    } else {
+    } else if (item->isCheckable()) {
         item->setCheckState(Qt::Unchecked);
     }
 }
@@ -212,12 +212,15 @@ QString ExtArgMultiSelect::defaultValue()
 
 bool ExtArgMultiSelect::isSetDefaultValueSupported()
 {
-    return TRUE;
+    return true;
 }
 
 void ExtArgMultiSelect::setDefaultValue()
 {
     QStringList checked;
+
+    if (viewModel == 0)
+        return;
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     checked = defaultValue().split(",", Qt::SkipEmptyParts);

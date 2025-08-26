@@ -53,7 +53,7 @@ public:
 
 signals:
     void filterAction(QString filter, FilterAction::Action action, FilterAction::ActionType type);
-    void openFollowStreamDialog(follow_type_t type);
+    void openFollowStreamDialog(int proto_id);
     void openTcpStreamGraph(int graph_type);
 
 protected:
@@ -75,10 +75,14 @@ protected slots:
 
 private slots:
     void on_nameResolutionCheckBox_toggled(bool checked);
-    void on_displayFilterCheckBox_toggled(bool checked);
+    void displayFilterCheckBoxToggled(bool checked);
+    void displayFilterSuccess(bool success);
     void captureEvent(CaptureEvent e);
 
     virtual void on_buttonBox_helpRequested() = 0;
+
+private:
+    void displayFilterUpdate(bool set_filter);
 };
 
 #endif // TRAFFIC_TABLE_DIALOG_H

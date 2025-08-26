@@ -9,31 +9,37 @@
 
 set(DFILTER_PUBLIC_HEADERS
 	dfilter.h
+	dfilter-int.h
+	dfilter-loc.h
+	dfilter-plugin.h
+	dfilter-translator.h
+	dfunctions.h
 	drange.h
+	syntax-tree.h
 )
 
 set(DFILTER_HEADER_FILES
 	${DFILTER_PUBLIC_HEADERS}
-	dfilter-int.h
 	dfilter-macro.h
-	dfilter.h
-	dfunctions.h
+	dfilter-macro-uat.h
 	dfvm.h
-	drange.h
 	gencode.h
 	semcheck.h
 	sttype-field.h
 	sttype-function.h
+	sttype-number.h
 	sttype-pointer.h
 	sttype-set.h
 	sttype-slice.h
 	sttype-op.h
-	syntax-tree.h
 )
 
 set(DFILTER_NONGENERATED_FILES
 	dfilter.c
 	dfilter-macro.c
+	dfilter-macro-uat.c
+	dfilter-plugin.c
+	dfilter-translator.c
 	dfunctions.c
 	dfvm.c
 	drange.c
@@ -41,6 +47,7 @@ set(DFILTER_NONGENERATED_FILES
 	semcheck.c
 	sttype-field.c
 	sttype-function.c
+	sttype-number.c
 	sttype-pointer.c
 	sttype-set.c
 	sttype-slice.c
@@ -93,6 +100,8 @@ set_target_properties(dfilter PROPERTIES
 
 install(FILES ${DFILTER_PUBLIC_HEADERS}
 	DESTINATION "${PROJECT_INSTALL_INCLUDEDIR}/epan/dfilter"
+	COMPONENT "Development"
+	EXCLUDE_FROM_ALL
 )
 
 CHECKAPI(
@@ -101,9 +110,6 @@ CHECKAPI(
 	SWITCHES
 	SOURCES
 	  ${DFILTER_NONGENERATED_FILES}
-# LEX files commented out due to use of malloc, free etc.
-#	  ${LEX_FILES}
-	  ${LEMON_FILES}
 )
 
 #
