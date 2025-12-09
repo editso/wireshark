@@ -2187,6 +2187,9 @@ set(USHARK_DISSECTOR_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/packet-tcp.c
         ${CMAKE_CURRENT_SOURCE_DIR}/packet-http.c
         ${CMAKE_CURRENT_SOURCE_DIR}/packet-http2.c
+	${CMAKE_CURRENT_SOURCE_DIR}/packet-quic.c
+	${CMAKE_CURRENT_SOURCE_DIR}/packet-gquic.c
+	${CMAKE_CURRENT_SOURCE_DIR}/packet-http3.c
         #${CMAKE_CURRENT_SOURCE_DIR}/packet-text-media.c
         #${CMAKE_CURRENT_SOURCE_DIR}/packet-dcerpc.c
         #${CMAKE_CURRENT_SOURCE_DIR}/packet-gsm_a_gm.c
